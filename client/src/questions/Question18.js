@@ -11,7 +11,7 @@ export default function Question18() {
         <div className="main">
           <h1>Question 18</h1>
           <form>
-            <Table>
+            <Table bordered hover>
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
@@ -29,6 +29,55 @@ export default function Question18() {
                   <td>
                     My company is increasingly concerned about the reputational
                     risks associated with the amount of taxes it pays
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>...</td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
                   </td>
                   <td>
                     <input type="radio"></input>
