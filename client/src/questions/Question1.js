@@ -63,7 +63,7 @@ export default function Question1() {
             </span>
           </div>
           <form>
-            <Table bordered style={{ color: "white" }}>
+            <Table bordered style={{ color: "black" }}>
               <thead>
                 <tr>
                   <th></th>

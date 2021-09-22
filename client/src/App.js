@@ -9,7 +9,18 @@ export default function App() {
     <BrowserRouter>
       <Route path="/" exact>
         <div className="main">
-          <Breadcrumb className="nav-div">
+          <iframe
+            src="http://www.marinakim.kz/"
+            name="survey"
+            scrolling="Yes"
+            style={{
+              height: "100%",
+              width: "100%",
+              style: "border: none;",
+            }}
+          ></iframe>
+
+          {/* <Breadcrumb className="nav-div">
             <Breadcrumb.Item active>Home</Breadcrumb.Item>
           </Breadcrumb>
           <div>
@@ -38,7 +49,7 @@ export default function App() {
               All responses will be kept completely confidential, and individual
               responses will never be attributed without your prior consent.
             </p>
-          </div>
+          </div> */}
           <Dropdown>
             <Dropdown.Toggle
               variant="danger"

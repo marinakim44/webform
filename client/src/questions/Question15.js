@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question14 from "./Question14";
 import Question16 from "./Question16";
-import { Button } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import "../App.css";
 
 export default function Question15() {
@@ -9,8 +9,87 @@ export default function Question15() {
     <BrowserRouter>
       <Route path="/eng-q15">
         <div className="main">
-          <h1>Question 15</h1>
+          <p>
+            Q15. Typically, how long does it take for your company to:
+            approve/green-light major initiatives once an idea has been
+            proposed? commit significant resources to new major initiatives?
+            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+          </p>
           <form>
+            <Table bordered hover>
+              <tbody>
+                <tr>
+                  <td colspan="2"></td>
+                  <td>Up to three months</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr>
+                  <td>A</td>
+                  <td>
+                    Approve/green-light major initiatives once an idea has been
+                    proposed
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>B</td>
+                  <td>...</td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                </tr>
+              </tbody>
+            </Table>
             <Link to="/eng-q14">
               <Button variant="light" className="back-btn">
                 Back
