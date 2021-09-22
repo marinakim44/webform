@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import QuestionD from "./QuestionD";
-import QuestionF from "./QuestionF";
+import Question28 from "./Question28";
+import Question30 from "./Question30";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
 
-export default function QuestionE() {
+export default function Question29() {
   return (
     <BrowserRouter>
-      <Route path="/eng-qe">
+      <Route path="/eng-q29">
         <div className="main">
           <Breadcrumb className="nav-div">
             <Breadcrumb.Item>
@@ -48,52 +48,35 @@ export default function QuestionE() {
             <Breadcrumb.Item>Q26</Breadcrumb.Item>
             <Breadcrumb.Item>Q27</Breadcrumb.Item>
             <Breadcrumb.Item>Q28</Breadcrumb.Item>
-            <Breadcrumb.Item>QA</Breadcrumb.Item>
-            <Breadcrumb.Item>QB</Breadcrumb.Item>
-            <Breadcrumb.Item>QC</Breadcrumb.Item>
-            <Breadcrumb.Item>QD</Breadcrumb.Item>
-            <Breadcrumb.Item active>QE</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q29</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 34).toString() + "%",
+                width: ((100 / 41) * 28).toString() + "%",
               }}
             ></div>
           </div>
           <p>
-            QE. Is your company privately owned or publicly listed? (PLEASE
-            SELECT ONE RESPONSE)
+            Q27. Taking into account the business achievements in 2021, please
+            name the best Kazakhstan CEO 2020 and why?
           </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Privately owned"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Publically listed"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-              </div>
-            ))}
-            <Link to="/eng-qd">
+            <Form.Group style={{ width: "35%" }}>
+              <Form.Control
+                type="text"
+                placeholder="Specify here"
+              ></Form.Control>
+            </Form.Group>
+
+            <Link to="/eng-q28">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
             </Link>
 
-            <Link to="/eng-qf">
+            <Link to="/eng-q30">
               <Button variant="danger" className="next-btn">
                 Next
               </Button>
@@ -103,11 +86,11 @@ export default function QuestionE() {
       </Route>
 
       <Switch>
-        <Route path="/eng-qd">
-          <QuestionD />
+        <Route path="/eng-q28">
+          <Question28 />
         </Route>
-        <Route path="/eng-qf">
-          <QuestionF />
+        <Route path="/eng-q30">
+          <Question30 />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question11 from "./Question11";
 import Question13 from "./Question13";
-import { Button, Table } from "react-bootstrap";
+
+import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question12() {
@@ -9,6 +10,38 @@ export default function Question12() {
     <BrowserRouter>
       <Route path="/eng-q12">
         <div className="main">
+          <Breadcrumb className="nav-div">
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/">
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/eng-start">
+                Credentials
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Q1</Breadcrumb.Item>
+            <Breadcrumb.Item>Q2</Breadcrumb.Item>
+            <Breadcrumb.Item>Q3</Breadcrumb.Item>
+            <Breadcrumb.Item>Q4</Breadcrumb.Item>
+            <Breadcrumb.Item>Q5</Breadcrumb.Item>
+            <Breadcrumb.Item>Q6</Breadcrumb.Item>
+            <Breadcrumb.Item>Q7</Breadcrumb.Item>
+            <Breadcrumb.Item>Q8</Breadcrumb.Item>
+            <Breadcrumb.Item>Q9</Breadcrumb.Item>
+            <Breadcrumb.Item>Q10</Breadcrumb.Item>
+            <Breadcrumb.Item>Q11</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q12</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 41) * 13).toString() + "%",
+              }}
+            ></div>
+          </div>
           <p>
             Q12a. How favourable are the following factors with regard to your
             company’s ability to reduce greenhouse gas (GHG) emissions?

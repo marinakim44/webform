@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question9 from "./Question9";
 import Question11 from "./Question11";
-import { Button, Table } from "react-bootstrap";
+
+import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question10() {
@@ -9,6 +10,36 @@ export default function Question10() {
     <BrowserRouter>
       <Route path="/eng-q10">
         <div className="main">
+          <Breadcrumb className="nav-div">
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/">
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/eng-start">
+                Credentials
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Q1</Breadcrumb.Item>
+            <Breadcrumb.Item>Q2</Breadcrumb.Item>
+            <Breadcrumb.Item>Q3</Breadcrumb.Item>
+            <Breadcrumb.Item>Q4</Breadcrumb.Item>
+            <Breadcrumb.Item>Q5</Breadcrumb.Item>
+            <Breadcrumb.Item>Q6</Breadcrumb.Item>
+            <Breadcrumb.Item>Q7</Breadcrumb.Item>
+            <Breadcrumb.Item>Q8</Breadcrumb.Item>
+            <Breadcrumb.Item>Q9</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q10</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 41) * 11).toString() + "%",
+              }}
+            ></div>
+          </div>
           <p>
             Q10a. How influential are the following factors behind your
             company’s carbon-neutral and/or net-zero commitments? (PLEASE SELECT

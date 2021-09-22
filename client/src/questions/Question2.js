@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import { Table, Button, Form } from "react-bootstrap";
+import { Table, Button, Form, Breadcrumb } from "react-bootstrap";
 import { default as ReactSelect } from "react-select";
 // import makeAnimated from "react-select/animated";
 import Question1 from "./Question1";
@@ -8,16 +8,32 @@ import "../App.css";
 import { countries } from "../countries.js";
 
 export default function Question2() {
-  //   var chunks = [];
-  //   var i = 0;
-  //   while (i < countries.length) {
-  //     chunks.push(countries.slice(i, (i += 6)));
-  //   }
-
   return (
     <BrowserRouter>
       <Route path="/eng-q2">
         <div className="main" style={{ display: "block", overflow: "scroll" }}>
+        <Breadcrumb className="nav-div">
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/">
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/eng-start">
+                Credentials
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item >Q1</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q2</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 41) * 3).toString() + "%",
+              }}
+            ></div>
+          </div>
           <div className="left-align-text">
             <p>
               Q2. Which three countries/territories, excluding the

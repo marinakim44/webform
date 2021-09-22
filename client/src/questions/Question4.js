@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question3 from "./Question3";
 import Question5 from "./Question5";
-import { Button, Table, Form } from "react-bootstrap";
+import { Button, Table, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question4(props) {
@@ -9,6 +9,30 @@ export default function Question4(props) {
     <BrowserRouter>
       <Route path="/eng-q4">
         <div className="main">
+          <Breadcrumb className="nav-div">
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/">
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/eng-start">
+                Credentials
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Q1</Breadcrumb.Item>
+            <Breadcrumb.Item>Q2</Breadcrumb.Item>
+            <Breadcrumb.Item>Q3</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q4</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 41) * 5).toString() + "%",
+              }}
+            ></div>
+          </div>
           <span>
             Q4. How do you anticipate your company could be impacted by [INSERT
             THREAT] over the next 12 months? (PLEASE SELECT UP TO THREE

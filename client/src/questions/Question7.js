@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question6 from "./Question6";
 import Question8 from "./Question8";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question7() {
@@ -9,6 +9,33 @@ export default function Question7() {
     <BrowserRouter>
       <Route path="/eng-q7">
         <div className="main">
+          <Breadcrumb className="nav-div">
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/">
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/eng-start">
+                Credentials
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Q1</Breadcrumb.Item>
+            <Breadcrumb.Item>Q2</Breadcrumb.Item>
+            <Breadcrumb.Item>Q3</Breadcrumb.Item>
+            <Breadcrumb.Item>Q4</Breadcrumb.Item>
+            <Breadcrumb.Item>Q5</Breadcrumb.Item>
+            <Breadcrumb.Item>Q6</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q7</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 41) * 8).toString() + "%",
+              }}
+            ></div>
+          </div>
           <p>
             Q7. Which science-based target, if any, will your company’s net-zero
             commitment be aligned to? (PLEASE SELECT ONE RESPONSE)

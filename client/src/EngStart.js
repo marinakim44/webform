@@ -24,16 +24,30 @@ function EngStart() {
             ></div>
           </div>
           <Form>
-            <Form.Group>
-              <Form.Label style={{ marginBottom: "1rem" }}>
-                <span>
-                  Please specify the ID number provided in the invitaion email
-                </span>
-              </Form.Label>
+            <Form.Group style={{ width: "35%", margin: "auto auto" }}>
+              {/* <Form.Label>
+                <span>Please specify your full name</span>
+              </Form.Label> */}
               <Form.Control
                 type="text"
-                placeholder="Specify ID number"
-                style={{ width: "30%", margin: "auto auto" }}
+                placeholder="Your full name"
+                style={{ margin: "1rem" }}
+              ></Form.Control>
+              {/* <Form.Label style={{ marginBottom: "1rem", marginTop: "2rem" }}>
+                <span>Please specify your email</span>
+              </Form.Label> */}
+              <Form.Control
+                type="text"
+                placeholder="Your email"
+                style={{ margin: "1rem" }}
+              ></Form.Control>
+              {/* <Form.Label style={{ marginBottom: "1rem", marginTop: "2rem" }}>
+                <span>Please specify your job title</span>
+              </Form.Label> */}
+              <Form.Control
+                type="text"
+                placeholder="Your job title"
+                style={{ margin: "1rem" }}
               ></Form.Control>
             </Form.Group>
 

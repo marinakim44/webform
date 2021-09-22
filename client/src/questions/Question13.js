@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question12 from "./Question12";
 import Question14 from "./Question14";
-import { Button, Table, Dropdown } from "react-bootstrap";
+
+import { Button, Table, Dropdown, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question13() {
@@ -9,6 +10,39 @@ export default function Question13() {
     <BrowserRouter>
       <Route path="/eng-q13">
         <div className="main">
+          <Breadcrumb className="nav-div">
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/">
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/eng-start">
+                Credentials
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Q1</Breadcrumb.Item>
+            <Breadcrumb.Item>Q2</Breadcrumb.Item>
+            <Breadcrumb.Item>Q3</Breadcrumb.Item>
+            <Breadcrumb.Item>Q4</Breadcrumb.Item>
+            <Breadcrumb.Item>Q5</Breadcrumb.Item>
+            <Breadcrumb.Item>Q6</Breadcrumb.Item>
+            <Breadcrumb.Item>Q7</Breadcrumb.Item>
+            <Breadcrumb.Item>Q8</Breadcrumb.Item>
+            <Breadcrumb.Item>Q9</Breadcrumb.Item>
+            <Breadcrumb.Item>Q10</Breadcrumb.Item>
+            <Breadcrumb.Item>Q11</Breadcrumb.Item>
+            <Breadcrumb.Item>Q12</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q13</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 41) * 14).toString() + "%",
+              }}
+            ></div>
+          </div>
           <p>
             Q13. Typically, how many: overarching strategic objectives does your
             company have? major initiatives does your company have underway in

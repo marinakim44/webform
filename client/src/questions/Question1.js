@@ -222,17 +222,26 @@ export default function Question1() {
               </tbody>
             </Table>
 
-            <Link to="/eng-start">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
-
-            <Link to="/eng-q2">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <div className="back-next-btns">
+              <Link to="/eng-start">
+                <Button variant="light" className="back-btn">
+                  <i
+                    class="fas fa-chevron-left"
+                    style={{ color: "#000", marginRight: "10px" }}
+                  ></i>
+                  Back
+                </Button>
+              </Link>
+              <Link to="/eng-q2">
+                <Button variant="danger" className="next-btn">
+                  Next
+                  <i
+                    class="fas fa-chevron-right"
+                    style={{ color: "#fff", marginLeft: "10px" }}
+                  ></i>
+                </Button>
+              </Link>
+            </div>
           </form>
         </div>
       </Route>

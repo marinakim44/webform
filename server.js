@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 // PAT
 // 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
+=======
+>>>>>>> ff137542e964b24461942a9dd3298d0a94cbeed9
 // imports
 const express = require("express");
 const mongoose = require("mongoose");

@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question19 from "./Question19";
 import Question21 from "./Question21";
-import { Button, Table } from "react-bootstrap";
+import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
 
 export default function Question20() {
@@ -9,7 +9,51 @@ export default function Question20() {
     <BrowserRouter>
       <Route path="/eng-q20">
         <div className="main">
-          <h1>Question 20</h1>
+          <Breadcrumb className="nav-div">
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/">
+                Home
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link className="before-link" to="/eng-start">
+                Credentials
+              </Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>Q1</Breadcrumb.Item>
+            <Breadcrumb.Item>Q2</Breadcrumb.Item>
+            <Breadcrumb.Item>Q3</Breadcrumb.Item>
+            <Breadcrumb.Item>Q4</Breadcrumb.Item>
+            <Breadcrumb.Item>Q5</Breadcrumb.Item>
+            <Breadcrumb.Item>Q6</Breadcrumb.Item>
+            <Breadcrumb.Item>Q7</Breadcrumb.Item>
+            <Breadcrumb.Item>Q8</Breadcrumb.Item>
+            <Breadcrumb.Item>Q9</Breadcrumb.Item>
+            <Breadcrumb.Item>Q10</Breadcrumb.Item>
+            <Breadcrumb.Item>Q11</Breadcrumb.Item>
+            <Breadcrumb.Item>Q12</Breadcrumb.Item>
+            <Breadcrumb.Item>Q13</Breadcrumb.Item>
+            <Breadcrumb.Item>Q14</Breadcrumb.Item>
+            <Breadcrumb.Item>Q15</Breadcrumb.Item>
+            <Breadcrumb.Item>Q16</Breadcrumb.Item>
+            <Breadcrumb.Item>Q17</Breadcrumb.Item>
+            <Breadcrumb.Item>Q18</Breadcrumb.Item>
+            <Breadcrumb.Item>Q19</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q20</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 41) * 21).toString() + "%",
+              }}
+            ></div>
+          </div>
+          <p>
+            Q20. Thinking about the customers who have regularly purchased your
+            products/services, how often would you say they take the following
+            actions: (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+          </p>
           <form>
             <Table bordered hover>
               <tbody>
@@ -198,6 +242,7 @@ export default function Question20() {
                 </tr>
               </tbody>
             </Table>
+
             <Link to="/eng-q19">
               <Button variant="light" className="back-btn">
                 Back

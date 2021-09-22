@@ -9,19 +9,7 @@ export default function App() {
     <BrowserRouter>
       <Route path="/" exact>
         <div className="main">
-          <p>New branch here</p>
-          <iframe
-            src="http://www.marinakim.kz/"
-            name="survey"
-            scrolling="Yes"
-            style={{
-              height: "100%",
-              width: "100%",
-              style: "border: none;",
-            }}
-          ></iframe>
-
-          {/* <Breadcrumb className="nav-div">
+          <Breadcrumb className="nav-div">
             <Breadcrumb.Item active>Home</Breadcrumb.Item>
           </Breadcrumb>
           <div>
@@ -50,7 +38,7 @@ export default function App() {
               All responses will be kept completely confidential, and individual
               responses will never be attributed without your prior consent.
             </p>
-          </div> */}
+          </div>
           <Dropdown>
             <Dropdown.Toggle
               variant="danger"
@@ -61,13 +49,26 @@ export default function App() {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item>
-                <Link to="/eng-start">English</Link>
+                <Link to="/eng-start">
+                  <div style={{ width: "100%" }}>English</div>
+                </Link>
               </Dropdown.Item>
               <Dropdown.Item>
                 <Link to="/rus-start">Russian</Link>
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          {/* <iframe
+            src="http://www.marinakim.kz/"
+            name="survey"
+            scrolling="Yes"
+            style={{
+              height: "100%",
+              width: "100%",
+              style: "border: none;",
+              marginTop: "4rem",
+            }}
+          ></iframe> */}
         </div>
       </Route>
       <Switch>
