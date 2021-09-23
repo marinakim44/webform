@@ -12,7 +12,7 @@ export default function Question2() {
     <BrowserRouter>
       <Route path="/eng-q2">
         <div className="main" style={{ display: "block", overflow: "scroll" }}>
-        <Breadcrumb className="nav-div">
+          <Breadcrumb className="nav-div">
             <Breadcrumb.Item>
               <Link className="before-link" to="/">
                 Home
@@ -23,7 +23,7 @@ export default function Question2() {
                 Credentials
               </Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item >Q1</Breadcrumb.Item>
+            <Breadcrumb.Item>Q1</Breadcrumb.Item>
             <Breadcrumb.Item active>Q2</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">

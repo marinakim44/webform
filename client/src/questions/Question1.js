@@ -8,8 +8,8 @@ import "../App.css";
 export default function Question1() {
   const [isChecked, setIsChecked] = useState(false);
   const [input, setInput] = useState({
-    A: "",
-    B: "",
+    A: [],
+    B: [],
   });
 
   function handleClick(e) {

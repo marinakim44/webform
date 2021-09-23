@@ -58,17 +58,6 @@ export default function App() {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          {/* <iframe
-            src="http://www.marinakim.kz/"
-            name="survey"
-            scrolling="Yes"
-            style={{
-              height: "100%",
-              width: "100%",
-              style: "border: none;",
-              marginTop: "4rem",
-            }}
-          ></iframe> */}
         </div>
       </Route>
       <Switch>
