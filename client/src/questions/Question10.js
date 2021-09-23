@@ -84,7 +84,7 @@ export default function Question10() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>Satisfying investor demands</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -106,7 +106,7 @@ export default function Question10() {
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td>...</td>
+                  <td>Meeting customer expectations</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -128,7 +128,7 @@ export default function Question10() {
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td>...</td>
+                  <td>Complying with government and/or intergovernmental targets </td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -150,7 +150,7 @@ export default function Question10() {
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td>...</td>
+                  <td>Mitigating climate change risks</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -172,7 +172,29 @@ export default function Question10() {
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td>...</td>
+                  <td>Driving product/service innovation</td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>G</td>
+                  <td>Keeping pace with competitor commitments</td>
                   <td>
                     <input type="radio"></input>
                   </td>

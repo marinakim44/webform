@@ -50,7 +50,7 @@ export default function Question9() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={"Yes, my company’s approach to reducing GHG emissions will be independently assessed and validated"}
                   style={{
                     textAlign: "left",
                   }}
@@ -58,7 +58,7 @@ export default function Question9() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={"No, my company’s approach to reducing GHG emissions will not be independently assessed and validated"}
                   style={{
                     textAlign: "left",
                   }}
@@ -66,7 +66,7 @@ export default function Question9() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={"Don’t know"}
                   style={{
                     textAlign: "left",
                   }}
