@@ -97,7 +97,35 @@ export default function Question14() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>Change its major initiatives</td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>Update its workforce about its major initiatives</td>
                   <td>
                     <input type="radio"></input>
                   </td>

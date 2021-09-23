@@ -46,7 +46,7 @@ export default function Question7() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={"Limiting global warming to 1.5° Celsius"}
                   style={{
                     textAlign: "left",
                   }}
@@ -54,7 +54,7 @@ export default function Question7() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={"Limiting global warming to well below 2.0° Celsius"}
                   style={{
                     textAlign: "left",
                   }}
@@ -62,7 +62,7 @@ export default function Question7() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={"My company’s net-zero commitment will not be aligned to a science-based target"}
                   style={{
                     textAlign: "left",
                   }}
@@ -70,7 +70,7 @@ export default function Question7() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={"Don’t know"}
                   style={{
                     textAlign: "left",
                   }}
