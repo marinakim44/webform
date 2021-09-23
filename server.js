@@ -61,17 +61,17 @@ app.delete("/delete", (req, res) => {
 });
 
 //delete one
-app.delete("/delete/:id", (req, res) => {
-  const id = req.params.id;
+// app.delete("/delete/:id", (req, res) => {
+//   const id = req.params.id;
 
-  Response.findByIdAndDelete({ _id: id }, (req, res, err) => {
-    if (!err) {
-      console.log("Deleted one record");
-    } else {
-      console.log(err);
-    }
-  });
-});
+//   Response.findByIdAndDelete(id, (req, res, err) => {
+//     if (!err) {
+//       console.log("Deleted one record");
+//     } else {
+//       console.log(err);
+//     }
+//   });
+// });
 
 //for production
 if (process.env.NODE_ENV === "production") {

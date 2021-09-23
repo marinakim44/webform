@@ -28,9 +28,9 @@ export default function Responses() {
     axios.delete("/delete");
   }
 
-  function deleteRecord(id) {
-    axios.delete("/delete/" + id);
-  }
+  // function deleteRecord(id) {
+  //   axios.delete("/delete/" + id);
+  // }
 
   return (
     <BrowserRouter>
@@ -45,9 +45,9 @@ export default function Responses() {
                     <td>{el.name}</td>
                     <td>{el.email}</td>
                     <td>{el.title}</td>
-                    <td>
+                    {/* <td>
                       <Button
-                        onClick={() => deleteRecords(el._id)}
+                        onClick={() => deleteRecord(el._id)}
                         style={{
                           width: "100px",
                           backgroundColor: "transparent",
@@ -63,7 +63,7 @@ export default function Responses() {
                           }}
                         ></i>
                       </Button>
-                    </td>
+                    </td> */}
                   </tr>
                 );
               })}
