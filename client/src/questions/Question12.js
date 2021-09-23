@@ -94,7 +94,7 @@ export default function Question12() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>The regulatory environment(s) in which my company operates</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -122,7 +122,7 @@ export default function Question12() {
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td>...</td>
+                  <td>Macro environmental forces (including demographic, cultural, environmental, technological)</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -150,7 +150,7 @@ export default function Question12() {
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td>...</td>
+                  <td>My company’s specific assets, capabilities and relationships </td>
                   <td>
                     <input type="radio"></input>
                   </td>

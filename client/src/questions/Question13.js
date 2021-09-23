@@ -143,6 +143,15 @@ export default function Question13() {
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
                         <Dropdown.Item>1-5</Dropdown.Item>
+                        <Dropdown.Item>6-10</Dropdown.Item>
+                        <Dropdown.Item>11-15</Dropdown.Item>
+                        <Dropdown.Item>16-20</Dropdown.Item>
+                        <Dropdown.Item>21-25</Dropdown.Item>
+                        <Dropdown.Item>25-30</Dropdown.Item>
+                        <Dropdown.Item>31-35</Dropdown.Item>
+                        <Dropdown.Item>36-40</Dropdown.Item>
+                        <Dropdown.Item>41-45</Dropdown.Item>
+                        <Dropdown.Item>46-50</Dropdown.Item>
                         <Dropdown.Item>51 or more</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>

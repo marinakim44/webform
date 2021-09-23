@@ -87,7 +87,7 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>My company does not currently have the capabilities to measure its greenhouse gas (GHG) emissions</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -109,7 +109,7 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td>...</td>
+                  <td>My company cannot financially afford to make a carbon-neutral or net-zero commitment</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -131,7 +131,7 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td>...</td>
+                  <td>My company’s external stakeholders (e.g., investors, customers, suppliers) are not significantly concerned about climate change</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -153,7 +153,7 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td>...</td>
+                  <td>My company is not confident it could fulfil a carbon-neutral or net-zero commitment</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -175,7 +175,7 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td>...</td>
+                  <td>My company's sector does not have an established decarbonisation approach</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -197,7 +197,7 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>G</td>
-                  <td>...</td>
+                  <td>My company’s internal  stakeholders (e.g., employees, board members, owners) are not significantly concerned about climate change</td>
                   <td>
                     <input type="radio"></input>
                   </td>
