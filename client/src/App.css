@@ -5,6 +5,7 @@
 }
 body span {
   color: black;
+  /* background-image: url("https://images.hdqwalls.com/wallpapers/progamming-code-4k-nt.jpg"); */
 }
 .main {
   width: 90%;
@@ -12,7 +13,7 @@ body span {
   margin: auto auto;
   height: 100vh;
   padding: 2rem;
-  background-color: rgb(237, 237, 237);
+  background-color: #000;
 }
 .main ol {
   margin: 0;
