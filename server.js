@@ -4,7 +4,6 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-const { ADDRGETNETWORKPARAMS } = require("dns");
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
