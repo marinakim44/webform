@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
+const { ADDRGETNETWORKPARAMS } = require("dns");
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
@@ -48,10 +49,24 @@ app.get("/display", (req, res) => {
     .catch((err) => res.status(400).json("Error" + err));
 });
 
+//delete all
 app.delete("/delete", (req, res) => {
   Response.deleteMany({}, (req, res, err) => {
     if (!err) {
       console.log("deleted");
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+//delete one
+app.delete("/delete/:id", (req, res) => {
+  const id = req.params.id;
+
+  Response.findByIdAndDelete({ _id: id }, (req, res, err) => {
+    if (!err) {
+      console.log("Deleted one record");
     } else {
       console.log(err);
     }

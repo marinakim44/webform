@@ -28,6 +28,10 @@ export default function Responses() {
     axios.delete("/delete");
   }
 
+  function deleteRecord(id) {
+    axios.delete("/delete/" + id);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/responses">
@@ -41,6 +45,25 @@ export default function Responses() {
                     <td>{el.name}</td>
                     <td>{el.email}</td>
                     <td>{el.title}</td>
+                    <td>
+                      <Button
+                        onClick={() => deleteRecords(el._id)}
+                        style={{
+                          width: "100px",
+                          backgroundColor: "transparent",
+                          border: "none",
+                        }}
+                      >
+                        <i
+                          class="fas fa-trash"
+                          style={{
+                            color: "grey",
+                            margin: "auto auto",
+                            padding: 0,
+                          }}
+                        ></i>
+                      </Button>
+                    </td>
                   </tr>
                 );
               })}

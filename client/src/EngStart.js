@@ -1,7 +1,8 @@
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { useState } from "react";
+import Question1 from "./questions/Question1";
 import Responses from "./questions/Responses";
-import App from "./App";
+// import App from "./App";
 import "./App.css";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import axios from "axios";
@@ -50,7 +51,7 @@ function EngStart() {
         <div className="main">
           <Breadcrumb className="nav-div">
             <Breadcrumb.Item>
-              <Link className="before-link" to="/">
+              <Link className="before-link" to="/responses">
                 Home
               </Link>
             </Breadcrumb.Item>
@@ -112,12 +113,12 @@ function EngStart() {
                 className="next-btn"
                 onClick={handleSubmit}
               >
-                <i
-                  class="fas fa-check"
-                  style={{ color: "#fff", marginRight: "10px" }}
-                ></i>
-                <Link to="/responses" style={{ color: "#fff" }}>
-                  Submit
+                <Link to="/eng-q1" style={{ color: "#fff" }}>
+                  Start
+                  <i
+                    class="fas fa-chevron-right"
+                    style={{ color: "#fff", marginLeft: "10px" }}
+                  ></i>
                 </Link>
               </Button>
             </div>
@@ -126,11 +127,11 @@ function EngStart() {
       </Route>
 
       <Switch>
-        <Route path="/" exact>
-          <App />
-        </Route>
         <Route path="/responses">
           <Responses />
+        </Route>
+        <Route path="/eng-q1">
+          <Question1 />
         </Route>
       </Switch>
     </BrowserRouter>

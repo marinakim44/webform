@@ -13,7 +13,7 @@ body span {
   margin: auto auto;
   height: 100vh;
   padding: 2rem;
-  background-color: #000;
+  background-color: rgb(233, 233, 233);
 }
 .main ol {
   margin: 0;
