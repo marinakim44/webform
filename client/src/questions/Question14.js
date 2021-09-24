@@ -52,12 +52,20 @@ export default function Question14() {
           <form>
             <Table bordered>
               <tbody>
-                <tr>
+                <tr style={{ color: "#dc3534" }}>
                   <td colSpan="2" rowSpan="2"></td>
-                  <td colSpan="3">Less often</td>
-                  <td rowSpan="2">Every year</td>
-                  <td colSpan="3">More often</td>
-                  <td rowSpan="2">Don't know</td>
+                  <td colSpan="3">
+                    <strong>Less often</strong>
+                  </td>
+                  <td rowSpan="2" style={{ verticalAlign: "middle" }}>
+                    <strong>Every year</strong>
+                  </td>
+                  <td colSpan="3">
+                    <strong>More often</strong>
+                  </td>
+                  <td rowSpan="2" style={{ verticalAlign: "middle" }}>
+                    <strong>Don't know</strong>
+                  </td>
                 </tr>
                 <tr>
                   <td>Every four years or less frequently</td>

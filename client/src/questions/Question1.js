@@ -1,28 +1,42 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { useState } from "react";
 import EngStart from "../EngStart";
 import Question2 from "./Question2";
 import { Table, Button, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import { useDispatch } from "react-redux";
+import { question1 } from "../actions";
 
-export default function Question1() {
-  const [isChecked, setIsChecked] = useState(false);
-  const [input, setInput] = useState({
-    A: [],
-    B: [],
-  });
+export default function Question1(props) {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [a, setA] = useState("");
+  const [b, setB] = useState("");
 
-  function handleClick(e) {
-    const { name, value } = e.target;
-    const letter = name.slice(-1);
-    setIsChecked(!isChecked);
-    setInput((prevInput) => {
-      return {
-        ...prevInput,
-        [letter]: [value],
-      };
-    });
-    console.log(input);
+  function handleA(e) {
+    setA(e.target.value);
+    console.log(e.target.value);
+  }
+
+  function handleB(e) {
+    setB(e.target.value);
+    console.log(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(
+      question1({
+        a: a,
+        b: b,
+      })
+    );
   }
 
   return (
@@ -50,6 +64,7 @@ export default function Question1() {
               }}
             ></div>
           </div>
+
           <div className="left-align-text">
             <span>
               Q1. How do you believe economic growth (i.e., gross domestic
@@ -64,21 +79,19 @@ export default function Question1() {
           </div>
           <form>
             <Table bordered style={{ color: "black" }}>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th>Decline significantly</th>
-                  <th>Decline moderately</th>
-                  <th>Decline slightly</th>
-                  <th>Stay the same</th>
-                  <th>Improve significantly</th>
-                  <th>Improve moderately</th>
-                  <th>Improve slightly</th>
-                  <th>Don't know</th>
-                </tr>
-              </thead>
               <tbody>
+                <tr>
+                  <td colSpan="2"></td>
+                  <td>Decline significantly</td>
+                  <td>Decline moderately</td>
+                  <td>Decline slightly</td>
+                  <td>Stay the same</td>
+                  <td>Improve significantly</td>
+                  <td>Improve moderately</td>
+                  <td>Improve slightly</td>
+                  <td>Don't know</td>
+                </tr>
+
                 <tr>
                   <td>A</td>
                   <td className="left-align-text">
@@ -86,66 +99,66 @@ export default function Question1() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="declineSignificantlyA"
+                      type="radio"
+                      name="a"
                       value="Decline significantly"
-                      onClick={handleClick}
+                      onClick={handleA}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="declineModeratelyA"
+                      type="radio"
+                      name="a"
                       value="Decline moderately"
-                      onClick={handleClick}
+                      onClick={handleA}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="declineSlightlyA"
+                      type="radio"
+                      name="a"
                       value="Decline slightly"
-                      onClick={handleClick}
+                      onClick={handleA}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="sameA"
+                      type="radio"
+                      name="a"
                       value="Stay the same"
-                      onClick={handleClick}
+                      onClick={handleA}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="improveSlightlyA"
+                      type="radio"
+                      name="a"
                       value="Improve slightly"
-                      onClick={handleClick}
+                      onClick={handleA}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="improveModeratelyA"
+                      type="radio"
+                      name="a"
                       value="Improve moderately"
-                      onClick={handleClick}
+                      onClick={handleA}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="improveSignificantlyA"
+                      type="radio"
+                      name="a"
                       value="Improve significantly"
-                      onClick={handleClick}
+                      onClick={handleA}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="dontknowA"
+                      type="radio"
+                      name="a"
                       value="Don't know"
-                      onClick={handleClick}
+                      onClick={handleA}
                     ></input>
                   </td>
                 </tr>
@@ -156,66 +169,66 @@ export default function Question1() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="declineSignificantlyB"
+                      type="radio"
+                      name="b"
                       value="Decline significantly"
-                      onClick={handleClick}
+                      onClick={handleB}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="declineModeratelyB"
+                      type="radio"
+                      name="b"
                       value="Decline moderately"
-                      onClick={handleClick}
+                      onClick={handleB}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="declineSlightlyB"
+                      type="radio"
+                      name="b"
                       value="Decline slightly"
-                      onClick={handleClick}
+                      onClick={handleB}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="sameB"
+                      type="radio"
+                      name="b"
                       value="Stay the same"
-                      onClick={handleClick}
+                      onClick={handleB}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="improveSlightlyB"
+                      type="radio"
+                      name="b"
                       value="Improve slightly"
-                      onClick={handleClick}
+                      onClick={handleB}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="improveModeratelyB"
+                      type="radio"
+                      name="b"
                       value="Improve moderately"
-                      onClick={handleClick}
+                      onClick={handleB}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="improveSignificantlyB"
+                      type="radio"
+                      name="b"
                       value="Improve significantly"
-                      onClick={handleClick}
+                      onClick={handleB}
                     ></input>
                   </td>
                   <td>
                     <input
-                      type="checkbox"
-                      name="Don't know"
+                      type="radio"
+                      name="b"
                       value="Don't know"
-                      onClick={handleClick}
+                      onClick={handleB}
                     ></input>
                   </td>
                 </tr>
@@ -223,24 +236,33 @@ export default function Question1() {
             </Table>
 
             <div className="back-next-btns">
-              <Link to="/eng-start">
-                <Button variant="light" className="back-btn">
-                  <i
-                    class="fas fa-chevron-left"
-                    style={{ color: "#000", marginRight: "10px" }}
-                  ></i>
-                  Back
-                </Button>
-              </Link>
-              <Link to="/eng-q2">
-                <Button variant="danger" className="next-btn">
+              {/* <Link to="/eng-start"> */}
+              <Button
+                variant="light"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  class="fas fa-chevron-left"
+                  style={{ color: "#000", marginRight: "10px" }}
+                ></i>
+                Back
+              </Button>
+              {/* </Link> */}
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                <Link to="/eng-q2" style={{ color: "#fff" }}>
                   Next
-                  <i
-                    class="fas fa-chevron-right"
-                    style={{ color: "#fff", marginLeft: "10px" }}
-                  ></i>
-                </Button>
-              </Link>
+                </Link>
+                <i
+                  class="fas fa-chevron-right"
+                  style={{ color: "#fff", marginLeft: "10px" }}
+                ></i>
+              </Button>
             </div>
           </form>
         </div>

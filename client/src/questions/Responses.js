@@ -10,6 +10,10 @@ export default function Responses() {
       name: "",
       email: "",
       title: "",
+      responses: {
+        question1A: "",
+        question1B: "",
+      },
     },
   ]);
 
@@ -45,6 +49,7 @@ export default function Responses() {
                     <td>{el.name}</td>
                     <td>{el.email}</td>
                     <td>{el.title}</td>
+
                     {/* <td>
                       <Button
                         onClick={() => deleteRecord(el._id)}

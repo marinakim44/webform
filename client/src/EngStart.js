@@ -1,13 +1,17 @@
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { useState } from "react";
 import Question1 from "./questions/Question1";
+import App from "./App";
 import Responses from "./questions/Responses";
-// import App from "./App";
 import "./App.css";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { credentials } from "./actions";
 
 function EngStart() {
+  const dispatch = useDispatch();
+
   const [input, setInput] = useState({
     name: "",
     email: "",
@@ -27,22 +31,7 @@ function EngStart() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (input.name === null && input.email === null && input.title === null) {
-      console.log("No input provided");
-    } else {
-      const dataInput = {
-        name: input.name,
-        email: input.email,
-        title: input.title,
-      };
-      axios.post("/name", dataInput);
-
-      setInput({
-        name: "",
-        email: "",
-        title: "",
-      });
-    }
+    dispatch(credentials(input));
   }
 
   return (
@@ -63,6 +52,7 @@ function EngStart() {
               style={{ width: ((100 / 41) * 1).toString() + "%" }}
             ></div>
           </div>
+
           <Form>
             <Form.Group style={{ width: "35%", margin: "auto auto" }}>
               <Form.Control
@@ -99,7 +89,7 @@ function EngStart() {
             <br></br>
             <div className="back-next-btns">
               <Link to="/">
-                <Button variant="light" className="back-btn">
+                <Button variant="light" className="back-btn" type="button">
                   <i
                     class="fas fa-chevron-left"
                     style={{ color: "#000", marginRight: "10px" }}
@@ -130,8 +120,11 @@ function EngStart() {
         <Route path="/responses">
           <Responses />
         </Route>
+        <Route path="/" exact>
+          <App />
+        </Route>
         <Route path="/eng-q1">
-          <Question1 />
+          <Question1 input={input} />
         </Route>
       </Switch>
     </BrowserRouter>

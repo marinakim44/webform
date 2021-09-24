@@ -1,13 +1,51 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import { Table, Button, Form, Breadcrumb } from "react-bootstrap";
-import { default as ReactSelect } from "react-select";
-// import makeAnimated from "react-select/animated";
+import { Button, Form, Breadcrumb } from "react-bootstrap";
+import { components, default as ReactSelect } from "react-select";
+import makeAnimated from "react-select/animated";
+import Creatable from "react-select";
 import Question1 from "./Question1";
 import Question3 from "./Question3";
 import "../App.css";
 import { countries } from "../countries.js";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { question2 } from "../actions";
+
+const Menu = (props) => {
+  const optionSelectedLength = props.getValue().length || 0;
+  return (
+    <components.Menu {...props}>
+      {optionSelectedLength < 3 ? (
+        props.children
+      ) : (
+        <div>Max 3 countries needed</div>
+      )}
+    </components.Menu>
+  );
+};
 
 export default function Question2() {
+  const animatedComponents = makeAnimated();
+  const dispatch = useDispatch();
+  const isValidNewOption = (inputValue, selectedValue) =>
+    inputValue.length > 0 && selectedValue.length < 4;
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  function handleChange(selectedOption) {
+    selectedOption.forEach((option) => {
+      if (!selectedOptions.includes(option.label)) {
+        selectedOptions.push(option.label);
+      }
+    });
+    console.log(selectedOptions);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    dispatch(question2(selectedOptions));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q2">
@@ -51,12 +89,23 @@ export default function Question2() {
                 marginBottom: "2rem",
               }}
             >
-              <ReactSelect
+              {/* <ReactSelect
                 options={countries}
+                components={animatedComponents}
                 isMulti
                 closeMenuOnSelect={false}
                 hideSelectedOptions={false}
                 placeholder="Please select 3 countries..."
+                onChange={handleChange}
+              /> */}
+              <Creatable
+                components={(animatedComponents, { Menu })}
+                isMulti
+                isValidNewOption={isValidNewOption}
+                options={countries}
+                closeMenuOnSelect={false}
+                placeholder="Please select 3 countries"
+                onChange={handleChange}
               />
             </div>
             <Form.Control
@@ -77,11 +126,13 @@ export default function Question2() {
               </Button>
             </Link>
 
-            <Link to="/eng-q3">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q3">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

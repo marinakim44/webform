@@ -104,7 +104,7 @@ export default function Question3() {
     <BrowserRouter>
       <Route path="/eng-q3">
         <div className="main">
-        <Breadcrumb className="nav-div">
+          <Breadcrumb className="nav-div">
             <Breadcrumb.Item>
               <Link className="before-link" to="/">
                 Home
@@ -115,8 +115,8 @@ export default function Question3() {
                 Credentials
               </Link>
             </Breadcrumb.Item>
-            <Breadcrumb.Item >Q1</Breadcrumb.Item>
-            <Breadcrumb.Item >Q2</Breadcrumb.Item>
+            <Breadcrumb.Item>Q1</Breadcrumb.Item>
+            <Breadcrumb.Item>Q2</Breadcrumb.Item>
             <Breadcrumb.Item active>Q3</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">
@@ -152,7 +152,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="notA"
                       value="Not concerned"
                       onClick={handleA}
@@ -160,7 +160,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="slightlyA"
                       value="Slightly concerned"
                       onClick={handleA}
@@ -168,7 +168,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="moderatelyA"
                       value="Moderately concerned"
                       onClick={handleA}
@@ -176,7 +176,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="veryA"
                       value="Very concerned"
                       onClick={handleA}
@@ -184,7 +184,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="extremelyA"
                       value="Extremely concerned"
                       onClick={handleA}
@@ -192,7 +192,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="dontknowA"
                       value="Don't know"
                       onClick={handleA}
@@ -203,7 +203,7 @@ export default function Question3() {
                   <td className="left-align-text">B) Climate change</td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="notB"
                       value="Not concerned"
                       onClick={handleB}
@@ -211,7 +211,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="slightlyB"
                       value="Slightly concerned"
                       onClick={handleB}
@@ -219,7 +219,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="moderatelyB"
                       value="Moderately concerned"
                       onClick={handleB}
@@ -227,7 +227,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="veryB"
                       value="Very concerned"
                       onClick={handleB}
@@ -235,7 +235,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="extremelyB"
                       value="Extremely concerned"
                       onClick={handleB}
@@ -243,7 +243,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="dontknowB"
                       value="Don't know"
                       onClick={handleB}
@@ -254,7 +254,7 @@ export default function Question3() {
                   <td className="left-align-text">C) Social inequality</td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="notC"
                       value="Not concerned"
                       onClick={handleC}
@@ -262,7 +262,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="slightlyC"
                       value="Slightly concerned"
                       onClick={handleC}
@@ -270,7 +270,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="moderatelyC"
                       value="Moderately concerned"
                       onClick={handleC}
@@ -278,7 +278,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="veryC"
                       value="Very concerned"
                       onClick={handleC}
@@ -286,7 +286,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="extremelyC"
                       value="Extremely concerned"
                       onClick={handleC}
@@ -294,7 +294,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="dontknowC"
                       value="Don't know"
                       onClick={handleC}
@@ -305,7 +305,7 @@ export default function Question3() {
                   <td className="left-align-text">D) Geopolitical conflict</td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="notD"
                       value="Not concerned"
                       onClick={handleD}
@@ -313,7 +313,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="slightlyD"
                       value="Slightly concerned"
                       onClick={handleD}
@@ -321,7 +321,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="moderatelyD"
                       value="Moderately concerned"
                       onClick={handleD}
@@ -329,7 +329,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="veryD"
                       value="Very concerned"
                       onClick={handleD}
@@ -337,7 +337,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="extremelyD"
                       value="Extremely concerned"
                       onClick={handleD}
@@ -345,7 +345,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="dontknowD"
                       value="Don't know"
                       onClick={handleD}
@@ -356,7 +356,7 @@ export default function Question3() {
                   <td className="left-align-text">E) Cyber risks</td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="notE"
                       value="Not concerned"
                       onClick={handleE}
@@ -364,7 +364,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="slightlyE"
                       value="Slightly concerned"
                       onClick={handleE}
@@ -372,7 +372,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="moderatelyE"
                       value="Moderately concerned"
                       onClick={handleE}
@@ -380,7 +380,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="veryE"
                       value="Very concerned"
                       onClick={handleE}
@@ -388,7 +388,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="extremelyE"
                       value="Extremely concerned"
                       onClick={handleE}
@@ -396,7 +396,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="dontknowE"
                       value="Don't know"
                       onClick={handleE}
@@ -407,7 +407,7 @@ export default function Question3() {
                   <td className="left-align-text">F) Healthh risks</td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="notF"
                       value="Not concerned"
                       onClick={handleF}
@@ -415,7 +415,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="slightlyF"
                       value="Slightly concerned"
                       onClick={handleF}
@@ -423,7 +423,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="moderatelyF"
                       value="Moderately concerned"
                       onClick={handleF}
@@ -431,7 +431,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="veryF"
                       value="Very concerned"
                       onClick={handleF}
@@ -439,7 +439,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="extremelyF"
                       value="Extremely concerned"
                       onClick={handleF}
@@ -447,7 +447,7 @@ export default function Question3() {
                   </td>
                   <td>
                     <input
-                      type="checkbox"
+                      type="radio"
                       name="dontknowF"
                       value="Don't know"
                       onClick={handleF}
