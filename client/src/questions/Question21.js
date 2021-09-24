@@ -61,11 +61,11 @@ export default function Question21() {
                 <tr>
                   <td colSpan="2"></td>
                   <td>Not confident</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>Slightly confident</td>
+                  <td>Moderately confident </td>
+                  <td>Very confident</td>
+                  <td>Extremely confident</td>
+                  <td>Don’t kno</td>
                 </tr>
                 <tr>
                   <td>A</td>
@@ -91,7 +91,7 @@ export default function Question21() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>Confidence in revenue growth - next three years</td>
                   <td>
                     <input type="radio"></input>
                   </td>

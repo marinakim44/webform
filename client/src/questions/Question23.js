@@ -68,11 +68,11 @@ export default function Question23() {
                 </tr>
                 <tr>
                   <td>Less or equal to 10%</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>6–9% below actual</td>
+                  <td>3–5% below actual</td>
+                  <td>3–5% above actual</td>
+                  <td>6–9% above actual</td>
+                  <td>≥10% above actual</td>
                   <td>...</td>
                   <td>...</td>
                 </tr>

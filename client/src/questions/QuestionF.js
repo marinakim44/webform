@@ -81,7 +81,7 @@ export default function QuestionF() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"Backed by private equity "}
                   style={{
                     textAlign: "left",
                   }}
@@ -89,7 +89,7 @@ export default function QuestionF() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"A partnership "}
                   style={{
                     textAlign: "left",
                   }}
@@ -97,7 +97,7 @@ export default function QuestionF() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"Owner-managed "}
                   style={{
                     textAlign: "left",
                   }}
@@ -105,7 +105,7 @@ export default function QuestionF() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"Other (please specify)"}
                   style={{
                     textAlign: "left",
                   }}

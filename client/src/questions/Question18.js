@@ -59,13 +59,13 @@ export default function Question18() {
                 <tr>
                   <td colSpan="2"></td>
                   <td>Strongly disagree</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>Moderately disagree</td>
+                  <td>Slightly disagree</td>
+                  <td>Neither agree nor disagree</td>
+                  <td>Slightly agree</td>
+                  <td>Moderately agree</td>
+                  <td>Strongly agree</td>
+                  <td>Don’t know</td>
                 </tr>
                 <tr>
                   <td>A</td>
@@ -100,7 +100,63 @@ export default function Question18() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>My company aims to minimise the amount of taxes it pays </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>C</td>
+                  <td>My company effectively communicates to the public all the taxes it pays (e.g., income, payroll, property) </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                  <td>
+                    <input type="radio"></input>
+                  </td>
+                </tr>
+                <tr>
+                  <td>D</td>
+                  <td>My company’s board regularly reviews its tax strategy</td>
                   <td>
                     <input type="radio"></input>
                   </td>

@@ -84,85 +84,85 @@ export default function Question27() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Adequate physical and digital infrastructure</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>K</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Investment attractiveness of the country</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Reducing climate change and environmental damage</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>L</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Fighting against corruption and bribery</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>High levels of employment</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>M</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>The supremacy of law in all spheres of state activity</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>An effective tax system</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>N</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Access to affordable capital</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Greater income equality</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>O</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Other (please specify)</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>G</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>The good health and well-being of the workforce</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>P</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>None of the above</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>H</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>A diverse and inclusive workforce</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -175,7 +175,7 @@ export default function Question27() {
                 </tr>
                 <tr>
                   <td>I</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Safeguards around usage of personal data</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>

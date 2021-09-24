@@ -64,7 +64,7 @@ export default function Question24() {
                 <tr>
                   <td colSpan="2"></td>
                   <td>A) Company’s long-term corporate strategy</td>
-                  <td>B) ...</td>
+                  <td>B) Personal annual bonus or long-term incentive plan</td>
                 </tr>
                 <tr>
                   <td>A</td>
@@ -78,7 +78,7 @@ export default function Question24() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>Gender representation rates</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -87,8 +87,8 @@ export default function Question24() {
                   </td>
                 </tr>
                 <tr>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>C</td>
+                  <td>Race and ethnicity representation rates</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -97,8 +97,8 @@ export default function Question24() {
                   </td>
                 </tr>
                 <tr>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>D</td>
+                  <td>Customer satisfaction metrics</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -107,8 +107,8 @@ export default function Question24() {
                   </td>
                 </tr>
                 <tr>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>E</td>
+                  <td>Automation and digitisation goals</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -117,8 +117,8 @@ export default function Question24() {
                   </td>
                 </tr>
                 <tr>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>F</td>
+                  <td>Employee engagement metrics</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -127,8 +127,8 @@ export default function Question24() {
                   </td>
                 </tr>
                 <tr>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>G</td>
+                  <td>None of the above</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -137,8 +137,8 @@ export default function Question24() {
                   </td>
                 </tr>
                 <tr>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>H</td>
+                  <td>Prefer not to answer</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
