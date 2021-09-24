@@ -47,16 +47,16 @@ export default function Question11() {
             (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
-            <Table bordered>
+            <Table bordered style={{ fontSize: "14px" }}>
               <thead>
                 <tr>
                   <th></th>
                   <th></th>
                   <th>Not accurate</th>
-                  <th>Slightly...</th>
-                  <th>Moderately...</th>
-                  <th>Very...</th>
-                  <th>Extremely</th>
+                  <th>Slightly accurate</th>
+                  <th>Moderately accurate</th>
+                  <th>Very accurate</th>
+                  <th>Extremely accurate</th>
                   <th>Don't know</th>
                 </tr>
               </thead>
@@ -88,7 +88,10 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>My company does not currently have the capabilities to measure its greenhouse gas (GHG) emissions</td>
+                  <td>
+                    My company does not currently have the capabilities to
+                    measure its greenhouse gas (GHG) emissions
+                  </td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -110,7 +113,10 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td>My company cannot financially afford to make a carbon-neutral or net-zero commitment</td>
+                  <td>
+                    My company cannot financially afford to make a
+                    carbon-neutral or net-zero commitment
+                  </td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -132,7 +138,11 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td>My company’s external stakeholders (e.g., investors, customers, suppliers) are not significantly concerned about climate change</td>
+                  <td>
+                    My company’s external stakeholders (e.g., investors,
+                    customers, suppliers) are not significantly concerned about
+                    climate change
+                  </td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -154,7 +164,10 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td>My company is not confident it could fulfil a carbon-neutral or net-zero commitment</td>
+                  <td>
+                    My company is not confident it could fulfil a carbon-neutral
+                    or net-zero commitment
+                  </td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -176,7 +189,10 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td>My company's sector does not have an established decarbonisation approach</td>
+                  <td>
+                    My company's sector does not have an established
+                    decarbonisation approach
+                  </td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -198,7 +214,11 @@ export default function Question11() {
                 </tr>
                 <tr>
                   <td>G</td>
-                  <td>My company’s internal  stakeholders (e.g., employees, board members, owners) are not significantly concerned about climate change</td>
+                  <td>
+                    My company’s internal stakeholders (e.g., employees, board
+                    members, owners) are not significantly concerned about
+                    climate change
+                  </td>
                   <td>
                     <input type="radio"></input>
                   </td>
