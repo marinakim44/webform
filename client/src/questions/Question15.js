@@ -56,13 +56,13 @@ export default function Question15() {
                 <tr>
                   <td colspan="2"></td>
                   <td>Up to three months</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>4–6 months</td>
+                  <td>7–12 months</td>
+                  <td>13–18 months</td>
+                  <td>19–24 months</td>
+                  <td>25–36 months</td>
+                  <td>More than 36 months</td>
+                  <td>Don't know</td>
                 </tr>
                 <tr>
                   <td>A</td>
@@ -97,7 +97,7 @@ export default function Question15() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>Commit significant resources to new major initiatives</td>
                   <td>
                     <input type="radio"></input>
                   </td>

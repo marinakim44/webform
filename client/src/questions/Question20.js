@@ -59,14 +59,14 @@ export default function Question20() {
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
-                  <td>Almost never...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>Almost never 0–5% of the time</td>
+                  <td>Rarely 6–20% of the time</td>
+                  <td>Occasionally 21–40% of the time</td>
+                  <td>Sometimes 41–60% of the time </td>
+                  <td>Frequently 61–80% of the tim </td>
+                  <td>Usually 81–94% of the time </td>
+                  <td>Almost always 95–100% of the time </td>
+                  <td>Don’t know</td>
                 </tr>
                 <tr>
                   <td>A</td>
@@ -102,7 +102,7 @@ export default function Question20() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>RELIABILITY/QUALITY (SHALLOW INTERDEPENDENCE) Recommend our products/services to family or friends</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -130,7 +130,7 @@ export default function Question20() {
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td>...</td>
+                  <td>FORESIGHT (DEEP INTERDEPENDENCE) Resist new updates or changes to our products/services</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -158,7 +158,7 @@ export default function Question20() {
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td>...</td>
+                  <td>INTUITION (DEEP INTERDEPENDENCE) Provide feedback that our products/services exceed expectations </td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -186,7 +186,7 @@ export default function Question20() {
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td>...</td>
+                  <td>COMPETENCY (SHALLOW DEPENDENCE) Update their personal preferences with our company to receive a more tailored experience </td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -214,7 +214,7 @@ export default function Question20() {
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td>...</td>
+                  <td>BENEVOLENCE (DEEP DEPENDENCE) Choose our products/services primarily because of the company’s values (e.g., environmental, social responsibility) </td>
                   <td>
                     <input type="radio"></input>
                   </td>

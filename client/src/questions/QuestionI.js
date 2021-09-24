@@ -84,7 +84,7 @@ export default function QuestionI() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"$101 million–$999 million"}
                   style={{
                     textAlign: "left",
                   }}
@@ -92,7 +92,7 @@ export default function QuestionI() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"$1 billion–$9.9 billion"}
                   style={{
                     textAlign: "left",
                   }}
@@ -100,7 +100,7 @@ export default function QuestionI() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"$10 billion–$24.9 billion"}
                   style={{
                     textAlign: "left",
                   }}
@@ -108,7 +108,7 @@ export default function QuestionI() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"$25 billion or more"}
                   style={{
                     textAlign: "left",
                   }}
@@ -116,7 +116,7 @@ export default function QuestionI() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"Prefer not to say"}
                   style={{
                     textAlign: "left",
                   }}
@@ -124,7 +124,7 @@ export default function QuestionI() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"Don't know "}
                   style={{
                     textAlign: "left",
                   }}

@@ -84,9 +84,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -113,9 +113,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -123,7 +123,7 @@ export default function Question26() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Adequate physical and digital infrastructure</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -140,16 +140,16 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>K</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Investment attractiveness of the country</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -166,9 +166,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -176,7 +176,7 @@ export default function Question26() {
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Reducing climate change and environmental damage</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -193,16 +193,16 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>L</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Fighting against corruption and bribery</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -219,9 +219,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -229,7 +229,7 @@ export default function Question26() {
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>High levels of employment</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -246,16 +246,16 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>M</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>The supremacy of law in all spheres of state activity</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -272,9 +272,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -282,7 +282,7 @@ export default function Question26() {
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>An effective tax system</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -299,16 +299,16 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>N</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Access to affordable capital</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -325,9 +325,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -335,7 +335,7 @@ export default function Question26() {
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Greater income equality</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -352,16 +352,16 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>O</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Other (please specify)</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -378,9 +378,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -388,7 +388,7 @@ export default function Question26() {
                 </tr>
                 <tr>
                   <td>G</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>The good health and well-being of the workforce</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -405,16 +405,16 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>P</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>None of the above</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -431,9 +431,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -441,7 +441,7 @@ export default function Question26() {
                 </tr>
                 <tr>
                   <td>H</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>A diverse and inclusive workforce</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -458,9 +458,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -484,9 +484,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -494,7 +494,7 @@ export default function Question26() {
                 </tr>
                 <tr>
                   <td>I</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Safeguards around usage of personal data</td>
                   <td>
                     <Dropdown
                       style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
@@ -511,9 +511,9 @@ export default function Question26() {
                         <Dropdown.Item>Greatly ineffective</Dropdown.Item>
                         <Dropdown.Item>Ineffective</Dropdown.Item>
                         <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
-                        <Dropdown.Item>...</Dropdown.Item>
+                        <Dropdown.Item>Effective</Dropdown.Item>
+                        <Dropdown.Item>Greatly effective</Dropdown.Item>
+                        <Dropdown.Item>Don’t know</Dropdown.Item>
                         <Dropdown.Item>Refused</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>

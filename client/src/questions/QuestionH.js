@@ -83,7 +83,7 @@ export default function QuestionH() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"No "}
                   style={{
                     textAlign: "left",
                   }}
@@ -91,7 +91,7 @@ export default function QuestionH() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"Don't know "}
                   style={{
                     textAlign: "left",
                   }}

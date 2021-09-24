@@ -71,7 +71,7 @@ export default function Question17() {
                 </tr>
                 <tr>
                   <td>A</td>
-                  <td>Assess its major initiatives</td>
+                  <td>Initiate investments in new projects</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -99,7 +99,7 @@ export default function Question17() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td>...</td>
+                  <td>Stop low-potential or nonaligned projects</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -127,7 +127,7 @@ export default function Question17() {
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td>...</td>
+                  <td>Invest in high-potential projects</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -155,7 +155,7 @@ export default function Question17() {
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td>...</td>
+                  <td>Scale-up high-performing small businesses</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -183,7 +183,7 @@ export default function Question17() {
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td>...</td>
+                  <td>Trim low-performing large businesses</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -211,7 +211,7 @@ export default function Question17() {
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td>...</td>
+                  <td>Divest businesses</td>
                   <td>
                     <input type="radio"></input>
                   </td>
@@ -239,7 +239,7 @@ export default function Question17() {
                 </tr>
                 <tr>
                   <td>G</td>
-                  <td>...</td>
+                  <td>Acquire businesses</td>
                   <td>
                     <input type="radio"></input>
                   </td>
