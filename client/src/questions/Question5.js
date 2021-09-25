@@ -1,10 +1,32 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import { useState } from "react";
 import Question4 from "./Question4";
 import Question6 from "./Question6";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question5() {
+  const [input, setInput] = useState({
+    carbonNeutral: "",
+    netZero: "",
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    setInput((prevInput) => {
+      return {
+        ...prevInput,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q5-carbonNeutral", input.carbonNeutral);
+    localStorage.setItem("q5-netZero", input.netZero);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q5">
@@ -43,9 +65,11 @@ export default function Question5() {
               <thead>
                 <tr>
                   <th></th>
-                  <th>Yes...</th>
-                  <th>No, but...</th>
-                  <th>No</th>
+                  <th>Yes, my company has made this commitment</th>
+                  <th>
+                    No, but my company is working toward making this commitment
+                  </th>
+                  <th>No, my company has not made this commitment</th>
                   <th>Don't know</th>
                 </tr>
               </thead>
@@ -57,16 +81,36 @@ export default function Question5() {
                     purchasing voluntary carbon credits)
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      name="carbonNeutral"
+                      value="yes"
+                      type="radio"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      name="carbonNeutral"
+                      value="no but"
+                      type="radio"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      name="carbonNeutral"
+                      value="no"
+                      type="radio"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      name="carbonNeutral"
+                      value="dontKnow"
+                      type="radio"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
@@ -76,16 +120,36 @@ export default function Question5() {
                     remaining unavoidable emissions
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      name="netZero"
+                      value="yes"
+                      type="radio"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      name="netZero"
+                      value="no but"
+                      type="radio"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      name="netZero"
+                      value="no"
+                      type="radio"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      name="netZero"
+                      value="dontKnow"
+                      type="radio"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                 </tr>
               </tbody>
@@ -96,11 +160,13 @@ export default function Question5() {
               </Button>
             </Link>
 
-            <Link to="/eng-q6">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q6">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

@@ -18,7 +18,14 @@ app.use(cors());
 mongoose.connect(process.env.MONGO_URI);
 
 //configure data schema and model
+var date = new Date();
+var currentDate = date.toString();
+
 const responseSchema = {
+  datetime: {
+    type: Date,
+    required: true,
+  },
   fullName: String,
   email: String,
   question1: {
@@ -26,14 +33,7 @@ const responseSchema = {
     b: String,
   },
   question2: Array,
-  question3: {
-    a: String,
-    b: String,
-    c: String,
-    d: String,
-    e: String,
-    f: String,
-  },
+  question3: Array,
   question4: Array,
   question5: {
     a: String,
@@ -158,48 +158,31 @@ const Response = mongoose.model("Response", responseSchema);
 //POST APIs
 app.post("/allinputs", (req, res) => {
   const newResponse = new Response({
+    datetime: currentDate,
+    fullName: req.body.fullName,
+    email: req.body.email,
+    title: req.body.title,
     question1: {
-      a: req.body.q1,
-      b: req.body.q2,
+      a: req.body.q1a,
+      b: req.body.q1b,
     },
+    question2: req.body.q2,
+    question3: req.body.q3,
+    question4: req.body.q4,
+    question5: {
+      a: req.body.q5a,
+      b: req.body.q5b,
+    },
+    question6: req.body.q6,
+    question7: req.body.q7,
+    question8: req.body.q8,
+    question9: req.body.q9,
   });
   newResponse
     .save()
     .then((item) => console.log(item))
     .catch((err) => res.status(400).json("Error " + err));
 });
-
-// app.post("/input", (req, res) => {
-//   const newResponse = new Response({
-//     name: req.body.name,
-//     email: req.body.email,
-//     title: req.body.title,
-//     responses: {
-//       question1A: "",
-//       question1B: "",
-//     },
-//   });
-
-//   newResponse
-//     .save()
-//     .then((item) => console.log(item))
-//     .catch((err) => res.status(400).json("Error " + err));
-// });
-
-// // ---question 1 saved
-// app.post("/q1", (req, res) => {
-//   //   const id = Response.findOne().sort({ _id: -1 }).limit(1);
-
-//   const newResponse = new Response({
-//     question1A: req.body.question1A,
-//     question1B: req.body.question1B,
-//   });
-
-//   newResponse
-//     .save()
-//     .then((item) => console.log(item))
-//     .catch((err) => res.status(400).json("Error " + err));
-// });
 
 //GET APIs
 app.get("/display", (req, res) => {

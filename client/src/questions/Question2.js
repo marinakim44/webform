@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import { components, default as ReactSelect } from "react-select";
 import makeAnimated from "react-select/animated";
@@ -8,8 +14,9 @@ import Question3 from "./Question3";
 import "../App.css";
 import { countries } from "../countries.js";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { question2 } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { question1, question2 } from "../actions";
+import { useEffect } from "react";
 
 const Menu = (props) => {
   const optionSelectedLength = props.getValue().length || 0;
@@ -25,12 +32,24 @@ const Menu = (props) => {
 };
 
 export default function Question2() {
+  useEffect(() => {
+    console.log(localStorage.getItem("a"));
+    console.log(localStorage.getItem("b"));
+    dispatch(
+      question1({ a: localStorage.getItem("a"), b: localStorage.getItem("b") })
+    );
+  });
+
   const animatedComponents = makeAnimated();
   const dispatch = useDispatch();
   const isValidNewOption = (inputValue, selectedValue) =>
     inputValue.length > 0 && selectedValue.length < 4;
 
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [other, setOther] = useState({
+    other1: "",
+    other2: "",
+  });
 
   function handleChange(selectedOption) {
     selectedOption.forEach((option) => {
@@ -41,9 +60,27 @@ export default function Question2() {
     console.log(selectedOptions);
   }
 
+  function handleOther(e) {
+    const { name, value } = e.target;
+    setOther((prevInput) => {
+      return {
+        ...prevInput,
+        [name]: value,
+      };
+    });
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(question2(selectedOptions));
+
+    if (other.other1) {
+      selectedOptions.push(other.other1);
+    }
+    if (other.other2) {
+      selectedOptions.push(other.other2);
+    }
+    localStorage.setItem("countries", JSON.stringify(selectedOptions));
   }
 
   return (
@@ -89,15 +126,6 @@ export default function Question2() {
                 marginBottom: "2rem",
               }}
             >
-              {/* <ReactSelect
-                options={countries}
-                components={animatedComponents}
-                isMulti
-                closeMenuOnSelect={false}
-                hideSelectedOptions={false}
-                placeholder="Please select 3 countries..."
-                onChange={handleChange}
-              /> */}
               <Creatable
                 components={(animatedComponents, { Menu })}
                 isMulti
@@ -111,20 +139,23 @@ export default function Question2() {
             <Form.Control
               type="text"
               placeholder="Other country 1 (please specify)"
+              name="other1"
+              value={other.other1}
+              onChange={handleOther}
               style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
             ></Form.Control>
-
             <Form.Control
               type="text"
+              name="other2"
+              value={other.other2}
+              onChange={handleOther}
               placeholder="Other country 2 (please specify)"
               style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
             ></Form.Control>
 
-            <Link to="/eng-q1">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+            <Button variant="light" className="back-btn">
+              <Link to="/eng-q1">Back</Link>
+            </Button>
 
             <Button
               variant="danger"

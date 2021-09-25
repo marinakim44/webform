@@ -1,11 +1,94 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question9 from "./Question9";
 import Question11 from "./Question11";
-
+import { useState } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question10() {
+  const rows = [
+    {
+      key: "A",
+      value: "Attracting and/or retaining employees",
+    },
+    {
+      key: "B",
+      value: "Satisfying investor demands",
+    },
+    {
+      key: "C",
+      value: "Meeting customer expectations",
+    },
+    {
+      key: "D",
+      value: "Complying with government and/or intergovernmental targets",
+    },
+    {
+      key: "E",
+      value: "Mitigating climate change risks",
+    },
+    {
+      key: "F",
+      value: "Driving product/service innovation",
+    },
+    {
+      key: "G",
+      value: "Keeping pace with competitor commitments",
+    },
+  ];
+
+  const columns = [
+    {
+      key: 1,
+      value: "Not influential",
+    },
+    {
+      key: 2,
+      value: "Slightly influential",
+    },
+    {
+      key: 3,
+      value: "Moderately influential",
+    },
+    {
+      key: 4,
+      value: "Very influential",
+    },
+    {
+      key: 5,
+      value: "Extremely influential",
+    },
+    {
+      key: 6,
+      value: "Don't know",
+    },
+  ];
+
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
+    F: "",
+    G: "",
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    setInput((prevInput) => {
+      return {
+        ...prevInput,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q10", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q10">
@@ -49,171 +132,33 @@ export default function Question10() {
             <Table bordered>
               <thead>
                 <tr>
-                  <th></th>
-                  <th></th>
-                  <th>Not influential</th>
-                  <th>Slightly...</th>
-                  <th>Moderately...</th>
-                  <th>Very...</th>
-                  <th>Extremely</th>
-                  <th>Don't know</th>
+                  <th colSpan="2"></th>
+                  {columns.map((column) => {
+                    return <th>{column.value}</th>;
+                  })}
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>A</td>
-                  <td>Attracting and/or retaining employees</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td>Satisfying investor demands</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td>Meeting customer expectations</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td>Complying with government and/or intergovernmental targets </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>E</td>
-                  <td>Mitigating climate change risks</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>F</td>
-                  <td>Driving product/service innovation</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>G</td>
-                  <td>Keeping pace with competitor commitments</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr>
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
+                      {columns.map((column) => {
+                        return (
+                          <td>
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={column.value}
+                              onClick={handleClick}
+                            ></input>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
             <Link to="/eng-q9">
@@ -222,11 +167,13 @@ export default function Question10() {
               </Button>
             </Link>
 
-            <Link to="/eng-q11">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q11">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

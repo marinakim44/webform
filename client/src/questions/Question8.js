@@ -1,11 +1,21 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question7 from "./Question7";
 import Question9 from "./Question9";
-
+import { useState } from "react";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question8() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    localStorage.setItem("q8", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q8">
@@ -49,26 +59,41 @@ export default function Question8() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"Yes, my company’s approach to reducing GHG emissions has been independently assessed and validated"}
+                  label={
+                    "Yes, my company’s approach to reducing GHG emissions has been independently assessed and validated"
+                  }
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="yes"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"No, but my company’s approach to reducing GHG emissions is currently being independently assessed and validated "}
+                  label={
+                    "No, but my company’s approach to reducing GHG emissions is currently being independently assessed and validated "
+                  }
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="no but"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"No, my company’s approach to reducing GHG emissions has not been independently assessed and validated"}
+                  label={
+                    "No, my company’s approach to reducing GHG emissions has not been independently assessed and validated"
+                  }
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="no"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -77,6 +102,9 @@ export default function Question8() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="don't know"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -86,11 +114,13 @@ export default function Question8() {
               </Button>
             </Link>
 
-            <Link to="/eng-q9">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q9">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

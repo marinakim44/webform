@@ -13,7 +13,7 @@ import "../App.css";
 import { useDispatch } from "react-redux";
 import { question1 } from "../actions";
 
-export default function Question1(props) {
+export default function Question1() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [a, setA] = useState("");
@@ -37,6 +37,8 @@ export default function Question1(props) {
         b: b,
       })
     );
+    localStorage.setItem("q1a", a);
+    localStorage.setItem("q1b", b);
   }
 
   return (

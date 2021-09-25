@@ -3,8 +3,23 @@ import EngStart from "./EngStart";
 import RusStart from "./RusStart";
 import { Dropdown, Breadcrumb } from "react-bootstrap";
 import "./App.css";
+import { useState } from "react";
 
 export default function App() {
+  const [language, setLanguage] = useState("");
+
+  function chooseEng(e) {
+    e.preventDefault();
+    setLanguage("English");
+    localStorage.setItem("language", "English");
+  }
+
+  function chooseRus(e) {
+    e.preventDefault();
+    setLanguage("Russian");
+    localStorage.setItem("language", "Russian");
+  }
+
   return (
     <BrowserRouter>
       <Route path="/" exact>
@@ -48,12 +63,12 @@ export default function App() {
               Choose language
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item>
+              <Dropdown.Item onClick={chooseEng} value="English">
                 <Link to="/eng-start">
                   <div style={{ width: "100%" }}>English</div>
                 </Link>
               </Dropdown.Item>
-              <Dropdown.Item>
+              <Dropdown.Item onClick={chooseRus}>
                 <Link to="/rus-start">Russian</Link>
               </Dropdown.Item>
             </Dropdown.Menu>
