@@ -1,10 +1,55 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import { useState } from "react";
 import Question3 from "./Question3";
 import Question5 from "./Question5";
 import { Button, Table, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
-export default function Question4(props) {
+export default function Question4() {
+  const concerns = JSON.parse(localStorage.getItem("q3"));
+  const rows = [
+    {
+      key: "1",
+      value:
+        "...develop products/services (including sourcing and procuring materials/inputs, manufacturing)",
+    },
+    {
+      key: "2",
+      value:
+        "...sell products/services (including sales and marketing, distribution, public relations)",
+    },
+    {
+      key: "3",
+      value:
+        "...raise capital (including cost of capital, sources of funding, reporting and compliance)",
+    },
+    {
+      key: "4",
+      value:
+        "...attract and retain key skills/talent (including reputation, rewards and benefits, culture)",
+    },
+    {
+      key: "5",
+      value:
+        "...innovate through technology or processes (including research and development, collaboration, creativity)",
+    },
+  ];
+
+  const [selectedActions, setSelectedActions] = useState([]);
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    selectedActions.push({
+      name: name,
+      value: value,
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q4", JSON.stringify(selectedActions));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q4">
@@ -34,79 +79,45 @@ export default function Question4(props) {
             ></div>
           </div>
           <span>
-            Q4. How do you anticipate your company could be impacted by [INSERT
-            THREAT] over the next 12 months? (PLEASE SELECT UP TO THREE
-            RESPONSES)
+            Q4. How do you anticipate your company could be impacted by the
+            following threat(s) over the next 12 months? (PLEASE SELECT UP TO
+            THREE RESPONSES)
           </span>
+
           <Form>
             <Table bordered>
               <thead>
                 <tr>
                   <th></th>
-                  <th>
-                    <span>[INSERT THREAT]</span>
-                  </th>
+                  {concerns.map((concern) => {
+                    return (
+                      <th>
+                        <span>{concern}</span>
+                      </th>
+                    );
+                  })}
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td className="left-align-text">
-                    <span>
-                      "...develop products/services <br />
-                      (including sourcing and procuring materials/inputs,
-                      manufacturing)"
-                    </span>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">
-                    <span>
-                      ...sell products/services <br />
-                      (including sales and marketing, distribution, public
-                      relations)
-                    </span>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">
-                    <span>
-                      ...raise capital <br /> (including cost of capital,
-                      sources of funding, reporting and compliance)
-                    </span>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">
-                    <span>
-                      ...attract and retain key skills/talent <br /> (including
-                      reputation, rewards and benefits, culture)
-                    </span>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">
-                    <span>
-                      ...innovate through technology or processes <br />
-                      (including research and development, collaboration,
-                      creativity)
-                    </span>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr>
+                      <td className="left-align-text">{row.value}</td>
+                      {concerns.map((concern) => {
+                        return (
+                          <td>
+                            <input
+                              type="checkbox"
+                              name={concern}
+                              value={row.key}
+                              onClick={handleClick}
+                            ></input>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
 
@@ -114,6 +125,7 @@ export default function Question4(props) {
               <Form.Control
                 placeholder="Other (please specify)"
                 style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
+                // onChange={handleChange}
               ></Form.Control>
             </Form.Group>
 
@@ -123,11 +135,13 @@ export default function Question4(props) {
               </Button>
             </Link>
 
-            <Link to="/eng-q5">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q5">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

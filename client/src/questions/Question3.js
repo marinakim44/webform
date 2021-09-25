@@ -7,97 +7,37 @@ import "../App.css";
 import { useState } from "react";
 
 export default function Question3() {
-  const [a, setA] = useState(false);
-  const [b, setB] = useState(false);
-  const [c, setC] = useState(false);
-  const [d, setD] = useState(false);
-  const [e, setE] = useState(false);
-  const [f, setF] = useState(false);
+  const [concern, setConcern] = useState({
+    a: false,
+    b: false,
+    c: false,
+    d: false,
+    e: false,
+    f: false,
+  });
 
-  const listOfConcerns = [];
+  const [listOfConcerns, setListOfConcerns] = useState([]);
 
-  function handleA(e) {
+  function handleRadioButtonClick(e) {
     const { name, value } = e.target;
     if (
       value === "Moderately concerned" ||
       value === "Very concerned" ||
       value === "Extremely concerned"
     ) {
-      setA(true);
-      listOfConcerns.push("a");
-    } else {
-      setA(false);
+      setConcern((prevInput) => {
+        return {
+          ...prevInput,
+          [name]: value,
+        };
+      });
+      listOfConcerns.push(name);
     }
   }
 
-  function handleB(e) {
-    const { name, value } = e.target;
-    if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
-    ) {
-      setB(true);
-      listOfConcerns.push("b");
-    } else {
-      setB(false);
-    }
-  }
-
-  function handleC(e) {
-    const { name, value } = e.target;
-    if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
-    ) {
-      setC(true);
-      listOfConcerns.push("c");
-    } else {
-      setC(false);
-    }
-  }
-
-  function handleD(e) {
-    const { name, value } = e.target;
-    if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
-    ) {
-      setD(true);
-      listOfConcerns.push("d");
-    } else {
-      setD(false);
-    }
-  }
-
-  function handleE(e) {
-    const { name, value } = e.target;
-    if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
-    ) {
-      setE(true);
-      listOfConcerns.push("e");
-    } else {
-      setE(false);
-    }
-  }
-
-  function handleF(e) {
-    const { name, value } = e.target;
-    if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
-    ) {
-      setF(true);
-      listOfConcerns.push("f");
-    } else {
-      setF(false);
-    }
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q3", JSON.stringify(listOfConcerns));
   }
 
   return (
@@ -153,49 +93,49 @@ export default function Question3() {
                   <td>
                     <input
                       type="radio"
-                      name="notA"
+                      name="Macroeconomic volatility"
                       value="Not concerned"
-                      onClick={handleA}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="slightlyA"
+                      name="Macroeconomic volatility"
                       value="Slightly concerned"
-                      onClick={handleA}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="moderatelyA"
+                      name="Macroeconomic volatility"
                       value="Moderately concerned"
-                      onClick={handleA}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="veryA"
+                      name="Macroeconomic volatility"
                       value="Very concerned"
-                      onClick={handleA}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="extremelyA"
+                      name="Macroeconomic volatility"
                       value="Extremely concerned"
-                      onClick={handleA}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="dontknowA"
+                      name="Macroeconomic volatility"
                       value="Don't know"
-                      onClick={handleA}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                 </tr>
@@ -204,49 +144,49 @@ export default function Question3() {
                   <td>
                     <input
                       type="radio"
-                      name="notB"
+                      name="Climate change"
                       value="Not concerned"
-                      onClick={handleB}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="slightlyB"
+                      name="Climate change"
                       value="Slightly concerned"
-                      onClick={handleB}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="moderatelyB"
+                      name="Climate change"
                       value="Moderately concerned"
-                      onClick={handleB}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="veryB"
+                      name="Climate change"
                       value="Very concerned"
-                      onClick={handleB}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="extremelyB"
+                      name="Climate change"
                       value="Extremely concerned"
-                      onClick={handleB}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="dontknowB"
+                      name="Climate change"
                       value="Don't know"
-                      onClick={handleB}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                 </tr>
@@ -255,49 +195,49 @@ export default function Question3() {
                   <td>
                     <input
                       type="radio"
-                      name="notC"
+                      name="Social inequality"
                       value="Not concerned"
-                      onClick={handleC}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="slightlyC"
+                      name="Social inequality"
                       value="Slightly concerned"
-                      onClick={handleC}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="moderatelyC"
+                      name="Social inequality"
                       value="Moderately concerned"
-                      onClick={handleC}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="veryC"
+                      name="Social inequality"
                       value="Very concerned"
-                      onClick={handleC}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="extremelyC"
+                      name="Social inequality"
                       value="Extremely concerned"
-                      onClick={handleC}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="dontknowC"
+                      name="Social inequality"
                       value="Don't know"
-                      onClick={handleC}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                 </tr>
@@ -306,49 +246,49 @@ export default function Question3() {
                   <td>
                     <input
                       type="radio"
-                      name="notD"
+                      name="Geopolitical conflict"
                       value="Not concerned"
-                      onClick={handleD}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="slightlyD"
+                      name="Geopolitical conflict"
                       value="Slightly concerned"
-                      onClick={handleD}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="moderatelyD"
+                      name="Geopolitical conflict"
                       value="Moderately concerned"
-                      onClick={handleD}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="veryD"
+                      name="Geopolitical conflict"
                       value="Very concerned"
-                      onClick={handleD}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="extremelyD"
+                      name="Geopolitical conflict"
                       value="Extremely concerned"
-                      onClick={handleD}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="dontknowD"
+                      name="Geopolitical conflict"
                       value="Don't know"
-                      onClick={handleD}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                 </tr>
@@ -357,100 +297,100 @@ export default function Question3() {
                   <td>
                     <input
                       type="radio"
-                      name="notE"
+                      name="Cyber risks"
                       value="Not concerned"
-                      onClick={handleE}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="slightlyE"
+                      name="Cyber risks"
                       value="Slightly concerned"
-                      onClick={handleE}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="moderatelyE"
+                      name="Cyber risks"
                       value="Moderately concerned"
-                      onClick={handleE}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="veryE"
+                      name="Cyber risks"
                       value="Very concerned"
-                      onClick={handleE}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="extremelyE"
+                      name="Cyber risks"
                       value="Extremely concerned"
-                      onClick={handleE}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="dontknowE"
+                      name="Cyber risks"
                       value="Don't know"
-                      onClick={handleE}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                 </tr>
                 <tr>
-                  <td className="left-align-text">F) Healthh risks</td>
+                  <td className="left-align-text">F) Health risks</td>
                   <td>
                     <input
                       type="radio"
-                      name="notF"
+                      name="Health risks"
                       value="Not concerned"
-                      onClick={handleF}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="slightlyF"
+                      name="Health risks"
                       value="Slightly concerned"
-                      onClick={handleF}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="moderatelyF"
+                      name="Health risks"
                       value="Moderately concerned"
-                      onClick={handleF}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="veryF"
+                      name="Health risks"
                       value="Very concerned"
-                      onClick={handleF}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="extremelyF"
+                      name="Health risks"
                       value="Extremely concerned"
-                      onClick={handleF}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                   <td>
                     <input
                       type="radio"
-                      name="dontknowF"
+                      name="Health risks"
                       value="Don't know"
-                      onClick={handleF}
+                      onClick={handleRadioButtonClick}
                     ></input>
                   </td>
                 </tr>
@@ -463,11 +403,16 @@ export default function Question3() {
               </Button>
             </Link>
 
-            <Link to={a || b || c || d || e || f ? "/eng-q4" : "/eng-q5"}>
-              <Button variant="danger" className="next-btn">
+            <Button
+              type="button"
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to={listOfConcerns.length === 0 ? "/eng-q5" : "/eng-q4"}>
                 Next
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </form>
         </div>
       </Route>
@@ -477,15 +422,7 @@ export default function Question3() {
           <Question2 />
         </Route>
         <Route path="/eng-q4">
-          <Question4
-            a={a}
-            b={b}
-            c={c}
-            d={d}
-            e={e}
-            f={f}
-            list={listOfConcerns}
-          />
+          <Question4 />
         </Route>
         <Route path="/eng-q5">
           <Question5 />

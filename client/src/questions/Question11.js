@@ -1,11 +1,102 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question10 from "./Question10";
 import Question12 from "./Question12";
-
+import { useState } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question11() {
+  const rows = [
+    {
+      key: "A",
+      value:
+        "My company does not produce a meaningful amount of greenhouse gas (GHG) emissions",
+    },
+    {
+      key: "B",
+      value:
+        "My company does not currently have the capabilities to measure its greenhouse gas (GHG) emissions",
+    },
+    {
+      key: "C",
+      value:
+        "My company cannot financially afford to make a carbon-neutral or net-zero commitment",
+    },
+    {
+      key: "D",
+      value:
+        "My company’s external stakeholders (e.g., investors, customers, suppliers) are not significantly concerned about climate change",
+    },
+    {
+      key: "E",
+      value:
+        "My company is not confident it could fulfil a carbon-neutral or net-zero commitment",
+    },
+    {
+      key: "F",
+      value:
+        "My company's sector does not have an established decarbonisation approach",
+    },
+    {
+      key: "G",
+      value:
+        "My company’s internal stakeholders (e.g., employees, board members, owners) are not significantly concerned about climate change",
+    },
+  ];
+
+  const columns = [
+    {
+      key: 1,
+      value: "Not accurate",
+    },
+    {
+      key: 2,
+      value: "Slightly accurate",
+    },
+    {
+      key: 3,
+      value: "Moderately accurate",
+    },
+    {
+      key: 4,
+      value: "Very accurate",
+    },
+    {
+      key: 5,
+      value: "Extremely accurate",
+    },
+    {
+      key: 6,
+      value: "Don't know",
+    },
+  ];
+
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
+    F: "",
+    G: "",
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+
+    setInput((prevInput) => {
+      return {
+        ...prevInput,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q11", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q11">
@@ -50,194 +141,33 @@ export default function Question11() {
             <Table bordered style={{ fontSize: "14px" }}>
               <thead>
                 <tr>
-                  <th></th>
-                  <th></th>
-                  <th>Not accurate</th>
-                  <th>Slightly accurate</th>
-                  <th>Moderately accurate</th>
-                  <th>Very accurate</th>
-                  <th>Extremely accurate</th>
-                  <th>Don't know</th>
+                  <th colSpan="2"></th>
+                  {columns.map((column) => {
+                    return <th>{column.value}</th>;
+                  })}
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>A</td>
-                  <td>
-                    My company does not produce a meaningful amount of
-                    greenhouse gas (GHG) emissions
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td>
-                    My company does not currently have the capabilities to
-                    measure its greenhouse gas (GHG) emissions
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td>
-                    My company cannot financially afford to make a
-                    carbon-neutral or net-zero commitment
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td>
-                    My company’s external stakeholders (e.g., investors,
-                    customers, suppliers) are not significantly concerned about
-                    climate change
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>E</td>
-                  <td>
-                    My company is not confident it could fulfil a carbon-neutral
-                    or net-zero commitment
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>F</td>
-                  <td>
-                    My company's sector does not have an established
-                    decarbonisation approach
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>G</td>
-                  <td>
-                    My company’s internal stakeholders (e.g., employees, board
-                    members, owners) are not significantly concerned about
-                    climate change
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr>
+                      <td>{row.key}</td>
+                      <td>{row.value}</td>
+                      {columns.map((column) => {
+                        return (
+                          <td>
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={column.value}
+                              onClick={handleClick}
+                            ></input>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
             <Link to="/eng-q10">
@@ -246,11 +176,13 @@ export default function Question11() {
               </Button>
             </Link>
 
-            <Link to="/eng-q12">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q12">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

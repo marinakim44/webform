@@ -2,9 +2,21 @@ import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question5 from "./Question5";
 import Question7 from "./Question7";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
+import { useState } from "react";
 import "../App.css";
 
 export default function Question6() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q6", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q6">
@@ -49,6 +61,9 @@ export default function Question6() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="1.5"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -57,14 +72,22 @@ export default function Question6() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="below 2"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"My company’s net-zero commitment is not aligned to a science-based target"}
+                  label={
+                    "My company’s net-zero commitment is not aligned to a science-based target"
+                  }
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="not aligned"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -73,6 +96,9 @@ export default function Question6() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="don't know"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -83,11 +109,13 @@ export default function Question6() {
               </Button>
             </Link>
 
-            <Link to="/eng-q7">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q7">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>
