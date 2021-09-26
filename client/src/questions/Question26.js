@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import Question25 from "./Question25";
+import Question25C from "./Question25C";
 import Question27 from "./Question27";
-import { Button, Breadcrumb, Table, Dropdown } from "react-bootstrap";
+import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
 
 export default function Question26() {
@@ -45,483 +45,54 @@ export default function Question26() {
             <Breadcrumb.Item>Q23</Breadcrumb.Item>
             <Breadcrumb.Item>Q24</Breadcrumb.Item>
             <Breadcrumb.Item>Q25</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q26</Breadcrumb.Item>
+            <Breadcrumb.Item>Q26</Breadcrumb.Item>
+            <Breadcrumb.Item>Q27</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q28</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 27).toString() + "%",
+                width: ((100 / 41) * 29).toString() + "%",
               }}
             ></div>
           </div>
           <p>
-            Q25b How effective do you think the government has been in achieving
-            these outcomes in Kazakhstan?
-            <br /> (Please select one response only per row)
+            Q26. What changes have you noticed in Kazakhstan's investment
+            climate during 2020?
           </p>
-          <form>
-            <Table style={{ verticalAlign: "middle" }}>
-              <tbody>
-                <tr>
-                  <td>A</td>
-                  <td style={{ textAlign: "left" }}>
-                    A skilled, educated and adaptable workforce
-                  </td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
 
-                  <td>J</td>
-                  <td style={{ textAlign: "left" }}>
-                    Predictable macroeconomic environment
-                  </td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td style={{ textAlign: "left" }}>Adequate physical and digital infrastructure</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>K</td>
-                  <td style={{ textAlign: "left" }}>Investment attractiveness of the country</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td style={{ textAlign: "left" }}>Reducing climate change and environmental damage</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>L</td>
-                  <td style={{ textAlign: "left" }}>Fighting against corruption and bribery</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td style={{ textAlign: "left" }}>High levels of employment</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>M</td>
-                  <td style={{ textAlign: "left" }}>The supremacy of law in all spheres of state activity</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-                <tr>
-                  <td>E</td>
-                  <td style={{ textAlign: "left" }}>An effective tax system</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>N</td>
-                  <td style={{ textAlign: "left" }}>Access to affordable capital</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-                <tr>
-                  <td>F</td>
-                  <td style={{ textAlign: "left" }}>Greater income equality</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>O</td>
-                  <td style={{ textAlign: "left" }}>Other (please specify)</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-                <tr>
-                  <td>G</td>
-                  <td style={{ textAlign: "left" }}>The good health and well-being of the workforce</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>P</td>
-                  <td style={{ textAlign: "left" }}>None of the above</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-                <tr>
-                  <td>H</td>
-                  <td style={{ textAlign: "left" }}>A diverse and inclusive workforce</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>Q</td>
-                  <td style={{ textAlign: "left" }}>Don't know</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-                <tr>
-                  <td>I</td>
-                  <td style={{ textAlign: "left" }}>Safeguards around usage of personal data</td>
-                  <td>
-                    <Dropdown
-                      style={{ margin: 0, padding: 0, verticalAlign: "middle" }}
-                    >
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        id="dropdown-basic"
-                        className="lng-btn"
-                        style={{ margin: 0, padding: 0, width: "100px" }}
-                      >
-                        Select
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Greatly ineffective</Dropdown.Item>
-                        <Dropdown.Item>Ineffective</Dropdown.Item>
-                        <Dropdown.Item>Neither / nor</Dropdown.Item>
-                        <Dropdown.Item>Effective</Dropdown.Item>
-                        <Dropdown.Item>Greatly effective</Dropdown.Item>
-                        <Dropdown.Item>Don’t know</Dropdown.Item>
-                        <Dropdown.Item>Refused</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-            <Link to="/eng-q25">
+          <Form>
+            {["radio"].map((type) => (
+              <div key={`default-${type}`} className="mb-3">
+                <Form.Check
+                  type={type}
+                  id={`default-${type}`}
+                  label={"Improved"}
+                  style={{
+                    textAlign: "left",
+                  }}
+                />
+                <Form.Check
+                  type={type}
+                  id={`default-${type}`}
+                  label={"Stayed the same"}
+                  style={{
+                    textAlign: "left",
+                  }}
+                />
+                <Form.Check
+                  type={type}
+                  id={`default-${type}`}
+                  label={"Declined"}
+                  style={{
+                    textAlign: "left",
+                  }}
+                />
+              </div>
+            ))}
+            <Link to="/eng-q25c">
+
               <Button variant="light" className="back-btn">
                 Back
               </Button>
@@ -532,13 +103,13 @@ export default function Question26() {
                 Next
               </Button>
             </Link>
-          </form>
+          </Form>
         </div>
       </Route>
 
       <Switch>
-        <Route path="/eng-q25">
-          <Question25 />
+        <Route path="/eng-q25c">
+          <Question25C />
         </Route>
         <Route path="/eng-q27">
           <Question27 />

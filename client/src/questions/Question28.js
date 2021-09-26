@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question27 from "./Question27";
-import Question29 from "./Question29";
+import QuestionA from "./QuestionA";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
 
@@ -47,56 +47,37 @@ export default function Question28() {
             <Breadcrumb.Item>Q25</Breadcrumb.Item>
             <Breadcrumb.Item>Q26</Breadcrumb.Item>
             <Breadcrumb.Item>Q27</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q28</Breadcrumb.Item>
+            <Breadcrumb.Item>Q28</Breadcrumb.Item>
+            <Breadcrumb.Item>Q29</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q30</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 29).toString() + "%",
+                width: ((100 / 41) * 28).toString() + "%",
               }}
             ></div>
           </div>
           <p>
-            Q26. What changes have you noticed in Kazakhstan's investment
-            climate during 2020?
+            Q28. What quality should a CEO possess to succeed in the modern
+            business environment?
           </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Improved"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Stayed the same"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Declined"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-              </div>
-            ))}
+            <Form.Group style={{ width: "35%" }}>
+              <Form.Control
+                type="text"
+                placeholder="Specify here"
+              ></Form.Control>
+            </Form.Group>
+
             <Link to="/eng-q27">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
             </Link>
 
-            <Link to="/eng-q29">
+            <Link to="/eng-qa">
               <Button variant="danger" className="next-btn">
                 Next
               </Button>
@@ -109,8 +90,8 @@ export default function Question28() {
         <Route path="/eng-q27">
           <Question27 />
         </Route>
-        <Route path="/eng-q29">
-          <Question29 />
+        <Route path="/eng-qa">
+          <QuestionA />
         </Route>
       </Switch>
     </BrowserRouter>

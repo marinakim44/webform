@@ -3,8 +3,30 @@ import Question13 from "./Question13";
 import Question15 from "./Question15";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function Question14() {
+  const [input, setInput] = useState({
+    a: "",
+    b: "",
+    c: "",
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    setInput((prevInput) => {
+      return {
+        ...prevInput,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q14", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q14">
@@ -79,84 +101,204 @@ export default function Question14() {
                   <td>A</td>
                   <td>Assess its major initiatives</td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="a"
+                      value="Every four years or less frequently"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="a"
+                      value="Every three years"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="a"
+                      value="Every two years"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="a"
+                      value="Every year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="a"
+                      value="Twice a year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="a"
+                      value="Three times a year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="a"
+                      value="Four times a year or more frequently"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="a"
+                      value="Don't know"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>B</td>
                   <td>Change its major initiatives</td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="b"
+                      value="Every four years or less frequently"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="b"
+                      value="Every three years"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="b"
+                      value="Every two years"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="b"
+                      value="Every year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="b"
+                      value="Twice a year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="b"
+                      value="Three times a year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="b"
+                      value="Four times a year or more frequently"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="b"
+                      value="Don't know"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>C</td>
                   <td>Update its workforce about its major initiatives</td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="c"
+                      value="Every four years or less frequently"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="c"
+                      value="Every three years"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="c"
+                      value="Every two years"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="c"
+                      value="Every year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="c"
+                      value="Twice a year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="c"
+                      value="Three times a year"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="c"
+                      value="Four time a year or more frequently"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="c"
+                      value="Don't know"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                 </tr>
               </tbody>
@@ -167,11 +309,13 @@ export default function Question14() {
               </Button>
             </Link>
 
-            <Link to="/eng-q15">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q15">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

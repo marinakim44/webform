@@ -3,8 +3,77 @@ import Question23 from "./Question23";
 import Question25 from "./Question25";
 import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
+import App from "../App";
 
 export default function Question24() {
+  const rows = [
+    {
+      key: "A",
+      value: "Greenhouse gas (GHG) emission targets",
+    },
+    {
+      key: "B",
+      value: "Gender representation rates",
+    },
+    {
+      key: "C",
+      value: "Race and ethnicity representation rates",
+    },
+    {
+      key: "D",
+      value: "Customer satisfaction metrics",
+    },
+    {
+      key: "E",
+      value: "Automation and digitisation goals",
+    },
+    {
+      key: "F",
+      value: "Employee engagement metrics",
+    },
+    {
+      key: "G",
+      value: "None of the above",
+    },
+    {
+      key: "H",
+      value: "Prefer not to answer",
+    },
+  ];
+
+  const columns = [
+    {
+      key: "A",
+      value: "Company’s long-term corporate strategy",
+    },
+    {
+      key: "B",
+      value: "Personal annual bonus or long-term incentive plan",
+    },
+  ];
+
+  const [input, setInput] = useState({
+    A: [],
+    B: [],
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+
+    if (name === "A" && !input.A.includes(value)) {
+      input.A.push(value);
+    }
+    if (name === "B" && !input.B.includes(value)) {
+      input.B.push(value);
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q24", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q24">
@@ -59,93 +128,40 @@ export default function Question24() {
             or long-term incentive plan? (PLEASE SELECT ALL THAT APPLY)
           </p>
           <form>
-            <Table bordered hover>
+            <Table bordered>
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
-                  <td>A) Company’s long-term corporate strategy</td>
-                  <td>B) Personal annual bonus or long-term incentive plan</td>
+
+                  {columns.map((col) => {
+                    return (
+                      <td className="left-align-text">
+                        {col.key}) {col.value}
+                      </td>
+                    );
+                  })}
+
                 </tr>
-                <tr>
-                  <td>A</td>
-                  <td>Greenhouse gas (GHG) emission targets</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td>Gender representation rates</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td>Race and ethnicity representation rates</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td>Customer satisfaction metrics</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>E</td>
-                  <td>Automation and digitisation goals</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>F</td>
-                  <td>Employee engagement metrics</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>G</td>
-                  <td>None of the above</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>H</td>
-                  <td>Prefer not to answer</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr>
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
+                      {columns.map((col) => {
+                        return (
+                          <td>
+                            <input
+                              type="checkbox"
+                              name={col.key}
+                              value={row.value}
+                              onClick={handleClick}
+                            ></input>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
             <Link to="/eng-q23">
@@ -154,11 +170,13 @@ export default function Question24() {
               </Button>
             </Link>
 
-            <Link to="/eng-q25">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q25">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

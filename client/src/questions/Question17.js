@@ -1,11 +1,102 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question16 from "./Question16";
 import Question18 from "./Question18";
-
+import { useState } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question17() {
+  const rows = [
+    {
+      key: "A",
+      value: "Initiate investments in new projects",
+    },
+    {
+      key: "B",
+      value: "Stop low-potential or nonaligned projects",
+    },
+    {
+      key: "C",
+      value: "Invest in high-potential projects",
+    },
+    {
+      key: "D",
+      value: "Scale-up high-performing small businesses",
+    },
+    {
+      key: "E",
+      value: "Trim low-performing large businesses",
+    },
+    {
+      key: "F",
+      value: "Divest businesses",
+    },
+    {
+      key: "G",
+      value: "Acquire businesses",
+    },
+  ];
+
+  const columns = [
+    {
+      key: 1,
+      value: "Every four years or less frequently",
+    },
+    {
+      key: 2,
+      value: "Every three years",
+    },
+    {
+      key: 3,
+      value: "Every two years",
+    },
+    {
+      key: 4,
+      value: "Every year",
+    },
+    {
+      key: 5,
+      value: "Twice a year",
+    },
+    {
+      key: 6,
+      value: "Three times a year",
+    },
+    {
+      key: 7,
+      value: "Four times a year or more frequently",
+    },
+    {
+      key: 8,
+      value: "Not applicable / Don't know",
+    },
+  ];
+
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
+    F: "",
+    G: "",
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    setInput((prevInput) => {
+      return {
+        ...prevInput,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q17", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q17">
@@ -57,214 +148,37 @@ export default function Question17() {
                 <tr>
                   <td colSpan="2" rowSpan="2"></td>
                   <td colSpan="3">Less often</td>
-                  <td rowSpan="2">Every year</td>
+                  <td></td>
                   <td colSpan="3">More often</td>
-                  <td rowSpan="2">Not applicable / Don't know</td>
+                  <td></td>
                 </tr>
                 <tr>
-                  <td>Every four years or less frequently</td>
-                  <td>Every three years</td>
-                  <td>Every two years</td>
-                  <td>Twice a year</td>
-                  <td>Three times a year</td>
-                  <td>Four times a year or more frequently</td>
+                  {columns.map((column) => {
+                    return <td>{column.value}</td>;
+                  })}
+
                 </tr>
-                <tr>
-                  <td>A</td>
-                  <td>Initiate investments in new projects</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td>Stop low-potential or nonaligned projects</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td>Invest in high-potential projects</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td>Scale-up high-performing small businesses</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>E</td>
-                  <td>Trim low-performing large businesses</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>F</td>
-                  <td>Divest businesses</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>G</td>
-                  <td>Acquire businesses</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
+
+                {rows.map((row) => {
+                  return (
+                    <tr>
+                      <td>{row.key}</td>
+                      <td>{row.value}</td>
+                      {columns.map((column) => {
+                        return (
+                          <td>
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={column.value}
+                              onClick={handleClick}
+                            ></input>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
 
@@ -274,11 +188,13 @@ export default function Question17() {
               </Button>
             </Link>
 
-            <Link to="/eng-q18">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q18">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

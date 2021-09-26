@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { useState } from "react";
-import Question30 from "./Question30";
+import Question28 from "./Question28";
 import QuestionB from "./QuestionB";
 import { Button, Breadcrumb, Table, Form } from "react-bootstrap";
 import "../App.css";
@@ -151,7 +151,7 @@ export default function QuestionA() {
                 )}
               </tbody>
             </Table>
-            <Link to="/eng-q30">
+            <Link to="/eng-q28">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
@@ -167,8 +167,8 @@ export default function QuestionA() {
       </Route>
 
       <Switch>
-        <Route path="/eng-q30">
-          <Question30 />
+        <Route path="/eng-q28">
+          <Question28 />
         </Route>
         <Route path="/eng-qb">
           <QuestionB />

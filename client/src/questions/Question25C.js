@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import Question25B from "./Question25B";
 import Question26 from "./Question26";
-import Question28 from "./Question28";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
 
-export default function Question27() {
+export default function Question25C() {
   return (
     <BrowserRouter>
-      <Route path="/eng-q27">
+      <Route path="/eng-q25c">
         <div className="main">
           <Breadcrumb className="nav-div">
             <Breadcrumb.Item>
@@ -46,9 +46,7 @@ export default function Question27() {
             <Breadcrumb.Item>Q24</Breadcrumb.Item>
             <Breadcrumb.Item>Q25</Breadcrumb.Item>
             <Breadcrumb.Item>Q26</Breadcrumb.Item>
-            <Breadcrumb.Item>Q27</Breadcrumb.Item>
-            <Breadcrumb.Item>Q28</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q29</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q27</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">
             <div
@@ -59,18 +57,22 @@ export default function Question27() {
             ></div>
           </div>
           <p>
-            Q27. Taking into account the business achievements in 2021, please
-            name the best Kazakhstan CEO 2020 and why?
+            Q25c. In order to achieve goals (if any) which of stated below, your
+            company is interested in cooperation with government agencies in the
+            next three years? (Select all that apply)
           </p>
-          <Form>
-            <Form.Group style={{ width: "35%" }}>
-              <Form.Control
-                type="text"
-                placeholder="Specify here"
-              ></Form.Control>
-            </Form.Group>
-
-
+          <form>
+            <Table>
+              <tbody>
+                <tr>
+                  <td>A</td>
+                  <td style={{ textAlign: "left" }}>
+                    A skilled, educated and adaptable workforce
+                  </td>
+                  <td>
+                    <input type="checkbox"></input>
+                  </td>
+                  <td style={{ width: "10%" }}></td>
 
                   <td>J</td>
                   <td style={{ textAlign: "left" }}>
@@ -82,85 +84,85 @@ export default function Question27() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td style={{ textAlign: "left" }}>Adequate physical and digital infrastructure</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>K</td>
-                  <td style={{ textAlign: "left" }}>Investment attractiveness of the country</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td style={{ textAlign: "left" }}>Reducing climate change and environmental damage</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>L</td>
-                  <td style={{ textAlign: "left" }}>Fighting against corruption and bribery</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td style={{ textAlign: "left" }}>High levels of employment</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>M</td>
-                  <td style={{ textAlign: "left" }}>The supremacy of law in all spheres of state activity</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td style={{ textAlign: "left" }}>An effective tax system</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>N</td>
-                  <td style={{ textAlign: "left" }}>Access to affordable capital</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td style={{ textAlign: "left" }}>Greater income equality</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>O</td>
-                  <td style={{ textAlign: "left" }}>Other (please specify)</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>G</td>
-                  <td style={{ textAlign: "left" }}>The good health and well-being of the workforce</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>P</td>
-                  <td style={{ textAlign: "left" }}>None of the above</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>H</td>
-                  <td style={{ textAlign: "left" }}>A diverse and inclusive workforce</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -173,35 +175,34 @@ export default function Question27() {
                 </tr>
                 <tr>
                   <td>I</td>
-                  <td style={{ textAlign: "left" }}>Safeguards around usage of personal data</td>
+                  <td style={{ textAlign: "left" }}>...</td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
               </tbody>
             </Table>
-
-            <Link to="/eng-q26">
+            <Link to="/eng-q25b">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
             </Link>
 
-            <Link to="/eng-q28">
+            <Link to="/eng-q26">
               <Button variant="danger" className="next-btn">
                 Next
               </Button>
             </Link>
-          </Form>
+          </form>
         </div>
       </Route>
 
       <Switch>
+        <Route path="/eng-q25b">
+          <Question25B />
+        </Route>
         <Route path="/eng-q26">
           <Question26 />
-        </Route>
-        <Route path="/eng-q28">
-          <Question28 />
         </Route>
       </Switch>
     </BrowserRouter>

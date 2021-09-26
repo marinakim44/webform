@@ -3,8 +3,112 @@ import Question19 from "./Question19";
 import Question21 from "./Question21";
 import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function Question20() {
+  const rows = [
+    {
+      key: "A",
+      title: "LOYALTY (SHALLOW DEPENDENCE)",
+      value:
+        "Switch to a competitor’s products/services (e.g., if ours are unavailable, if a competitor offers discount/promotion)",
+    },
+    {
+      key: "B",
+      title: "RELIABILITY/QUALITY (SHALLOW INTERDEPENDENCE)",
+      value: "Recommend our products/services to family or friends",
+    },
+    {
+      key: "C",
+      title: "FORESIGHT (DEEP INTERDEPENDENCE)",
+      value: "Resist new updates or changes to our products/services",
+    },
+    {
+      key: "D",
+      title: "INTUITION (DEEP INTERDEPENDENCE)",
+      value: "Provide feedback that our products/services exceed expectations",
+    },
+    {
+      key: "E",
+      title: "COMPETENCY (SHALLOW DEPENDENCE)",
+      value:
+        "Update their personal preferences with our company to receive a more tailored experience",
+    },
+    {
+      key: "F",
+      title: "BENEVOLENCE (DEEP DEPENDENCE)",
+      value:
+        "Choose our products/services primarily because of the company’s values (e.g., environmental, social responsibility)",
+    },
+  ];
+
+  const columns = [
+    {
+      key: 1,
+      title: "Almost never",
+      value: "0-5% of the time",
+    },
+    {
+      key: 2,
+      title: "Rarely",
+      value: "6-20% of the time",
+    },
+    {
+      key: 3,
+      title: "Occasionally",
+      value: "21-40% of the time",
+    },
+    {
+      key: 4,
+      title: "Sometimes",
+      value: "41-60% of the time",
+    },
+    {
+      key: 5,
+      title: "Frequently",
+      value: "61-80% of the time",
+    },
+    {
+      key: 6,
+      title: "Usually",
+      value: "81-94% of the time",
+    },
+    {
+      key: 7,
+      title: "Almost always",
+      value: "95-100% of the time",
+    },
+    {
+      key: 8,
+      title: "Don't know",
+      value: "",
+    },
+  ];
+
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
+    F: "",
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q20", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q20">
@@ -55,191 +159,55 @@ export default function Question20() {
             actions: (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
-            <Table bordered hover>
+            <Table bordered style={{ fontSize: "12px" }}>
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
-                  <td>Almost never 0–5% of the time</td>
-                  <td>Rarely 6–20% of the time</td>
-                  <td>Occasionally 21–40% of the time</td>
-                  <td>Sometimes 41–60% of the time </td>
-                  <td>Frequently 61–80% of the tim </td>
-                  <td>Usually 81–94% of the time </td>
-                  <td>Almost always 95–100% of the time </td>
-                  <td>Don’t know</td>
+
+                  {columns.map((col) => {
+                    return (
+                      <td>
+                        <p style={{ margin: 0, padding: 0 }}>{col.title}</p>
+                        <p style={{ margin: 0, padding: 0 }}>{col.value}</p>
+                      </td>
+                    );
+                  })}
+
                 </tr>
-                <tr>
-                  <td>A</td>
-                  <td>
-                    LOYALTY (SHALLOW DEPENDENCE) Switch to a competitor’s
-                    products/services (e.g., if ours are unavailable, if a
-                    competitor offers discount/promotion)
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td>RELIABILITY/QUALITY (SHALLOW INTERDEPENDENCE) Recommend our products/services to family or friends</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td>FORESIGHT (DEEP INTERDEPENDENCE) Resist new updates or changes to our products/services</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td>INTUITION (DEEP INTERDEPENDENCE) Provide feedback that our products/services exceed expectations </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>E</td>
-                  <td>COMPETENCY (SHALLOW DEPENDENCE) Update their personal preferences with our company to receive a more tailored experience </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>F</td>
-                  <td>BENEVOLENCE (DEEP DEPENDENCE) Choose our products/services primarily because of the company’s values (e.g., environmental, social responsibility) </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr>
+                      <td
+                        style={{
+                          margin: 0,
+                          padding: 0,
+                          verticalAlign: "middle",
+                        }}
+                      >
+                        {row.key}
+                      </td>
+                      <td
+                        className="left-align-text"
+                        style={{ width: "400px" }}
+                      >
+                        <p style={{ margin: 0, padding: 0 }}>{row.title}</p>
+                        <p style={{ margin: 0, padding: 0 }}>{row.value}</p>
+                      </td>
+                      {columns.map((col) => {
+                        return (
+                          <td>
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col.title}
+                              onClick={handleClick}
+                            ></input>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
 
@@ -249,11 +217,13 @@ export default function Question20() {
               </Button>
             </Link>
 
-            <Link to="/eng-q21">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q21">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>
