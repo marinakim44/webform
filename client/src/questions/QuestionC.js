@@ -99,23 +99,7 @@ export default function QuestionC() {
                         <Form.Check
                           type={type}
                           id={`default-${type}`}
-                          label={"..."}
-                          style={{
-                            textAlign: "left",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {["radio"].map((type) => (
-                      <div key={`default-${type}`} className="mb-3">
-                        <Form.Check
-                          type={type}
-                          id={`default-${type}`}
-                          label={"..."}
+                          label={"CEO of an entity within a multi-entity parent company"}
                           style={{
                             textAlign: "left",
                           }}

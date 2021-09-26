@@ -85,7 +85,7 @@ export default function QuestionJ() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"500–999"}
                   style={{
                     textAlign: "left",
                   }}
@@ -93,7 +93,7 @@ export default function QuestionJ() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"1,000–4,999"}
                   style={{
                     textAlign: "left",
                   }}
@@ -101,7 +101,7 @@ export default function QuestionJ() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"5,000–9,999"}
                   style={{
                     textAlign: "left",
                   }}
@@ -109,7 +109,7 @@ export default function QuestionJ() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"10,000–24,999"}
                   style={{
                     textAlign: "left",
                   }}
@@ -117,7 +117,7 @@ export default function QuestionJ() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"25,000–49,999"}
                   style={{
                     textAlign: "left",
                   }}
@@ -125,7 +125,15 @@ export default function QuestionJ() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"50,000 or more"}
+                  style={{
+                    textAlign: "left",
+                  }}
+                />
+                 <Form.Check
+                  type={type}
+                  id={`default-${type}`}
+                  label={"Don't know "}
                   style={{
                     textAlign: "left",
                   }}
