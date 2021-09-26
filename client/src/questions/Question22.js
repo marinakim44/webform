@@ -9,6 +9,21 @@ export default function Question22() {
   const [isClicked1, setIsClicked1] = useState(false);
   const [isClicked2, setIsClicked2] = useState(false);
   const [isClicked3, setIsClicked3] = useState(false);
+  const [input, setInput] = useState({
+    revenue: "",
+    profit: "",
+    return: "",
+  });
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
 
   function handleClick1(e) {
     setIsClicked1(!isClicked1);
@@ -18,6 +33,11 @@ export default function Question22() {
   }
   function handleClick3(e) {
     setIsClicked3(!isClicked3);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q22", JSON.stringify(input));
   }
 
   return (
@@ -84,6 +104,9 @@ export default function Question22() {
                         <Form.Control
                           type="text"
                           placeholder="Specify whole number"
+                          name="revenue"
+                          value={input.revenue}
+                          onChange={handleChange}
                         />
                       </Col>
                       <Form.Label
@@ -117,6 +140,9 @@ export default function Question22() {
                         <Form.Control
                           type="text"
                           placeholder="Specify whole number"
+                          name="profit"
+                          value={input.profit}
+                          onChange={handleChange}
                         />
                       </Col>
                       <Form.Label
@@ -150,6 +176,9 @@ export default function Question22() {
                         <Form.Control
                           type="text"
                           placeholder="Specify whole number"
+                          name="return"
+                          value={input.return}
+                          onChange={handleChange}
                         />
                       </Col>
                       <Form.Label
@@ -185,11 +214,13 @@ export default function Question22() {
               </Button>
             </Link>
 
-            <Link to="/eng-q23">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q23">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

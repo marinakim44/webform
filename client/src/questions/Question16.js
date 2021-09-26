@@ -3,8 +3,20 @@ import Question15 from "./Question15";
 import Question17 from "./Question17";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function Question16() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q16", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q16">
@@ -60,6 +72,9 @@ export default function Question16() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="0"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -68,6 +83,9 @@ export default function Question16() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="1"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -76,6 +94,9 @@ export default function Question16() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="2-5"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -84,6 +105,9 @@ export default function Question16() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="6-10"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -92,6 +116,9 @@ export default function Question16() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="11-20"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -100,6 +127,9 @@ export default function Question16() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="21-30"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -108,6 +138,9 @@ export default function Question16() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="More than 30"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -116,6 +149,9 @@ export default function Question16() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Don't know"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -126,11 +162,13 @@ export default function Question16() {
               </Button>
             </Link>
 
-            <Link to="/eng-q17">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q17">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

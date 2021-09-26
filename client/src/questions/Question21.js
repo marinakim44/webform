@@ -3,8 +3,49 @@ import Question20 from "./Question20";
 import Question22 from "./Question22";
 import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function Question21() {
+  const rows = [
+    {
+      key: "A",
+      value: "Confidence in revenue growth - next 12 months",
+    },
+    {
+      key: "B",
+      value: "Confidence in revenue growth - next three years",
+    },
+  ];
+
+  const columns = [
+    "Not confident",
+    "Slightly confident",
+    "Moderately confident",
+    "Very confident",
+    "Extremely confident",
+    "Don't know",
+  ];
+
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q21", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q21">
@@ -60,58 +101,31 @@ export default function Question21() {
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
-                  <td>Not confident</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                </tr>
-                <tr>
-                  <td>A</td>
-                  <td>Confidence in revenue growth - next 12 months</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td>...</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
+                  {columns.map((col) => {
+                    return <td>{col}</td>;
+                  })}
                 </tr>
               </tbody>
+              {rows.map((row) => {
+                return (
+                  <tr>
+                    <td>{row.key}</td>
+                    <td>{row.value}</td>
+                    {columns.map((col) => {
+                      return (
+                        <td>
+                          <input
+                            type="radio"
+                            name={row.key}
+                            value={col}
+                            onClick={handleClick}
+                          ></input>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </Table>
 
             <Link to="/eng-q20">
@@ -120,11 +134,13 @@ export default function Question21() {
               </Button>
             </Link>
 
-            <Link to="/eng-q22">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q22">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

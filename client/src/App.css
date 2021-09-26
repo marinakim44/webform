@@ -10,10 +10,10 @@ body span {
 .main {
   width: 90%;
   text-align: center;
-  margin: auto auto;
-  height: 100vh;
-  padding: 2rem;
-  background-color: rgb(233, 233, 233);
+  margin: 1rem auto 0;
+  height: 100%;
+
+  /* background-color: rgb(233, 233, 233); */
 }
 .main ol {
   margin: 0;
@@ -22,13 +22,13 @@ body span {
 .main a {
   text-decoration: none;
 }
-.nav-div {
+/* .nav-div {
   border-radius: 8px;
   padding: 10px;
   margin: 0;
   margin-bottom: 2rem;
   padding: 0;
-}
+} */
 .progressBarEmpty {
   width: 100%;
   margin: 0 auto 40px;
@@ -79,4 +79,16 @@ h1 {
   margin: 0;
   margin-top: 2rem;
   width: 200px;
+}
+
+.sticky-sub-div {
+  background-color: white;
+  position: sticky;
+  top: 0;
+  left: 5%;
+  z-index: 100;
+  width: 90%;
+  height: 120px;
+  margin: 0 auto;
+  padding: 1rem 0;
 }

@@ -1,11 +1,89 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question17 from "./Question17";
 import Question19 from "./Question19";
-
+import { useState } from "react";
 import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
 
 export default function Question18() {
+  const rows = [
+    {
+      key: "A",
+      value:
+        "My company is increasingly concerned about the reputational risks associated with the amount of taxes it pays",
+    },
+    {
+      key: "B",
+      value: "My company aims to minimise the amount of taxes it pays",
+    },
+    {
+      key: "C",
+      value:
+        "My company effectively communicates to the public all the taxes it pays (e.g., income, payroll, property)",
+    },
+    {
+      key: "D",
+      value: "My company’s board regularly reviews its tax strategy",
+    },
+  ];
+
+  const columns = [
+    {
+      key: 1,
+      value: "Strongly disagree",
+    },
+    {
+      key: 2,
+      value: "Moderately disagree",
+    },
+    {
+      key: 3,
+      value: "Slightly disagree",
+    },
+    {
+      key: 4,
+      value: "Neither agree nor disagree",
+    },
+    {
+      key: 5,
+      value: "Slightly agree",
+    },
+    {
+      key: 6,
+      value: "Moderately agree",
+    },
+    {
+      key: 7,
+      value: "Strongly agree",
+    },
+    {
+      key: 8,
+      value: "Don't know",
+    },
+  ];
+
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+  });
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q18", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q18">
@@ -54,78 +132,34 @@ export default function Question18() {
             RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
-            <Table bordered hover>
+            <Table bordered>
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
-                  <td>Strongly disagree</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
+                  {columns.map((col) => {
+                    return <td>{col.value}</td>;
+                  })}
                 </tr>
-                <tr>
-                  <td>A</td>
-                  <td>
-                    My company is increasingly concerned about the reputational
-                    risks associated with the amount of taxes it pays
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td>...</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr>
+                      <td>{row.key}</td>
+                      <td>{row.value}</td>
+                      {columns.map((col) => {
+                        return (
+                          <td>
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col.value}
+                              onClick={handleClick}
+                            ></input>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
             </Table>
 
@@ -135,11 +169,13 @@ export default function Question18() {
               </Button>
             </Link>
 
-            <Link to="/eng-q19">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q19">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

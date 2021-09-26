@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question26 from "./Question26";
 import Question28 from "./Question28";
-import { Button, Breadcrumb, Table } from "react-bootstrap";
+import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
 
 export default function Question27() {
@@ -46,7 +46,9 @@ export default function Question27() {
             <Breadcrumb.Item>Q24</Breadcrumb.Item>
             <Breadcrumb.Item>Q25</Breadcrumb.Item>
             <Breadcrumb.Item>Q26</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q27</Breadcrumb.Item>
+            <Breadcrumb.Item>Q27</Breadcrumb.Item>
+            <Breadcrumb.Item>Q28</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q29</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">
             <div
@@ -57,131 +59,17 @@ export default function Question27() {
             ></div>
           </div>
           <p>
-            Q25c. In order to achieve goals (if any) which of stated below, your
-            company is interested in cooperation with government agencies in the
-            next three years? (Select all that apply)
+            Q27. Taking into account the business achievements in 2021, please
+            name the best Kazakhstan CEO 2020 and why?
           </p>
-          <form>
-            <Table>
-              <tbody>
-                <tr>
-                  <td>A</td>
-                  <td style={{ textAlign: "left" }}>
-                    A skilled, educated and adaptable workforce
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
+          <Form>
+            <Form.Group style={{ width: "35%" }}>
+              <Form.Control
+                type="text"
+                placeholder="Specify here"
+              ></Form.Control>
+            </Form.Group>
 
-                  <td>J</td>
-                  <td style={{ textAlign: "left" }}>
-                    Predictable macroeconomic environment
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>K</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>L</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>M</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>E</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>N</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>F</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>O</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>G</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>P</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>H</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>Q</td>
-                  <td style={{ textAlign: "left" }}>Don't know</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>I</td>
-                  <td style={{ textAlign: "left" }}>...</td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
             <Link to="/eng-q26">
               <Button variant="light" className="back-btn">
                 Back
@@ -193,7 +81,7 @@ export default function Question27() {
                 Next
               </Button>
             </Link>
-          </form>
+          </Form>
         </div>
       </Route>
 

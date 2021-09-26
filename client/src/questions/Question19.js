@@ -1,11 +1,22 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question18 from "./Question18";
 import Question20 from "./Question20";
-
+import { useState } from "react";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
 
 export default function Question19() {
+  const [input, setInput] = useState([]);
+
+  function handleClick(e) {
+    input.push(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q19", JSON.stringify(input));
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q19">
@@ -60,31 +71,73 @@ export default function Question19() {
               <Form.Check
                 type="checkbox"
                 label="The global tax policy change is not applicable to our company"
+                onClick={handleClick}
+                value="The global tax policy change is not applicable to our company"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Check
+                type="checkbox"
+                label="Engaged tax specialists to advise our company on potential implications"
+                onClick={handleClick}
+                value="Engaged tax specialists to advise our company on potential implications"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Check
+                type="checkbox"
+                label="Modeled the cash tax’s impact on our company"
+                onClick={handleClick}
+                value="Modeled the cash tax’s impact on our company"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Check
+                type="checkbox"
+                label="Conducted scenario planning regarding where our company will pay taxes"
+                onClick={handleClick}
+                value="Modeled the cash tax’s impact on our company"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Check
+                type="checkbox"
+                label="Encouraged government officials to support the tax policy"
+                onClick={handleClick}
+                value="Encouraged government officials to support the tax policy"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Check
+                type="checkbox"
+                label="Recommended additional tax policy changes to government officials"
+                onClick={handleClick}
+                value="Recommended additional tax policy changes to government officials"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Check
+                type="checkbox"
+                label="Other action (please specify)"
+                onClick={handleClick}
+                value="Other action (please specify)"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Check
+                type="checkbox"
+                label="Our company has not taken any action"
+                onClick={handleClick}
+                value="Our company has not taken any action"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
+              <Form.Check
+                type="checkbox"
+                label="Don't know"
+                onClick={handleClick}
+                value="Don't know"
+              />
             </Form.Group>
             <div style={{ textAlign: "center" }}>
               <Link to="/eng-q18">
@@ -93,11 +146,13 @@ export default function Question19() {
                 </Button>
               </Link>
 
-              <Link to="/eng-q20">
-                <Button variant="danger" className="next-btn">
-                  Next
-                </Button>
-              </Link>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                <Link to="/eng-q20">Next</Link>
+              </Button>
             </div>
           </Form>
         </div>

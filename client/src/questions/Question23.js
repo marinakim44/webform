@@ -1,10 +1,23 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question22 from "./Question22";
 import Question24 from "./Question24";
-import { Button, Breadcrumb, Table } from "react-bootstrap";
+import { Button, Breadcrumb, Table, Form, Row, Col } from "react-bootstrap";
+import RangeSlider from "react-bootstrap-range-slider";
+import { useState } from "react";
 import "../App.css";
 
 export default function Question23() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q23", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q23">
@@ -54,50 +67,96 @@ export default function Question23() {
           </div>
           <p>
             Q23. How would you describe your company's typical forecasting
-            accuracy regarding year-on-year revenue growth? (PLEASE SELECT ONE
-            RESPONSE)
+            accuracy regarding year-on-year revenue growth?
           </p>
-          <form>
-            <Table bordered hover>
+          <Form>
+            <Table bordered>
               <tbody>
-                <tr>
+                <tr style={{ color: "#dc3545", fontWeight: "bold" }}>
                   <td colSpan="3">Forecast is below actual</td>
-                  <td>Within +-2%</td>
+                  <td rowSpan="2" style={{ verticalAlign: "middle" }}>
+                    Forecast is within +-2% of actual
+                  </td>
                   <td colSpan="3">Forecast is below actual</td>
-                  <td>Don't know</td>
+                  <td rowSpan="2" style={{ verticalAlign: "middle" }}>
+                    Don't know
+                  </td>
                 </tr>
                 <tr>
-                  <td>Less or equal to 10%</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
-                  <td>...</td>
+                  <td>Less or equal to 10% below actual</td>
+                  <td>6-9% below actual</td>
+                  <td>3-5% below actual</td>
+
+                  <td>3-5% above actual</td>
+                  <td>6-9% above actual</td>
+                  <td>More or equal to 10% above actual</td>
+                  <td></td>
                 </tr>
 
                 <tr>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="option"
+                      value="Less or equal to 10% below actual"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="option"
+                      value="6-9% below actual"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="option"
+                      value="3-5% below actual"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="option"
+                      value="Forecast is within +-2% of actual"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="option"
+                      value="3-5% above actual"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="option"
+                      value="6-9% above actual"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                   <td>
-                    <input type="radio"></input>
+                    <input
+                      type="radio"
+                      name="option"
+                      value="More or equal to 10% above actual"
+                      onClick={handleClick}
+                    ></input>
+                  </td>
+                  <td>
+                    <input
+                      type="radio"
+                      name="option"
+                      value="Don't know"
+                      onClick={handleClick}
+                    ></input>
                   </td>
                 </tr>
               </tbody>
@@ -108,12 +167,14 @@ export default function Question23() {
               </Button>
             </Link>
 
-            <Link to="/eng-q24">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
-          </form>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q24">Next</Link>
+            </Button>
+          </Form>
         </div>
       </Route>
 

@@ -1,11 +1,39 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question12 from "./Question12";
 import Question14 from "./Question14";
-
+import { useState } from "react";
 import { Button, Table, Dropdown, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 
 export default function Question13() {
+  const [inputA, setInputA] = useState("");
+  const [inputB, setInputB] = useState("");
+  const [isCheckedA, setIsCheckedA] = useState(false);
+  const [isCheckedB, setIsCheckedB] = useState(false);
+
+  function handleSelectA(e) {
+    setInputA(e);
+  }
+
+  function handleSelectB(e) {
+    setInputB(e);
+  }
+
+  function handleClickOtherA(e) {
+    setIsCheckedA(!isCheckedA);
+    setInputA("");
+  }
+  function handleClickOtherB(e) {
+    setIsCheckedB(!isCheckedB);
+    setInputB("");
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q13a", inputA ? inputA : "Don't know");
+    localStorage.setItem("q13b", inputB ? inputB : "Don't know");
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q13">
@@ -64,27 +92,31 @@ export default function Question13() {
                     Overarching strategic objectives
                   </td>
                   <td>
-                    <Dropdown>
+                    <Dropdown onSelect={handleSelectA}>
                       <Dropdown.Toggle
                         variant="light"
                         id="dropdown-basic"
                         className="lng-btn"
                         style={{ margin: "2px" }}
+                        disabled={isCheckedA ? true : false}
                       >
-                        Select number
+                        {inputA ? inputA : "Select number"}
                       </Dropdown.Toggle>
+
                       <Dropdown.Menu>
-                        <Dropdown.Item>1</Dropdown.Item>
-                        <Dropdown.Item>2</Dropdown.Item>
-                        <Dropdown.Item>3</Dropdown.Item>
-                        <Dropdown.Item>4</Dropdown.Item>
-                        <Dropdown.Item>5</Dropdown.Item>
-                        <Dropdown.Item>6</Dropdown.Item>
-                        <Dropdown.Item>7</Dropdown.Item>
-                        <Dropdown.Item>8</Dropdown.Item>
-                        <Dropdown.Item>9</Dropdown.Item>
-                        <Dropdown.Item>10</Dropdown.Item>
-                        <Dropdown.Item>11 or more</Dropdown.Item>
+                        <Dropdown.Item eventKey="1">1</Dropdown.Item>
+                        <Dropdown.Item eventKey="2">2</Dropdown.Item>
+                        <Dropdown.Item eventKey="3">3</Dropdown.Item>
+                        <Dropdown.Item eventKey="4">4</Dropdown.Item>
+                        <Dropdown.Item eventKey="5">5</Dropdown.Item>
+                        <Dropdown.Item eventKey="6">6</Dropdown.Item>
+                        <Dropdown.Item eventKey="7">7</Dropdown.Item>
+                        <Dropdown.Item eventKey="8">8</Dropdown.Item>
+                        <Dropdown.Item eventKey="9">9</Dropdown.Item>
+                        <Dropdown.Item eventKey="10">10</Dropdown.Item>
+                        <Dropdown.Item eventKey="11 or more">
+                          11 or more
+                        </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
@@ -101,6 +133,10 @@ export default function Question13() {
                         margin: 0,
                         verticalAlign: "middle",
                       }}
+                      name="a"
+                      value="Don't know"
+                      checked={isCheckedA ? true : false}
+                      onClick={handleClickOtherA}
                     ></input>
                     <label
                       for="#dontknowa"
@@ -131,7 +167,7 @@ export default function Question13() {
                     objectives (in total)
                   </td>
                   <td style={{ verticalAlign: "middle" }}>
-                    <Dropdown>
+                    <Dropdown onSelect={handleSelectB}>
                       <Dropdown.Toggle
                         variant="light"
                         id="dropdown-basic"
@@ -139,21 +175,24 @@ export default function Question13() {
                         style={{
                           margin: "2px",
                         }}
+                        disabled={isCheckedB ? true : false}
                       >
-                        Select number
+                        {inputB ? inputB : "Select number"}
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item>1-5</Dropdown.Item>
-                        <Dropdown.Item>6-10</Dropdown.Item>
-                        <Dropdown.Item>11-15</Dropdown.Item>
-                        <Dropdown.Item>16-20</Dropdown.Item>
-                        <Dropdown.Item>21-25</Dropdown.Item>
-                        <Dropdown.Item>25-30</Dropdown.Item>
-                        <Dropdown.Item>31-35</Dropdown.Item>
-                        <Dropdown.Item>36-40</Dropdown.Item>
-                        <Dropdown.Item>41-45</Dropdown.Item>
-                        <Dropdown.Item>46-50</Dropdown.Item>
-                        <Dropdown.Item>51 or more</Dropdown.Item>
+                        <Dropdown.Item eventKey="1-5">1-5</Dropdown.Item>
+                        <Dropdown.Item eventKey="6-10">6-10</Dropdown.Item>
+                        <Dropdown.Item eventKey="11-15">11-15</Dropdown.Item>
+                        <Dropdown.Item eventKey="16-20">16-20</Dropdown.Item>
+                        <Dropdown.Item eventKey="21-25">21-25</Dropdown.Item>
+                        <Dropdown.Item eventKey="25-30">25-30</Dropdown.Item>
+                        <Dropdown.Item eventKey="31-35">31-35</Dropdown.Item>
+                        <Dropdown.Item eventKey="36-40">36-40</Dropdown.Item>
+                        <Dropdown.Item eventKey="41-45">41-45</Dropdown.Item>
+                        <Dropdown.Item eventKey="46-50">46-50</Dropdown.Item>
+                        <Dropdown.Item eventKey="51 or more">
+                          51 or more
+                        </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
@@ -167,6 +206,10 @@ export default function Question13() {
                       type="checkbox"
                       id="dontknowb"
                       style={{ verticalAlign: "middle", margin: 0, padding: 0 }}
+                      name="b"
+                      value="Don't know"
+                      checked={isCheckedB ? true : false}
+                      onClick={handleClickOtherB}
                     ></input>
                     <label
                       for="#dontknowb"
@@ -188,11 +231,13 @@ export default function Question13() {
               </Button>
             </Link>
 
-            <Link to="/eng-q14">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q14">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>

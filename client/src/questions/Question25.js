@@ -1,10 +1,48 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question24 from "./Question24";
-import Question26 from "./Question26";
+import Question25B from "./Question25B";
 import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function Question25() {
+  const [input, setInput] = useState([]);
+  const [other, setOther] = useState("");
+  const [dontknow, setDontknow] = useState(false);
+
+  function handleClick(e) {
+    if (!input.includes(e.target.value) && input.length < 3 && !dontknow) {
+      input.push(e.target.value);
+    } else {
+      input.push("Don't know");
+    }
+  }
+
+  function handleChange(e) {
+    if (dontknow) {
+      setOther("");
+    } else {
+      setOther(e.target.value);
+    }
+  }
+
+  function dontKnow(e) {
+    setDontknow(!dontknow);
+    if (dontknow) {
+      setInput([]);
+      setOther("");
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem(
+      "q25",
+      dontknow ? "Don't know" : JSON.stringify(input)
+    );
+    localStorage.setItem("q25other", other);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q25">
@@ -60,7 +98,7 @@ export default function Question25() {
             (PLEASE SELECT UP TO THREE RESPONSES ONLY)
           </p>
           <form>
-            <Table>
+            <Table style={{ fontSize: "12px" }}>
               <tbody>
                 <tr>
                   <td>A</td>
@@ -68,7 +106,12 @@ export default function Question25() {
                     A skilled, educated and adaptable workforce
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="a"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
 
@@ -77,105 +120,200 @@ export default function Question25() {
                     Predictable macroeconomic environment
                   </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="j"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    Adequate physical and digital infrastructure
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="b"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>K</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    Investment attractiveness of the country
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="k"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    Reducing climate change and environmental damage
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="c"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>L</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    Fighting against corruption and bribery
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="l"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    High levels of employment
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="d"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>M</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    The supremacy of law in all spheres of state activity
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="m"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>E</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>An effective tax system</td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="e"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>N</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    Access to affordable capital
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="n"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>F</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Greater income equality</td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="f"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>O</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>Other (please specify)</td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="text"
+                      value={other}
+                      onChange={handleChange}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>G</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    The good health and well-being of the workforce
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="g"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>P</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>None of the above</td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="p"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                 </tr>
                 <tr>
                   <td>H</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    A diverse and inclusive workforce
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="h"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>Q</td>
                   <td style={{ textAlign: "left" }}>Don't know</td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input type="radio" value="q" onClick={dontKnow}></input>
                   </td>
                 </tr>
                 <tr>
                   <td>I</td>
-                  <td style={{ textAlign: "left" }}>...</td>
+                  <td style={{ textAlign: "left" }}>
+                    Safeguards around usage of personal data
+                  </td>
                   <td>
-                    <input type="checkbox"></input>
+                    <input
+                      type="checkbox"
+                      value="i"
+                      onClick={handleClick}
+                      disabled={dontknow ? true : false}
+                    ></input>
                   </td>
                 </tr>
               </tbody>
@@ -186,11 +324,13 @@ export default function Question25() {
               </Button>
             </Link>
 
-            <Link to="/eng-q26">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q25b">Next</Link>
+            </Button>
           </form>
         </div>
       </Route>
@@ -199,8 +339,8 @@ export default function Question25() {
         <Route path="/eng-q24">
           <Question24 />
         </Route>
-        <Route path="/eng-q26">
-          <Question26 />
+        <Route path="/eng-q25b">
+          <Question25B />
         </Route>
       </Switch>
     </BrowserRouter>
