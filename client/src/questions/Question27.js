@@ -3,8 +3,20 @@ import Question26 from "./Question26";
 import Question28 from "./Question28";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function Question27() {
+  const [input, setInput] = useState("");
+
+  function handleChange(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q27", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q27">
@@ -67,6 +79,9 @@ export default function Question27() {
               <Form.Control
                 type="text"
                 placeholder="Specify here"
+                value={input}
+                onChange={handleChange}
+                autoComplete="on"
               ></Form.Control>
             </Form.Group>
 
@@ -76,11 +91,13 @@ export default function Question27() {
               </Button>
             </Link>
 
-            <Link to="/eng-q28">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q28">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

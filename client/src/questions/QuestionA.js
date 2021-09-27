@@ -2,14 +2,24 @@ import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import { useState } from "react";
 import Question28 from "./Question28";
 import QuestionB from "./QuestionB";
-import { Button, Breadcrumb, Table, Form } from "react-bootstrap";
+import { Button, Breadcrumb, Table, Form, Row, Col } from "react-bootstrap";
 import "../App.css";
 
 export default function QuestionA() {
-  const [isOther, setIsOther] = useState(false);
+  const [input, setInput] = useState("");
+  const [other, setOther] = useState("");
 
-  function handleOther(e) {
-    setIsOther(!isOther);
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleChange(e) {
+    setOther(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qa", input);
   }
 
   return (
@@ -70,98 +80,64 @@ export default function QuestionA() {
             SELECT ONE RESPONSE)
           </p>
           <Form>
-            <Table borderless>
-              <tbody>
-                <tr>
-                  <td style={{ verticalAlign: "middle" }}>
-                    {["radio"].map((type) => (
-                      <div key={`default-${type}`} className="mb-3">
-                        <Form.Check
-                          type={type}
-                          id={`default-${type}`}
-                          label={"Female"}
-                          style={{
-                            textAlign: "left",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {["radio"].map((type) => (
-                      <div key={`default-${type}`} className="mb-3">
-                        <Form.Check
-                          type={type}
-                          id={`default-${type}`}
-                          label={"Male"}
-                          style={{
-                            textAlign: "left",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {["radio"].map((type) => (
-                      <div key={`default-${type}`} className="mb-3">
-                        <Form.Check
-                          type={type}
-                          id={`default-${type}`}
-                          label={"Prefer not to say"}
-                          style={{
-                            textAlign: "left",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </td>
-                </tr>
-                <tr>
-                  {["radio"].map((type) => (
-                    <div key={`default-${type}`} className="mb-3">
-                      <Form.Check
-                        type={type}
-                        id={`default-${type}`}
-                        label={"Other"}
-                        style={{
-                          textAlign: "left",
-                        }}
-                        onClick={handleOther}
-                      />
-                    </div>
-                  ))}
-                </tr>
-                {isOther ? (
-                  <tr>
-                    <td>
-                      <Form.Group>
-                        <Form.Control
-                          type="text"
-                          placeholder="Other (please specify)"
-                        ></Form.Control>
-                      </Form.Group>
-                    </td>
-                  </tr>
-                ) : (
-                  ""
-                )}
-              </tbody>
-            </Table>
+            <Form.Group style={{ width: "40%", textAlign: "left" }}>
+              <div>
+                <input
+                  type="radio"
+                  id="female"
+                  value="Female"
+                  onClick={handleClick}
+                  name="option"
+                  disabled={other ? true : false}
+                ></input>
+                <label for="#female">Female</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="male"
+                  value="Male"
+                  onClick={handleClick}
+                  name="option"
+                  disabled={other ? true : false}
+                ></input>
+                <label for="#male">Male</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="not"
+                  value="Prefer not to say"
+                  onClick={handleClick}
+                  name="option"
+                  disabled={other ? true : false}
+                ></input>
+                <label for="#not">Prefer not to say</label>
+              </div>
+              <div>
+                <input
+                  style={{ width: "100%" }}
+                  type="text"
+                  placeholder="Other (please specify)"
+                  value={other}
+                  onChange={handleChange}
+                ></input>
+              </div>
+            </Form.Group>
+
             <Link to="/eng-q28">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
             </Link>
 
-            <Link to="/eng-qb">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qb">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

@@ -3,8 +3,19 @@ import QuestionC from "./QuestionC";
 import QuestionE from "./QuestionE";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionD() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qd", input);
+  }
   return (
     <BrowserRouter>
       <Route path="/eng-qd">
@@ -66,45 +77,51 @@ export default function QuestionD() {
             same country? (PLEASE SELECT ONE RESPONSE){" "}
           </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Yes"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"No"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don't know"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
+            <Form.Group style={{ width: "60%", textAlign: "left" }}>
+              <div>
+                <input
+                  type="radio"
+                  id="option1"
+                  value="yes"
+                  onClick={handleClick}
+                  name="option"
+                ></input>
+                <label for="#option1">Yes</label>
               </div>
-            ))}
+              <div>
+                <input
+                  type="radio"
+                  id="option1"
+                  value="no"
+                  onClick={handleClick}
+                  name="option"
+                ></input>
+                <label for="#option1">No</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="option1"
+                  value="dontknow"
+                  onClick={handleClick}
+                  name="option"
+                ></input>
+                <label for="#option1">Don't know</label>
+              </div>
+            </Form.Group>
             <Link to="/eng-qc">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
             </Link>
 
-            <Link to="/eng-qe">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qe">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

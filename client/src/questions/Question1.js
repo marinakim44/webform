@@ -88,9 +88,9 @@ export default function Question1() {
                   <td>Decline moderately</td>
                   <td>Decline slightly</td>
                   <td>Stay the same</td>
-                  <td>Improve significantly</td>
-                  <td>Improve moderately</td>
                   <td>Improve slightly</td>
+                  <td>Improve moderately</td>
+                  <td>Improve significantly</td>
                   <td>Don't know</td>
                 </tr>
 

@@ -3,8 +3,20 @@ import QuestionF from "./QuestionF";
 import QuestionH from "./QuestionH";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionG() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qg", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-qg">
@@ -79,22 +91,31 @@ export default function QuestionG() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Yes"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"No"}
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="No"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"..."}
+                  label={"Don't know"}
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Don't know"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -104,11 +125,13 @@ export default function QuestionG() {
               </Button>
             </Link>
 
-            <Link to="/eng-qh">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qh">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

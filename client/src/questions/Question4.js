@@ -36,6 +36,7 @@ export default function Question4() {
   ];
 
   const [selectedActions, setSelectedActions] = useState([]);
+  const [other, setOther] = useState("");
 
   function handleClick(e) {
     const { name, value } = e.target;
@@ -45,9 +46,14 @@ export default function Question4() {
     });
   }
 
+  function handleChange(e) {
+    setOther(e.target.value);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q4", JSON.stringify(selectedActions));
+    localStorage.setItem("q4-other", other);
   }
 
   return (
@@ -125,7 +131,8 @@ export default function Question4() {
               <Form.Control
                 placeholder="Other (please specify)"
                 style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
-                // onChange={handleChange}
+                onChange={handleChange}
+                value={other}
               ></Form.Control>
             </Form.Group>
 

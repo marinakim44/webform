@@ -7,14 +7,23 @@ import "../App.css";
 
 export default function Question19() {
   const [input, setInput] = useState([]);
+  const [dontknow, setDontknow] = useState(false);
 
   function handleClick(e) {
     input.push(e.target.value);
   }
 
+  function handleDontknow(e) {
+    setDontknow(!dontknow);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q19", JSON.stringify(input));
+    if (dontknow) {
+      localStorage.setItem("q19", "Don't know");
+    } else {
+      localStorage.setItem("q19", JSON.stringify(input));
+    }
   }
 
   return (
@@ -73,6 +82,7 @@ export default function Question19() {
                 label="The global tax policy change is not applicable to our company"
                 onClick={handleClick}
                 value="The global tax policy change is not applicable to our company"
+                disabled={dontknow ? true : false}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -81,6 +91,7 @@ export default function Question19() {
                 label="Engaged tax specialists to advise our company on potential implications"
                 onClick={handleClick}
                 value="Engaged tax specialists to advise our company on potential implications"
+                disabled={dontknow ? true : false}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -89,6 +100,7 @@ export default function Question19() {
                 label="Modeled the cash tax’s impact on our company"
                 onClick={handleClick}
                 value="Modeled the cash tax’s impact on our company"
+                disabled={dontknow ? true : false}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -97,6 +109,7 @@ export default function Question19() {
                 label="Conducted scenario planning regarding where our company will pay taxes"
                 onClick={handleClick}
                 value="Modeled the cash tax’s impact on our company"
+                disabled={dontknow ? true : false}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -105,6 +118,7 @@ export default function Question19() {
                 label="Encouraged government officials to support the tax policy"
                 onClick={handleClick}
                 value="Encouraged government officials to support the tax policy"
+                disabled={dontknow ? true : false}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -113,6 +127,7 @@ export default function Question19() {
                 label="Recommended additional tax policy changes to government officials"
                 onClick={handleClick}
                 value="Recommended additional tax policy changes to government officials"
+                disabled={dontknow ? true : false}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -121,6 +136,7 @@ export default function Question19() {
                 label="Other action (please specify)"
                 onClick={handleClick}
                 value="Other action (please specify)"
+                disabled={dontknow ? true : false}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
@@ -129,13 +145,14 @@ export default function Question19() {
                 label="Our company has not taken any action"
                 onClick={handleClick}
                 value="Our company has not taken any action"
+                disabled={dontknow ? true : false}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check
                 type="checkbox"
                 label="Don't know"
-                onClick={handleClick}
+                onClick={handleDontknow}
                 value="Don't know"
               />
             </Form.Group>

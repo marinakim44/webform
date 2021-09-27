@@ -6,10 +6,20 @@ import { Button, Breadcrumb, Form, Table } from "react-bootstrap";
 import "../App.css";
 
 export default function QuestionC() {
-  const [isOther, setIsOther] = useState(false);
+  const [input, setInput] = useState("");
+  const [other, setOther] = useState("");
 
-  function handleOther(e) {
-    setIsOther(!isOther);
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleChange(e) {
+    setOther(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qc", input);
   }
 
   return (
@@ -72,100 +82,68 @@ export default function QuestionC() {
             SELECT ONE RESPONSE)
           </p>
           <Form>
-            <Table borderless>
-              <tbody>
-                <tr>
-                  <td style={{ verticalAlign: "middle" }}>
-                    {["radio"].map((type) => (
-                      <div key={`default-${type}`} className="mb-3">
-                        <Form.Check
-                          type={type}
-                          id={`default-${type}`}
-                          label={
-                            "CEO of a single or multi-entity parent company"
-                          }
-                          style={{
-                            textAlign: "left",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {["radio"].map((type) => (
-                      <div key={`default-${type}`} className="mb-3">
-                        <Form.Check
-                          type={type}
-                          id={`default-${type}`}
-                          label={"..."}
-                          style={{
-                            textAlign: "left",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {["radio"].map((type) => (
-                      <div key={`default-${type}`} className="mb-3">
-                        <Form.Check
-                          type={type}
-                          id={`default-${type}`}
-                          label={"..."}
-                          style={{
-                            textAlign: "left",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </td>
-                </tr>
-                <tr>
-                  {["radio"].map((type) => (
-                    <div key={`default-${type}`} className="mb-3">
-                      <Form.Check
-                        type={type}
-                        id={`default-${type}`}
-                        label={"Other"}
-                        style={{
-                          textAlign: "left",
-                        }}
-                        onClick={handleOther}
-                      />
-                    </div>
-                  ))}
-                </tr>
-                {isOther ? (
-                  <tr>
-                    <td>
-                      <Form.Group>
-                        <Form.Control
-                          type="text"
-                          placeholder="Other (please specify)"
-                        ></Form.Control>
-                      </Form.Group>
-                    </td>
-                  </tr>
-                ) : (
-                  ""
-                )}
-              </tbody>
-            </Table>
+            <Form.Group style={{ width: "60%", textAlign: "left" }}>
+              <div>
+                <input
+                  type="radio"
+                  id="option1"
+                  value="CEO of a single or multi-entity parent company"
+                  onClick={handleClick}
+                  name="option"
+                  disabled={other ? true : false}
+                ></input>
+                <label for="#option1">
+                  CEO of a single or multi-entity parent company
+                </label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="option2"
+                  value="CEO of an entity within a multi-entity parent company"
+                  onClick={handleClick}
+                  name="option"
+                  disabled={other ? true : false}
+                ></input>
+                <label for="#option2">
+                  CEO of an entity within a multi-entity parent company
+                </label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  id="not"
+                  value="Prefer not to say"
+                  onClick={handleClick}
+                  name="option"
+                  disabled={other ? true : false}
+                ></input>
+                <label for="#not">Prefer not to say</label>
+              </div>
+              <div>
+                <input
+                  style={{ width: "100%" }}
+                  type="text"
+                  placeholder="Other (please specify)"
+                  value={other}
+                  onChange={handleChange}
+                ></input>
+              </div>
+            </Form.Group>
+
             <Link to="/eng-qb">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
             </Link>
 
-            <Link to="/eng-qd">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qd">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

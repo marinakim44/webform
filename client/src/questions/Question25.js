@@ -1,46 +1,585 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Question24 from "./Question24";
 import Question25B from "./Question25B";
-import { Button, Breadcrumb, Table } from "react-bootstrap";
+import { Button, Breadcrumb, Table, Form } from "react-bootstrap";
 import "../App.css";
 import { useState } from "react";
 
 export default function Question25() {
-  const [input, setInput] = useState([]);
-  const [other, setOther] = useState("");
-  const [dontknow, setDontknow] = useState(false);
+  const rows = [
+    {
+      key: "A",
+      value: "A skilled, educated and adaptable workforce",
+    },
+    {
+      key: "B",
+      value: "Adequate digital and physical infrastructure",
+    },
+    {
+      key: "C",
+      value: "Reducing climate change and environmental damage",
+    },
+    {
+      key: "D",
+      value: "High levels of employment",
+    },
+    {
+      key: "E",
+      value: "An effective tax system",
+    },
+    {
+      key: "F",
+      value: "Greater income equality",
+    },
+    {
+      key: "G",
+      value: "The good health and well-being of the workforce",
+    },
+    {
+      key: "H",
+      value: "A diverse and inclusive workforce",
+    },
+    {
+      key: "I",
+      value: "Safeguards around usage of personal data",
+    },
+    {
+      key: "J",
+      value: "Predictable macroeconomic environment",
+    },
+    {
+      key: "K",
+      value: "Investment attractiveness of the country",
+    },
+    {
+      key: "L",
+      value: "Fighting against corruption and bribery",
+    },
+    {
+      key: "M",
+      value: "The supremacy of law in all spheres of state activity",
+    },
+    {
+      key: "N",
+      value: "Access to affordable capital",
+    },
+  ];
 
-  function handleClick(e) {
-    if (!input.includes(e.target.value) && input.length < 3 && !dontknow) {
-      input.push(e.target.value);
+  const [input, setInput] = useState([]);
+  const [isNone, setIsNone] = useState(false);
+  const [isDontknow, setIsDontknow] = useState(false);
+  const [other, setOther] = useState("");
+  const [checkedA, setCheckedA] = useState(false);
+  const [disabledA, setDisabledA] = useState(false);
+  const [checkedB, setCheckedB] = useState(false);
+  const [disabledB, setDisabledB] = useState(false);
+  const [checkedC, setCheckedC] = useState(false);
+  const [disabledC, setDisabledC] = useState(false);
+  const [checkedD, setCheckedD] = useState(false);
+  const [disabledD, setDisabledD] = useState(false);
+  const [checkedE, setCheckedE] = useState(false);
+  const [disabledE, setDisabledE] = useState(false);
+  const [checkedF, setCheckedF] = useState(false);
+  const [disabledF, setDisabledF] = useState(false);
+  const [checkedG, setCheckedG] = useState(false);
+  const [disabledG, setDisabledG] = useState(false);
+  const [checkedH, setCheckedH] = useState(false);
+  const [disabledH, setDisabledH] = useState(false);
+  const [checkedI, setCheckedI] = useState(false);
+  const [disabledI, setDisabledI] = useState(false);
+  const [checkedJ, setCheckedJ] = useState(false);
+  const [disabledJ, setDisabledJ] = useState(false);
+  const [checkedK, setCheckedK] = useState(false);
+  const [disabledK, setDisabledK] = useState(false);
+  const [disabledL, setDisabledL] = useState(false);
+  const [checkedL, setCheckedL] = useState(false);
+  const [disabledM, setDisabledM] = useState(false);
+  const [checkedM, setCheckedM] = useState(false);
+  const [disabledN, setDisabledN] = useState(false);
+  const [checkedN, setCheckedN] = useState(false);
+
+  var [checked, setChecked] = useState({
+    A: false,
+    B: false,
+    C: false,
+    D: false,
+    E: false,
+    F: false,
+    G: false,
+    H: false,
+    I: false,
+    J: false,
+    K: false,
+    L: false,
+    M: false,
+    N: false,
+  });
+
+  var [disabled, setDisabled] = useState({
+    A: false,
+    B: false,
+    C: false,
+    D: false,
+    E: false,
+    F: false,
+    G: false,
+    H: false,
+    I: false,
+    J: false,
+    K: false,
+    L: false,
+    M: false,
+    N: false,
+  });
+
+  //   function handleClick(e) {
+  //     var letter = e.target.value;
+  //     var x = eval("checked" + "." + letter);
+
+  //     setChecked((prev) => {
+  //       return {
+  //         ...prev,
+  //         [letter]: !x,
+  //       };
+  //     });
+
+  //     if (x) {
+  //       if (input.includes(letter)) {
+  //         input.pop(letter);
+  //       }
+  //     } else {
+  //       if (input.length < 3) {
+  //         if (!input.includes(letter)) {
+  //           input.push(letter);
+  //         }
+  //       } else {
+  //         setChecked((prev) => {
+  //           return {
+  //             ...prev,
+  //             [letter]: false,
+  //           };
+  //         });
+  //         setDisabled((prev) => {
+  //           return {
+  //             ...prev,
+  //             [letter]: true,
+  //           };
+  //         });
+  //       }
+  //     }
+
+  //     console.log(checked);
+  //   }
+
+  function handleA(e) {
+    setCheckedA(!checkedA);
+
+    if (checkedA) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
     } else {
-      input.push("Don't know");
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedA(false);
+        setDisabledA(true);
+      }
+    }
+  }
+
+  function handleB(e) {
+    setCheckedB(!checkedB);
+
+    if (checkedB) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedB(false);
+        setDisabledB(true);
+      }
+    }
+  }
+
+  function handleC(e) {
+    setCheckedC(!checkedC);
+
+    if (checkedC) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedC(false);
+        setDisabledC(true);
+      }
+    }
+  }
+
+  function handleD(e) {
+    setCheckedD(!checkedD);
+
+    if (checkedD) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedD(false);
+        if (input.length < 3) {
+          setDisabledD(false);
+        }
+      }
+    }
+  }
+
+  function handleE(e) {
+    setCheckedE(!checkedE);
+
+    if (checkedE) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedE(false);
+        setDisabledE(true);
+      }
+    }
+  }
+
+  function handleF(e) {
+    setCheckedF(!checkedF);
+
+    if (checkedF) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedF(false);
+        setDisabledF(true);
+      }
+    }
+  }
+
+  function handleG(e) {
+    setCheckedG(!checkedG);
+
+    if (checkedG) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedG(false);
+        setDisabledG(true);
+      }
+    }
+  }
+
+  function handleH(e) {
+    setCheckedH(!checkedH);
+
+    if (checkedH) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedH(false);
+        setDisabledH(true);
+      }
+    }
+  }
+
+  function handleI(e) {
+    setCheckedI(!checkedI);
+
+    if (checkedI) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedI(false);
+        setDisabledI(true);
+      }
+    }
+  }
+
+  function handleJ(e) {
+    setCheckedJ(!checkedJ);
+
+    if (checkedJ) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedJ(false);
+        setDisabledJ(true);
+      }
+    }
+  }
+
+  function handleK(e) {
+    setCheckedK(!checkedK);
+
+    if (checkedK) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedK(false);
+        setDisabledK(true);
+      }
+    }
+  }
+
+  function handleL(e) {
+    setCheckedL(!checkedL);
+
+    if (checkedL) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedL(false);
+        setDisabledL(true);
+      }
+    }
+  }
+
+  function handleM(e) {
+    setCheckedM(!checkedM);
+
+    if (checkedM) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedM(false);
+        setDisabledM(true);
+      }
+    }
+  }
+
+  function handleN(e) {
+    setCheckedN(!checkedN);
+
+    if (checkedN) {
+      if (input.includes(e.target.value)) {
+        input.pop(e.target.value);
+      }
+    } else {
+      if (input.length < 3) {
+        if (!input.includes(e.target.value)) {
+          input.push(e.target.value);
+        }
+      } else {
+        setCheckedN(false);
+        setDisabledN(true);
+      }
+    }
+  }
+
+  function handleNone(e) {
+    e.preventDefault();
+    setIsNone(!isNone);
+    setDisabledA(!disabledA);
+    setDisabledB(!disabledB);
+    setDisabledC(!disabledC);
+    setDisabledD(!disabledD);
+    setDisabledE(!disabledE);
+    setDisabledF(!disabledF);
+    setDisabledG(!disabledG);
+    setDisabledH(!disabledH);
+    setDisabledI(!disabledI);
+    setDisabledJ(!disabledJ);
+    setDisabledK(!disabledK);
+    setDisabledL(!disabledL);
+    setDisabledM(!disabledM);
+    setDisabledN(!disabledN);
+    if (checkedA) {
+      setCheckedA(false);
+    }
+    if (checkedB) {
+      setCheckedB(false);
+    }
+    if (checkedC) {
+      setCheckedC(false);
+    }
+    if (checkedD) {
+      setCheckedD(false);
+    }
+    if (checkedE) {
+      setCheckedE(false);
+    }
+    if (checkedF) {
+      setCheckedF(false);
+    }
+    if (checkedG) {
+      setCheckedG(false);
+    }
+    if (checkedH) {
+      setCheckedH(false);
+    }
+    if (checkedI) {
+      setCheckedI(false);
+    }
+    if (checkedJ) {
+      setCheckedJ(false);
+    }
+    if (checkedK) {
+      setCheckedK(false);
+    }
+    if (checkedL) {
+      setCheckedL(false);
+    }
+    if (checkedM) {
+      setCheckedM(false);
+    }
+    if (checkedN) {
+      setCheckedN(false);
+    }
+  }
+
+  function handleDontknow(e) {
+    e.preventDefault();
+    setIsDontknow(!isDontknow);
+    setDisabledA(!disabledA);
+    setDisabledB(!disabledB);
+    setDisabledC(!disabledC);
+    setDisabledD(!disabledD);
+    setDisabledE(!disabledE);
+    setDisabledF(!disabledF);
+    setDisabledG(!disabledG);
+    setDisabledH(!disabledH);
+    setDisabledI(!disabledI);
+    setDisabledJ(!disabledJ);
+    setDisabledK(!disabledK);
+    setDisabledL(!disabledL);
+    setDisabledM(!disabledM);
+    setDisabledN(!disabledN);
+    if (checkedA) {
+      setCheckedA(false);
+    }
+    if (checkedB) {
+      setCheckedB(false);
+    }
+    if (checkedC) {
+      setCheckedC(false);
+    }
+    if (checkedD) {
+      setCheckedD(false);
+    }
+    if (checkedE) {
+      setCheckedE(false);
+    }
+    if (checkedF) {
+      setCheckedF(false);
+    }
+    if (checkedG) {
+      setCheckedG(false);
+    }
+    if (checkedH) {
+      setCheckedH(false);
+    }
+    if (checkedI) {
+      setCheckedI(false);
+    }
+    if (checkedJ) {
+      setCheckedJ(false);
+    }
+    if (checkedK) {
+      setCheckedK(false);
+    }
+    if (checkedL) {
+      setCheckedL(false);
+    }
+    if (checkedM) {
+      setCheckedM(false);
+    }
+    if (checkedN) {
+      setCheckedN(false);
     }
   }
 
   function handleChange(e) {
-    if (dontknow) {
-      setOther("");
-    } else {
+    if (!isNone && !isDontknow) {
       setOther(e.target.value);
-    }
-  }
-
-  function dontKnow(e) {
-    setDontknow(!dontknow);
-    if (dontknow) {
-      setInput([]);
-      setOther("");
     }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem(
-      "q25",
-      dontknow ? "Don't know" : JSON.stringify(input)
-    );
-    localStorage.setItem("q25other", other);
+    if (input.length <= 3) {
+      if (isNone) {
+        localStorage.setItem("q25", "None of the above");
+      } else if (isDontknow) {
+        localStorage.setItem("q25", "Don't know");
+      } else if (other) {
+        localStorage.setItem("q25-other", other);
+      } else {
+        localStorage.setItem("q25", JSON.stringify(input));
+      }
+    }
   }
 
   return (
@@ -98,226 +637,228 @@ export default function Question25() {
             (PLEASE SELECT UP TO THREE RESPONSES ONLY)
           </p>
           <form>
-            <Table style={{ fontSize: "12px" }}>
-              <tbody>
-                <tr>
-                  <td>A</td>
-                  <td style={{ textAlign: "left" }}>
-                    A skilled, educated and adaptable workforce
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="a"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-
-                  <td>J</td>
-                  <td style={{ textAlign: "left" }}>
-                    Predictable macroeconomic environment
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="j"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td style={{ textAlign: "left" }}>
-                    Adequate physical and digital infrastructure
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="b"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>K</td>
-                  <td style={{ textAlign: "left" }}>
-                    Investment attractiveness of the country
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="k"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td style={{ textAlign: "left" }}>
-                    Reducing climate change and environmental damage
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="c"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>L</td>
-                  <td style={{ textAlign: "left" }}>
-                    Fighting against corruption and bribery
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="l"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td style={{ textAlign: "left" }}>
-                    High levels of employment
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="d"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>M</td>
-                  <td style={{ textAlign: "left" }}>
-                    The supremacy of law in all spheres of state activity
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="m"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>E</td>
-                  <td style={{ textAlign: "left" }}>An effective tax system</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="e"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>N</td>
-                  <td style={{ textAlign: "left" }}>
-                    Access to affordable capital
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="n"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>F</td>
-                  <td style={{ textAlign: "left" }}>Greater income equality</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="f"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>O</td>
-                  <td style={{ textAlign: "left" }}>Other (please specify)</td>
-                  <td>
-                    <input
-                      type="text"
-                      value={other}
-                      onChange={handleChange}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>G</td>
-                  <td style={{ textAlign: "left" }}>
-                    The good health and well-being of the workforce
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="g"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>P</td>
-                  <td style={{ textAlign: "left" }}>None of the above</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="p"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>H</td>
-                  <td style={{ textAlign: "left" }}>
-                    A diverse and inclusive workforce
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="h"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                  <td style={{ width: "10%" }}></td>
-                  <td>Q</td>
-                  <td style={{ textAlign: "left" }}>Don't know</td>
-                  <td>
-                    <input type="radio" value="q" onClick={dontKnow}></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>I</td>
-                  <td style={{ textAlign: "left" }}>
-                    Safeguards around usage of personal data
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="i"
-                      onClick={handleClick}
-                      disabled={dontknow ? true : false}
-                    ></input>
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
+            <div style={{ overflow: "auto", height: "320px" }}>
+              <Table style={{ fontSize: "12px" }}>
+                <tbody>
+                  <tr>
+                    <td>A</td>
+                    <td>A value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="A"
+                        onClick={handleA}
+                        checked={checkedA}
+                        disabled={disabledA}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>B</td>
+                    <td>B value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="B"
+                        onClick={handleB}
+                        checked={checkedB}
+                        disabled={disabledB}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>C</td>
+                    <td>C value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="C"
+                        onClick={handleC}
+                        checked={checkedC}
+                        disabled={disabledC}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>D</td>
+                    <td>D value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="D"
+                        onClick={handleD}
+                        checked={checkedD}
+                        disabled={disabledD}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>E</td>
+                    <td>E value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="E"
+                        onClick={handleE}
+                        checked={checkedE}
+                        disabled={disabledE}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>F</td>
+                    <td>F value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="F"
+                        onClick={handleF}
+                        checked={checkedF}
+                        disabled={disabledF}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>G</td>
+                    <td>G value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="G"
+                        onClick={handleG}
+                        checked={checkedG}
+                        disabled={disabledG}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>H</td>
+                    <td>H value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="H"
+                        onClick={handleH}
+                        checked={checkedH}
+                        disabled={disabledH}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>I</td>
+                    <td>I value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="I"
+                        onClick={handleI}
+                        checked={checkedI}
+                        disabled={disabledI}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>J</td>
+                    <td>J value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="J"
+                        onClick={handleJ}
+                        checked={checkedJ}
+                        disabled={disabledJ}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>K</td>
+                    <td>K value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="K"
+                        onClick={handleK}
+                        checked={checkedK}
+                        disabled={disabledK}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>L</td>
+                    <td>L value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="L"
+                        onClick={handleL}
+                        checked={checkedL}
+                        disabled={disabledL}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>M</td>
+                    <td>M value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="M"
+                        onClick={handleM}
+                        checked={checkedM}
+                        disabled={disabledM}
+                      ></input>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>N</td>
+                    <td>N value</td>
+                    <td>
+                      <input
+                        type="checkbox"
+                        value="N"
+                        onClick={handleN}
+                        checked={checkedN}
+                        disabled={disabledN}
+                      ></input>
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+            </div>
+            <Form.Control
+              type="text"
+              placeholder="Other (please specify)"
+              style={{ marginTop: "1rem" }}
+              value={other}
+              onChange={handleChange}
+            ></Form.Control>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "left",
+                width: "35%",
+                marginTop: "2rem",
+              }}
+            >
+              <Button
+                type="button"
+                variant={isNone ? "warning" : "light"}
+                style={{ marginRight: "2rem", width: "100%" }}
+                value="None of the above"
+                onClick={handleNone}
+              >
+                NONE OF THE ABOVE
+              </Button>
+              <Button
+                type="button"
+                variant={isDontknow ? "warning" : "light"}
+                style={{ width: "100%" }}
+                value="Don't know"
+                onClick={handleDontknow}
+              >
+                DON'T KNOW
+              </Button>
+            </div>
             <Link to="/eng-q24">
               <Button variant="light" className="back-btn">
                 Back

@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import { Breadcrumb } from "react-bootstrap";
+import { Breadcrumb, Button } from "react-bootstrap";
 import "./App.css";
 import App from "./App";
+import QuestionL from "./questions/QuestionL";
 
 export default function EngFinish() {
   return (
@@ -16,12 +17,18 @@ export default function EngFinish() {
             </Breadcrumb.Item>
           </Breadcrumb>
           <h1>English - Finish Survey</h1>
+          <Link to="/eng-ql">
+            <Button>Back to L and Kira</Button>
+          </Link>
         </div>
       </Route>
 
       <Switch>
         <Route path="/" exact>
           <App />
+        </Route>
+        <Route path="/eng-ql">
+          <QuestionL />
         </Route>
       </Switch>
     </BrowserRouter>

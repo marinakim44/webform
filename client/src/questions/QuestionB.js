@@ -3,8 +3,24 @@ import QuestionA from "./QuestionA";
 import QuestionC from "./QuestionC";
 import { Button, Breadcrumb, Form, Row, Col } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionB() {
+  const [input, setInput] = useState("");
+
+  function handleChange(e) {
+    if (isNaN(e.target.value)) {
+      alert("Please specify a whole number");
+    } else {
+      setInput(e.target.value);
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qb", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-qb">
@@ -71,7 +87,12 @@ export default function QuestionB() {
               style={{ width: "25%" }}
             >
               <Col>
-                <Form.Control type="text" placeholder="Specify whole number" />
+                <Form.Control
+                  type="text"
+                  placeholder="Specify whole number"
+                  value={input}
+                  onChange={handleChange}
+                />
               </Col>
               <Form.Label
                 column
@@ -87,11 +108,13 @@ export default function QuestionB() {
               </Button>
             </Link>
 
-            <Link to="/eng-qc">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qc">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>
