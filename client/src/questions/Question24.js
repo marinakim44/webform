@@ -172,6 +172,7 @@ export default function Question24() {
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
+
                   {columns.map((col) => {
                     return (
                       <td className="left-align-text">
@@ -179,6 +180,7 @@ export default function Question24() {
                       </td>
                     );
                   })}
+
                 </tr>
                 {rows.map((row) => {
                   return (

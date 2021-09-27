@@ -156,6 +156,7 @@ export default function Question17() {
                   {columns.map((column) => {
                     return <td>{column.value}</td>;
                   })}
+
                 </tr>
 
                 {rows.map((row) => {

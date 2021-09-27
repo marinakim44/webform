@@ -83,6 +83,7 @@ export default function Question23() {
                   </td>
                 </tr>
                 <tr>
+
                   <td>Less or equal to 10% below actual</td>
                   <td>6-9% below actual</td>
                   <td>3-5% below actual</td>
@@ -91,6 +92,7 @@ export default function Question23() {
                   <td>6-9% above actual</td>
                   <td>More or equal to 10% above actual</td>
                   <td></td>
+
                 </tr>
 
                 <tr>

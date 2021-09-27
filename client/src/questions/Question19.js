@@ -86,6 +86,7 @@ export default function Question19() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
+
               <Form.Check
                 type="checkbox"
                 label="Engaged tax specialists to advise our company on potential implications"

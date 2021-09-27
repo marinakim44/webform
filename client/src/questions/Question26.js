@@ -73,6 +73,7 @@ export default function Question26() {
             Q26. What changes have you noticed in Kazakhstan's investment
             climate during 2020?
           </p>
+
           <Form>
             {["radio"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
@@ -109,6 +110,7 @@ export default function Question26() {
               </div>
             ))}
             <Link to="/eng-q25c">
+
               <Button variant="light" className="back-btn">
                 Back
               </Button>

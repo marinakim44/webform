@@ -101,9 +101,11 @@ export default function Question21() {
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
+
                   {columns.map((col) => {
                     return <td>{col}</td>;
                   })}
+
                 </tr>
               </tbody>
               {rows.map((row) => {

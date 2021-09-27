@@ -163,6 +163,7 @@ export default function Question20() {
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
+
                   {columns.map((col) => {
                     return (
                       <td>
@@ -171,6 +172,7 @@ export default function Question20() {
                       </td>
                     );
                   })}
+
                 </tr>
                 {rows.map((row) => {
                   return (
