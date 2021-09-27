@@ -75,7 +75,7 @@ export default function Question5() {
               </thead>
               <tbody>
                 <tr>
-                  <td>
+                  <td className="left-align-text">
                     Carbon-neutral commitment Achieved when a company offsets
                     its greenhouse gas (GHG) emissions to zero (e.g., by
                     purchasing voluntary carbon credits)

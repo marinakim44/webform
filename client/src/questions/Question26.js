@@ -71,7 +71,7 @@ export default function Question26() {
           </div>
           <p>
             Q26. What changes have you noticed in Kazakhstan's investment
-            climate during 2020?
+            climate during 2021?
           </p>
 
           <Form>
@@ -110,7 +110,6 @@ export default function Question26() {
               </div>
             ))}
             <Link to="/eng-q25c">
-
               <Button variant="light" className="back-btn">
                 Back
               </Button>

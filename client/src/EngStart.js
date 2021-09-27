@@ -7,7 +7,6 @@ import "./App.css";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { credentials } from "./actions";
-import { useEffect } from "react";
 
 function EngStart() {
   const x = useSelector((state) => state.credentials);
@@ -15,8 +14,10 @@ function EngStart() {
 
   const [input, setInput] = useState({
     name: "",
-    email: "",
+    company: "",
     title: "",
+    email: "",
+    phone: "",
   });
 
   function handleChange(e) {
@@ -34,8 +35,10 @@ function EngStart() {
     e.preventDefault();
     dispatch(credentials(input));
     localStorage.setItem("name", input.name);
-    localStorage.setItem("email", input.email);
+    localStorage.setItem("company", input.company);
     localStorage.setItem("title", input.title);
+    localStorage.setItem("email", input.email);
+    localStorage.setItem("phone", input.phone);
   }
 
   return (
@@ -68,7 +71,24 @@ function EngStart() {
                 onChange={handleChange}
                 autoComplete="on"
               ></Form.Control>
-
+              <Form.Control
+                type="text"
+                placeholder="Company name"
+                style={{ margin: "1rem" }}
+                name="company"
+                value={input.company}
+                onChange={handleChange}
+                autoComplete="on"
+              ></Form.Control>
+              <Form.Control
+                type="text"
+                placeholder="Job title"
+                style={{ margin: "1rem" }}
+                name="title"
+                value={input.title}
+                onChange={handleChange}
+                autoComplete="on"
+              ></Form.Control>
               <Form.Control
                 type="text"
                 placeholder="Email"
@@ -78,13 +98,12 @@ function EngStart() {
                 onChange={handleChange}
                 autoComplete="on"
               ></Form.Control>
-
               <Form.Control
                 type="text"
-                placeholder="Job title"
+                placeholder="Phone number (optional)"
                 style={{ margin: "1rem" }}
-                name="title"
-                value={input.title}
+                name="phone"
+                value={input.phone}
                 onChange={handleChange}
                 autoComplete="on"
               ></Form.Control>
