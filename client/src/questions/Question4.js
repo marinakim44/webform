@@ -84,11 +84,14 @@ export default function Question4() {
               }}
             ></div>
           </div>
-          <span>
-            Q4. How do you anticipate your company could be impacted by the
-            following threat(s) over the next 12 months? (PLEASE SELECT UP TO
-            THREE RESPONSES)
-          </span>
+
+          <div className="left-align-text">
+            <span>
+              Q4. How do you anticipate your company could be impacted by the
+              following threat(s) over the next 12 months? (PLEASE SELECT UP TO
+              THREE RESPONSES)
+            </span>
+          </div>
 
           <Form>
             <Table bordered>

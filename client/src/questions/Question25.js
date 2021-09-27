@@ -6,64 +6,64 @@ import "../App.css";
 import { useState } from "react";
 
 export default function Question25() {
-  const rows = [
-    {
-      key: "A",
-      value: "A skilled, educated and adaptable workforce",
-    },
-    {
-      key: "B",
-      value: "Adequate digital and physical infrastructure",
-    },
-    {
-      key: "C",
-      value: "Reducing climate change and environmental damage",
-    },
-    {
-      key: "D",
-      value: "High levels of employment",
-    },
-    {
-      key: "E",
-      value: "An effective tax system",
-    },
-    {
-      key: "F",
-      value: "Greater income equality",
-    },
-    {
-      key: "G",
-      value: "The good health and well-being of the workforce",
-    },
-    {
-      key: "H",
-      value: "A diverse and inclusive workforce",
-    },
-    {
-      key: "I",
-      value: "Safeguards around usage of personal data",
-    },
-    {
-      key: "J",
-      value: "Predictable macroeconomic environment",
-    },
-    {
-      key: "K",
-      value: "Investment attractiveness of the country",
-    },
-    {
-      key: "L",
-      value: "Fighting against corruption and bribery",
-    },
-    {
-      key: "M",
-      value: "The supremacy of law in all spheres of state activity",
-    },
-    {
-      key: "N",
-      value: "Access to affordable capital",
-    },
-  ];
+  // const rows = [
+  //   {
+  //     key: "A",
+  //     value: "A skilled, educated and adaptable workforce",
+  //   },
+  //   {
+  //     key: "B",
+  //     value: "Adequate digital and physical infrastructure",
+  //   },
+  //   {
+  //     key: "C",
+  //     value: "Reducing climate change and environmental damage",
+  //   },
+  //   {
+  //     key: "D",
+  //     value: "High levels of employment",
+  //   },
+  //   {
+  //     key: "E",
+  //     value: "An effective tax system",
+  //   },
+  //   {
+  //     key: "F",
+  //     value: "Greater income equality",
+  //   },
+  //   {
+  //     key: "G",
+  //     value: "The good health and well-being of the workforce",
+  //   },
+  //   {
+  //     key: "H",
+  //     value: "A diverse and inclusive workforce",
+  //   },
+  //   {
+  //     key: "I",
+  //     value: "Safeguards around usage of personal data",
+  //   },
+  //   {
+  //     key: "J",
+  //     value: "Predictable macroeconomic environment",
+  //   },
+  //   {
+  //     key: "K",
+  //     value: "Investment attractiveness of the country",
+  //   },
+  //   {
+  //     key: "L",
+  //     value: "Fighting against corruption and bribery",
+  //   },
+  //   {
+  //     key: "M",
+  //     value: "The supremacy of law in all spheres of state activity",
+  //   },
+  //   {
+  //     key: "N",
+  //     value: "Access to affordable capital",
+  //   },
+  // ];
 
   const [input, setInput] = useState([]);
   const [isNone, setIsNone] = useState(false);
@@ -132,47 +132,14 @@ export default function Question25() {
     N: false,
   });
 
-  //   function handleClick(e) {
-  //     var letter = e.target.value;
-  //     var x = eval("checked" + "." + letter);
-
-  //     setChecked((prev) => {
-  //       return {
-  //         ...prev,
-  //         [letter]: !x,
-  //       };
-  //     });
-
-  //     if (x) {
-  //       if (input.includes(letter)) {
-  //         input.pop(letter);
-  //       }
-  //     } else {
-  //       if (input.length < 3) {
-  //         if (!input.includes(letter)) {
-  //           input.push(letter);
-  //         }
-  //       } else {
-  //         setChecked((prev) => {
-  //           return {
-  //             ...prev,
-  //             [letter]: false,
-  //           };
-  //         });
-  //         setDisabled((prev) => {
-  //           return {
-  //             ...prev,
-  //             [letter]: true,
-  //           };
-  //         });
-  //       }
-  //     }
-
-  //     console.log(checked);
-  //   }
-
   function handleA(e) {
     setCheckedA(!checkedA);
+
+    if (disabledA) {
+      if (input.includes(e.target.value)) {
+        setInput(input.filter((e) => e !== e.target.value));
+      }
+    }
 
     if (checkedA) {
       if (input.includes(e.target.value)) {
@@ -441,7 +408,22 @@ export default function Question25() {
 
   function handleNone(e) {
     e.preventDefault();
+    if (isDontknow) {
+      setIsDontknow(false);
+    }
+    if (input) {
+      setInput([]);
+    }
     setIsNone(!isNone);
+    if (isNone) {
+      if (isDontknow) {
+        setIsDontknow(false);
+      }
+    }
+    if (isNone || isDontknow) {
+      setInput("");
+    }
+
     setDisabledA(!disabledA);
     setDisabledB(!disabledB);
     setDisabledC(!disabledC);
@@ -502,7 +484,21 @@ export default function Question25() {
 
   function handleDontknow(e) {
     e.preventDefault();
+    if (isNone) {
+      setIsNone(false);
+    }
+    if (input) {
+      setInput([]);
+    }
     setIsDontknow(!isDontknow);
+    if (isDontknow) {
+      if (isNone) {
+        setIsNone(false);
+      }
+    }
+    if (isNone || isDontknow) {
+      setInput("");
+    }
     setDisabledA(!disabledA);
     setDisabledB(!disabledB);
     setDisabledC(!disabledC);
@@ -569,17 +565,11 @@ export default function Question25() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (input.length <= 3) {
-      if (isNone) {
-        localStorage.setItem("q25", "None of the above");
-      } else if (isDontknow) {
-        localStorage.setItem("q25", "Don't know");
-      } else if (other) {
-        localStorage.setItem("q25-other", other);
-      } else {
-        localStorage.setItem("q25", JSON.stringify(input));
-      }
-    }
+
+    localStorage.setItem("q25none", isNone);
+    localStorage.setItem("q25dontknow", isDontknow);
+    localStorage.setItem("q25", JSON.stringify(input));
+    localStorage.setItem("q25-other", other);
   }
 
   return (
@@ -642,7 +632,7 @@ export default function Question25() {
                 <tbody>
                   <tr>
                     <td>A</td>
-                    <td>A value</td>
+                    <td>A skilled, educated and adaptable workforce</td>
                     <td>
                       <input
                         type="checkbox"
@@ -655,7 +645,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>B</td>
-                    <td>B value</td>
+                    <td>Adequate physical and digital infrastructure</td>
                     <td>
                       <input
                         type="checkbox"
@@ -668,7 +658,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>C</td>
-                    <td>C value</td>
+                    <td>Reducing climate change and environmental damage</td>
                     <td>
                       <input
                         type="checkbox"
@@ -681,7 +671,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>D</td>
-                    <td>D value</td>
+                    <td>High levels of employment</td>
                     <td>
                       <input
                         type="checkbox"
@@ -694,7 +684,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>E</td>
-                    <td>E value</td>
+                    <td>An effective tax system</td>
                     <td>
                       <input
                         type="checkbox"
@@ -707,7 +697,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>F</td>
-                    <td>F value</td>
+                    <td>Greater income equality</td>
                     <td>
                       <input
                         type="checkbox"
@@ -720,7 +710,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>G</td>
-                    <td>G value</td>
+                    <td>The good health and well-being of the workforce</td>
                     <td>
                       <input
                         type="checkbox"
@@ -733,7 +723,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>H</td>
-                    <td>H value</td>
+                    <td>A diverse and inclusive workforce</td>
                     <td>
                       <input
                         type="checkbox"
@@ -746,7 +736,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>I</td>
-                    <td>I value</td>
+                    <td>Safeguards around usage of personal data</td>
                     <td>
                       <input
                         type="checkbox"
@@ -759,7 +749,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>J</td>
-                    <td>J value</td>
+                    <td>Predictable macroeconomic environment</td>
                     <td>
                       <input
                         type="checkbox"
@@ -772,7 +762,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>K</td>
-                    <td>K value</td>
+                    <td>Investment attractiveness of the country</td>
                     <td>
                       <input
                         type="checkbox"
@@ -785,7 +775,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>L</td>
-                    <td>L value</td>
+                    <td>Fighting against corruption and bribery</td>
                     <td>
                       <input
                         type="checkbox"
@@ -798,7 +788,9 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>M</td>
-                    <td>M value</td>
+                    <td>
+                      The supremacy of law in all spheres of state activity
+                    </td>
                     <td>
                       <input
                         type="checkbox"
@@ -811,7 +803,7 @@ export default function Question25() {
                   </tr>
                   <tr>
                     <td>N</td>
-                    <td>N value</td>
+                    <td>Access to affordable capital</td>
                     <td>
                       <input
                         type="checkbox"

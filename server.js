@@ -212,8 +212,6 @@ app.post("/allinputs", (req, res) => {
     questionH: req.body.qh,
     questionI: req.body.qi,
     questionJ: req.body.qj,
-    questionK: req.body.qk,
-    questionL: req.body.qL,
   });
 
   newResponse

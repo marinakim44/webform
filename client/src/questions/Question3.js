@@ -67,11 +67,15 @@ export default function Question3() {
               }}
             ></div>
           </div>
-          <p>
-            Q3. How concerned are you about the following global threats
-            negatively impacting your company over the next 12 months?
-            <br /> (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
-          </p>
+
+          <div className="left-align-text">
+            <p>
+              Q3. How concerned are you about the following global threats
+              negatively impacting your company over the next 12 months?
+              <br /> (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+            </p>
+          </div>
+
           <form>
             <Table bordered>
               <thead>
@@ -409,9 +413,8 @@ export default function Question3() {
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to={listOfConcerns.length === 0 ? "/eng-q5" : "/eng-q4"}>
-                Next
-              </Link>
+              {/* <Link to={listOfConcerns.length === 0 ? "/eng-q5" : "/eng-q4"}> */}
+              <Link to="/eng-q4">Next</Link>
             </Button>
           </form>
         </div>
