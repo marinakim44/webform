@@ -3,8 +3,73 @@ import QuestionK from "./QuestionJ";
 import EngFinish from "../EngFinish";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
+import axios from "axios";
 
 export default function QuestionL() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+  function handleSubmit(e) {
+    localStorage.setItem("ql", input);
+
+    const allInputs = {
+      fullName: localStorage.getItem("name"),
+      email: localStorage.getItem("email"),
+      title: localStorage.getItem("title"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+      q4: JSON.parse(localStorage.getItem("q4")),
+      q4other: localStorage.getItem("q4-other"),
+      q5a: localStorage.getItem("q4-carbonNeutral"),
+      q5b: localStorage.getItem("q4-netZero"),
+      q6: localStorage.getItem("q6"),
+      q7: localStorage.getItem("q7"),
+      q8: localStorage.getItem("q8"),
+      q9: localStorage.getItem("q9"),
+      q10: JSON.parse(localStorage.getItem("q10")),
+      q11: JSON.parse(localStorage.getItem("q11")),
+      q12: JSON.parse(localStorage.getItem("q12")),
+      q13a: localStorage.getItem("q13a"),
+      q13b: localStorage.getItem("q13b"),
+      q14: JSON.parse(localStorage.getItem("q14")),
+      q15: JSON.parse(localStorage.getItem("q15")),
+      q16: localStorage.getItem("q16"),
+      q17: JSON.parse(localStorage.getItem("q17")),
+      q18: JSON.parse(localStorage.getItem("q18")),
+      q19: JSON.parse(localStorage.getItem("q19")),
+      q20: JSON.parse(localStorage.getItem("q20")),
+      q21: JSON.parse(localStorage.getItem("q21")),
+      q22: JSON.parse(localStorage.getItem("q22")),
+      q23: localStorage.getItem("q23"),
+      q24: JSON.parse(localStorage.getItem("q24")),
+      q25: JSON.parse(localStorage.getItem("q25")),
+      q25b: JSON.parse(localStorage.getItem("q25b")),
+      q25c: JSON.parse(localStorage.getItem("q25c")),
+      q26: localStorage.getItem("q26"),
+      q27: localStorage.getItem("q27"),
+      q28: localStorage.getItem("q28"),
+      qa: localStorage.getItem("qa"),
+      qb: localStorage.getItem("qb"),
+      qc: localStorage.getItem("qc"),
+      qd: localStorage.getItem("qd"),
+      qe: localStorage.getItem("qe"),
+      qf: localStorage.getItem("qf"),
+      qg: localStorage.getItem("qg"),
+      qh: localStorage.getItem("qh"),
+      qi: localStorage.getItem("qi"),
+      qj: localStorage.getItem("qj"),
+      qk: localStorage.getItem("qk"),
+      ql: localStorage.getItem("ql"),
+    };
+
+    axios.post("/allinputs", allInputs);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-ql">
@@ -85,6 +150,9 @@ export default function QuestionL() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Yes"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -93,6 +161,9 @@ export default function QuestionL() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="No"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -101,11 +172,14 @@ export default function QuestionL() {
                 Back
               </Button>
             </Link>
-            <Link to="/eng-finish">
-              <Button variant="danger" className="next-btn">
-                Finish
-              </Button>
-            </Link>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-finish">Finish</Link>
+            </Button>
           </Form>
         </div>
       </Route>

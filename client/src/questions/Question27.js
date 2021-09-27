@@ -3,8 +3,20 @@ import Question26 from "./Question26";
 import Question28 from "./Question28";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function Question27() {
+  const [input, setInput] = useState("");
+
+  function handleChange(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q27", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q27">
@@ -67,11 +79,15 @@ export default function Question27() {
               <Form.Control
                 type="text"
                 placeholder="Specify here"
+                value={input}
+                onChange={handleChange}
+                autoComplete="on"
               ></Form.Control>
             </Form.Group>
 
-
-
+            <Table>
+              <tbody>
+                <tr>
                   <td>J</td>
                   <td style={{ textAlign: "left" }}>
                     Predictable macroeconomic environment
@@ -82,39 +98,51 @@ export default function Question27() {
                 </tr>
                 <tr>
                   <td>B</td>
-                  <td style={{ textAlign: "left" }}>Adequate physical and digital infrastructure</td>
+                  <td style={{ textAlign: "left" }}>
+                    Adequate physical and digital infrastructure
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>K</td>
-                  <td style={{ textAlign: "left" }}>Investment attractiveness of the country</td>
+                  <td style={{ textAlign: "left" }}>
+                    Investment attractiveness of the country
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>C</td>
-                  <td style={{ textAlign: "left" }}>Reducing climate change and environmental damage</td>
+                  <td style={{ textAlign: "left" }}>
+                    Reducing climate change and environmental damage
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>L</td>
-                  <td style={{ textAlign: "left" }}>Fighting against corruption and bribery</td>
+                  <td style={{ textAlign: "left" }}>
+                    Fighting against corruption and bribery
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                 </tr>
                 <tr>
                   <td>D</td>
-                  <td style={{ textAlign: "left" }}>High levels of employment</td>
+                  <td style={{ textAlign: "left" }}>
+                    High levels of employment
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>M</td>
-                  <td style={{ textAlign: "left" }}>The supremacy of law in all spheres of state activity</td>
+                  <td style={{ textAlign: "left" }}>
+                    The supremacy of law in all spheres of state activity
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -127,7 +155,9 @@ export default function Question27() {
                   </td>
                   <td style={{ width: "10%" }}></td>
                   <td>N</td>
-                  <td style={{ textAlign: "left" }}>Access to affordable capital</td>
+                  <td style={{ textAlign: "left" }}>
+                    Access to affordable capital
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -147,7 +177,9 @@ export default function Question27() {
                 </tr>
                 <tr>
                   <td>G</td>
-                  <td style={{ textAlign: "left" }}>The good health and well-being of the workforce</td>
+                  <td style={{ textAlign: "left" }}>
+                    The good health and well-being of the workforce
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -160,7 +192,9 @@ export default function Question27() {
                 </tr>
                 <tr>
                   <td>H</td>
-                  <td style={{ textAlign: "left" }}>A diverse and inclusive workforce</td>
+                  <td style={{ textAlign: "left" }}>
+                    A diverse and inclusive workforce
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -173,7 +207,9 @@ export default function Question27() {
                 </tr>
                 <tr>
                   <td>I</td>
-                  <td style={{ textAlign: "left" }}>Safeguards around usage of personal data</td>
+                  <td style={{ textAlign: "left" }}>
+                    Safeguards around usage of personal data
+                  </td>
                   <td>
                     <input type="checkbox"></input>
                   </td>
@@ -187,11 +223,13 @@ export default function Question27() {
               </Button>
             </Link>
 
-            <Link to="/eng-q28">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q28">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

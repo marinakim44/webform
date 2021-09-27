@@ -3,8 +3,30 @@ import QuestionH from "./QuestionH";
 import QuestionJ from "./QuestionJ";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionI() {
+  const rows = [
+    "Less than US$100 million",
+    "$101 million–$999 million",
+    "$1 billion–$9.9 billion",
+    "$10 billion–$24.9 billion",
+    "$25 billion or more",
+    "Prefer not to say",
+    "Don't know",
+  ];
+
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qi", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-qi">
@@ -71,76 +93,35 @@ export default function QuestionI() {
             SELECT ONE RESPONSE)  
           </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Less than US$100 million"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"$101 million–$999 million"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"$1 billion–$9.9 billion"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"$10 billion–$24.9 billion"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"$25 billion or more"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Prefer not to say"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don't know "}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-              </div>
-            ))}
+            <Form.Group style={{ width: "40%", textAlign: "left" }}>
+              {rows.map((row) => {
+                return (
+                  <div>
+                    <input
+                      type="radio"
+                      id={row}
+                      value={row}
+                      onClick={handleClick}
+                      name="option"
+                    ></input>
+                    <label for={row}>{row}</label>
+                  </div>
+                );
+              })}
+            </Form.Group>
             <Link to="/eng-qh">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
             </Link>
-            <Link to="/eng-qj">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qj">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

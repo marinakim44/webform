@@ -3,8 +3,19 @@ import QuestionG from "./QuestionG";
 import QuestionI from "./QuestionI";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionH() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qh", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-qh">
@@ -79,22 +90,31 @@ export default function QuestionH() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Yes"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"No "}
+                  label={"No"}
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="No"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"Don't know "}
+                  label={"Don't know"}
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Don't know"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -103,11 +123,14 @@ export default function QuestionH() {
                 Back
               </Button>
             </Link>
-            <Link to="/eng-qi">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qi">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

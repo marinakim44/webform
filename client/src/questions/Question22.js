@@ -6,14 +6,27 @@ import { Button, Breadcrumb, Form, Row, Col, Table } from "react-bootstrap";
 import "../App.css";
 
 export default function Question22() {
-  const [isClicked1, setIsClicked1] = useState(false);
-  const [isClicked2, setIsClicked2] = useState(false);
-  const [isClicked3, setIsClicked3] = useState(false);
   const [input, setInput] = useState({
     revenue: "",
     profit: "",
     return: "",
   });
+
+  const [dontknowRevenue, setDontknowRevenue] = useState(false);
+  const [dontknowProfit, setDontknowProfit] = useState(false);
+  const [dontknowReturn, setDontknowReturn] = useState(false);
+
+  function handleDontknowRevenue(e) {
+    setDontknowRevenue(!dontknowRevenue);
+  }
+
+  function handleDontknowProfit(e) {
+    setDontknowProfit(!dontknowProfit);
+  }
+
+  function handleDontknowReturn(e) {
+    setDontknowReturn(!dontknowReturn);
+  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -23,16 +36,6 @@ export default function Question22() {
         [name]: value,
       };
     });
-  }
-
-  function handleClick1(e) {
-    setIsClicked1(!isClicked1);
-  }
-  function handleClick2(e) {
-    setIsClicked2(!isClicked2);
-  }
-  function handleClick3(e) {
-    setIsClicked3(!isClicked3);
   }
 
   function handleSubmit(e) {
@@ -107,6 +110,7 @@ export default function Question22() {
                           name="revenue"
                           value={input.revenue}
                           onChange={handleChange}
+                          disabled={dontknowRevenue ? true : false}
                         />
                       </Col>
                       <Form.Label
@@ -121,11 +125,13 @@ export default function Question22() {
                   <td style={{ textAlign: "left" }}>
                     <Button
                       variant="outline-dark"
-                      onClick={handleClick1}
+                      name="revenue"
+                      value="Don't know"
+                      onClick={handleDontknowRevenue}
                       style={{
-                        backgroundColor: isClicked1 ? "#dc3545" : "",
-                        color: isClicked1 ? "white" : "",
-                        borderColor: isClicked1 ? "#dc3545" : "",
+                        backgroundColor: dontknowRevenue ? "#dc3545" : "",
+                        color: dontknowRevenue ? "white" : "",
+                        borderColor: dontknowRevenue ? "#dc3545" : "",
                       }}
                     >
                       Don't know
@@ -143,6 +149,7 @@ export default function Question22() {
                           name="profit"
                           value={input.profit}
                           onChange={handleChange}
+                          disabled={dontknowProfit ? true : false}
                         />
                       </Col>
                       <Form.Label
@@ -157,11 +164,14 @@ export default function Question22() {
                   <td style={{ textAlign: "left" }}>
                     <Button
                       variant="outline-dark"
-                      onClick={handleClick2}
+                      // onClick={handleDontknow}
+                      name="profit"
+                      value="Don't know"
+                      onClick={handleDontknowProfit}
                       style={{
-                        backgroundColor: isClicked2 ? "#dc3545" : "",
-                        color: isClicked2 ? "white" : "",
-                        borderColor: isClicked2 ? "#dc3545" : "",
+                        backgroundColor: dontknowProfit ? "#dc3545" : "",
+                        color: dontknowProfit ? "white" : "",
+                        borderColor: dontknowProfit ? "#dc3545" : "",
                       }}
                     >
                       Don't know
@@ -179,6 +189,7 @@ export default function Question22() {
                           name="return"
                           value={input.return}
                           onChange={handleChange}
+                          disabled={dontknowReturn ? true : false}
                         />
                       </Col>
                       <Form.Label
@@ -193,11 +204,13 @@ export default function Question22() {
                   <td style={{ textAlign: "left" }}>
                     <Button
                       variant="outline-dark"
-                      onClick={handleClick3}
+                      onClick={handleDontknowReturn}
+                      name="return"
+                      value="Don't know"
                       style={{
-                        backgroundColor: isClicked3 ? "#dc3545" : "",
-                        color: isClicked3 ? "white" : "",
-                        borderColor: isClicked3 ? "#dc3545" : "",
+                        backgroundColor: dontknowReturn ? "#dc3545" : "",
+                        color: dontknowReturn ? "white" : "",
+                        borderColor: dontknowReturn ? "#dc3545" : "",
                       }}
                       className="test-button"
                     >

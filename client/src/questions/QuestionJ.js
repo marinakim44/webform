@@ -3,8 +3,31 @@ import QuestionI from "./QuestionI";
 import QuestionK from "./QuestionK";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionJ() {
+  const rows = [
+    "Fewer than 500",
+    "500-999",
+    "1,000-4,999",
+    "5,000–9,999",
+    "10,000–24,999",
+    "25,000–49,999",
+    "50,000 or more",
+    "Don't know",
+  ];
+
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qj", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-qj">
@@ -72,84 +95,38 @@ export default function QuestionJ() {
             RESPONSE)  
           </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Fewer than 500"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"500–999"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"1,000–4,999"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"5,000–9,999"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"10,000–24,999"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"25,000–49,999"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"50,000 or more"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-                 <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don't know "}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
-              </div>
-            ))}
+            {["radio"].map((type) =>
+              rows.map((row) => {
+                return (
+                  <div key={`default-${type}`} className="mb-3">
+                    <Form.Check
+                      type={type}
+                      id={`default-${type}`}
+                      label={row}
+                      style={{
+                        textAlign: "left",
+                      }}
+                      onClick={handleClick}
+                      value={row}
+                      name="option"
+                    />
+                  </div>
+                );
+              })
+            )}
             <Link to="/eng-qi">
               <Button variant="light" className="back-btn">
                 Back
               </Button>
             </Link>
-            <Link to="/eng-qk">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qk">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

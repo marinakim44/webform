@@ -58,9 +58,49 @@ export default function Question24() {
     B: [],
   });
 
+  const [noneA, setNoneA] = useState(false);
+  const [noneB, setNoneB] = useState(false);
+  const [notA, setNotA] = useState(false);
+  const [notB, setNotB] = useState(false);
+
   function handleClick(e) {
     const { name, value } = e.target;
-
+    if (name === "A" && value === "None of the above") {
+      setNoneA(!noneA);
+      setInput((prev) => {
+        return {
+          ...prev,
+          [name]: ["None of the above"],
+        };
+      });
+    }
+    if (name === "B" && value === "None of the above") {
+      setNoneB(!noneB);
+      setInput((prev) => {
+        return {
+          ...prev,
+          [name]: ["None of the above"],
+        };
+      });
+    }
+    if (name === "A" && value === "Prefer not to answer") {
+      setNotA(!notA);
+      setInput((prev) => {
+        return {
+          ...prev,
+          [name]: ["Prefer not to answer"],
+        };
+      });
+    }
+    if (name === "B" && value === "Prefer not to answer") {
+      setNotB(!notB);
+      setInput((prev) => {
+        return {
+          ...prev,
+          [name]: ["Prefer not to answer"],
+        };
+      });
+    }
     if (name === "A" && !input.A.includes(value)) {
       input.A.push(value);
     }
@@ -155,6 +195,14 @@ export default function Question24() {
                               name={col.key}
                               value={row.value}
                               onClick={handleClick}
+                              disabled={
+                                (noneA && row.key !== "G" && col.key === "A") ||
+                                (noneB && row.key !== "G" && col.key === "B") ||
+                                (notA && row.key !== "H" && col.key === "A") ||
+                                (notB && row.key !== "H" && col.key === "B")
+                                  ? true
+                                  : false
+                              }
                             ></input>
                           </td>
                         );

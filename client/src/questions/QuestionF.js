@@ -3,8 +3,29 @@ import QuestionE from "./QuestionE";
 import QuestionG from "./QuestionG";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionF() {
+  const [input, setInput] = useState("");
+  const [other, setOther] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleChange(e) {
+    setOther(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (other) {
+      localStorage.setItem("qf", other);
+    } else {
+      localStorage.setItem("qf", input);
+    }
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-qf">
@@ -77,39 +98,49 @@ export default function QuestionF() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Family-run"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"Backed by private equity "}
+                  label={"Backed by private equity"}
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Backed by private equity"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"A partnership "}
+                  label={"A partnership"}
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="A partnership"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={"Owner-managed "}
+                  label={"Owner-managed"}
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="Owner-managed"
+                  onClick={handleClick}
                 />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Other (please specify)"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                />
+                <Form.Control
+                  type="text"
+                  placeholder="Other (please specify)"
+                  value={other}
+                  onChange={handleChange}
+                ></Form.Control>
               </div>
             ))}
             <Link to="/eng-qe">
@@ -118,11 +149,13 @@ export default function QuestionF() {
               </Button>
             </Link>
 
-            <Link to="/eng-qg">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qg">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

@@ -3,8 +3,20 @@ import QuestionD from "./QuestionD";
 import QuestionF from "./QuestionF";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionE() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qe", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-qe">
@@ -76,6 +88,8 @@ export default function QuestionE() {
                   style={{
                     textAlign: "left",
                   }}
+                  value="Privately owned"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -84,6 +98,8 @@ export default function QuestionE() {
                   style={{
                     textAlign: "left",
                   }}
+                  value="Publicly listed"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -93,11 +109,13 @@ export default function QuestionE() {
               </Button>
             </Link>
 
-            <Link to="/eng-qf">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-qf">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

@@ -3,8 +3,20 @@ import Question25C from "./Question25C";
 import Question27 from "./Question27";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function Question26() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("q26", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q26">
@@ -72,6 +84,8 @@ export default function Question26() {
                   style={{
                     textAlign: "left",
                   }}
+                  value="Improved"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -80,6 +94,8 @@ export default function Question26() {
                   style={{
                     textAlign: "left",
                   }}
+                  value="Stayed the same"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -88,6 +104,8 @@ export default function Question26() {
                   style={{
                     textAlign: "left",
                   }}
+                  value="Declined"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -98,11 +116,13 @@ export default function Question26() {
               </Button>
             </Link>
 
-            <Link to="/eng-q27">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-q27">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>

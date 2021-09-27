@@ -3,8 +3,20 @@ import QuestionJ from "./QuestionJ";
 import QuestionL from "./QuestionL";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import { useState } from "react";
 
 export default function QuestionK() {
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    localStorage.setItem("qk", input);
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-qk">
@@ -84,6 +96,9 @@ export default function QuestionK() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="yes"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
@@ -92,6 +107,9 @@ export default function QuestionK() {
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="no"
+                  onClick={handleClick}
                 />
               </div>
             ))}
@@ -100,11 +118,14 @@ export default function QuestionK() {
                 Back
               </Button>
             </Link>
-            <Link to="/eng-ql">
-              <Button variant="danger" className="next-btn">
-                Next
-              </Button>
-            </Link>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <Link to="/eng-ql">Next</Link>
+            </Button>
           </Form>
         </div>
       </Route>
