@@ -36,6 +36,7 @@ export default function Question15() {
     history.push("/eng-q16");
 
     const data = {
+      uuid: localStorage.getItem("uuid"),
       name: localStorage.getItem("name"),
       company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
@@ -45,10 +46,8 @@ export default function Question15() {
       q1b: localStorage.getItem("q1b"),
       q2: JSON.parse(localStorage.getItem("countries")),
       q3: JSON.parse(localStorage.getItem("q3")),
-      q4: JSON.parse(localStorage.getItem("q4")),
-      q4other: localStorage.getItem("q4-other"),
-      q5a: localStorage.getItem("q4-carbonNeutral"),
-      q5b: localStorage.getItem("q4-netZero"),
+      q5a: localStorage.getItem("q5-carbonNeutral"),
+      q5b: localStorage.getItem("q5-netZero"),
       q6: localStorage.getItem("q6"),
       q7: localStorage.getItem("q7"),
       q8: localStorage.getItem("q8"),
@@ -59,7 +58,7 @@ export default function Question15() {
       q13a: localStorage.getItem("q13a"),
       q13b: localStorage.getItem("q13b"),
       q14: JSON.parse(localStorage.getItem("q14")),
-      q15: input,
+      q15: JSON.parse(localStorage.getItem("q15")),
     };
 
     axios.post("/allinputs", data);

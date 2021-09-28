@@ -10,24 +10,91 @@ import QuestionB from "./QuestionB";
 import QuestionD from "./QuestionD";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import axios from "axios";
 
 export default function QuestionC() {
   const history = useHistory();
   const [input, setInput] = useState("");
   const [other, setOther] = useState("");
+  const [isOther, setIsOther] = useState(false);
 
   function handleClick(e) {
     setInput(e.target.value);
+    setIsOther(false);
+    setOther("");
+  }
+
+  function handleOther(e) {
+    if (!isOther) {
+      setIsOther(true);
+    }
   }
 
   function handleChange(e) {
     setOther(e.target.value);
+    setInput("");
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("qc", input);
+    localStorage.setItem("qc-other", other);
     history.push("/eng-qd");
+
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+      q5a: localStorage.getItem("q5-carbonNeutral"),
+      q5b: localStorage.getItem("q5-netZero"),
+      q6: localStorage.getItem("q6"),
+      q7: localStorage.getItem("q7"),
+      q8: localStorage.getItem("q8"),
+      q9: localStorage.getItem("q9"),
+      q10: JSON.parse(localStorage.getItem("q10")),
+      q11: JSON.parse(localStorage.getItem("q11")),
+      q12: JSON.parse(localStorage.getItem("q12")),
+      q13a: localStorage.getItem("q13a"),
+      q13b: localStorage.getItem("q13b"),
+      q14: JSON.parse(localStorage.getItem("q14")),
+      q15: JSON.parse(localStorage.getItem("q15")),
+      q16: localStorage.getItem("q16"),
+      q17: JSON.parse(localStorage.getItem("q17")),
+      q18: JSON.parse(localStorage.getItem("q18")),
+      q19: JSON.parse(localStorage.getItem("q19")),
+      q20: JSON.parse(localStorage.getItem("q20")),
+      q21: JSON.parse(localStorage.getItem("q21")),
+      q22: JSON.parse(localStorage.getItem("q22")),
+      q23: localStorage.getItem("q23"),
+      q24: JSON.parse(localStorage.getItem("q24")),
+      q25none: localStorage.getItem("q25none"),
+      q25dontknow: localStorage.getItem("q25dontknow"),
+      q25other: localStorage.getItem("q25-other"),
+      q25: JSON.parse(localStorage.getItem("q25")),
+      q25b: JSON.parse(localStorage.getItem("q25b")),
+      q25bNone: localStorage.getItem("q25b-none"),
+      q25bDontknow: localStorage.getItem("q25b-dontknow"),
+      q25c: JSON.parse(localStorage.getItem("q25c")),
+      q25cNone: localStorage.getItem("q25c-none"),
+      q25cDontknow: localStorage.getItem("q25c-dontknow"),
+      q26: localStorage.getItem("q26"),
+      q27: localStorage.getItem("q27"),
+      q28: localStorage.getItem("q28"),
+      qa: localStorage.getItem("qa"),
+      qaOther: localStorage.getItem("qa-other"),
+      qb: localStorage.getItem("qb"),
+      qc: localStorage.getItem("qc"),
+      qcOther: localStorage.getItem("qc-other"),
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -98,9 +165,8 @@ export default function QuestionC() {
                   value="CEO of a single or multi-entity parent company"
                   onClick={handleClick}
                   name="option"
-                  disabled={other ? true : false}
                 ></input>
-                <label for="#option1">
+                <label for="#option1" style={{ marginLeft: "8px" }}>
                   CEO of a single or multi-entity parent company
                 </label>
               </div>
@@ -111,9 +177,8 @@ export default function QuestionC() {
                   value="CEO of an entity within a multi-entity parent company"
                   onClick={handleClick}
                   name="option"
-                  disabled={other ? true : false}
                 ></input>
-                <label for="#option2">
+                <label for="#option2" style={{ marginLeft: "8px" }}>
                   CEO of an entity within a multi-entity parent company
                 </label>
               </div>
@@ -124,20 +189,35 @@ export default function QuestionC() {
                   value="Prefer not to say"
                   onClick={handleClick}
                   name="option"
-                  disabled={other ? true : false}
                 ></input>
-                <label for="#not">Prefer not to say</label>
+                <label for="#not" style={{ marginLeft: "8px" }}>
+                  Prefer not to say
+                </label>
               </div>
               <div>
                 <input
-                  style={{ width: "100%" }}
-                  type="text"
-                  placeholder="Other (please specify)"
-                  value={other}
-                  onChange={handleChange}
+                  type="radio"
+                  name="option"
+                  value="Other"
+                  onClick={handleOther}
                 ></input>
+                <label for="#other" style={{ marginLeft: "8px" }}>
+                  Other
+                </label>
               </div>
             </Form.Group>
+            {isOther ? (
+              <Form.Group style={{ width: "40%", textAlign: "left" }}>
+                <input
+                  type="text"
+                  placeholder="Other (please specify)"
+                  onChange={handleChange}
+                  value={other}
+                ></input>
+              </Form.Group>
+            ) : (
+              ""
+            )}
 
             <Button
               variant="light"

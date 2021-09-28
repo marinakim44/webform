@@ -34,16 +34,15 @@ const Menu = (props) => {
 
 export default function Question2() {
   const history = useHistory();
-  useEffect(() => {
-    console.log(localStorage.getItem("a"));
-    console.log(localStorage.getItem("b"));
-    dispatch(
-      question1({ a: localStorage.getItem("a"), b: localStorage.getItem("b") })
-    );
-  });
+  // useEffect(() => {
+  //   console.log(localStorage.getItem("a"));
+  //   console.log(localStorage.getItem("b"));
+  //   dispatch(
+  //     question1({ a: localStorage.getItem("a"), b: localStorage.getItem("b") })
+  //   );
+  // });
 
-  const animatedComponents = makeAnimated();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const isValidNewOption = (inputValue, selectedValue) =>
     inputValue.length > 0 && selectedValue.length < 4;
 
@@ -74,7 +73,7 @@ export default function Question2() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(question2(selectedOptions));
+    // dispatch(question2(selectedOptions));
 
     if (other.other1) {
       selectedOptions.push(other.other1);
@@ -86,6 +85,7 @@ export default function Question2() {
     history.push("/eng-q3");
 
     const data = {
+      uuid: localStorage.getItem("uuid"),
       name: localStorage.getItem("name"),
       company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
@@ -143,7 +143,7 @@ export default function Question2() {
               }}
             >
               <Creatable
-                components={(animatedComponents, { Menu })}
+                components={{ Menu }}
                 isMulti
                 isValidNewOption={isValidNewOption}
                 options={countries}

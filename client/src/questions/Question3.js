@@ -16,7 +16,7 @@ import { question3 } from "../actions";
 import axios from "axios";
 
 export default function Question3() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
   const [concern, setConcern] = useState({
     a: false,
@@ -49,10 +49,10 @@ export default function Question3() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q3", JSON.stringify(listOfConcerns));
-    history.push("/eng-q4");
-    dispatch(question3(listOfConcerns));
+    // dispatch(question3(listOfConcerns));
 
     const data = {
+      uuid: localStorage.getItem("uuid"),
       name: localStorage.getItem("name"),
       company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
@@ -65,6 +65,8 @@ export default function Question3() {
     };
 
     axios.post("/allinputs", data);
+
+    history.push("/eng-q4");
   }
 
   return (

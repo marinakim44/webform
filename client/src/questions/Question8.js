@@ -25,6 +25,8 @@ export default function Question8() {
     history.push("/eng-q9");
 
     const data = {
+      uuid: localStorage.getItem("uuid"),
+      uuid: localStorage.getItem("uuid"),
       name: localStorage.getItem("name"),
       company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
@@ -34,10 +36,8 @@ export default function Question8() {
       q1b: localStorage.getItem("q1b"),
       q2: JSON.parse(localStorage.getItem("countries")),
       q3: JSON.parse(localStorage.getItem("q3")),
-      q4: JSON.parse(localStorage.getItem("q4")),
-      q4other: localStorage.getItem("q4-other"),
-      q5a: localStorage.getItem("q4-carbonNeutral"),
-      q5b: localStorage.getItem("q4-netZero"),
+      q5a: localStorage.getItem("q5-carbonNeutral"),
+      q5b: localStorage.getItem("q5-netZero"),
       q6: localStorage.getItem("q6"),
       q7: localStorage.getItem("q7"),
       q8: localStorage.getItem("q8"),

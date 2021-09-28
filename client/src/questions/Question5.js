@@ -36,6 +36,7 @@ export default function Question5() {
     history.push("/eng-q6");
 
     const data = {
+      uuid: localStorage.getItem("uuid"),
       name: localStorage.getItem("name"),
       company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
@@ -45,14 +46,8 @@ export default function Question5() {
       q1b: localStorage.getItem("q1b"),
       q2: JSON.parse(localStorage.getItem("countries")),
       q3: JSON.parse(localStorage.getItem("q3")),
-      q4: JSON.parse(localStorage.getItem("q4")),
-      q4other: localStorage.getItem("q4-other"),
-      q5a: localStorage.getItem("q4-carbonNeutral")
-        ? localStorage.getItem("q4-carbonNeutral")
-        : input.carbonNeutral,
-      q5b: localStorage.getItem("q4-netZero")
-        ? localStorage.getItem("q4-netZero")
-        : input.netZero,
+      q5a: localStorage.getItem("q5-carbonNeutral"),
+      q5b: localStorage.getItem("q5-netZero"),
     };
 
     axios.post("/allinputs", data);
