@@ -12,6 +12,7 @@ import { Table, Button, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import { useDispatch } from "react-redux";
 import { question1 } from "../actions";
+import axios from "axios";
 
 export default function Question1() {
   const history = useHistory();
@@ -39,6 +40,19 @@ export default function Question1() {
     );
     localStorage.setItem("q1a", a);
     localStorage.setItem("q1b", b);
+    history.push("/eng-q2");
+
+    const data = {
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -238,7 +252,6 @@ export default function Question1() {
             </Table>
 
             <div className="back-next-btns">
-              {/* <Link to="/eng-start"> */}
               <Button
                 variant="light"
                 className="back-btn"
@@ -250,16 +263,13 @@ export default function Question1() {
                 ></i>
                 Back
               </Button>
-              {/* </Link> */}
 
               <Button
                 variant="danger"
                 className="next-btn"
                 onClick={handleSubmit}
               >
-                <Link to="/eng-q2" style={{ color: "#fff" }}>
-                  Next
-                </Link>
+                Next
                 <i
                   class="fas fa-chevron-right"
                   style={{ color: "#fff", marginLeft: "10px" }}

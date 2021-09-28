@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import Question18 from "./Question18";
 import Question20 from "./Question20";
 import { useState } from "react";
@@ -6,6 +12,7 @@ import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
 
 export default function Question19() {
+  const history = useHistory();
   const [input, setInput] = useState([]);
   const [dontknow, setDontknow] = useState(false);
 
@@ -24,6 +31,7 @@ export default function Question19() {
     } else {
       localStorage.setItem("q19", JSON.stringify(input));
     }
+    history.push("/eng-q20");
   }
 
   return (
@@ -86,7 +94,6 @@ export default function Question19() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-
               <Form.Check
                 type="checkbox"
                 label="Engaged tax specialists to advise our company on potential implications"
@@ -158,18 +165,20 @@ export default function Question19() {
               />
             </Form.Group>
             <div style={{ textAlign: "center" }}>
-              <Link to="/eng-q18">
-                <Button variant="light" className="back-btn">
-                  Back
-                </Button>
-              </Link>
+              <Button
+                variant="light"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                Back
+              </Button>
 
               <Button
                 variant="danger"
                 className="next-btn"
                 onClick={handleSubmit}
               >
-                <Link to="/eng-q20">Next</Link>
+                Next
               </Button>
             </div>
           </Form>

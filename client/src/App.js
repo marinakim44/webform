@@ -44,8 +44,6 @@ import QuestionG from "./questions/QuestionG";
 import QuestionH from "./questions/QuestionH";
 import QuestionI from "./questions/QuestionI";
 import QuestionJ from "./questions/QuestionJ";
-// import QuestionK from "./questions/QuestionK";
-// import QuestionL from "./questions/QuestionL";
 
 export default function App() {
   const [language, setLanguage] = useState("");
@@ -304,12 +302,6 @@ export default function App() {
         <Route path="/eng-qj">
           <QuestionJ />
         </Route>
-        {/* <Route path="/eng-qk">
-          <QuestionK />
-        </Route>
-        <Route path="/eng-ql">
-          <QuestionL />
-        </Route> */}
       </Switch>
     </BrowserRouter>
   );

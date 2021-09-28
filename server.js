@@ -6,7 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
 
-//below for production
+//below line for production
 // const port = process.env.PORT || 5000;
 const port = 3001;
 
@@ -26,8 +26,11 @@ const responseSchema = {
     type: Date,
     required: true,
   },
-  fullName: String,
+  name: String,
+  company: String,
+  title: String,
   email: String,
+  phone: String,
   question1: {
     a: String,
     b: String,
@@ -160,9 +163,11 @@ const Response = mongoose.model("Response", responseSchema);
 app.post("/allinputs", (req, res) => {
   const newResponse = new Response({
     datetime: currentDate,
-    fullName: req.body.fullName,
-    email: req.body.email,
+    name: req.body.name,
+    company: req.body.company,
     title: req.body.title,
+    email: req.body.email,
+    phone: req.body.phone,
     question1: {
       a: req.body.q1a,
       b: req.body.q1b,

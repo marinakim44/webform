@@ -1,12 +1,23 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { Table, Button, Breadcrumb } from "react-bootstrap";
 import Question2 from "./Question2";
 import Question4 from "./Question4";
 import Question5 from "./Question5";
 import "../App.css";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { question3 } from "../actions";
+import axios from "axios";
 
 export default function Question3() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [concern, setConcern] = useState({
     a: false,
     b: false,
@@ -38,6 +49,22 @@ export default function Question3() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q3", JSON.stringify(listOfConcerns));
+    history.push("/eng-q4");
+    dispatch(question3(listOfConcerns));
+
+    const data = {
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -401,11 +428,13 @@ export default function Question3() {
               </tbody>
             </Table>
 
-            <Link to="/eng-q2">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               type="button"
@@ -413,8 +442,7 @@ export default function Question3() {
               className="next-btn"
               onClick={handleSubmit}
             >
-              {/* <Link to={listOfConcerns.length === 0 ? "/eng-q5" : "/eng-q4"}> */}
-              <Link to="/eng-q4">Next</Link>
+              Next
             </Button>
           </form>
         </div>

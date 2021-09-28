@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { useState } from "react";
 import Question21 from "./Question21";
 import Question23 from "./Question23";
@@ -6,6 +12,7 @@ import { Button, Breadcrumb, Form, Row, Col, Table } from "react-bootstrap";
 import "../App.css";
 
 export default function Question22() {
+  const history = useHistory();
   const [input, setInput] = useState({
     revenue: "",
     profit: "",
@@ -41,6 +48,7 @@ export default function Question22() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q22", JSON.stringify(input));
+    history.push("/eng-q23");
   }
 
   return (
@@ -221,18 +229,20 @@ export default function Question22() {
               </tbody>
             </Table>
 
-            <Link to="/eng-q21">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               variant="danger"
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-q23">Next</Link>
+              Next
             </Button>
           </Form>
         </div>

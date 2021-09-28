@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import Question22 from "./Question22";
 import Question24 from "./Question24";
 import { Button, Breadcrumb, Table, Form, Row, Col } from "react-bootstrap";
@@ -7,6 +13,7 @@ import { useState } from "react";
 import "../App.css";
 
 export default function Question23() {
+  const history = useHistory();
   const [input, setInput] = useState("");
 
   function handleClick(e) {
@@ -16,6 +23,7 @@ export default function Question23() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q23", input);
+    history.push("/eng-q24");
   }
 
   return (
@@ -83,7 +91,6 @@ export default function Question23() {
                   </td>
                 </tr>
                 <tr>
-
                   <td>Less or equal to 10% below actual</td>
                   <td>6-9% below actual</td>
                   <td>3-5% below actual</td>
@@ -92,7 +99,6 @@ export default function Question23() {
                   <td>6-9% above actual</td>
                   <td>More or equal to 10% above actual</td>
                   <td></td>
-
                 </tr>
 
                 <tr>
@@ -163,18 +169,21 @@ export default function Question23() {
                 </tr>
               </tbody>
             </Table>
-            <Link to="/eng-q22">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               variant="danger"
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-q24">Next</Link>
+              Next
             </Button>
           </Form>
         </div>
