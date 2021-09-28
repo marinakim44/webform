@@ -10,6 +10,7 @@ import Question25 from "./Question25";
 import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Question24() {
   const history = useHistory();
@@ -119,6 +120,43 @@ export default function Question24() {
     e.preventDefault();
     localStorage.setItem("q24", JSON.stringify(input));
     history.push("/eng-q25");
+
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+      q5a: localStorage.getItem("q5-carbonNeutral"),
+      q5b: localStorage.getItem("q5-netZero"),
+      q6: localStorage.getItem("q6"),
+      q7: localStorage.getItem("q7"),
+      q8: localStorage.getItem("q8"),
+      q9: localStorage.getItem("q9"),
+      q10: JSON.parse(localStorage.getItem("q10")),
+      q11: JSON.parse(localStorage.getItem("q11")),
+      q12: JSON.parse(localStorage.getItem("q12")),
+      q13a: localStorage.getItem("q13a"),
+      q13b: localStorage.getItem("q13b"),
+      q14: JSON.parse(localStorage.getItem("q14")),
+      q15: JSON.parse(localStorage.getItem("q15")),
+      q16: localStorage.getItem("q16"),
+      q17: JSON.parse(localStorage.getItem("q17")),
+      q18: JSON.parse(localStorage.getItem("q18")),
+      q19: JSON.parse(localStorage.getItem("q19")),
+      q20: JSON.parse(localStorage.getItem("q20")),
+      q21: JSON.parse(localStorage.getItem("q21")),
+      q22: JSON.parse(localStorage.getItem("q22")),
+      q23: localStorage.getItem("q23"),
+      q24: JSON.parse(localStorage.getItem("q24")),
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -232,7 +270,9 @@ export default function Question24() {
               className="next-btn"
               onClick={handleSubmit}
             >
+              {/* <Link style={{ color: "#fff" }} to="/eng-q25"> */}
               Next
+              {/* </Link> */}
             </Button>
           </form>
         </div>

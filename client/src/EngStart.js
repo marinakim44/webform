@@ -12,14 +12,14 @@ import App from "./App";
 import Responses from "./questions/Responses";
 import "./App.css";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { credentials } from "./actions";
+// import { useDispatch } from "react-redux";
+// import { credentials } from "./actions";
 import axios from "axios";
 
 function EngStart() {
   const history = useHistory();
   const location = useLocation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     name: "",
@@ -27,7 +27,12 @@ function EngStart() {
     title: "",
     email: "",
     phone: "",
+    uuid: {},
   });
+
+  //google oauth / email to restore previous answers
+  // alert
+  // save and continue later
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -42,7 +47,7 @@ function EngStart() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(credentials(input));
+    // dispatch(credentials(input));
     localStorage.setItem("name", input.name);
     localStorage.setItem("company", input.company);
     localStorage.setItem("title", input.title);
@@ -51,7 +56,9 @@ function EngStart() {
     console.log(history);
     console.log(location);
     history.push("/eng-q1");
+
     const data = {
+      uuid: localStorage.getItem("uuid"),
       name: input.name,
       company: input.company,
       title: input.title,

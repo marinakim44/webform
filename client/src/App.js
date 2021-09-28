@@ -3,7 +3,7 @@ import EngStart from "./EngStart";
 import RusStart from "./RusStart";
 import { Dropdown, Breadcrumb } from "react-bootstrap";
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Question1 from "./questions/Question1";
 import Question2 from "./questions/Question2";
 import Question3 from "./questions/Question3";
@@ -44,14 +44,28 @@ import QuestionG from "./questions/QuestionG";
 import QuestionH from "./questions/QuestionH";
 import QuestionI from "./questions/QuestionI";
 import QuestionJ from "./questions/QuestionJ";
+import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 export default function App() {
+  useEffect(() => {
+    const id = uuidv4();
+    localStorage.setItem("uuid", id);
+    console.log(id);
+  }, []);
+
   const [language, setLanguage] = useState("");
 
   function chooseEng(e) {
     e.preventDefault();
     setLanguage("English");
     localStorage.setItem("language", "English");
+
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+    };
+
+    axios.post("/allinputs", data);
   }
 
   function chooseRus(e) {
@@ -160,8 +174,6 @@ export default function App() {
             <Link to="/eng-qh">Question H</Link>
             <Link to="/eng-qi">Question I</Link>
             <Link to="/eng-qj">Question J</Link>
-            {/* <Link to="/eng-qk">Question K</Link>
-            <Link to="/eng-ql">Question L</Link> */}
             <div
               style={{
                 backgroundColor: "#000",
@@ -292,6 +304,9 @@ export default function App() {
         </Route>
         <Route path="/eng-qf">
           <QuestionF />
+        </Route>
+        <Route path="/eng-qg">
+          <QuestionG />
         </Route>
         <Route path="/eng-qh">
           <QuestionH />

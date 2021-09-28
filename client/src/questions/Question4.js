@@ -62,9 +62,9 @@ export default function Question4() {
     e.preventDefault();
     localStorage.setItem("q4", JSON.stringify(selectedActions));
     localStorage.setItem("q4-other", other);
-    history.push("/eng-q5");
 
     const data = {
+      uuid: localStorage.getItem("uuid"),
       name: localStorage.getItem("name"),
       company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
@@ -79,6 +79,7 @@ export default function Question4() {
     };
 
     axios.post("/allinputs", data);
+    history.push("/eng-q5");
   }
 
   return (

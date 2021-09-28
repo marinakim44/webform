@@ -34,18 +34,19 @@ export default function QuestionJ() {
     e.preventDefault();
     localStorage.setItem("qj", input);
 
-    const allInputs = {
-      fullName: localStorage.getItem("name"),
-      email: localStorage.getItem("email"),
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
       q1a: localStorage.getItem("q1a"),
       q1b: localStorage.getItem("q1b"),
       q2: JSON.parse(localStorage.getItem("countries")),
       q3: JSON.parse(localStorage.getItem("q3")),
-      q4: JSON.parse(localStorage.getItem("q4")),
-      q4other: localStorage.getItem("q4-other"),
-      q5a: localStorage.getItem("q4-carbonNeutral"),
-      q5b: localStorage.getItem("q4-netZero"),
+      q5a: localStorage.getItem("q5-carbonNeutral"),
+      q5b: localStorage.getItem("q5-netZero"),
       q6: localStorage.getItem("q6"),
       q7: localStorage.getItem("q7"),
       q8: localStorage.getItem("q8"),
@@ -66,25 +67,35 @@ export default function QuestionJ() {
       q22: JSON.parse(localStorage.getItem("q22")),
       q23: localStorage.getItem("q23"),
       q24: JSON.parse(localStorage.getItem("q24")),
+      q25none: localStorage.getItem("q25none"),
+      q25dontknow: localStorage.getItem("q25dontknow"),
+      q25other: localStorage.getItem("q25-other"),
       q25: JSON.parse(localStorage.getItem("q25")),
       q25b: JSON.parse(localStorage.getItem("q25b")),
+      q25bNone: localStorage.getItem("q25b-none"),
+      q25bDontknow: localStorage.getItem("q25b-dontknow"),
       q25c: JSON.parse(localStorage.getItem("q25c")),
+      q25cNone: localStorage.getItem("q25c-none"),
+      q25cDontknow: localStorage.getItem("q25c-dontknow"),
       q26: localStorage.getItem("q26"),
       q27: localStorage.getItem("q27"),
       q28: localStorage.getItem("q28"),
       qa: localStorage.getItem("qa"),
+      qaOther: localStorage.getItem("qa-other"),
       qb: localStorage.getItem("qb"),
       qc: localStorage.getItem("qc"),
+      qcOther: localStorage.getItem("qc-other"),
       qd: localStorage.getItem("qd"),
       qe: localStorage.getItem("qe"),
       qf: localStorage.getItem("qf"),
+      qfOther: localStorage.getItem("qf-other"),
       qg: localStorage.getItem("qg"),
       qh: localStorage.getItem("qh"),
       qi: localStorage.getItem("qi"),
       qj: localStorage.getItem("qj"),
     };
 
-    axios.post("/allinputs", allInputs);
+    axios.post("/allinputs", data);
   }
 
   return (

@@ -16,7 +16,7 @@ import axios from "axios";
 
 export default function Question1() {
   const history = useHistory();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [a, setA] = useState("");
   const [b, setB] = useState("");
 
@@ -32,17 +32,12 @@ export default function Question1() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(
-      question1({
-        a: a,
-        b: b,
-      })
-    );
     localStorage.setItem("q1a", a);
     localStorage.setItem("q1b", b);
     history.push("/eng-q2");
 
     const data = {
+      uuid: localStorage.getItem("uuid"),
       name: localStorage.getItem("name"),
       company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
