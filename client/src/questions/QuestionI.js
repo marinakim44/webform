@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import QuestionH from "./QuestionH";
 import QuestionJ from "./QuestionJ";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
@@ -6,6 +12,7 @@ import "../App.css";
 import { useState } from "react";
 
 export default function QuestionI() {
+  const history = useHistory();
   const rows = [
     "Less than US$100 million",
     "$101 million–$999 million",
@@ -25,6 +32,7 @@ export default function QuestionI() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("qi", input);
+    history.push("/eng-qj");
   }
 
   return (
@@ -109,18 +117,21 @@ export default function QuestionI() {
                 );
               })}
             </Form.Group>
-            <Link to="/eng-qh">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               variant="danger"
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-qj">Next</Link>
+              Next
             </Button>
           </Form>
         </div>

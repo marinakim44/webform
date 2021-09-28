@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import QuestionG from "./QuestionG";
 import QuestionI from "./QuestionI";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
@@ -6,6 +12,7 @@ import "../App.css";
 import { useState } from "react";
 
 export default function QuestionH() {
+  const history = useHistory();
   const [input, setInput] = useState("");
 
   function handleClick(e) {
@@ -14,6 +21,7 @@ export default function QuestionH() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("qh", input);
+    history.push("/eng-qi");
   }
 
   return (
@@ -118,18 +126,23 @@ export default function QuestionH() {
                 />
               </div>
             ))}
-            <Link to="/eng-qg">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               variant="danger"
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-qi">Next</Link>
+              <Link to="/eng-qi" style={{ color: "#fff" }}>
+                Next
+              </Link>
             </Button>
           </Form>
         </div>

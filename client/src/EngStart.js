@@ -1,15 +1,24 @@
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import { useState } from "react";
 import Question1 from "./questions/Question1";
 import App from "./App";
 import Responses from "./questions/Responses";
 import "./App.css";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { credentials } from "./actions";
+import axios from "axios";
 
 function EngStart() {
-  const x = useSelector((state) => state.credentials);
+  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
@@ -39,13 +48,24 @@ function EngStart() {
     localStorage.setItem("title", input.title);
     localStorage.setItem("email", input.email);
     localStorage.setItem("phone", input.phone);
+    console.log(history);
+    console.log(location);
+    history.push("/eng-q1");
+    const data = {
+      name: input.name,
+      company: input.company,
+      title: input.title,
+      email: input.email,
+      phone: input.phone,
+    };
+    axios.post("/allinputs", data);
   }
 
   return (
     <BrowserRouter>
       <Route path="/eng-start">
         <div className="main">
-          <Breadcrumb className="nav-div">
+          <Breadcrumb className="nav-div" style={{ marginBottom: "1rem" }}>
             <Breadcrumb.Item>
               <Link className="before-link" to="/responses">
                 Home
@@ -111,28 +131,32 @@ function EngStart() {
 
             <br></br>
             <div className="back-next-btns">
-              <Link to="/">
-                <Button variant="light" className="back-btn" type="button">
-                  <i
-                    class="fas fa-chevron-left"
-                    style={{ color: "#000", marginRight: "10px" }}
-                  ></i>
-                  Back
-                </Button>
-              </Link>
+              {/* <Link to="/"> */}
+              <Button
+                variant="light"
+                className="back-btn"
+                type="button"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  class="fas fa-chevron-left"
+                  style={{ color: "#000", marginRight: "10px" }}
+                ></i>
+                Back
+              </Button>
+              {/* </Link> */}
 
               <Button
                 variant="danger"
                 className="next-btn"
                 onClick={handleSubmit}
+                component={Link}
               >
-                <Link to="/eng-q1" style={{ color: "#fff" }}>
-                  Start
-                  <i
-                    class="fas fa-chevron-right"
-                    style={{ color: "#fff", marginLeft: "10px" }}
-                  ></i>
-                </Link>
+                Start
+                <i
+                  class="fas fa-chevron-right"
+                  style={{ color: "#fff", marginLeft: "10px" }}
+                ></i>
               </Button>
             </div>
           </Form>

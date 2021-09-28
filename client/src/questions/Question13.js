@@ -1,11 +1,19 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import Question12 from "./Question12";
 import Question14 from "./Question14";
 import { useState } from "react";
 import { Button, Table, Dropdown, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import axios from "axios";
 
 export default function Question13() {
+  const history = useHistory();
   const [inputA, setInputA] = useState("");
   const [inputB, setInputB] = useState("");
   const [isCheckedA, setIsCheckedA] = useState(false);
@@ -32,6 +40,34 @@ export default function Question13() {
     e.preventDefault();
     localStorage.setItem("q13a", inputA ? inputA : "Don't know");
     localStorage.setItem("q13b", inputB ? inputB : "Don't know");
+    history.push("/eng-q14");
+
+    const data = {
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+      q4: JSON.parse(localStorage.getItem("q4")),
+      q4other: localStorage.getItem("q4-other"),
+      q5a: localStorage.getItem("q4-carbonNeutral"),
+      q5b: localStorage.getItem("q4-netZero"),
+      q6: localStorage.getItem("q6"),
+      q7: localStorage.getItem("q7"),
+      q8: localStorage.getItem("q8"),
+      q9: localStorage.getItem("q9"),
+      q10: JSON.parse(localStorage.getItem("q10")),
+      q11: JSON.parse(localStorage.getItem("q11")),
+      q12: JSON.parse(localStorage.getItem("q12")),
+      q13a: inputA ? inputA : "Don't know",
+      q13b: inputB ? inputB : "Don't know",
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -225,18 +261,21 @@ export default function Question13() {
                 </tr>
               </tbody>
             </Table>
-            <Link to="/eng-q12">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               variant="danger"
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-q14">Next</Link>
+              Next
             </Button>
           </form>
         </div>

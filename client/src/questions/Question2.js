@@ -14,9 +14,10 @@ import Question3 from "./Question3";
 import "../App.css";
 import { countries } from "../countries.js";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { question1, question2 } from "../actions";
 import { useEffect } from "react";
+import axios from "axios";
 
 const Menu = (props) => {
   const optionSelectedLength = props.getValue().length || 0;
@@ -32,6 +33,7 @@ const Menu = (props) => {
 };
 
 export default function Question2() {
+  const history = useHistory();
   useEffect(() => {
     console.log(localStorage.getItem("a"));
     console.log(localStorage.getItem("b"));
@@ -81,6 +83,20 @@ export default function Question2() {
       selectedOptions.push(other.other2);
     }
     localStorage.setItem("countries", JSON.stringify(selectedOptions));
+    history.push("/eng-q3");
+
+    const data = {
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -153,8 +169,12 @@ export default function Question2() {
               style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
             ></Form.Control>
 
-            <Button variant="light" className="back-btn">
-              <Link to="/eng-q1">Back</Link>
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
             </Button>
 
             <Button
@@ -162,7 +182,7 @@ export default function Question2() {
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-q3">Next</Link>
+              Next
             </Button>
           </Form>
         </div>

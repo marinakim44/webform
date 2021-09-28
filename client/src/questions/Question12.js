@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import Question11 from "./Question11";
 import Question13 from "./Question13";
 import { useState } from "react";
@@ -7,6 +13,7 @@ import "../App.css";
 import axios from "axios";
 
 export default function Question12() {
+  const history = useHistory();
   const rows = [
     {
       key: "A",
@@ -79,57 +86,35 @@ export default function Question12() {
     });
   }
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   localStorage.setItem("q12", JSON.stringify(input));
-  // }
-
   function handleSubmit(e) {
     e.preventDefault();
-
     localStorage.setItem("q12", JSON.stringify(input));
+    history.push("/eng-q13");
 
-    // const dataInput = {
-    //   fullName: localStorage.getItem("name"),
-    //   email: localStorage.getItem("email"),
-    //   title: localStorage.getItem("title"),
-    //   q1a: localStorage.getItem("q1a"),
-    //   q1b: localStorage.getItem("q1b"),
-    //   q2: JSON.parse(localStorage.getItem("countries")),
-    //   q3: JSON.parse(localStorage.getItem("q3")),
-    //   q4: JSON.parse(localStorage.getItem("q4")),
-    //   q5a: localStorage.getItem("q5-carbonNeutral"),
-    //   q5b: localStorage.getItem("q5-netZero"),
-    //   q6: localStorage.getItem("q6"),
-    //   q7: localStorage.getItem("q7"),
-    //   q8: localStorage.getItem("q8"),
-    //   q9: localStorage.getItem("q9"),
-    // q10: JSON.parse(localStorage.getItem("q10")),
-    // q10b: JSON.parse(localStorage.getItem("q10").B),
-    // q10c: JSON.parse(localStorage.getItem("q10").C),
-    // q10d: JSON.parse(localStorage.getItem("q10").D),
-    // q10e: JSON.parse(localStorage.getItem("q10").E),
-    // q10f: JSON.parse(localStorage.getItem("q10").F),
-    // q10g: JSON.parse(localStorage.getItem("q10").G),
+    const data = {
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+      q4: JSON.parse(localStorage.getItem("q4")),
+      q4other: localStorage.getItem("q4-other"),
+      q5a: localStorage.getItem("q4-carbonNeutral"),
+      q5b: localStorage.getItem("q4-netZero"),
+      q6: localStorage.getItem("q6"),
+      q7: localStorage.getItem("q7"),
+      q8: localStorage.getItem("q8"),
+      q9: localStorage.getItem("q9"),
+      q10: JSON.parse(localStorage.getItem("q10")),
+      q11: JSON.parse(localStorage.getItem("q11")),
+      q12: input,
+    };
 
-    // question11: {
-    //   a: JSON.parse(localStorage.getItem("q11")[0]),
-    //   b: JSON.parse(localStorage.getItem("q11")[1]),
-    //   c: JSON.parse(localStorage.getItem("q11")[2]),
-    //   d: JSON.parse(localStorage.getItem("q11")[3]),
-    //   e: JSON.parse(localStorage.getItem("q11")[4]),
-    //   f: JSON.parse(localStorage.getItem("q11")[5]),
-    //   g: JSON.parse(localStorage.getItem("q11")[6]),
-    // },
-    // question12: {
-    //   a: JSON.parse(localStorage.getItem("q12")[0]),
-    //   b: JSON.parse(localStorage.getItem("q12")[1]),
-    //   c: JSON.parse(localStorage.getItem("q12")[2]),
-    //   d: JSON.parse(localStorage.getItem("q12")[3]),
-    // },
-    // };
-
-    // axios.post("/allinputs", dataInput);
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -207,18 +192,21 @@ export default function Question12() {
                 })}
               </tbody>
             </Table>
-            <Link to="/eng-q11">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               variant="danger"
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-q13">Next</Link>
+              Next
             </Button>
           </form>
         </div>

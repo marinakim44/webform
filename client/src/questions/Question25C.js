@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import Question25B from "./Question25B";
 import Question26 from "./Question26";
 import { Button, Breadcrumb, Table, Form, Col } from "react-bootstrap";
@@ -6,6 +12,7 @@ import "../App.css";
 import { useState } from "react";
 
 export default function Question25C() {
+  const history = useHistory();
   const rows = [
     {
       key: "A",
@@ -100,6 +107,7 @@ export default function Question25C() {
     } else {
       localStorage.setItem("q25c", JSON.stringify(input));
     }
+    history.push("/eng-q26");
   }
 
   return (
@@ -228,22 +236,24 @@ export default function Question25C() {
                 </Button>
               </div>
               <div className="back-next-btns">
-                <Link to="/eng-q25b">
-                  <Button variant="light" className="back-btn">
-                    <i
-                      className="fas fa-chevron-left"
-                      style={{ marginRight: "8px" }}
-                    ></i>
-                    Back
-                  </Button>
-                </Link>
+                <Button
+                  variant="light"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
 
                 <Button
                   variant="danger"
                   className="next-btn"
                   onClick={handleSubmit}
                 >
-                  <Link to="/eng-q26">Next</Link>
+                  Next
                   <i
                     className="fas fa-chevron-right"
                     style={{ marginLeft: "8px" }}

@@ -1,11 +1,19 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import Question5 from "./Question5";
 import Question7 from "./Question7";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import { useState } from "react";
 import "../App.css";
+import axios from "axios";
 
 export default function Question6() {
+  const history = useHistory();
   const [input, setInput] = useState("");
 
   function handleClick(e) {
@@ -15,6 +23,26 @@ export default function Question6() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q6", input);
+    history.push("/eng-q7");
+
+    const data = {
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+      q4: JSON.parse(localStorage.getItem("q4")),
+      q4other: localStorage.getItem("q4-other"),
+      q5a: localStorage.getItem("q4-carbonNeutral"),
+      q5b: localStorage.getItem("q4-netZero"),
+      q6: input,
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -62,7 +90,7 @@ export default function Question6() {
                     textAlign: "left",
                   }}
                   name="option"
-                  value="1.5"
+                  value="Limiting global warming to 1.5° Celsius"
                   onClick={handleClick}
                 />
                 <Form.Check
@@ -73,7 +101,7 @@ export default function Question6() {
                     textAlign: "left",
                   }}
                   name="option"
-                  value="below 2"
+                  value="Limiting global warming to well below 2.0° Celsius"
                   onClick={handleClick}
                 />
                 <Form.Check
@@ -86,7 +114,7 @@ export default function Question6() {
                     textAlign: "left",
                   }}
                   name="option"
-                  value="not aligned"
+                  value="My company’s net-zero commitment is not aligned to a science-based target"
                   onClick={handleClick}
                 />
                 <Form.Check
@@ -97,24 +125,26 @@ export default function Question6() {
                     textAlign: "left",
                   }}
                   name="option"
-                  value="don't know"
+                  value="Don't know"
                   onClick={handleClick}
                 />
               </div>
             ))}
 
-            <Link to="/eng-q5">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               variant="danger"
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-q7">Next</Link>
+              Next
             </Button>
           </Form>
         </div>

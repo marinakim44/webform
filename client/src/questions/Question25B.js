@@ -1,11 +1,18 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import Question25 from "./Question25";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
+import Question25 from "./Question25v";
 import Question25C from "./Question25C";
 import { Button, Breadcrumb, Table, Dropdown, Form } from "react-bootstrap";
 import "../App.css";
 import { useState } from "react";
 
 export default function Question25B() {
+  const history = useHistory();
   const rows = [
     {
       key: "A",
@@ -102,11 +109,6 @@ export default function Question25B() {
     });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    localStorage.setItem("q25", JSON.stringify(input));
-  }
-
   const [none, setNone] = useState("");
   const [isNone, setIsNone] = useState(false);
 
@@ -134,6 +136,7 @@ export default function Question25B() {
     } else {
       localStorage.setItem("q25b", JSON.stringify(input));
     }
+    history.push("/eng-q25c");
   }
 
   return (
@@ -273,22 +276,24 @@ export default function Question25B() {
                 </Button>
               </div>
               <div className="back-next-btns">
-                <Link to="/eng-q25">
-                  <Button variant="light" className="back-btn">
-                    <i
-                      className="fas fa-chevron-left"
-                      style={{ marginRight: "8px" }}
-                    ></i>
-                    Back
-                  </Button>
-                </Link>
+                <Button
+                  variant="light"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
 
                 <Button
                   variant="danger"
                   className="next-btn"
                   onClick={handleSubmit}
                 >
-                  <Link to="/eng-q25c">Next</Link>
+                  Next
                   <i
                     className="fas fa-chevron-right"
                     style={{ marginLeft: "8px" }}

@@ -1,25 +1,36 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { Breadcrumb, Button } from "react-bootstrap";
 import "./App.css";
 import App from "./App";
 import QuestionJ from "./questions/QuestionJ";
 
 export default function EngFinish() {
+  const history = useHistory();
   return (
     <BrowserRouter>
       <Route path="/eng-finish">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link to="/" className="before-link">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-          </Breadcrumb>
           <h1>English - Finish Survey</h1>
-          <Link to="/eng-qj">
-            <Button>Back to J</Button>
-          </Link>
+          <div className="back-next-btns">
+            <Button
+              className="back-btn"
+              variant="light"
+              onClick={() => history.goBack()}
+            >
+              Back to J
+            </Button>
+            <Button className="next-btn" variant="danger">
+              <Link to="/" style={{ color: "#fff" }}>
+                Back home
+              </Link>
+            </Button>
+          </div>
         </div>
       </Route>
 

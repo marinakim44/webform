@@ -1,11 +1,19 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import Question8 from "./Question8";
 import Question10 from "./Question10";
 import { useState } from "react";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import axios from "axios";
 
 export default function Question9() {
+  const history = useHistory();
   const [input, setInput] = useState("");
 
   function handleClick(e) {
@@ -15,6 +23,29 @@ export default function Question9() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q9", input);
+    history.push("/eng-q10");
+
+    const data = {
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1a: localStorage.getItem("q1a"),
+      q1b: localStorage.getItem("q1b"),
+      q2: JSON.parse(localStorage.getItem("countries")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+      q4: JSON.parse(localStorage.getItem("q4")),
+      q4other: localStorage.getItem("q4-other"),
+      q5a: localStorage.getItem("q4-carbonNeutral"),
+      q5b: localStorage.getItem("q4-netZero"),
+      q6: localStorage.getItem("q6"),
+      q7: localStorage.getItem("q7"),
+      q8: localStorage.getItem("q8"),
+      q9: localStorage.getItem("q9"),
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
@@ -97,18 +128,21 @@ export default function Question9() {
                 />
               </div>
             ))}
-            <Link to="/eng-q8">
-              <Button variant="light" className="back-btn">
-                Back
-              </Button>
-            </Link>
+
+            <Button
+              variant="light"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              Back
+            </Button>
 
             <Button
               variant="danger"
               className="next-btn"
               onClick={handleSubmit}
             >
-              <Link to="/eng-q10">Next</Link>
+              Next
             </Button>
           </Form>
         </div>

@@ -38,17 +38,7 @@ export const submitQuestion2 = (state = [], action) => {
   }
 };
 
-export const submitQuestion3 = (
-  state = {
-    a: "",
-    b: "",
-    c: "",
-    d: "",
-    e: "",
-    f: "",
-  },
-  action
-) => {
+export const submitQuestion3 = (state = [], action) => {
   switch (action.type) {
     case "SUBMIT_QUESTION_3":
       return action.payload;
