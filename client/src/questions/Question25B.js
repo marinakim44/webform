@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question25 from "./Question25";
-import Question25C from "./Question25C";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { Button, Breadcrumb, Table, Form } from "react-bootstrap";
 import "../App.css";
 import { useState } from "react";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question25B() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const rows = [
     {
@@ -100,6 +96,8 @@ export default function Question25B() {
     N: "",
   });
 
+  const [checkedList, setCheckedList] = useState([]);
+
   function handleClick(e) {
     const { name, value } = e.target;
     setInput((prev) => {
@@ -108,6 +106,10 @@ export default function Question25B() {
         [name]: value,
       };
     });
+    if (!checkedList.includes(name)) {
+      checkedList.push(name);
+    }
+    console.log(input, checkedList);
   }
 
   const [isNone, setIsNone] = useState(false);
@@ -161,61 +163,170 @@ export default function Question25B() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q25b-none", isNone);
-    localStorage.setItem("q25b-dontknow", isDontknow);
-    localStorage.setItem("q25b", JSON.stringify(input));
 
-    history.push("/eng-q25c");
+    if (checkedList.length < 14) {
+      if (!isNone) {
+        if (!isDontknow) {
+          handleShow();
+        } else {
+          localStorage.setItem("q25b-none", isNone);
+          localStorage.setItem("q25b-dontknow", isDontknow);
+          localStorage.setItem("q25b", JSON.stringify(input));
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-      q8: localStorage.getItem("q8"),
-      q9: localStorage.getItem("q9"),
-      q10: JSON.parse(localStorage.getItem("q10")),
-      q11: JSON.parse(localStorage.getItem("q11")),
-      q12: JSON.parse(localStorage.getItem("q12")),
-      q13a: localStorage.getItem("q13a"),
-      q13b: localStorage.getItem("q13b"),
-      q14: JSON.parse(localStorage.getItem("q14")),
-      q15: JSON.parse(localStorage.getItem("q15")),
-      q16: localStorage.getItem("q16"),
-      q17: JSON.parse(localStorage.getItem("q17")),
-      q18: JSON.parse(localStorage.getItem("q18")),
-      q19: JSON.parse(localStorage.getItem("q19")),
-      q20: JSON.parse(localStorage.getItem("q20")),
-      q21: JSON.parse(localStorage.getItem("q21")),
-      q22: JSON.parse(localStorage.getItem("q22")),
-      q23: localStorage.getItem("q23"),
-      q24: JSON.parse(localStorage.getItem("q24")),
-      q25none: localStorage.getItem("q25none"),
-      q25dontknow: localStorage.getItem("q25dontknow"),
-      q25other: localStorage.getItem("q25-other"),
-      q25: JSON.parse(localStorage.getItem("q25")),
-      q25b: JSON.parse(localStorage.getItem("q25b")),
-      q25bNone: localStorage.getItem("q25b-none"),
-      q25bDontknow: localStorage.getItem("q25b-dontknow"),
-    };
+          history.push("/eng-q25c");
 
-    axios.post("/allinputs", data);
+          const data = {
+            uuid: localStorage.getItem("uuid"),
+            name: localStorage.getItem("name"),
+            company: localStorage.getItem("company"),
+            title: localStorage.getItem("title"),
+            email: localStorage.getItem("email"),
+            phone: localStorage.getItem("phone"),
+            q1a: localStorage.getItem("q1a"),
+            q1b: localStorage.getItem("q1b"),
+            q2: JSON.parse(localStorage.getItem("countries")),
+            q3: JSON.parse(localStorage.getItem("q3")),
+            q5a: localStorage.getItem("q5-carbonNeutral"),
+            q5b: localStorage.getItem("q5-netZero"),
+            q6: localStorage.getItem("q6"),
+            q7: localStorage.getItem("q7"),
+            q8: localStorage.getItem("q8"),
+            q9: localStorage.getItem("q9"),
+            q10: JSON.parse(localStorage.getItem("q10")),
+            q11: JSON.parse(localStorage.getItem("q11")),
+            q12: JSON.parse(localStorage.getItem("q12")),
+            q13a: localStorage.getItem("q13a"),
+            q13b: localStorage.getItem("q13b"),
+            q14: JSON.parse(localStorage.getItem("q14")),
+            q15: JSON.parse(localStorage.getItem("q15")),
+            q16: localStorage.getItem("q16"),
+            q17: JSON.parse(localStorage.getItem("q17")),
+            q18: JSON.parse(localStorage.getItem("q18")),
+            q19: JSON.parse(localStorage.getItem("q19")),
+            q20: JSON.parse(localStorage.getItem("q20")),
+            q21: JSON.parse(localStorage.getItem("q21")),
+            q22: JSON.parse(localStorage.getItem("q22")),
+            q23: localStorage.getItem("q23"),
+            q24: JSON.parse(localStorage.getItem("q24")),
+            q25none: localStorage.getItem("q25none"),
+            q25dontknow: localStorage.getItem("q25dontknow"),
+            q25other: localStorage.getItem("q25-other"),
+            q25: JSON.parse(localStorage.getItem("q25")),
+            q25b: JSON.parse(localStorage.getItem("q25b")),
+            q25bNone: localStorage.getItem("q25b-none"),
+            q25bDontknow: localStorage.getItem("q25b-dontknow"),
+          };
+
+          axios.post("/allinputs", data);
+        }
+      } else {
+        localStorage.setItem("q25b-none", isNone);
+        localStorage.setItem("q25b-dontknow", isDontknow);
+        localStorage.setItem("q25b", JSON.stringify(input));
+
+        history.push("/eng-q25c");
+
+        const data = {
+          uuid: localStorage.getItem("uuid"),
+          name: localStorage.getItem("name"),
+          company: localStorage.getItem("company"),
+          title: localStorage.getItem("title"),
+          email: localStorage.getItem("email"),
+          phone: localStorage.getItem("phone"),
+          q1a: localStorage.getItem("q1a"),
+          q1b: localStorage.getItem("q1b"),
+          q2: JSON.parse(localStorage.getItem("countries")),
+          q3: JSON.parse(localStorage.getItem("q3")),
+          q5a: localStorage.getItem("q5-carbonNeutral"),
+          q5b: localStorage.getItem("q5-netZero"),
+          q6: localStorage.getItem("q6"),
+          q7: localStorage.getItem("q7"),
+          q8: localStorage.getItem("q8"),
+          q9: localStorage.getItem("q9"),
+          q10: JSON.parse(localStorage.getItem("q10")),
+          q11: JSON.parse(localStorage.getItem("q11")),
+          q12: JSON.parse(localStorage.getItem("q12")),
+          q13a: localStorage.getItem("q13a"),
+          q13b: localStorage.getItem("q13b"),
+          q14: JSON.parse(localStorage.getItem("q14")),
+          q15: JSON.parse(localStorage.getItem("q15")),
+          q16: localStorage.getItem("q16"),
+          q17: JSON.parse(localStorage.getItem("q17")),
+          q18: JSON.parse(localStorage.getItem("q18")),
+          q19: JSON.parse(localStorage.getItem("q19")),
+          q20: JSON.parse(localStorage.getItem("q20")),
+          q21: JSON.parse(localStorage.getItem("q21")),
+          q22: JSON.parse(localStorage.getItem("q22")),
+          q23: localStorage.getItem("q23"),
+          q24: JSON.parse(localStorage.getItem("q24")),
+          q25none: localStorage.getItem("q25none"),
+          q25dontknow: localStorage.getItem("q25dontknow"),
+          q25other: localStorage.getItem("q25-other"),
+          q25: JSON.parse(localStorage.getItem("q25")),
+          q25b: JSON.parse(localStorage.getItem("q25b")),
+          q25bNone: localStorage.getItem("q25b-none"),
+          q25bDontknow: localStorage.getItem("q25b-dontknow"),
+        };
+
+        axios.post("/allinputs", data);
+      }
+    } else {
+      localStorage.setItem("q25b-none", isNone);
+      localStorage.setItem("q25b-dontknow", isDontknow);
+      localStorage.setItem("q25b", JSON.stringify(input));
+
+      history.push("/eng-q25c");
+
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+        q12: JSON.parse(localStorage.getItem("q12")),
+        q13a: localStorage.getItem("q13a"),
+        q13b: localStorage.getItem("q13b"),
+        q14: JSON.parse(localStorage.getItem("q14")),
+        q15: JSON.parse(localStorage.getItem("q15")),
+        q16: localStorage.getItem("q16"),
+        q17: JSON.parse(localStorage.getItem("q17")),
+        q18: JSON.parse(localStorage.getItem("q18")),
+        q19: JSON.parse(localStorage.getItem("q19")),
+        q20: JSON.parse(localStorage.getItem("q20")),
+        q21: JSON.parse(localStorage.getItem("q21")),
+        q22: JSON.parse(localStorage.getItem("q22")),
+        q23: localStorage.getItem("q23"),
+        q24: JSON.parse(localStorage.getItem("q24")),
+        q25none: localStorage.getItem("q25none"),
+        q25dontknow: localStorage.getItem("q25dontknow"),
+        q25other: localStorage.getItem("q25-other"),
+        q25: JSON.parse(localStorage.getItem("q25")),
+        q25b: JSON.parse(localStorage.getItem("q25b")),
+        q25bNone: localStorage.getItem("q25b-none"),
+        q25bDontknow: localStorage.getItem("q25b-dontknow"),
+      };
+
+      axios.post("/allinputs", data);
+    }
   }
 
   return (
     <BrowserRouter>
       <Route path="/eng-q25b">
-        <div>
+        <div className="main">
           <div className="sticky-sub-div">
             <Breadcrumb className="nav-div">
               <Breadcrumb.Item>
@@ -264,128 +375,118 @@ export default function Question25B() {
               ></div>
             </div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
 
-          <div className="main">
-            <p>
-              Q25b How effective do you think the government has been in
-              achieving these outcomes in Kazakhstan?
-              <br /> (Please select one response only per row)
-            </p>
-            <Form>
-              <div style={{ overflow: "auto", height: "320px" }}>
-                <Table>
-                  <thead
-                    style={{
-                      position: "sticky",
-                      top: 0,
-                      zIndex: 1,
-                      backgroundColor: "#fff",
-                    }}
-                  >
-                    <tr style={{ position: "sticky", top: 0 }}>
-                      <th
-                        colSpan="2"
-                        style={{ position: "sticky", top: 0, zIndex: 1 }}
-                      ></th>
-                      {columns.map((col) => {
-                        return (
-                          <th style={{ position: "sticky", top: 0, zIndex: 1 }}>
-                            {col}
-                          </th>
-                        );
-                      })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((row) => {
+          <p>
+            Q25b How effective do you think the government has been in achieving
+            these outcomes in Kazakhstan?
+            <br /> (Please select one response only per row)
+          </p>
+          <Form>
+            <div style={{ overflow: "auto", height: "320px" }}>
+              <Table>
+                <thead
+                  style={{
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <tr style={{ position: "sticky", top: 0 }}>
+                    <th
+                      colSpan="2"
+                      style={{ position: "sticky", top: 0, zIndex: 1 }}
+                    ></th>
+                    {columns.map((col) => {
                       return (
-                        <tr>
-                          <td>{row.key}</td>
-                          <td>{row.value}</td>
-                          {columns.map((col) => {
-                            return (
-                              <td>
-                                <input
-                                  type="radio"
-                                  name={row.key}
-                                  value={col}
-                                  onClick={handleClick}
-                                  disabled={isNone || isDontknow ? true : false}
-                                ></input>
-                              </td>
-                            );
-                          })}
-                        </tr>
+                        <th style={{ position: "sticky", top: 0, zIndex: 1 }}>
+                          {col}
+                        </th>
                       );
                     })}
-                  </tbody>
-                </Table>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "left",
-                  width: "35%",
-                  marginTop: "2rem",
-                }}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => {
+                    return (
+                      <tr>
+                        <td>{row.key}</td>
+                        <td>{row.value}</td>
+                        {columns.map((col) => {
+                          return (
+                            <td>
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={col}
+                                onClick={handleClick}
+                                disabled={isNone || isDontknow ? true : false}
+                              ></input>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "left",
+                width: "35%",
+                marginTop: "2rem",
+              }}
+            >
+              <Button
+                type="button"
+                variant={isNone ? "warning" : "light"}
+                style={{ marginRight: "2rem", width: "100%" }}
+                value="None of the above"
+                onClick={handleNone}
               >
-                <Button
-                  type="button"
-                  variant={isNone ? "warning" : "light"}
-                  style={{ marginRight: "2rem", width: "100%" }}
-                  value="None of the above"
-                  onClick={handleNone}
-                >
-                  NONE OF THE ABOVE
-                </Button>
-                <Button
-                  type="button"
-                  variant={isDontknow ? "warning" : "light"}
-                  style={{ width: "100%" }}
-                  value="Don't know"
-                  onClick={handleDontknow}
-                >
-                  DON'T KNOW
-                </Button>
-              </div>
-              <div className="back-next-btns">
-                <Button
-                  variant="light"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i
-                    className="fas fa-chevron-left"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                  Back
-                </Button>
+                NONE OF THE ABOVE
+              </Button>
+              <Button
+                type="button"
+                variant={isDontknow ? "warning" : "light"}
+                style={{ width: "100%" }}
+                value="Don't know"
+                onClick={handleDontknow}
+              >
+                DON'T KNOW
+              </Button>
+            </div>
+            <div className="back-next-btns">
+              <Button
+                variant="light"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i
-                    className="fas fa-chevron-right"
-                    style={{ marginLeft: "8px" }}
-                  ></i>
-                </Button>
-              </div>
-            </Form>
-          </div>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
+          </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q25">
-          <Question25 />
-        </Route>
-        <Route path="/eng-q25c">
-          <Question25C />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

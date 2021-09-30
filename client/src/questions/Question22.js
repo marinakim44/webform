@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import Question21 from "./Question21";
-import Question23 from "./Question23";
 import { Button, Breadcrumb, Form, Row, Col, Table } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question22() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState({
     revenue: "",
@@ -26,14 +22,32 @@ export default function Question22() {
 
   function handleDontknowRevenue(e) {
     setDontknowRevenue(!dontknowRevenue);
+    setInput((prev) => {
+      return {
+        ...prev,
+        revenue: "Don't know",
+      };
+    });
   }
 
   function handleDontknowProfit(e) {
     setDontknowProfit(!dontknowProfit);
+    setInput((prev) => {
+      return {
+        ...prev,
+        profit: "Don't know",
+      };
+    });
   }
 
   function handleDontknowReturn(e) {
     setDontknowReturn(!dontknowReturn);
+    setInput((prev) => {
+      return {
+        ...prev,
+        return: "Don't know",
+      };
+    });
   }
 
   function handleChange(e) {
@@ -48,43 +62,52 @@ export default function Question22() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q22", JSON.stringify(input));
-    history.push("/eng-q23");
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-      q8: localStorage.getItem("q8"),
-      q9: localStorage.getItem("q9"),
-      q10: JSON.parse(localStorage.getItem("q10")),
-      q11: JSON.parse(localStorage.getItem("q11")),
-      q12: JSON.parse(localStorage.getItem("q12")),
-      q13a: localStorage.getItem("q13a"),
-      q13b: localStorage.getItem("q13b"),
-      q14: JSON.parse(localStorage.getItem("q14")),
-      q15: JSON.parse(localStorage.getItem("q15")),
-      q16: localStorage.getItem("q16"),
-      q17: JSON.parse(localStorage.getItem("q17")),
-      q18: JSON.parse(localStorage.getItem("q18")),
-      q19: JSON.parse(localStorage.getItem("q19")),
-      q20: JSON.parse(localStorage.getItem("q20")),
-      q21: JSON.parse(localStorage.getItem("q21")),
-      q22: JSON.parse(localStorage.getItem("q22")),
-    };
+    if (
+      (!input.revenue && !dontknowRevenue) ||
+      (!input.profit && !dontknowProfit) ||
+      (!input.return && !dontknowReturn)
+    ) {
+      handleShow();
+    } else {
+      localStorage.setItem("q22", JSON.stringify(input));
+      history.push("/eng-q23");
 
-    axios.post("/allinputs", data);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+        q12: JSON.parse(localStorage.getItem("q12")),
+        q13a: localStorage.getItem("q13a"),
+        q13b: localStorage.getItem("q13b"),
+        q14: JSON.parse(localStorage.getItem("q14")),
+        q15: JSON.parse(localStorage.getItem("q15")),
+        q16: localStorage.getItem("q16"),
+        q17: JSON.parse(localStorage.getItem("q17")),
+        q18: JSON.parse(localStorage.getItem("q18")),
+        q19: JSON.parse(localStorage.getItem("q19")),
+        q20: JSON.parse(localStorage.getItem("q20")),
+        q21: JSON.parse(localStorage.getItem("q21")),
+        q22: JSON.parse(localStorage.getItem("q22")),
+      };
+
+      axios.post("/allinputs", data);
+    }
   }
 
   return (
@@ -133,13 +156,14 @@ export default function Question22() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             Q22. What was your company’s revenue growth, profit margin and
             return on assets (ROA) for the last fiscal year? (PLEASE PROVIDE
             YOUR ANSWER TO THE NEAREST PERCENTAGE POINT IN THE BOX BELOW)
           </p>
           <Form>
-            <Table style={{ width: "70%" }}>
+            <Table style={{ width: "70%" }} borderless>
               <tbody>
                 <tr>
                   <td style={{ textAlign: "left" }}>
@@ -283,15 +307,6 @@ export default function Question22() {
           </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q21">
-          <Question21 />
-        </Route>
-        <Route path="/eng-q23">
-          <Question23 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

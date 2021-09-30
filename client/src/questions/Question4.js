@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import Question3 from "./Question3";
-import Question5 from "./Question5";
 import { Button, Table, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question4() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const concerns = JSON.parse(localStorage.getItem("q3"));
   const rows = [
@@ -43,15 +39,60 @@ export default function Question4() {
     },
   ];
 
-  const [selectedActions, setSelectedActions] = useState([]);
   const [other, setOther] = useState("");
+  const [input, setInput] = useState([]);
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
+  const [checked3, setChecked3] = useState(false);
+  const [checked4, setChecked4] = useState(false);
+  const [checked5, setChecked5] = useState(false);
+  const [checked6, setChecked6] = useState(false);
 
   function handleClick(e) {
     const { name, value } = e.target;
-    selectedActions.push({
-      name: name,
-      value: value,
-    });
+
+    if (name === "Macroeconomic volatility") {
+      setChecked1(!checked1);
+      console.log(checked1);
+      if (setChecked1) {
+        if (!input.includes(`Macroeconomic volatility: ${value}`))
+          input.push(`Macroeconomic volatility: ${value}`);
+      } else {
+        if (input.includes(`Macroeconomic volatility: ${value}`))
+          input.pop(`Macroeconomic volatility: ${value}`);
+      }
+      console.log(input);
+    }
+    if (name === "Climate change") {
+      setChecked2(!checked2);
+      if (setChecked2) {
+        input.push(`Climate change: ${value}`);
+      }
+    }
+    if (name === "Social inequality") {
+      setChecked3(!checked3);
+      if (setChecked3) {
+        input.push(`Social inequality: ${value}`);
+      }
+    }
+    if (name === "Geopolitical conflict") {
+      setChecked4(!checked4);
+      if (setChecked4) {
+        input.push(`Climate change: ${value}`);
+      }
+    }
+    if (name === "Cyber risks") {
+      setChecked5(!checked5);
+      if (setChecked5) {
+        input.push(`Cyber risks: ${value}`);
+      }
+    }
+    if (name === "Health risks") {
+      setChecked6(!checked6);
+      if (setChecked6) {
+        input.push(`Health risks: ${value}`);
+      }
+    }
   }
 
   function handleChange(e) {
@@ -60,26 +101,31 @@ export default function Question4() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q4", JSON.stringify(selectedActions));
-    localStorage.setItem("q4-other", other);
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q4: JSON.parse(localStorage.getItem("q4")),
-      q4other: localStorage.getItem("q4-other"),
-    };
+    if (input.length === 0 && !other) {
+      handleShow();
+    } else {
+      localStorage.setItem("q4", JSON.stringify(input));
+      localStorage.setItem("q4-other", other);
 
-    axios.post("/allinputs", data);
-    history.push("/eng-q5");
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4")),
+        q4other: localStorage.getItem("q4-other"),
+      };
+
+      axios.post("/allinputs", data);
+      history.push("/eng-q5");
+    }
   }
 
   return (
@@ -110,7 +156,7 @@ export default function Question4() {
               }}
             ></div>
           </div>
-
+          <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
             <span>
               Q4. How do you anticipate your company could be impacted by the
@@ -183,15 +229,6 @@ export default function Question4() {
           </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q3">
-          <Question3 />
-        </Route>
-        <Route path="/eng-q5">
-          <Question5 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question7 from "./Question7";
-import Question9 from "./Question9";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question8() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
 
@@ -21,29 +17,34 @@ export default function Question8() {
   }
 
   function handleSubmit(e) {
-    localStorage.setItem("q8", input);
-    history.push("/eng-q9");
+    if (!input) {
+      handleShow();
+    } else {
+      localStorage.setItem("q8", input);
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-      q8: localStorage.getItem("q8"),
-    };
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+      };
 
-    axios.post("/allinputs", data);
+      axios.post("/allinputs", data);
+
+      history.push("/eng-q10a");
+    }
   }
 
   return (
@@ -78,6 +79,7 @@ export default function Question8() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             Q8. Has your company's approach to reducing greenhouse gas (GHG)
             emissions been independently assessed and validated (e.g., by SBTi)?
@@ -158,14 +160,14 @@ export default function Question8() {
         </div>
       </Route>
 
-      <Switch>
+      {/* <Switch>
         <Route path="/eng-q7">
           <Question7 />
         </Route>
         <Route path="/eng-q9">
           <Question9 />
         </Route>
-      </Switch>
+      </Switch> */}
     </BrowserRouter>
   );
 }

@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question17 from "./Question17";
-import Question19 from "./Question19";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { Button, Breadcrumb, Table } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question18() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const rows = [
     {
@@ -77,6 +73,8 @@ export default function Question18() {
     D: "",
   });
 
+  const [checked, setChecked] = useState([]);
+
   function handleClick(e) {
     const { name, value } = e.target;
     setInput((prev) => {
@@ -85,43 +83,52 @@ export default function Question18() {
         [name]: value,
       };
     });
+    if (!checked.includes(name)) {
+      checked.push(name);
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q18", JSON.stringify(input));
-    history.push("/eng-q19");
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-      q8: localStorage.getItem("q8"),
-      q9: localStorage.getItem("q9"),
-      q10: JSON.parse(localStorage.getItem("q10")),
-      q11: JSON.parse(localStorage.getItem("q11")),
-      q12: JSON.parse(localStorage.getItem("q12")),
-      q13a: localStorage.getItem("q13a"),
-      q13b: localStorage.getItem("q13b"),
-      q14: JSON.parse(localStorage.getItem("q14")),
-      q15: JSON.parse(localStorage.getItem("q15")),
-      q16: localStorage.getItem("q16"),
-      q17: JSON.parse(localStorage.getItem("q17")),
-      q18: JSON.parse(localStorage.getItem("q18")),
-    };
+    if (checked.length < 4) {
+      handleShow();
+    } else {
+      localStorage.setItem("q18", JSON.stringify(input));
 
-    axios.post("/allinputs", data);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+        q12: JSON.parse(localStorage.getItem("q12")),
+        q13a: localStorage.getItem("q13a"),
+        q13b: localStorage.getItem("q13b"),
+        q14: JSON.parse(localStorage.getItem("q14")),
+        q15: JSON.parse(localStorage.getItem("q15")),
+        q16: localStorage.getItem("q16"),
+        q17: JSON.parse(localStorage.getItem("q17")),
+        q18: JSON.parse(localStorage.getItem("q18")),
+      };
+
+      axios.post("/allinputs", data);
+
+      history.push("/eng-q19");
+    }
   }
 
   return (
@@ -166,6 +173,7 @@ export default function Question18() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             Q18. Thinking about the taxes your company pays, to what extent do
             you agree/disagree with the following statements? (PLEASE SELECT ONE
@@ -222,15 +230,6 @@ export default function Question18() {
           </form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q17">
-          <Question17 />
-        </Route>
-        <Route path="/eng-q19">
-          <Question19 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question9 from "./Question9";
-import Question11 from "./Question11";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
-export default function Question10() {
+export default function Question10B() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const rows = [
     {
@@ -82,6 +78,8 @@ export default function Question10() {
     G: "",
   });
 
+  const [checked, setChecked] = useState([]);
+
   function handleClick(e) {
     const { name, value } = e.target;
     setInput((prevInput) => {
@@ -90,39 +88,48 @@ export default function Question10() {
         [name]: value,
       };
     });
+    if (!checked.includes(name)) {
+      checked.push(name);
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q10", JSON.stringify(input));
-    history.push("/eng-q11");
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-      q8: localStorage.getItem("q8"),
-      q9: localStorage.getItem("q9"),
-      q10: JSON.parse(localStorage.getItem("q10")),
-    };
+    if (checked.length < 7) {
+      handleShow();
+    } else {
+      localStorage.setItem("q10", JSON.stringify(input));
 
-    axios.post("/allinputs", data);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+      };
+
+      axios.post("/allinputs", data);
+
+      history.push("/eng-q12");
+    }
   }
 
   return (
     <BrowserRouter>
-      <Route path="/eng-q10">
+      <Route path="/eng-q10b">
         <div className="main">
           <Breadcrumb className="nav-div">
             <Breadcrumb.Item>
@@ -154,10 +161,11 @@ export default function Question10() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
-            Q10a. How influential are the following factors behind your
-            company’s carbon-neutral and/or net-zero commitments? (PLEASE SELECT
-            ONE RESPONSE FOR EACH STATEMENT)
+            Q10b. How influential are the following factors behind the
+            carbon-neutral and/or net-zero commitment your company is
+            developing? (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
             <Table bordered>
@@ -211,15 +219,6 @@ export default function Question10() {
           </form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q9">
-          <Question9 />
-        </Route>
-        <Route path="/eng-q11">
-          <Question11 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

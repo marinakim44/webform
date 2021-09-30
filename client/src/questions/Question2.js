@@ -1,22 +1,11 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import { components, default as ReactSelect } from "react-select";
-import makeAnimated from "react-select/animated";
+import ModalAlert from "../ModalAlert";
 import Creatable from "react-select";
-import Question1 from "./Question1";
-import Question3 from "./Question3";
 import "../App.css";
 import { countries } from "../countries.js";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { question1, question2 } from "../actions";
-import { useEffect } from "react";
 import axios from "axios";
 
 const Menu = (props) => {
@@ -33,16 +22,10 @@ const Menu = (props) => {
 };
 
 export default function Question2() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
-  // useEffect(() => {
-  //   console.log(localStorage.getItem("a"));
-  //   console.log(localStorage.getItem("b"));
-  //   dispatch(
-  //     question1({ a: localStorage.getItem("a"), b: localStorage.getItem("b") })
-  //   );
-  // });
-
-  // const dispatch = useDispatch();
   const isValidNewOption = (inputValue, selectedValue) =>
     inputValue.length > 0 && selectedValue.length < 4;
 
@@ -50,7 +33,10 @@ export default function Question2() {
   const [other, setOther] = useState({
     other1: "",
     other2: "",
+    other3: "",
   });
+  const [isNone, setIsNone] = useState(false);
+  const [isDontknow, setIsDontknow] = useState(false);
 
   function handleChange(selectedOption) {
     selectedOption.forEach((option) => {
@@ -71,32 +57,107 @@ export default function Question2() {
     });
   }
 
+  function handleNone() {
+    if (isDontknow) {
+      setIsDontknow(false);
+    }
+    if (selectedOptions) {
+      setSelectedOptions([]);
+    }
+    if (other) {
+      setOther({
+        other1: "",
+        other2: "",
+        other3: "",
+      });
+    }
+
+    setIsNone(!isNone);
+
+    if (isNone) {
+      setSelectedOptions([]);
+      setIsDontknow(false);
+    }
+
+    if (isNone || isDontknow) {
+      setSelectedOptions([]);
+    }
+
+    console.log(isNone);
+  }
+
+  function handleDontknow() {
+    if (isNone) {
+      setIsNone(false);
+    }
+    if (selectedOptions) {
+      setSelectedOptions([]);
+    }
+    if (other) {
+      setOther({
+        other1: "",
+        other2: "",
+        other3: "",
+      });
+    }
+
+    setIsDontknow(!isDontknow);
+
+    if (isDontknow) {
+      setSelectedOptions([]);
+      setIsNone(false);
+    }
+
+    if (isNone || isDontknow) {
+      setSelectedOptions([]);
+    }
+    console.log(isDontknow);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
-    // dispatch(question2(selectedOptions));
+    if (
+      selectedOptions.length === 0 &&
+      !isNone &&
+      !isDontknow &&
+      !other.other1 &&
+      !other.other2 &&
+      !other.other3
+    ) {
+      handleShow();
+    } else {
+      if (other.other1) {
+        selectedOptions.push(other.other1);
+      }
+      if (other.other2) {
+        selectedOptions.push(other.other2);
+      }
+      if (other.other3) {
+        selectedOptions.push(other.other3);
+      }
 
-    if (other.other1) {
-      selectedOptions.push(other.other1);
+      localStorage.setItem("q2", JSON.stringify(selectedOptions));
+      localStorage.setItem("q2-none", isNone);
+      localStorage.setItem("q2-dontknow", isDontknow);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2none: localStorage.getItem("q2-none"),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
+      };
+
+      axios.post("/allinputs", data);
+
+      history.push("/eng-q3");
     }
-    if (other.other2) {
-      selectedOptions.push(other.other2);
-    }
-    localStorage.setItem("countries", JSON.stringify(selectedOptions));
-    history.push("/eng-q3");
-
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-    };
-
-    axios.post("/allinputs", data);
+    console.log(selectedOptions, other, isNone, isDontknow);
   }
 
   return (
@@ -125,6 +186,7 @@ export default function Question2() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
             <p>
               Q2. Which three countries/territories, excluding the
@@ -143,6 +205,7 @@ export default function Question2() {
               }}
             >
               <Creatable
+                isDisabled={isNone || isDontknow ? true : false}
                 components={{ Menu }}
                 isMulti
                 isValidNewOption={isValidNewOption}
@@ -159,6 +222,7 @@ export default function Question2() {
               value={other.other1}
               onChange={handleOther}
               style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
+              disabled={isNone || isDontknow ? true : false}
             ></Form.Control>
             <Form.Control
               type="text"
@@ -167,8 +231,44 @@ export default function Question2() {
               onChange={handleOther}
               placeholder="Other country 2 (please specify)"
               style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
+              disabled={isNone || isDontknow ? true : false}
             ></Form.Control>
-
+            <Form.Control
+              type="text"
+              name="other3"
+              value={other.other3}
+              onChange={handleOther}
+              placeholder="Other country 3 (please specify)"
+              style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
+              disabled={isNone || isDontknow ? true : false}
+            ></Form.Control>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "left",
+                width: "35%",
+                marginTop: "2rem",
+              }}
+            >
+              <Button
+                type="button"
+                variant={isNone ? "warning" : "light"}
+                style={{ marginRight: "2rem", width: "100%" }}
+                value="none"
+                onClick={handleNone}
+              >
+                My company <strong>does not</strong> operate internationally
+              </Button>
+              <Button
+                type="button"
+                variant={isDontknow ? "warning" : "light"}
+                style={{ width: "100%" }}
+                value="Don't know"
+                onClick={handleDontknow}
+              >
+                Don't know
+              </Button>
+            </div>
             <Button
               variant="light"
               className="back-btn"
@@ -187,14 +287,14 @@ export default function Question2() {
           </Form>
         </div>
       </Route>
-      <Switch>
+      {/* <Switch>
         <Route path="/eng-q1">
           <Question1 />
         </Route>
         <Route path="/eng-q3">
           <Question3 />
         </Route>
-      </Switch>
+      </Switch> */}
     </BrowserRouter>
   );
 }

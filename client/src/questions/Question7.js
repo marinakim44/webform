@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question6 from "./Question6";
-import Question8 from "./Question8";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import { useState } from "react";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question7() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
 
@@ -22,28 +18,45 @@ export default function Question7() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q7", input);
-    history.push("/eng-q8");
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-    };
+    if (!input) {
+      handleShow();
+    } else {
+      localStorage.setItem("q7", input);
 
-    axios.post("/allinputs", data);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+      };
+
+      axios.post("/allinputs", data);
+
+      if (
+        input === "Limiting global warming to 1.5° Celsius" ||
+        input === "Limiting global warming to well below 2.0° Celsius"
+      ) {
+        history.push("/eng-q9");
+      } else {
+        if (localStorage.getItem("q5-carbonNeutral") === "yes") {
+          history.push("/eng-q10a");
+        } else if (localStorage.getItem("q5-carbonNeutral") === "no but") {
+          history.push("/eng-q10b");
+        }
+      }
+    }
   }
 
   return (
@@ -77,6 +90,7 @@ export default function Question7() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             Q7. Which science-based target, if any, will your company’s net-zero
             commitment be aligned to? (PLEASE SELECT ONE RESPONSE)
@@ -151,15 +165,6 @@ export default function Question7() {
           </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q6">
-          <Question6 />
-        </Route>
-        <Route path="/eng-q8">
-          <Question8 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question5 from "./Question5";
-import Question7 from "./Question7";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import { useState } from "react";
 import "../App.css";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question6() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
 
@@ -21,9 +17,7 @@ export default function Question6() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
     localStorage.setItem("q6", input);
-    history.push("/eng-q7");
 
     const data = {
       uuid: localStorage.getItem("uuid"),
@@ -42,6 +36,57 @@ export default function Question6() {
     };
 
     axios.post("/allinputs", data);
+    if (!input) {
+      handleShow();
+    } else {
+      // history.push("/eng-q7");
+      if (
+        localStorage.getItem("q6") ===
+          "Limiting global warming to 1.5° Celsius" ||
+        localStorage.getItem("q6") ===
+          "Limiting global warming to well below 2.0° Celsius"
+      ) {
+        if (localStorage.getItem("q5-carbonNeutral") === "yes") {
+          history.push("/eng-q8");
+        } else if (localStorage.getItem("q5-netZero") === "no but") {
+          history.push("/eng-q9");
+        } else if (
+          (localStorage.getItem("q5-carbonNeutral") === "no" &&
+            localStorage.getItem("q5-netZer0") === "no") ||
+          (localStorage.getItem("q5-carbonNeutral") === "dontKnow" &&
+            localStorage.getItem("q5-netZero") === "no") ||
+          (localStorage.getItem("q5-carbonNeutral") === "no" &&
+            localStorage.getItem("q5-netZero") === "dontKnow")
+        ) {
+          history.push("/eng-q11");
+        } else {
+          history.push("/eng-q12");
+        }
+      } else {
+        if (
+          localStorage.getItem("q5-carbonNeutral") === "yes" ||
+          localStorage.getItem("q5-netZero") === "yes"
+        ) {
+          history.push("/eng-q10a");
+        }
+        if (
+          localStorage.getItem("q5-carbonNeutral") === "no but" ||
+          localStorage.getItem("q5-netZero") === "no but"
+        ) {
+          history.push("/eng-q10b");
+        }
+        if (
+          (localStorage.getItem("q5-carbonNeutral") === "no" &&
+            localStorage.getItem("q5-netZero") === "no") ||
+          (localStorage.getItem("q5-carbonNeutral") === "dontKnow" &&
+            localStorage.getItem("q5-netZero") === "no") ||
+          (localStorage.getItem("q5-carbonNeutral") === "no" &&
+            localStorage.getItem("q5-netZero") === "dontKnow")
+        ) {
+          history.push("/eng-q11");
+        }
+      }
+    }
   }
 
   return (
@@ -74,6 +119,7 @@ export default function Question6() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             Q6. Which science-based target, if any, is your company’s net-zero
             commitment aligned to? (PLEASE SELECT ONE RESPONSE)
@@ -148,15 +194,6 @@ export default function Question6() {
           </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q5">
-          <Question5 />
-        </Route>
-        <Route path="/eng-q7">
-          <Question7 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

@@ -3,7 +3,7 @@ import EngStart from "./EngStart";
 import RusStart from "./RusStart";
 import { Dropdown, Breadcrumb } from "react-bootstrap";
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Question1 from "./questions/Question1";
 import Question2 from "./questions/Question2";
 import Question3 from "./questions/Question3";
@@ -13,7 +13,8 @@ import Question6 from "./questions/Question6";
 import Question7 from "./questions/Question7";
 import Question8 from "./questions/Question8";
 import Question9 from "./questions/Question9";
-import Question10 from "./questions/Question10";
+import Question10A from "./questions/Question10A";
+import Question10B from "./questions/Question10B";
 import Question11 from "./questions/Question11";
 import Question12 from "./questions/Question12";
 import Question13 from "./questions/Question13";
@@ -54,11 +55,8 @@ export default function App() {
     console.log(id);
   }, []);
 
-  const [language, setLanguage] = useState("");
-
   function chooseEng(e) {
     e.preventDefault();
-    setLanguage("English");
     localStorage.setItem("language", "English");
 
     const data = {
@@ -70,7 +68,6 @@ export default function App() {
 
   function chooseRus(e) {
     e.preventDefault();
-    setLanguage("Russian");
     localStorage.setItem("language", "Russian");
   }
 
@@ -143,7 +140,8 @@ export default function App() {
             <Link to="/eng-q7">Question 7</Link>
             <Link to="/eng-q8">Question 8</Link>
             <Link to="/eng-q9">Question 9</Link>
-            <Link to="/eng-q10">Question 10</Link>
+            <Link to="/eng-q10a">Question 10A</Link>
+            <Link to="/eng-q10b">Question 10B</Link>
             <Link to="/eng-q11">Question 11</Link>
             <Link to="/eng-q12">Question 12</Link>
             <Link to="/eng-q13">Question 13</Link>
@@ -224,8 +222,11 @@ export default function App() {
         <Route path="/eng-q9">
           <Question9 />
         </Route>
-        <Route path="/eng-q10">
-          <Question10 />
+        <Route path="/eng-q10a">
+          <Question10A />
+        </Route>
+        <Route path="/eng-q10b">
+          <Question10B />
         </Route>
         <Route path="/eng-q11">
           <Question11 />

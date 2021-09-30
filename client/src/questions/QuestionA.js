@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import Question28 from "./Question28";
-import QuestionB from "./QuestionB";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function QuestionA() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
   const [other, setOther] = useState("");
@@ -147,6 +143,7 @@ export default function QuestionA() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             QA. If willing, would you please record your gender below? (PLEASE
             SELECT ONE RESPONSE)
@@ -234,15 +231,6 @@ export default function QuestionA() {
           </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q28">
-          <Question28 />
-        </Route>
-        <Route path="/eng-qb">
-          <QuestionB />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }
