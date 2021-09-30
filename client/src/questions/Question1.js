@@ -6,17 +6,16 @@ import {
   useHistory,
 } from "react-router-dom";
 import { useState } from "react";
-import EngStart from "../EngStart";
-import Question2 from "./Question2";
 import { Table, Button, Breadcrumb } from "react-bootstrap";
 import "../App.css";
-import { useDispatch } from "react-redux";
-import { question1 } from "../actions";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question1() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
-  // const dispatch = useDispatch();
   const [a, setA] = useState("");
   const [b, setB] = useState("");
 
@@ -32,22 +31,27 @@ export default function Question1() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q1a", a);
-    localStorage.setItem("q1b", b);
-    history.push("/eng-q2");
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-    };
+    if (!a || !b) {
+      handleShow();
+    } else {
+      localStorage.setItem("q1a", a);
+      localStorage.setItem("q1b", b);
+      history.push("/eng-q2");
 
-    axios.post("/allinputs", data);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+      };
+
+      axios.post("/allinputs", data);
+    }
   }
 
   return (
@@ -75,7 +79,7 @@ export default function Question1() {
               }}
             ></div>
           </div>
-
+          <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
             <span>
               Q1. How do you believe economic growth (i.e., gross domestic
@@ -274,14 +278,14 @@ export default function Question1() {
           </form>
         </div>
       </Route>
-      <Switch>
+      {/* <Switch>
         <Route path="/eng-start">
           <EngStart />
         </Route>
         <Route path="/eng-q2">
           <Question2 />
         </Route>
-      </Switch>
+      </Switch> */}
     </BrowserRouter>
   );
 }

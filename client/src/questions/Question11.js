@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question10 from "./Question10";
-import Question12 from "./Question12";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question11() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const rows = [
     {
@@ -89,6 +85,8 @@ export default function Question11() {
     G: "",
   });
 
+  const [checked, setChecked] = useState([]);
+
   function handleClick(e) {
     const { name, value } = e.target;
 
@@ -98,35 +96,44 @@ export default function Question11() {
         [name]: value,
       };
     });
+    if (!checked.includes(name)) {
+      checked.push(name);
+    }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q11", JSON.stringify(input));
-    history.push("/eng-q12");
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-      q8: localStorage.getItem("q8"),
-      q9: localStorage.getItem("q9"),
-      q10: JSON.parse(localStorage.getItem("q10")),
-      q11: JSON.parse(localStorage.getItem("q11")),
-    };
+    if (checked.length < 7) {
+      handleShow();
+    } else {
+      localStorage.setItem("q11", JSON.stringify(input));
 
-    axios.post("/allinputs", data);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+      };
+
+      axios.post("/allinputs", data);
+
+      history.push("/eng-q12");
+    }
   }
 
   return (
@@ -164,6 +171,7 @@ export default function Question11() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             Q11. How accurate are the following statements regarding why your
             company has not made a carbon-neutral or net-zero commitment?
@@ -221,15 +229,6 @@ export default function Question11() {
           </form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q10">
-          <Question10 />
-        </Route>
-        <Route path="/eng-q12">
-          <Question12 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

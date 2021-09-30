@@ -1,33 +1,18 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { Table, Button, Breadcrumb } from "react-bootstrap";
-import Question2 from "./Question2";
-import Question4 from "./Question4";
-import Question5 from "./Question5";
 import "../App.css";
+import ModalAlert from "../ModalAlert";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { question3 } from "../actions";
 import axios from "axios";
 
 export default function Question3() {
-  // const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
-  const [concern, setConcern] = useState({
-    a: false,
-    b: false,
-    c: false,
-    d: false,
-    e: false,
-    f: false,
-  });
-
+  const [listOthers, setListOthers] = useState([]);
   const [listOfConcerns, setListOfConcerns] = useState([]);
+  const [listAll, setListAll] = useState([]);
 
   function handleRadioButtonClick(e) {
     const { name, value } = e.target;
@@ -36,37 +21,48 @@ export default function Question3() {
       value === "Very concerned" ||
       value === "Extremely concerned"
     ) {
-      setConcern((prevInput) => {
-        return {
-          ...prevInput,
-          [name]: value,
-        };
-      });
-      listOfConcerns.push(name);
+      if (!listOfConcerns.includes(name)) {
+        listOfConcerns.push(name);
+      }
+    } else {
+      if (!listOthers.includes(name)) {
+        listOthers.push(name);
+      }
+    }
+    if (!listAll.includes(name)) {
+      listAll.push(name);
     }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q3", JSON.stringify(listOfConcerns));
-    // dispatch(question3(listOfConcerns));
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-    };
+    if (listAll.length < 6) {
+      handleShow();
+    } else {
+      localStorage.setItem("q3", JSON.stringify(listOfConcerns));
 
-    axios.post("/allinputs", data);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+      };
 
-    history.push("/eng-q4");
+      axios.post("/allinputs", data);
+
+      if (listOfConcerns.length !== 0) {
+        history.push("/eng-q4");
+      } else {
+        history.push("/eng-q5");
+      }
+    }
   }
 
   return (
@@ -96,7 +92,7 @@ export default function Question3() {
               }}
             ></div>
           </div>
-
+          <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
             <p>
               Q3. How concerned are you about the following global threats
@@ -449,18 +445,6 @@ export default function Question3() {
           </form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q2">
-          <Question2 />
-        </Route>
-        <Route path="/eng-q4">
-          <Question4 />
-        </Route>
-        <Route path="/eng-q5">
-          <Question5 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

@@ -5,7 +5,7 @@ import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question12() {
+export default function Question10A() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -13,54 +13,57 @@ export default function Question12() {
   const rows = [
     {
       key: "A",
-      value: "The industry’s long-term trends",
+      value: "Attracting and/or retaining employees",
     },
     {
       key: "B",
-      value: "The regulatory environment(s) in which my company operates",
+      value: "Satisfying investor demands",
     },
     {
       key: "C",
-      value:
-        "Macro environmental forces (including demographic, cultural, environmental, technological)",
+      value: "Meeting customer expectations",
     },
     {
       key: "D",
-      value: "My company’s specific assets, capabilities and relationships",
+      value: "Complying with government and/or intergovernmental targets",
+    },
+    {
+      key: "E",
+      value: "Mitigating climate change risks",
+    },
+    {
+      key: "F",
+      value: "Driving product/service innovation",
+    },
+    {
+      key: "G",
+      value: "Keeping pace with competitor commitments",
     },
   ];
 
   const columns = [
     {
       key: 1,
-      value: "Very unfavourable",
+      value: "Not influential",
     },
     {
       key: 2,
-      value: "Moderately unfavourable",
+      value: "Slightly influential",
     },
     {
       key: 3,
-      value: "Slightly unfavourable",
+      value: "Moderately influential",
     },
     {
       key: 4,
-      value: "Neither favourable nor unfavourable",
+      value: "Very influential",
     },
     {
       key: 5,
-      value: "Slightly favourable",
+      value: "Extremely influential",
     },
     {
       key: 6,
-      value: "Moderately favourable",
-    },
-    {
-      key: 7,
-      value: "Very favourable",
-    },
-    {
-      key: 8,
       value: "Don't know",
     },
   ];
@@ -70,8 +73,10 @@ export default function Question12() {
     B: "",
     C: "",
     D: "",
+    E: "",
+    F: "",
+    G: "",
   });
-
   const [checked, setChecked] = useState([]);
 
   function handleClick(e) {
@@ -90,11 +95,10 @@ export default function Question12() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 4) {
+    if (checked.length < 7) {
       handleShow();
     } else {
-      localStorage.setItem("q12", JSON.stringify(input));
-      history.push("/eng-q13");
+      localStorage.setItem("q10a", JSON.stringify(input));
 
       const data = {
         uuid: localStorage.getItem("uuid"),
@@ -113,18 +117,18 @@ export default function Question12() {
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
-        q11: JSON.parse(localStorage.getItem("q11")),
-        q12: JSON.parse(localStorage.getItem("q12")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
       };
 
       axios.post("/allinputs", data);
+
+      history.push("/eng-q12");
     }
   }
 
   return (
     <BrowserRouter>
-      <Route path="/eng-q12">
+      <Route path="/eng-q10a">
         <div className="main">
           <Breadcrumb className="nav-div">
             <Breadcrumb.Item>
@@ -146,24 +150,21 @@ export default function Question12() {
             <Breadcrumb.Item>Q7</Breadcrumb.Item>
             <Breadcrumb.Item>Q8</Breadcrumb.Item>
             <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q12</Breadcrumb.Item>
+            <Breadcrumb.Item active>Q10</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 13).toString() + "%",
+                width: ((100 / 41) * 11).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
           <p>
-            Q12a. How favourable are the following factors with regard to your
-            company’s ability to reduce greenhouse gas (GHG) emissions?
-            (favourable factors are those that may help your company,
-            unfavourable factors are those that may hinder your company)
+            Q10a. How influential are the following factors behind your
+            company’s carbon-neutral and/or net-zero commitments? (PLEASE SELECT
+            ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
             <Table bordered>
@@ -217,6 +218,15 @@ export default function Question12() {
           </form>
         </div>
       </Route>
+
+      {/* <Switch>
+        <Route path="/eng-q9">
+          <Question9 />
+        </Route>
+        <Route path="/eng-q11">
+          <Question11 />
+        </Route>
+      </Switch> */}
     </BrowserRouter>
   );
 }

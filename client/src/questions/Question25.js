@@ -1,18 +1,14 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question24 from "./Question24";
-import Question25B from "./Question25B";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { Button, Breadcrumb, Table, Form } from "react-bootstrap";
 import "../App.css";
 import { useState } from "react";
 import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question25() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState([]);
   const [isNone, setIsNone] = useState(false);
@@ -480,52 +476,63 @@ export default function Question25() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("q25none", isNone);
-    localStorage.setItem("q25dontknow", isDontknow);
-    localStorage.setItem("q25", JSON.stringify(input));
-    localStorage.setItem("q25-other", other);
-    history.push("/eng-q25b");
 
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-      q8: localStorage.getItem("q8"),
-      q9: localStorage.getItem("q9"),
-      q10: JSON.parse(localStorage.getItem("q10")),
-      q11: JSON.parse(localStorage.getItem("q11")),
-      q12: JSON.parse(localStorage.getItem("q12")),
-      q13a: localStorage.getItem("q13a"),
-      q13b: localStorage.getItem("q13b"),
-      q14: JSON.parse(localStorage.getItem("q14")),
-      q15: JSON.parse(localStorage.getItem("q15")),
-      q16: localStorage.getItem("q16"),
-      q17: JSON.parse(localStorage.getItem("q17")),
-      q18: JSON.parse(localStorage.getItem("q18")),
-      q19: JSON.parse(localStorage.getItem("q19")),
-      q20: JSON.parse(localStorage.getItem("q20")),
-      q21: JSON.parse(localStorage.getItem("q21")),
-      q22: JSON.parse(localStorage.getItem("q22")),
-      q23: localStorage.getItem("q23"),
-      q24: JSON.parse(localStorage.getItem("q24")),
-      q25none: localStorage.getItem("q25none"),
-      q25dontknow: localStorage.getItem("q25dontknow"),
-      q25other: localStorage.getItem("q25-other"),
-      q25: JSON.parse(localStorage.getItem("q25")),
-    };
+    if (input.length === 0) {
+      if (!isNone) {
+        if (!isDontknow) {
+          if (!other) {
+            handleShow();
+          }
+        }
+      }
+    } else {
+      localStorage.setItem("q25none", isNone);
+      localStorage.setItem("q25dontknow", isDontknow);
+      localStorage.setItem("q25", JSON.stringify(input));
+      localStorage.setItem("q25-other", other);
 
-    axios.post("/allinputs", data);
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+        q12: JSON.parse(localStorage.getItem("q12")),
+        q13a: localStorage.getItem("q13a"),
+        q13b: localStorage.getItem("q13b"),
+        q14: JSON.parse(localStorage.getItem("q14")),
+        q15: JSON.parse(localStorage.getItem("q15")),
+        q16: localStorage.getItem("q16"),
+        q17: JSON.parse(localStorage.getItem("q17")),
+        q18: JSON.parse(localStorage.getItem("q18")),
+        q19: JSON.parse(localStorage.getItem("q19")),
+        q20: JSON.parse(localStorage.getItem("q20")),
+        q21: JSON.parse(localStorage.getItem("q21")),
+        q22: JSON.parse(localStorage.getItem("q22")),
+        q23: localStorage.getItem("q23"),
+        q24: JSON.parse(localStorage.getItem("q24")),
+        q25none: localStorage.getItem("q25none"),
+        q25dontknow: localStorage.getItem("q25dontknow"),
+        q25other: localStorage.getItem("q25-other"),
+        q25: JSON.parse(localStorage.getItem("q25")),
+      };
+
+      axios.post("/allinputs", data);
+      history.push("/eng-q25b");
+    }
   }
 
   return (
@@ -577,6 +584,7 @@ export default function Question25() {
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             Q25. Which three of these outcomes do you think should be government
             priorities in Kazakhstan? <br />
@@ -826,162 +834,6 @@ export default function Question25() {
           </form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q24">
-          <Question24 />
-        </Route>
-        <Route path="/eng-q25b">
-          <Question25B />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }
-
-// import {
-//   BrowserRouter,
-//   Route,
-//   Switch,
-//   Link,
-//   useHistory,
-// } from "react-router-dom";
-// import Question24 from "./Question24";
-// import Question25B from "./Question25B";
-// import { Button, Breadcrumb, Table, Form } from "react-bootstrap";
-// import "../App.css";
-// import { useState } from "react";
-
-// export default function Question25() {
-//   const rows = [
-//     {
-//       key: "A",
-//       value: "A value",
-//     },
-//     {
-//       key: "B",
-//       value: "B value",
-//     },
-//     {
-//       key: "C",
-//       value: "C value",
-//     },
-//     {
-//       key: "D",
-//       value: "D value",
-//     },
-//     {
-//       key: "E",
-//       value: "E value",
-//     },
-//     {
-//       key: "F",
-//       value: "F value",
-//     },
-//   ];
-
-//   const [input, setInput] = useState([]);
-//   const [checkedA, setCheckedA] = useState(false);
-
-//   function handleClick(e) {
-//     const { name, value } = e.target;
-//     (function setChecked(name) {
-//       if (!name) {
-//         return;
-//       }
-//       setChecked(!name);
-//     })();
-
-//     setCheckedA(!name);
-//     console.log(checkedA);
-//     console.log(name);
-//     // input.push(name);
-//     // console.log(input);
-//   }
-
-//   return (
-//     <BrowserRouter>
-//       <Route path="/eng-q25">
-//         <div className="main">
-//           <Breadcrumb className="nav-div">
-//             <Breadcrumb.Item>
-//               <Link className="before-link" to="/">
-//                 Home
-//               </Link>
-//             </Breadcrumb.Item>
-//             <Breadcrumb.Item>
-//               <Link className="before-link" to="/eng-start">
-//                 Credentials
-//               </Link>
-//             </Breadcrumb.Item>
-//             <Breadcrumb.Item>Q1</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q2</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q3</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q4</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q5</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q6</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q7</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q8</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q9</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q10</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q11</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q12</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q13</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q14</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q15</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q16</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q17</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q18</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q19</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q20</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q21</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q22</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q23</Breadcrumb.Item>
-//             <Breadcrumb.Item>Q24</Breadcrumb.Item>
-//             <Breadcrumb.Item active>Q25</Breadcrumb.Item>
-//           </Breadcrumb>
-//           <div className="progressBarEmpty">
-//             <div
-//               className="progressBarFilled"
-//               style={{
-//                 width: ((100 / 41) * 26).toString() + "%",
-//               }}
-//             ></div>
-//           </div>
-//           <p>
-//             Q25. Which three of these outcomes do you think should be government
-//             priorities in Kazakhstan? <br />
-//             (PLEASE SELECT UP TO THREE RESPONSES ONLY)
-//           </p>
-//           <Form>
-//             {rows.map((row) => {
-//               return (
-//                 <Form.Group>
-//                   <Form.Check
-//                     style={{ textAlign: "left" }}
-//                     type="checkbox"
-//                     label={row.value}
-//                     name={`checked${row.key}`}
-//                     value={row.value}
-//                     onClick={handleClick}
-//                   />
-//                 </Form.Group>
-//               );
-//             })}
-//           </Form>
-//           <Button type="button">NONE OF THE ABOVE</Button>
-//           <Button type="button">DON'T KNOW</Button>
-//         </div>
-//       </Route>
-
-//       <Switch>
-//         <Route path="/eng-q24">
-//           <Question24 />
-//         </Route>
-//         <Route path="/eng-q25b">
-//           <Question25B />
-//         </Route>
-//       </Switch>
-//     </BrowserRouter>
-//   );
-// }

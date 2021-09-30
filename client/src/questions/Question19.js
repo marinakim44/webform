@@ -1,75 +1,171 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import Question18 from "./Question18";
-import Question20 from "./Question20";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { Button, Breadcrumb, Form } from "react-bootstrap";
+import ModalAlert from "../ModalAlert";
 import "../App.css";
 import axios from "axios";
 
 export default function Question19() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
-  const [input, setInput] = useState([]);
-  const [dontknow, setDontknow] = useState(false);
+  const rows = [
+    {
+      key: "key1",
+      value: "The global tax policy change is not applicable to our company",
+    },
+    {
+      key: "key2",
+      value:
+        "Engaged tax specialists to advise our company on potential implications",
+    },
+    {
+      key: "key3",
+      value: "Modeled the cash tax’s impact on our company",
+    },
+    {
+      key: "key4",
+      value: "Modeled the cash tax’s impact on our company",
+    },
+    {
+      key: "key5",
+      value: "Encouraged government officials to support the tax policy",
+    },
+    {
+      key: "key6",
+      value:
+        "Recommended additional tax policy changes to government officials",
+    },
+  ];
 
-  function handleClick(e) {
-    input.push(e.target.value);
+  const [none, setNone] = useState(false);
+  const [dontknow, setDontknow] = useState(false);
+  const [input, setInput] = useState([]);
+  const [checked, setChecked] = useState({
+    key1: false,
+    key2: false,
+    key3: false,
+    key4: false,
+  });
+  const [disabled, setDisabled] = useState({
+    key1: false,
+    key2: false,
+    key3: false,
+    key4: false,
+  });
+  const [other, setOther] = useState("");
+
+  function clearAll() {
+    setChecked((prev) => {
+      return { ...prev, key1: false, key2: false, key3: false, key4: false };
+    });
+    setDisabled((prev) => {
+      return { ...prev, key1: false, key2: false, key3: false, key4: false };
+    });
+    setInput([]);
   }
 
-  function handleDontknow(e) {
+  function handleChange(e) {
+    const { name, value } = e.target;
+
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [name]: !checked[name],
+      };
+    });
+    if (checked) {
+      if (!input.includes(value)) {
+        input.push(value);
+      }
+    }
+  }
+
+  function handleChangeOther(e) {
+    setOther(e.target.value);
+  }
+
+  function handleNone() {
+    if (dontknow) {
+      setDontknow(false);
+    }
+    setNone(!none);
+
+    if (none) {
+      clearAll();
+      setDontknow(false);
+    }
+  }
+
+  function handleDontknow() {
+    if (none) {
+      setNone(false);
+    }
     setDontknow(!dontknow);
+
+    if (dontknow) {
+      clearAll();
+      setNone(false);
+    }
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-    if (dontknow) {
-      localStorage.setItem("q19", "Don't know");
+    if (none || dontknow) {
+      setChecked(false);
+      setInput([]);
+      setDontknow(false);
+    }
+    if (!none && !dontknow && input.length === 0 && !other) {
+      handleShow();
     } else {
       localStorage.setItem("q19", JSON.stringify(input));
+      localStorage.setItem("q19-none", none);
+      localStorage.setItem("q19-dontknow", dontknow);
+      localStorage.setItem("q19-other", other);
+
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5a: localStorage.getItem("q5-carbonNeutral"),
+        q5b: localStorage.getItem("q5-netZero"),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+        q12: JSON.parse(localStorage.getItem("q12")),
+        q13a: localStorage.getItem("q13a"),
+        q13b: localStorage.getItem("q13b"),
+        q14: JSON.parse(localStorage.getItem("q14")),
+        q15: JSON.parse(localStorage.getItem("q15")),
+        q16: localStorage.getItem("q16"),
+        q17: JSON.parse(localStorage.getItem("q17")),
+        q18: JSON.parse(localStorage.getItem("q18")),
+        q19: JSON.parse(localStorage.getItem("q19")),
+        q19none: localStorage.getItem("q19-none"),
+        q19dontknow: localStorage.getItem("q19-dontknow"),
+        q19other: localStorage.getItem("q19-other"),
+      };
+
+      axios.post("/allinputs", data);
+
+      history.push("/eng-q20");
     }
-    history.push("/eng-q20");
-
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1a: localStorage.getItem("q1a"),
-      q1b: localStorage.getItem("q1b"),
-      q2: JSON.parse(localStorage.getItem("countries")),
-      q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
-      q6: localStorage.getItem("q6"),
-      q7: localStorage.getItem("q7"),
-      q8: localStorage.getItem("q8"),
-      q9: localStorage.getItem("q9"),
-      q10: JSON.parse(localStorage.getItem("q10")),
-      q11: JSON.parse(localStorage.getItem("q11")),
-      q12: JSON.parse(localStorage.getItem("q12")),
-      q13a: localStorage.getItem("q13a"),
-      q13b: localStorage.getItem("q13b"),
-      q14: JSON.parse(localStorage.getItem("q14")),
-      q15: JSON.parse(localStorage.getItem("q15")),
-      q16: localStorage.getItem("q16"),
-      q17: JSON.parse(localStorage.getItem("q17")),
-      q18: JSON.parse(localStorage.getItem("q18")),
-      q19: JSON.parse(localStorage.getItem("q19")),
-    };
-
-    axios.post("/allinputs", data);
   }
 
   return (
     <BrowserRouter>
-      <Route path="/eng-q19">
+      <Route>
         <div className="main">
           <Breadcrumb className="nav-div">
             <Breadcrumb.Item>
@@ -110,93 +206,51 @@ export default function Question19() {
               }}
             ></div>
           </div>
-          <p>
+          <ModalAlert show={show} close={handleClose} />
+          <p className="left-align-text">
             Q19. What actions has your company taken, if any, to prepare for
             potential global tax policy change that would make all countries
             commit to an effective corporate tax rate of at least 15%? (PLEASE
             SELECT ALL THAT APPLY)
           </p>
           <Form style={{ textAlign: "left" }}>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="The global tax policy change is not applicable to our company"
-                onClick={handleClick}
-                value="The global tax policy change is not applicable to our company"
-                disabled={dontknow ? true : false}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="Engaged tax specialists to advise our company on potential implications"
-                onClick={handleClick}
-                value="Engaged tax specialists to advise our company on potential implications"
-                disabled={dontknow ? true : false}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="Modeled the cash tax’s impact on our company"
-                onClick={handleClick}
-                value="Modeled the cash tax’s impact on our company"
-                disabled={dontknow ? true : false}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="Conducted scenario planning regarding where our company will pay taxes"
-                onClick={handleClick}
-                value="Modeled the cash tax’s impact on our company"
-                disabled={dontknow ? true : false}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="Encouraged government officials to support the tax policy"
-                onClick={handleClick}
-                value="Encouraged government officials to support the tax policy"
-                disabled={dontknow ? true : false}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="Recommended additional tax policy changes to government officials"
-                onClick={handleClick}
-                value="Recommended additional tax policy changes to government officials"
-                disabled={dontknow ? true : false}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="Other action (please specify)"
-                onClick={handleClick}
-                value="Other action (please specify)"
-                disabled={dontknow ? true : false}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="Our company has not taken any action"
-                onClick={handleClick}
-                value="Our company has not taken any action"
-                disabled={dontknow ? true : false}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check
-                type="checkbox"
-                label="Don't know"
-                onClick={handleDontknow}
-                value="Don't know"
-              />
-            </Form.Group>
+            {rows.map((row) => {
+              return (
+                <div key={row.key}>
+                  <Form.Group>
+                    <Form.Check
+                      type="checkbox"
+                      name={row.key}
+                      label={row.value}
+                      value={row.value}
+                      onChange={handleChange}
+                      disabled={none || dontknow ? true : false}
+                    />
+                  </Form.Group>
+                </div>
+              );
+            })}
+            <Form.Control
+              type="text"
+              placeholder="Other (please specify)"
+              style={{ width: "45%" }}
+              disabled={dontknow || none ? true : false}
+              onChange={handleChangeOther}
+            ></Form.Control>
+            <Button
+              variant={none ? "warning" : "light"}
+              type="button"
+              onClick={handleNone}
+            >
+              NONE
+            </Button>
+            <Button
+              variant={dontknow ? "warning" : "light"}
+              type="button"
+              onClick={handleDontknow}
+            >
+              DON'T KNOW
+            </Button>
             <div style={{ textAlign: "center" }}>
               <Button
                 variant="light"
@@ -217,15 +271,6 @@ export default function Question19() {
           </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q18">
-          <Question18 />
-        </Route>
-        <Route path="/eng-q20">
-          <Question20 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }
