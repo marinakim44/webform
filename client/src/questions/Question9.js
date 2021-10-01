@@ -26,7 +26,6 @@ export default function Question9() {
 
       const data = {
         uuid: localStorage.getItem("uuid"),
-        uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
         company: localStorage.getItem("company"),
         title: localStorage.getItem("title"),
@@ -36,8 +35,7 @@ export default function Question9() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q9: localStorage.getItem("q9"),
@@ -53,44 +51,61 @@ export default function Question9() {
     <BrowserRouter>
       <Route path="/eng-q9">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q9</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 10).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 10).toString() + "%",
+                width: ((100 / 39) * 10).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q9. Will your company’s approach to reducing greenhouse gas (GHG)
+          <p className="left-align-text">
+            Will your company’s approach to reducing greenhouse gas (GHG)
             emissions be independently assessed and validated (e.g., by SBTi)?
+            <br />
             (PLEASE SELECT ONE RESPONSE)
           </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
+            <div style={{ textAlign: "left" }}>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
+                  name="option"
+                  style={{ marginRight: "8px" }}
+                  onChange={handleClick}
+                  value="yes"
+                />
+                Yes, my company’s approach to reducing GHG emissions will be
+                independently assessed and validated
+              </label>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
+                  name="option"
+                  style={{ marginRight: "8px" }}
+                  onChange={handleClick}
+                  value="no"
+                />
+                No, my company’s approach to reducing GHG emissions will not be
+                independently assessed and validated
+              </label>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
+                  name="option"
+                  style={{ marginRight: "8px" }}
+                  onChange={handleClick}
+                  value="dontknow"
+                />
+                Don't know
+              </label>
+            </div>
+            {/* {["radio"].map((type) => (
+              <div key={`default-${type}`} className="mb-3 left-align-text">
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
@@ -104,6 +119,7 @@ export default function Question9() {
                   value="yes"
                   onClick={handleClick}
                 />
+
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
@@ -117,6 +133,7 @@ export default function Question9() {
                   value="no"
                   onClick={handleClick}
                 />
+
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
@@ -129,23 +146,32 @@ export default function Question9() {
                   onClick={handleClick}
                 />
               </div>
-            ))}
+            ))} */}
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </Form>
         </div>
       </Route>

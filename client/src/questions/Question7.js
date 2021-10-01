@@ -26,7 +26,6 @@ export default function Question7() {
 
       const data = {
         uuid: localStorage.getItem("uuid"),
-        uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
         company: localStorage.getItem("company"),
         title: localStorage.getItem("title"),
@@ -36,8 +35,7 @@ export default function Question7() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
       };
@@ -50,9 +48,9 @@ export default function Question7() {
       ) {
         history.push("/eng-q9");
       } else {
-        if (localStorage.getItem("q5-carbonNeutral") === "yes") {
+        if (JSON.parse(localStorage.getItem("q5")).A === "yes") {
           history.push("/eng-q10a");
-        } else if (localStorage.getItem("q5-carbonNeutral") === "no but") {
+        } else if (JSON.parse(localStorage.getItem("q5")).A === "no but") {
           history.push("/eng-q10b");
         }
       }
@@ -63,44 +61,28 @@ export default function Question7() {
     <BrowserRouter>
       <Route path="/eng-q7">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q7</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 8).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 8).toString() + "%",
+                width: ((100 / 39) * 8).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q7. Which science-based target, if any, will your company’s net-zero
-            commitment be aligned to? (PLEASE SELECT ONE RESPONSE)
+          <p className="left-align-text">
+            Which science-based target, if any, will your company’s net-zero
+            commitment be aligned to? <br />
+            (PLEASE SELECT ONE RESPONSE)
           </p>
           <Form>
             {["radio"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
                 <Form.Check
                   type={type}
-                  id={`default-${type}`}
                   label={"Limiting global warming to 1.5° Celsius"}
                   style={{
                     textAlign: "left",
@@ -111,7 +93,6 @@ export default function Question7() {
                 />
                 <Form.Check
                   type={type}
-                  id={`default-${type}`}
                   label={"Limiting global warming to well below 2.0° Celsius"}
                   style={{
                     textAlign: "left",
@@ -122,7 +103,6 @@ export default function Question7() {
                 />
                 <Form.Check
                   type={type}
-                  id={`default-${type}`}
                   label={
                     "My company’s net-zero commitment will not be aligned to a science-based target"
                   }
@@ -135,7 +115,6 @@ export default function Question7() {
                 />
                 <Form.Check
                   type={type}
-                  id={`default-${type}`}
                   label={"Don’t know"}
                   style={{
                     textAlign: "left",
@@ -146,22 +125,31 @@ export default function Question7() {
                 />
               </div>
             ))}
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </Form>
         </div>
       </Route>

@@ -4,13 +4,14 @@ import { Button, Table, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import { questions } from "../questions";
 
 export default function Question4() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const concerns = JSON.parse(localStorage.getItem("q3"));
+  const concerns = JSON.parse(localStorage.getItem("q3-concerns"));
   const rows = [
     {
       key: "1",
@@ -132,42 +133,29 @@ export default function Question4() {
     <BrowserRouter>
       <Route path="/eng-q4">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q4</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 5).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 5).toString() + "%",
+                width: ((100 / 39) * 5).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
             <span>
-              Q4. How do you anticipate your company could be impacted by the
-              following threat(s) over the next 12 months? (PLEASE SELECT UP TO
-              THREE RESPONSES)
+              How do you anticipate your company could be impacted by the
+              following threat(s) over the next 12 months? <br /> (PLEASE SELECT
+              UP TO THREE RESPONSES)
             </span>
           </div>
 
           <Form>
-            <Table bordered>
-              <thead>
+            <table className="table">
+              <tbody>
                 <tr>
                   <th></th>
                   {concerns.map((concern) => {
@@ -178,21 +166,21 @@ export default function Question4() {
                     );
                   })}
                 </tr>
-              </thead>
-              <tbody>
                 {rows.map((row) => {
                   return (
-                    <tr>
+                    <tr className="table-row">
                       <td className="left-align-text">{row.value}</td>
                       {concerns.map((concern) => {
                         return (
-                          <td>
-                            <input
-                              type="checkbox"
-                              name={concern}
-                              value={row.key}
-                              onClick={handleClick}
-                            ></input>
+                          <td className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="checkbox"
+                                name={concern}
+                                value={row.key}
+                                onClick={handleClick}
+                              ></input>
+                            </label>
                           </td>
                         );
                       })}
@@ -200,7 +188,7 @@ export default function Question4() {
                   );
                 })}
               </tbody>
-            </Table>
+            </table>
 
             <Form.Group>
               <Form.Control

@@ -1,11 +1,71 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Table, Button, Breadcrumb } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import "../App.css";
 import ModalAlert from "../ModalAlert";
 import { useState } from "react";
 import axios from "axios";
 
 export default function Question3() {
+  const rows = [
+    {
+      key: "A",
+      value: "Macroeconomic volatility",
+      text: "(including in GDP, unemployment, inflation)",
+    },
+    {
+      key: "B",
+      value: "Climate change",
+      text: "(including physical risks and transition risks such as policy & legal, markets, technology and reputation risks)",
+    },
+    {
+      key: "C",
+      value: "Social inequality",
+      text: "(including those stemming from gender, race and ethnicity, wealth)",
+    },
+    {
+      key: "D",
+      value: "Geopolitical conflict",
+      text: "(including resource and trade disputes, terrorism, interstate violence)",
+    },
+    {
+      key: "E",
+      value: "Cyber risks",
+      text: "(including hacking, surveillance, disinformation)",
+    },
+    {
+      key: "F",
+      value: "Health risks",
+      text: "(including COVID-19 and other pandemics, chronic illness, strains on mental health)",
+    },
+  ];
+
+  const columns = [
+    {
+      key: "1",
+      value: "Not concerned",
+    },
+    {
+      key: "2",
+      value: "Slightly concerned",
+    },
+    {
+      key: "3",
+      value: "Moderately concerned",
+    },
+    {
+      key: "4",
+      value: "Very concerned",
+    },
+    {
+      key: "5",
+      value: "Extremely concerned",
+    },
+    {
+      key: "6",
+      value: "Don't know",
+    },
+  ];
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -13,34 +73,91 @@ export default function Question3() {
   const [listOthers, setListOthers] = useState([]);
   const [listOfConcerns, setListOfConcerns] = useState([]);
   const [listAll, setListAll] = useState([]);
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
+    F: "",
+  });
 
-  function handleRadioButtonClick(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
+
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+
     if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
+      name === "A" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
     ) {
-      if (!listOfConcerns.includes(name)) {
-        listOfConcerns.push(name);
-      }
-    } else {
-      if (!listOthers.includes(name)) {
-        listOthers.push(name);
+      if (!listOfConcerns.includes("Macroeconomic volatility")) {
+        listOfConcerns.push("Macroeconomic volatility");
       }
     }
-    if (!listAll.includes(name)) {
-      listAll.push(name);
+    if (
+      name === "B" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
+    ) {
+      if (!listOfConcerns.includes("Climate change")) {
+        listOfConcerns.push("Climate change");
+      }
     }
-  }
+    if (
+      name === "C" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
+    ) {
+      if (!listOfConcerns.includes("Social inequality")) {
+        listOfConcerns.push("Social inequality");
+      }
+    }
+    if (
+      name === "D" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
+    ) {
+      if (!listOfConcerns.includes("Geopolitical conflict")) {
+        listOfConcerns.push("Geopolitical conflict");
+      }
+    }
+    if (
+      name === "E" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
+    ) {
+      if (!listOfConcerns.includes("Cyber risks")) {
+        listOfConcerns.push("Cyber risks");
+      }
+    }
+    if (
+      name === "F" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
+    ) {
+      if (!listOfConcerns.includes("Health risks")) {
+        listOfConcerns.push("Health risks");
+      }
+    }
+  };
 
   function handleSubmit(e) {
-    e.preventDefault();
-
-    if (listAll.length < 6) {
-      handleShow();
-    } else {
-      localStorage.setItem("q3", JSON.stringify(listOfConcerns));
+    if (input.A && input.B && input.C && input.D && input.E && input.F) {
+      localStorage.setItem("q3", JSON.stringify(input));
+      localStorage.setItem("q3-concerns", JSON.stringify(listOfConcerns));
 
       const data = {
         uuid: localStorage.getItem("uuid"),
@@ -57,11 +174,13 @@ export default function Question3() {
 
       axios.post("/allinputs", data);
 
-      if (listOfConcerns.length !== 0) {
-        history.push("/eng-q4");
-      } else {
+      if (listOfConcerns.length === 0) {
         history.push("/eng-q5");
+      } else {
+        history.push("/eng-q4");
       }
+    } else {
+      handleShow();
     }
   }
 
@@ -69,379 +188,86 @@ export default function Question3() {
     <BrowserRouter>
       <Route path="/eng-q3">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q3</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 4).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 4).toString() + "%",
+                width: ((100 / 39) * 4).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
             <p>
-              Q3. How concerned are you about the following global threats
+              How concerned are you about the following global threats
               negatively impacting your company over the next 12 months?
               <br /> (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
             </p>
           </div>
 
           <form>
-            <Table bordered>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Not concerned</th>
-                  <th>Slightly concerned</th>
-                  <th>Moderately concerned</th>
-                  <th>Very concerned</th>
-                  <th>Extremely concerned</th>
-                  <th>Don't know</th>
-                </tr>
-              </thead>
+            <table className="table">
               <tbody>
                 <tr>
-                  <td className="left-align-text">
-                    A) Macroeconomic volatility
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Macroeconomic volatility"
-                      value="Not concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Macroeconomic volatility"
-                      value="Slightly concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Macroeconomic volatility"
-                      value="Moderately concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Macroeconomic volatility"
-                      value="Very concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Macroeconomic volatility"
-                      value="Extremely concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Macroeconomic volatility"
-                      value="Don't know"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
+                  <td colSpan="2"></td>
+                  {columns.map((col) => {
+                    return (
+                      <td key={col.key}>
+                        <strong>{col.value}</strong>
+                      </td>
+                    );
+                  })}
                 </tr>
-                <tr>
-                  <td className="left-align-text">B) Climate change</td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Climate change"
-                      value="Not concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Climate change"
-                      value="Slightly concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Climate change"
-                      value="Moderately concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Climate change"
-                      value="Very concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Climate change"
-                      value="Extremely concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Climate change"
-                      value="Don't know"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">C) Social inequality</td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Social inequality"
-                      value="Not concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Social inequality"
-                      value="Slightly concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Social inequality"
-                      value="Moderately concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Social inequality"
-                      value="Very concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Social inequality"
-                      value="Extremely concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Social inequality"
-                      value="Don't know"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">D) Geopolitical conflict</td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Geopolitical conflict"
-                      value="Not concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Geopolitical conflict"
-                      value="Slightly concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Geopolitical conflict"
-                      value="Moderately concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Geopolitical conflict"
-                      value="Very concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Geopolitical conflict"
-                      value="Extremely concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Geopolitical conflict"
-                      value="Don't know"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">E) Cyber risks</td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Cyber risks"
-                      value="Not concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Cyber risks"
-                      value="Slightly concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Cyber risks"
-                      value="Moderately concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Cyber risks"
-                      value="Very concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Cyber risks"
-                      value="Extremely concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Cyber risks"
-                      value="Don't know"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">F) Health risks</td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Health risks"
-                      value="Not concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Health risks"
-                      value="Slightly concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Health risks"
-                      value="Moderately concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Health risks"
-                      value="Very concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Health risks"
-                      value="Extremely concerned"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="Health risks"
-                      value="Don't know"
-                      onClick={handleRadioButtonClick}
-                    ></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr key={row.key} className="table-row">
+                      <td>{row.key}</td>
+                      <td className="left-align-text">
+                        <p style={{ margin: 0, padding: 0 }}>{row.value}</p>
+                        <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
+                      </td>
+                      {columns.map((col) => {
+                        return (
+                          <td className="input-cell" style={{ width: "100px" }}>
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={col.value}
+                                onChange={handleChange}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
-            </Table>
+            </table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              type="button"
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                type="button"
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
           </form>
         </div>
       </Route>

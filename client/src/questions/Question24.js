@@ -169,55 +169,27 @@ export default function Question24() {
     <BrowserRouter>
       <Route path="/eng-q24">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item>Q13</Breadcrumb.Item>
-            <Breadcrumb.Item>Q14</Breadcrumb.Item>
-            <Breadcrumb.Item>Q15</Breadcrumb.Item>
-            <Breadcrumb.Item>Q16</Breadcrumb.Item>
-            <Breadcrumb.Item>Q17</Breadcrumb.Item>
-            <Breadcrumb.Item>Q18</Breadcrumb.Item>
-            <Breadcrumb.Item>Q19</Breadcrumb.Item>
-            <Breadcrumb.Item>Q20</Breadcrumb.Item>
-            <Breadcrumb.Item>Q21</Breadcrumb.Item>
-            <Breadcrumb.Item>Q22</Breadcrumb.Item>
-            <Breadcrumb.Item>Q23</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q24</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 25).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 25).toString() + "%",
+                width: ((100 / 39) * 25).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q24. Are the following non-financial related outcomes included in
-            your: company’s long-term corporate strategy? personal annual bonus
-            or long-term incentive plan? (PLEASE SELECT ALL THAT APPLY)
+          <p className="left-align-text">
+            Are the following non-financial related outcomes included in your:
+            <p style={{ margin: "4px auto 0 20px" }}>
+              A) company’s long-term corporate strategy?{" "}
+            </p>
+            <p style={{ margin: "0 auto 0 20px" }}>
+              B) personal annual bonus or long-term incentive plan?{" "}
+            </p>
+            <br /> (PLEASE SELECT ALL THAT APPLY)
           </p>
           <form>
             <Table bordered>
@@ -227,7 +199,7 @@ export default function Question24() {
 
                   {columns.map((col) => {
                     return (
-                      <td className="left-align-text">
+                      <td>
                         {col.key}) {col.value}
                       </td>
                     );
@@ -240,21 +212,29 @@ export default function Question24() {
                       <td className="left-align-text">{row.value}</td>
                       {columns.map((col) => {
                         return (
-                          <td>
-                            <input
-                              type="checkbox"
-                              name={col.key}
-                              value={row.value}
-                              onChange={handleClick}
-                              disabled={
-                                (noneA && row.key !== "G" && col.key === "A") ||
-                                (noneB && row.key !== "G" && col.key === "B") ||
-                                (notA && row.key !== "H" && col.key === "A") ||
-                                (notB && row.key !== "H" && col.key === "B")
-                                  ? true
-                                  : false
-                              }
-                            ></input>
+                          <td className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="checkbox"
+                                name={col.key}
+                                value={row.value}
+                                onChange={handleClick}
+                                disabled={
+                                  (noneA &&
+                                    row.key !== "G" &&
+                                    col.key === "A") ||
+                                  (noneB &&
+                                    row.key !== "G" &&
+                                    col.key === "B") ||
+                                  (notA &&
+                                    row.key !== "H" &&
+                                    col.key === "A") ||
+                                  (notB && row.key !== "H" && col.key === "B")
+                                    ? true
+                                    : false
+                                }
+                              ></input>
+                            </label>
                           </td>
                         );
                       })}
@@ -263,24 +243,31 @@ export default function Question24() {
                 })}
               </tbody>
             </Table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              {/* <Link style={{ color: "#fff" }} to="/eng-q25"> */}
-              Next
-              {/* </Link> */}
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </form>
         </div>
       </Route>

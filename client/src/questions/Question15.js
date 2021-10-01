@@ -7,13 +7,34 @@ import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question15() {
+  const rows = [
+    {
+      key: "A",
+      value:
+        "Approve/green-light major initiatives once an idea has been proposed",
+    },
+    {
+      key: "B",
+      value: "Commit significant resources to new major initiatives",
+    },
+  ];
+  const columns = [
+    "Up to three months",
+    "4-6 months",
+    "7-12 months",
+    "13-18 months",
+    "19-24 months",
+    "25-36 months",
+    "More than 36 months",
+    "Don't know",
+  ];
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState({
-    a: "",
-    b: "",
+    A: "",
+    B: "",
   });
 
   const [checked, setChecked] = useState([]);
@@ -51,8 +72,7 @@ export default function Question15() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -74,216 +94,88 @@ export default function Question15() {
     <BrowserRouter>
       <Route path="/eng-q15">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item>Q13</Breadcrumb.Item>
-            <Breadcrumb.Item>Q14</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q15</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 16).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 16).toString() + "%",
+                width: ((100 / 39) * 16).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q15. Typically, how long does it take for your company to:
+          <p className="left-align-text">
+            Typically, how long does it take for your company to:
             approve/green-light major initiatives once an idea has been
             proposed? commit significant resources to new major initiatives?
+            <br />
             (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
-            <Table bordered hover>
+            <table className="table">
               <tbody>
                 <tr>
-                  <td colspan="2"></td>
-                  <td>Up to 3 months</td>
-                  <td>4-6 months</td>
-                  <td>7-12 months</td>
-                  <td>13-18 months</td>
-                  <td>19-24 months</td>
-                  <td>25-36 months</td>
-                  <td>More than 36 months</td>
-                  <td>Don't know</td>
+                  <td colSpan="2"></td>
+                  {columns.map((col) => {
+                    return (
+                      <td style={{ width: "120px", verticalAlign: "middle" }}>
+                        <strong>{col}</strong>
+                      </td>
+                    );
+                  })}
                 </tr>
-                <tr>
-                  <td>A</td>
-                  <td>
-                    Approve/green-light major initiatives once an idea has been
-                    proposed
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Up to 3 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="4-6 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="7-12 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="13-18 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="19-24 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="25-36 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="More than 36 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Don't know"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td>Commit significant resources to new major initiatives</td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Up to 3 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="4-6 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="7-12 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="13-18 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="19-24 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="25-36 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="More than 36 months"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Don't know"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr className="table-row">
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
+                      {columns.map((col) => {
+                        return (
+                          <td className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={col}
+                                onClick={handleClick}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
-            </Table>
+            </table>
           </form>
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              Back
+            </Button>
 
-          <Button
-            variant="light"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            Back
-          </Button>
-
-          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
-            Next
-          </Button>
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              Next
+              <i
+                className="fas fa-chevron-right"
+                style={{ marginLeft: "8px" }}
+              ></i>
+            </Button>
+          </div>
         </div>
       </Route>
     </BrowserRouter>

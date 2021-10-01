@@ -112,8 +112,7 @@ export default function Question10B() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -131,67 +130,52 @@ export default function Question10B() {
     <BrowserRouter>
       <Route path="/eng-q10b">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q10</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 11).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 11).toString() + "%",
+                width: ((100 / 39) * 11).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q10b. How influential are the following factors behind the
-            carbon-neutral and/or net-zero commitment your company is
-            developing? (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+          <p className="left-align-text">
+            How influential are the following factors behind the carbon-neutral
+            and/or net-zero commitment your company is developing? <br />{" "}
+            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
-            <Table bordered>
-              <thead>
+            <table className="table">
+              <tbody>
                 <tr>
                   <th colSpan="2"></th>
                   {columns.map((column) => {
-                    return <th>{column.value}</th>;
+                    return <th key={column.value}>{column.value}</th>;
                   })}
                 </tr>
-              </thead>
-              <tbody>
                 {rows.map((row) => {
                   return (
-                    <tr>
+                    <tr
+                      key={row.key}
+                      className="table-row"
+                      style={{ padding: 0 }}
+                    >
                       <td>{row.key}</td>
                       <td className="left-align-text">{row.value}</td>
                       {columns.map((column) => {
                         return (
-                          <td>
-                            <input
-                              type="radio"
-                              name={row.key}
-                              value={column.value}
-                              onClick={handleClick}
-                            ></input>
+                          <td key={column.key} className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={column.value}
+                                onClick={handleClick}
+                              ></input>
+                            </label>
                           </td>
                         );
                       })}
@@ -199,23 +183,26 @@ export default function Question10B() {
                   );
                 })}
               </tbody>
-            </Table>
+            </table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
           </form>
         </div>
       </Route>

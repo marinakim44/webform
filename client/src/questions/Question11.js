@@ -4,6 +4,8 @@ import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Question10A from "./Question10A";
+import Switch from "react-bootstrap/esm/Switch";
 
 export default function Question11() {
   const [show, setShow] = useState(false);
@@ -120,8 +122,7 @@ export default function Question11() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -160,14 +161,16 @@ export default function Question11() {
             <Breadcrumb.Item>Q7</Breadcrumb.Item>
             <Breadcrumb.Item>Q8</Breadcrumb.Item>
             <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/eng-q10a">Q10</Link>
+            </Breadcrumb.Item>
             <Breadcrumb.Item active>Q11</Breadcrumb.Item>
           </Breadcrumb>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 12).toString() + "%",
+                width: ((100 / 39) * 12).toString() + "%",
               }}
             ></div>
           </div>
@@ -229,6 +232,11 @@ export default function Question11() {
           </form>
         </div>
       </Route>
+      <Switch>
+        <Route path="/eng-q10a">
+          <Question10A />
+        </Route>
+      </Switch>
     </BrowserRouter>
   );
 }

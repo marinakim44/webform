@@ -52,8 +52,7 @@ export default function Question13() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -75,59 +74,39 @@ export default function Question13() {
     <BrowserRouter>
       <Route path="/eng-q13">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q13</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 14).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 14).toString() + "%",
+                width: ((100 / 39) * 14).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q13. Typically, how many: overarching strategic objectives does your
-            company have? major initiatives does your company have underway in
-            support of those strategic objectives? (in total)
-          </p>
-          <p>
-            Please see below for examples of both: Overarching strategic
-            objective: Increasing market share Supporting major initiatives:
-            Releasing a new advertising campaign Launching a new product/service
-            Acquiring a competitor (PLEASE SELECT ONE RESPONSE FOR EACH
-            STATEMENT)
+          <p className="left-align-text">
+            Typically, how many:
+            <p style={{ margin: "0 auto 0 20px" }}>
+              A) overarching strategic objectives does your company have?
+            </p>
+            <p style={{ margin: "0 auto 0 20px" }}>
+              B) major initiatives does your company have underway in support of
+              those strategic objectives? (in total)
+            </p>
+            <br />
+            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
             <Table bordered>
               <tbody>
-                <tr>
+                <tr className="table-row">
                   <td style={{ verticalAlign: "middle" }}>A</td>
-                  <td style={{ verticalAlign: "middle" }}>
-                    Overarching strategic objectives
+                  <td style={{ verticalAlign: "middle", textAlign: "left" }}>
+                    <strong>Overarching strategic objectives</strong>
+                    <p></p>
+                    Increasing market share
                   </td>
                   <td>
                     <Dropdown onSelect={handleSelectA}>
@@ -188,7 +167,7 @@ export default function Question13() {
                     </label>
                   </td>
                 </tr>
-                <tr>
+                <tr className="table-row">
                   <td
                     style={{
                       verticalAlign: "middle",
@@ -199,10 +178,20 @@ export default function Question13() {
                   <td
                     style={{
                       verticalAlign: "middle",
+                      textAlign: "left",
                     }}
                   >
-                    Major initiatives underway in support of those strategic
-                    objectives (in total)
+                    <strong>
+                      Major initiatives underway in support of those strategic
+                      objectives (in total)
+                    </strong>
+                    <p></p>
+
+                    <ul>
+                      <li>Releasing a new advertising campaign</li>
+                      <li>Launching a new product/service</li>
+                      <li>Acquiring a competitor</li>
+                    </ul>
                   </td>
                   <td style={{ verticalAlign: "middle" }}>
                     <Dropdown onSelect={handleSelectB}>
@@ -226,7 +215,7 @@ export default function Question13() {
                         <Dropdown.Item eventKey="25-30">25-30</Dropdown.Item>
                         <Dropdown.Item eventKey="31-35">31-35</Dropdown.Item>
                         <Dropdown.Item eventKey="36-40">36-40</Dropdown.Item>
-                        <Dropdown.Item eventKey="41-45">41-45</Dropdown.Item>
+                        <Dropdown.Item eventKey="39-45">39-45</Dropdown.Item>
                         <Dropdown.Item eventKey="46-50">46-50</Dropdown.Item>
                         <Dropdown.Item eventKey="51 or more">
                           51 or more
@@ -263,22 +252,31 @@ export default function Question13() {
                 </tr>
               </tbody>
             </Table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </form>
         </div>
       </Route>

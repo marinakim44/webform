@@ -121,8 +121,7 @@ export default function Question17() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -146,78 +145,71 @@ export default function Question17() {
     <BrowserRouter>
       <Route path="/eng-q17">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item>Q13</Breadcrumb.Item>
-            <Breadcrumb.Item>Q14</Breadcrumb.Item>
-            <Breadcrumb.Item>Q15</Breadcrumb.Item>
-            <Breadcrumb.Item>Q16</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q17</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 18).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 18).toString() + "%",
+                width: ((100 / 39) * 18).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q17. How frequently does your company typically engage in the
-            following processes? (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+          <p className="left-align-text">
+            How frequently does your company typically engage in the following
+            processes? <br />
+            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
-            <Table bordered>
+            <Table bordered className="table">
               <tbody>
-                <tr>
+                <tr style={{ fontWeight: "bold", color: "#dc3545" }}>
                   <td colSpan="2" rowSpan="2"></td>
                   <td colSpan="3">Less often</td>
-                  <td></td>
+                  <td
+                    rowSpan="2"
+                    style={{ width: "120px", verticalAlign: "middle" }}
+                  >
+                    Every year
+                  </td>
                   <td colSpan="3">More often</td>
-                  <td></td>
+                  <td
+                    rowSpan="2"
+                    style={{ width: "120px", verticalAlign: "middle" }}
+                  >
+                    Not applicable / Don't know
+                  </td>
                 </tr>
                 <tr>
-                  {columns.map((column) => {
-                    return <td>{column.value}</td>;
-                  })}
+                  {columns
+                    .filter(
+                      (col) =>
+                        col.value !== "Every year" &&
+                        col.value !== "Not applicable / Don't know"
+                    )
+                    .map((column) => {
+                      return <td style={{ width: "120px" }}>{column.value}</td>;
+                    })}
                 </tr>
 
                 {rows.map((row) => {
                   return (
-                    <tr>
+                    <tr className="table-row">
                       <td>{row.key}</td>
-                      <td>{row.value}</td>
+                      <td className="left-align-text">{row.value}</td>
                       {columns.map((column) => {
                         return (
-                          <td>
-                            <input
-                              type="radio"
-                              name={row.key}
-                              value={column.value}
-                              onClick={handleClick}
-                            ></input>
+                          <td className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={column.value}
+                                onClick={handleClick}
+                              ></input>
+                            </label>
                           </td>
                         );
                       })}
@@ -226,22 +218,25 @@ export default function Question17() {
                 })}
               </tbody>
             </Table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
           </form>
         </div>
       </Route>

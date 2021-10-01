@@ -142,18 +142,13 @@ function EngStart() {
     <BrowserRouter>
       <Route path="/eng-start">
         <div className="main">
-          <Breadcrumb className="nav-div" style={{ marginBottom: "1rem" }}>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/responses">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item active>Credentials</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 className="left-align-text">
+            {Math.round(((100 / 38) * 1).toString())}% Completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
-              style={{ width: ((100 / 41) * 1).toString() + "%" }}
+              style={{ width: ((100 / 38) * 1).toString() + "%" }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />

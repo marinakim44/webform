@@ -30,8 +30,7 @@ export default function Question6() {
       q1b: localStorage.getItem("q1b"),
       q2: JSON.parse(localStorage.getItem("countries")),
       q3: JSON.parse(localStorage.getItem("q3")),
-      q5a: localStorage.getItem("q5-carbonNeutral"),
-      q5b: localStorage.getItem("q5-netZero"),
+      q5: JSON.parse(localStorage.getItem("q5")),
       q6: localStorage.getItem("q6"),
     };
 
@@ -39,7 +38,6 @@ export default function Question6() {
     if (!input) {
       handleShow();
     } else {
-      // history.push("/eng-q7");
       if (
         localStorage.getItem("q6") ===
           "Limiting global warming to 1.5° Celsius" ||
@@ -93,104 +91,91 @@ export default function Question6() {
     <BrowserRouter>
       <Route path="/eng-q6">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q6</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 7).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 7).toString() + "%",
+                width: ((100 / 39) * 7).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q6. Which science-based target, if any, is your company’s net-zero
+          <p className="left-align-text">
+            Which science-based target, if any, is your company’s net-zero
             commitment aligned to? (PLEASE SELECT ONE RESPONSE)
           </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Limiting global warming to 1.5° Celsius"}
-                  style={{
-                    textAlign: "left",
-                  }}
+            <div style={{ textAlign: "left" }}>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
                   name="option"
                   value="Limiting global warming to 1.5° Celsius"
                   onClick={handleClick}
+                  style={{ marginRight: "8px" }}
                 />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Limiting global warming to well below 2.0° Celsius"}
-                  style={{
-                    textAlign: "left",
-                  }}
+                Limiting global warming to 1.5° Celsius
+              </label>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
                   name="option"
                   value="Limiting global warming to well below 2.0° Celsius"
                   onClick={handleClick}
+                  style={{ marginRight: "8px" }}
                 />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={
-                    "My company’s net-zero commitment is not aligned to a science-based target"
-                  }
-                  style={{
-                    textAlign: "left",
-                  }}
+                Limiting global warming to well below 2.0° Celsius
+              </label>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
                   name="option"
-                  value="My company’s net-zero commitment is not aligned to a science-based target"
+                  value="My company’s net-zero commitment is not aligned to a
+                  science-based target"
                   onClick={handleClick}
+                  style={{ marginRight: "8px" }}
                 />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don’t know"}
-                  style={{
-                    textAlign: "left",
-                  }}
+                My company’s net-zero commitment is not aligned to a
+                science-based target
+              </label>
+              <label style={{ display: "block" }}>
+                <input
+                  type="radio"
                   name="option"
                   value="Don't know"
                   onClick={handleClick}
+                  style={{ marginRight: "8px" }}
                 />
-              </div>
-            ))}
-
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+                Don't know
+              </label>
+            </div>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ color: "#fff", marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ color: "#fff", marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </Form>
         </div>
       </Route>

@@ -6,6 +6,40 @@ import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question16() {
+  const rows = [
+    {
+      key: "1",
+      value: "0",
+    },
+    {
+      key: "2",
+      value: "1",
+    },
+    {
+      key: "3",
+      value: "2-5",
+    },
+    {
+      key: "4",
+      value: "6-10",
+    },
+    {
+      key: "5",
+      value: "11-20",
+    },
+    {
+      key: "6",
+      value: "21-30",
+    },
+    {
+      key: "7",
+      value: "More than 30",
+    },
+    {
+      key: "8",
+      value: "Don't know",
+    },
+  ];
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -36,8 +70,7 @@ export default function Question16() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -60,50 +93,41 @@ export default function Question16() {
     <BrowserRouter>
       <Route path="/eng-q16">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item>Q13</Breadcrumb.Item>
-            <Breadcrumb.Item>Q14</Breadcrumb.Item>
-            <Breadcrumb.Item>Q15</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q16</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 17).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 17).toString() + "%",
+                width: ((100 / 39) * 17).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q16. During a typical review cycle, how many different profit and
-            loss (P&L) statements do you personally examine? (PLEASE SELECT ONE
-            RESPONSE)
+          <p className="left-align-text">
+            During a typical review cycle, how many different profit and loss
+            (P&L) statements do you personally examine?
+            <br /> (PLEASE SELECT ONE RESPONSE)
           </p>
           <Form>
-            {["radio"].map((type) => (
+            <div style={{ textAlign: "left" }}>
+              {rows.map((row) => {
+                return (
+                  <label style={{ display: "block" }}>
+                    <input
+                      type="radio"
+                      name="option"
+                      value={row.value}
+                      style={{ marginRight: "8px" }}
+                      onChange={handleClick}
+                    ></input>
+                    {row.value}
+                  </label>
+                );
+              })}
+            </div>
+            {/* {["radio"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
                 <Form.Check
                   type={type}
@@ -194,23 +218,32 @@ export default function Question16() {
                   onClick={handleClick}
                 />
               </div>
-            ))}
+            ))} */}
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </Form>
         </div>
       </Route>

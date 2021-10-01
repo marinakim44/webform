@@ -1,42 +1,80 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Table, Button, Breadcrumb } from "react-bootstrap";
+import { Table, Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question1() {
+  const rows = [
+    {
+      key: "A",
+      value: "Global economic growth - next 12 months",
+    },
+    {
+      key: "B",
+      value: "Kazakhstan economic growth - next 12 months",
+    },
+  ];
+
+  const columns = [
+    {
+      key: "1",
+      value: "Decline significantly",
+    },
+    {
+      key: "2",
+      value: "Decline moderately",
+    },
+    {
+      key: "3",
+      value: "Decline slightly",
+    },
+    {
+      key: "4",
+      value: "Stay the same",
+    },
+    {
+      key: "5",
+      value: "Improve slightly",
+    },
+    {
+      key: "6",
+      value: "Improve moderately",
+    },
+    {
+      key: "7",
+      value: "Improve significantly",
+    },
+    {
+      key: "8",
+      value: "Don't know",
+    },
+  ];
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const [a, setA] = useState("");
-  const [b, setB] = useState("");
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+  });
 
-  function handleA(e) {
-    setA(e.target.value);
-    console.log(e.target.value);
-  }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  function handleB(e) {
-    setB(e.target.value);
-    console.log(e.target.value);
-  }
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (!a || !b) {
-      handleShow();
-    } else {
-      localStorage.setItem("q1a", a);
-      localStorage.setItem("q1b", b);
+  const handleSubmit = () => {
+    if (input.A && input.B) {
+      localStorage.setItem("q1", JSON.stringify(input));
       history.push("/eng-q2");
 
       const data = {
@@ -46,220 +84,87 @@ export default function Question1() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
+        q1: JSON.parse(localStorage.getItem("q1")),
       };
-
       axios.post("/allinputs", data);
+    } else {
+      handleShow();
     }
-  }
+  };
 
   return (
     <BrowserRouter>
       <Route path="/eng-q1">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item active>Q1</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 2).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 2).toString() + "%",
+                width: ((100 / 39) * 2).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
-            <span>
-              Q1. How do you believe economic growth (i.e., gross domestic
-              product) will change, if at all, over the next 12 months in:{" "}
-              <br />
+            <p>
+              How do you believe economic growth (i.e., gross domestic product)
+              will change, if at all, over the next 12 months in: <br />
               <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
                 A) the global economy?
               </span>
               <br />
               <span style={{ marginLeft: "2rem" }}>B) Kazakhstan economy?</span>
-            </span>
+            </p>
           </div>
-          <form>
-            <Table bordered style={{ color: "black" }}>
+          <Form>
+            <table className="table">
               <tbody>
                 <tr>
                   <td colSpan="2"></td>
-                  <td>Decline significantly</td>
-                  <td>Decline moderately</td>
-                  <td>Decline slightly</td>
-                  <td>Stay the same</td>
-                  <td>Improve slightly</td>
-                  <td>Improve moderately</td>
-                  <td>Improve significantly</td>
-                  <td>Don't know</td>
+                  {columns.map((col) => {
+                    return (
+                      <td key={col.key}>
+                        <strong>{col.value}</strong>
+                      </td>
+                    );
+                  })}
                 </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr key={row.key} className="table-row">
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
 
-                <tr>
-                  <td>A</td>
-                  <td className="left-align-text">
-                    Global economic growth - next 12 months
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Decline significantly"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Decline moderately"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Decline slightly"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Stay the same"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Improve slightly"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Improve moderately"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Improve significantly"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="a"
-                      value="Don't know"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>B</td>
-                  <td className="left-align-text">
-                    Kazakhstan economic growth - next 12 months
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Decline significantly"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Decline moderately"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Decline slightly"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Stay the same"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Improve slightly"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Improve moderately"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Improve significantly"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="b"
-                      value="Don't know"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                </tr>
+                      {columns.map((col) => {
+                        return (
+                          <td key={col.key} className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                name={row.key}
+                                value={col.value}
+                                type="radio"
+                                onChange={handleChange}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
-            </Table>
+            </table>
 
             <div className="back-next-btns">
               <Button
-                variant="light"
+                variant="secondary"
                 className="back-btn"
                 onClick={() => history.goBack()}
               >
-                <i
-                  class="fas fa-chevron-left"
-                  style={{ color: "#000", marginRight: "10px" }}
-                ></i>
+                <i className="fas fa-chevron-left back-arrow"></i>
                 Back
               </Button>
 
@@ -269,23 +174,12 @@ export default function Question1() {
                 onClick={handleSubmit}
               >
                 Next
-                <i
-                  class="fas fa-chevron-right"
-                  style={{ color: "#fff", marginLeft: "10px" }}
-                ></i>
+                <i class="fas fa-chevron-right next-arrow"></i>
               </Button>
             </div>
-          </form>
+          </Form>
         </div>
       </Route>
-      {/* <Switch>
-        <Route path="/eng-start">
-          <EngStart />
-        </Route>
-        <Route path="/eng-q2">
-          <Question2 />
-        </Route>
-      </Switch> */}
     </BrowserRouter>
   );
 }
