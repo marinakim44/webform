@@ -6,8 +6,9 @@ const mongoose = require("mongoose");
 const path = require("path");
 
 //below line for production
-// const port = process.env.PORT || 5000;
-const port = 3001;
+const port = process.env.PORT || 5000;
+//below line for development
+// const port = 3001;
 
 app.use(express.json());
 app.use(cors());
