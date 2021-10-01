@@ -327,64 +327,29 @@ export default function Question25B() {
     <BrowserRouter>
       <Route path="/eng-q25b">
         <div className="main">
-          <div className="sticky-sub-div">
-            <Breadcrumb className="nav-div">
-              <Breadcrumb.Item>
-                <Link className="before-link" to="/">
-                  Home
-                </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>
-                <Link className="before-link" to="/eng-start">
-                  Credentials
-                </Link>
-              </Breadcrumb.Item>
-              <Breadcrumb.Item>Q1</Breadcrumb.Item>
-              <Breadcrumb.Item>Q2</Breadcrumb.Item>
-              <Breadcrumb.Item>Q3</Breadcrumb.Item>
-              <Breadcrumb.Item>Q4</Breadcrumb.Item>
-              <Breadcrumb.Item>Q5</Breadcrumb.Item>
-              <Breadcrumb.Item>Q6</Breadcrumb.Item>
-              <Breadcrumb.Item>Q7</Breadcrumb.Item>
-              <Breadcrumb.Item>Q8</Breadcrumb.Item>
-              <Breadcrumb.Item>Q9</Breadcrumb.Item>
-              <Breadcrumb.Item>Q10</Breadcrumb.Item>
-              <Breadcrumb.Item>Q11</Breadcrumb.Item>
-              <Breadcrumb.Item>Q12</Breadcrumb.Item>
-              <Breadcrumb.Item>Q13</Breadcrumb.Item>
-              <Breadcrumb.Item>Q14</Breadcrumb.Item>
-              <Breadcrumb.Item>Q15</Breadcrumb.Item>
-              <Breadcrumb.Item>Q16</Breadcrumb.Item>
-              <Breadcrumb.Item>Q17</Breadcrumb.Item>
-              <Breadcrumb.Item>Q18</Breadcrumb.Item>
-              <Breadcrumb.Item>Q19</Breadcrumb.Item>
-              <Breadcrumb.Item>Q20</Breadcrumb.Item>
-              <Breadcrumb.Item>Q21</Breadcrumb.Item>
-              <Breadcrumb.Item>Q22</Breadcrumb.Item>
-              <Breadcrumb.Item>Q23</Breadcrumb.Item>
-              <Breadcrumb.Item>Q24</Breadcrumb.Item>
-              <Breadcrumb.Item>Q25</Breadcrumb.Item>
-              <Breadcrumb.Item active>Q26</Breadcrumb.Item>
-            </Breadcrumb>
+          <div style={{ width: "100%" }}>
+            <h2 style={{ textAlign: "left" }}>
+              {Math.round(((100 / 39) * 27).toString())}% completed
+            </h2>
             <div className="progressBarEmpty">
               <div
                 className="progressBarFilled"
                 style={{
-                  width: ((100 / 41) * 27).toString() + "%",
+                  width: ((100 / 39) * 27).toString() + "%",
                 }}
               ></div>
             </div>
           </div>
           <ModalAlert show={show} close={handleClose} />
 
-          <p>
-            Q25b How effective do you think the government has been in achieving
+          <p className="left-align-text">
+            How effective do you think the government has been in achieving
             these outcomes in Kazakhstan?
             <br /> (Please select one response only per row)
           </p>
           <Form>
             <div style={{ overflow: "auto", height: "320px" }}>
-              <Table>
+              <table className="table">
                 <thead
                   style={{
                     position: "sticky",
@@ -400,7 +365,15 @@ export default function Question25B() {
                     ></th>
                     {columns.map((col) => {
                       return (
-                        <th style={{ position: "sticky", top: 0, zIndex: 1 }}>
+                        <th
+                          style={{
+                            position: "sticky",
+                            top: 0,
+                            zIndex: 1,
+                            width: "120px",
+                            verticalAlign: "middle",
+                          }}
+                        >
                           {col}
                         </th>
                       );
@@ -410,19 +383,21 @@ export default function Question25B() {
                 <tbody>
                   {rows.map((row) => {
                     return (
-                      <tr>
+                      <tr className="table-row">
                         <td>{row.key}</td>
-                        <td>{row.value}</td>
+                        <td className="left-align-text">{row.value}</td>
                         {columns.map((col) => {
                           return (
-                            <td>
-                              <input
-                                type="radio"
-                                name={row.key}
-                                value={col}
-                                onClick={handleClick}
-                                disabled={isNone || isDontknow ? true : false}
-                              ></input>
+                            <td className="input-cell">
+                              <label className="label-cell">
+                                <input
+                                  type="radio"
+                                  name={row.key}
+                                  value={col}
+                                  onClick={handleClick}
+                                  disabled={isNone || isDontknow ? true : false}
+                                ></input>
+                              </label>
                             </td>
                           );
                         })}
@@ -430,7 +405,7 @@ export default function Question25B() {
                     );
                   })}
                 </tbody>
-              </Table>
+              </table>
             </div>
             <div
               style={{
@@ -443,25 +418,16 @@ export default function Question25B() {
               <Button
                 type="button"
                 variant={isNone ? "warning" : "light"}
-                style={{ marginRight: "2rem", width: "100%" }}
+                style={{ marginRight: "2rem", width: "44%" }}
                 value="None of the above"
                 onClick={handleNone}
               >
                 NONE OF THE ABOVE
               </Button>
-              <Button
-                type="button"
-                variant={isDontknow ? "warning" : "light"}
-                style={{ width: "100%" }}
-                value="Don't know"
-                onClick={handleDontknow}
-              >
-                DON'T KNOW
-              </Button>
             </div>
             <div className="back-next-btns">
               <Button
-                variant="light"
+                variant="secondary"
                 className="back-btn"
                 onClick={() => history.goBack()}
               >

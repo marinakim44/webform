@@ -24,7 +24,6 @@ export default function Question8() {
 
       const data = {
         uuid: localStorage.getItem("uuid"),
-        uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
         company: localStorage.getItem("company"),
         title: localStorage.getItem("title"),
@@ -34,8 +33,7 @@ export default function Question8() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -75,7 +73,7 @@ export default function Question8() {
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 9).toString() + "%",
+                width: ((100 / 39) * 9).toString() + "%",
               }}
             ></div>
           </div>
@@ -140,34 +138,34 @@ export default function Question8() {
                 />
               </div>
             ))}
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </Form>
         </div>
       </Route>
-
-      {/* <Switch>
-        <Route path="/eng-q7">
-          <Question7 />
-        </Route>
-        <Route path="/eng-q9">
-          <Question9 />
-        </Route>
-      </Switch> */}
     </BrowserRouter>
   );
 }

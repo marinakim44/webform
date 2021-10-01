@@ -4,6 +4,7 @@ import "../App.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import ProgressBar from "react-animated-progress-bar";
 
 export default function Question20() {
   const [show, setShow] = useState(false);
@@ -65,7 +66,7 @@ export default function Question20() {
     {
       key: 4,
       title: "Sometimes",
-      value: "41-60% of the time",
+      value: "39-60% of the time",
     },
     {
       key: 5,
@@ -133,8 +134,7 @@ export default function Question20() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -161,119 +161,123 @@ export default function Question20() {
     <BrowserRouter>
       <Route path="/eng-q20">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item>Q13</Breadcrumb.Item>
-            <Breadcrumb.Item>Q14</Breadcrumb.Item>
-            <Breadcrumb.Item>Q15</Breadcrumb.Item>
-            <Breadcrumb.Item>Q16</Breadcrumb.Item>
-            <Breadcrumb.Item>Q17</Breadcrumb.Item>
-            <Breadcrumb.Item>Q18</Breadcrumb.Item>
-            <Breadcrumb.Item>Q19</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q20</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 21).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 21).toString() + "%",
+                width: ((100 / 39) * 21).toString() + "%",
               }}
             ></div>
           </div>
+          {/* </div> */}
+          {/* <ProgressBar
+            width="400px"
+            height="10px"
+            rect
+            fontColor="gray"
+            percentage={(100 / 39) * 21}
+            rectPadding="1px"
+            rectBorderRadius="20px"
+            trackPathColor="transparent"
+            bgColor="#dc3545"
+            trackBorderColor="grey"
+          /> */}
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q20. Thinking about the customers who have regularly purchased your
+          <p className="left-align-text">
+            Thinking about the customers who have regularly purchased your
             products/services, how often would you say they take the following
-            actions: (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+            actions: <br />
+            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
-          <form>
-            <Table bordered>
-              <tbody>
-                <tr>
-                  <td colSpan="2"></td>
 
-                  {columns.map((col) => {
+          <form>
+            <div style={{ overflow: "auto", height: "420px" }}>
+              <table className="table">
+                <thead
+                  style={{
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <tr style={{ position: "sticky", top: 0 }}>
+                    <th colSpan="2"></th>
+
+                    {columns.map((col) => {
+                      return (
+                        <td style={{ verticalAlign: "top", width: "120px" }}>
+                          <p>
+                            <strong>{col.title}</strong>
+                          </p>
+                          <p>{col.value}</p>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => {
                     return (
-                      <td>
-                        <p style={{ margin: 0, padding: 0 }}>{col.title}</p>
-                        <p style={{ margin: 0, padding: 0 }}>{col.value}</p>
-                      </td>
+                      <tr className="table-row">
+                        <td>{row.key}</td>
+                        <td className="left-align-text">
+                          <p>
+                            <strong>{row.title}</strong>
+                          </p>
+                          <p>{row.value}</p>
+                        </td>
+                        {columns.map((col) => {
+                          return (
+                            <td className="input-cell">
+                              <label
+                                className="label-cell"
+                                style={{ height: "40px" }}
+                              >
+                                <input
+                                  type="radio"
+                                  name={row.key}
+                                  value={col.title}
+                                  onClick={handleClick}
+                                ></input>
+                              </label>
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
-                {rows.map((row) => {
-                  return (
-                    <tr>
-                      <td
-                        style={{
-                          margin: 0,
-                          padding: 0,
-                          verticalAlign: "middle",
-                        }}
-                      >
-                        {row.key}
-                      </td>
-                      <td
-                        className="left-align-text"
-                        style={{ width: "400px" }}
-                      >
-                        <p style={{ margin: 0, padding: 0 }}>{row.title}</p>
-                        <p style={{ margin: 0, padding: 0 }}>{row.value}</p>
-                      </td>
-                      {columns.map((col) => {
-                        return (
-                          <td>
-                            <input
-                              type="radio"
-                              name={row.key}
-                              value={col.title}
-                              onClick={handleClick}
-                            ></input>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
+                </tbody>
+              </table>
+            </div>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </form>
         </div>
       </Route>

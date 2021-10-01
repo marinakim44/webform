@@ -94,6 +94,7 @@ export default function Question10A() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(history);
 
     if (checked.length < 7) {
       handleShow();
@@ -111,8 +112,7 @@ export default function Question10A() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -156,7 +156,7 @@ export default function Question10A() {
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 11).toString() + "%",
+                width: ((100 / 39) * 11).toString() + "%",
               }}
             ></div>
           </div>

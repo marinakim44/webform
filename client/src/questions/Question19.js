@@ -26,7 +26,8 @@ export default function Question19() {
     },
     {
       key: "key4",
-      value: "Modeled the cash tax’s impact on our company",
+      value:
+        "Conducted scenario planning regarding where our company will pay taxes",
     },
     {
       key: "key5",
@@ -135,8 +136,7 @@ export default function Question19() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -167,67 +167,40 @@ export default function Question19() {
     <BrowserRouter>
       <Route>
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item>Q13</Breadcrumb.Item>
-            <Breadcrumb.Item>Q14</Breadcrumb.Item>
-            <Breadcrumb.Item>Q15</Breadcrumb.Item>
-            <Breadcrumb.Item>Q16</Breadcrumb.Item>
-            <Breadcrumb.Item>Q17</Breadcrumb.Item>
-            <Breadcrumb.Item>Q18</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q19</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 20).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 20).toString() + "%",
+                width: ((100 / 39) * 20).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
           <p className="left-align-text">
-            Q19. What actions has your company taken, if any, to prepare for
+            What actions has your company taken, if any, to prepare for
             potential global tax policy change that would make all countries
-            commit to an effective corporate tax rate of at least 15%? (PLEASE
-            SELECT ALL THAT APPLY)
+            commit to an effective corporate tax rate of at least 15%? <br />
+            (PLEASE SELECT ALL THAT APPLY)
           </p>
           <Form style={{ textAlign: "left" }}>
             {rows.map((row) => {
               return (
-                <div key={row.key}>
-                  <Form.Group>
-                    <Form.Check
+                <Form.Group key={row.key}>
+                  <label>
+                    <input
+                      style={{ marginRight: "8px" }}
                       type="checkbox"
                       name={row.key}
-                      label={row.value}
                       value={row.value}
                       onChange={handleChange}
                       disabled={none || dontknow ? true : false}
                     />
-                  </Form.Group>
-                </div>
+                    {row.value}
+                  </label>
+                </Form.Group>
               );
             })}
             <Form.Control
@@ -236,11 +209,13 @@ export default function Question19() {
               style={{ width: "45%" }}
               disabled={dontknow || none ? true : false}
               onChange={handleChangeOther}
+              style={{ margin: "1rem 0", width: "45%" }}
             ></Form.Control>
             <Button
               variant={none ? "warning" : "light"}
               type="button"
               onClick={handleNone}
+              style={{ width: "15%", marginRight: "1rem" }}
             >
               NONE
             </Button>
@@ -248,15 +223,17 @@ export default function Question19() {
               variant={dontknow ? "warning" : "light"}
               type="button"
               onClick={handleDontknow}
+              style={{ width: "15%", marginRight: "1rem" }}
             >
               DON'T KNOW
             </Button>
-            <div style={{ textAlign: "center" }}>
+            <div className="back-next-btns">
               <Button
-                variant="light"
+                variant="secondary"
                 className="back-btn"
                 onClick={() => history.goBack()}
               >
+                <i className="fas fa-chevron-left back-arrow"></i>
                 Back
               </Button>
 
@@ -266,6 +243,7 @@ export default function Question19() {
                 onClick={handleSubmit}
               >
                 Next
+                <i class="fas fa-chevron-right next-arrow"></i>
               </Button>
             </div>
           </Form>

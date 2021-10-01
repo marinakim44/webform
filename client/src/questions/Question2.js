@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Form, Breadcrumb } from "react-bootstrap";
-import { components, default as ReactSelect } from "react-select";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
+import { components } from "react-select";
 import ModalAlert from "../ModalAlert";
 import Creatable from "react-select";
 import "../App.css";
@@ -35,7 +35,6 @@ export default function Question2() {
     other2: "",
     other3: "",
   });
-  const [isNone, setIsNone] = useState(false);
   const [isDontknow, setIsDontknow] = useState(false);
 
   function handleChange(selectedOption) {
@@ -57,39 +56,7 @@ export default function Question2() {
     });
   }
 
-  function handleNone() {
-    if (isDontknow) {
-      setIsDontknow(false);
-    }
-    if (selectedOptions) {
-      setSelectedOptions([]);
-    }
-    if (other) {
-      setOther({
-        other1: "",
-        other2: "",
-        other3: "",
-      });
-    }
-
-    setIsNone(!isNone);
-
-    if (isNone) {
-      setSelectedOptions([]);
-      setIsDontknow(false);
-    }
-
-    if (isNone || isDontknow) {
-      setSelectedOptions([]);
-    }
-
-    console.log(isNone);
-  }
-
   function handleDontknow() {
-    if (isNone) {
-      setIsNone(false);
-    }
     if (selectedOptions) {
       setSelectedOptions([]);
     }
@@ -100,25 +67,16 @@ export default function Question2() {
         other3: "",
       });
     }
-
     setIsDontknow(!isDontknow);
-
     if (isDontknow) {
       setSelectedOptions([]);
-      setIsNone(false);
     }
-
-    if (isNone || isDontknow) {
-      setSelectedOptions([]);
-    }
-    console.log(isDontknow);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (
       selectedOptions.length === 0 &&
-      !isNone &&
       !isDontknow &&
       !other.other1 &&
       !other.other2 &&
@@ -137,7 +95,7 @@ export default function Question2() {
       }
 
       localStorage.setItem("q2", JSON.stringify(selectedOptions));
-      localStorage.setItem("q2-none", isNone);
+
       localStorage.setItem("q2-dontknow", isDontknow);
       const data = {
         uuid: localStorage.getItem("uuid"),
@@ -149,7 +107,7 @@ export default function Question2() {
         q1a: localStorage.getItem("q1a"),
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("q2")),
-        q2none: localStorage.getItem("q2-none"),
+
         q2dontknow: localStorage.getItem("q2-dontknow"),
       };
 
@@ -157,42 +115,29 @@ export default function Question2() {
 
       history.push("/eng-q3");
     }
-    console.log(selectedOptions, other, isNone, isDontknow);
   }
 
   return (
     <BrowserRouter>
       <Route path="/eng-q2">
         <div className="main" style={{ display: "block", overflow: "scroll" }}>
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q2</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 3).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 3).toString() + "%",
+                width: ((100 / 39) * 3).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
             <p>
-              Q2. Which three countries/territories, excluding the
-              country/territory in which you are based, do you consider most
-              important for your company’s prospects for revenue growth over the
-              next 12 months?
+              Which three countries/territories, excluding the country/territory
+              in which you are based, do you consider most important for your
+              company’s prospects for revenue growth over the next 12 months?
             </p>
           </div>
 
@@ -205,7 +150,7 @@ export default function Question2() {
               }}
             >
               <Creatable
-                isDisabled={isNone || isDontknow ? true : false}
+                isDisabled={isDontknow ? true : false}
                 components={{ Menu }}
                 isMulti
                 isValidNewOption={isValidNewOption}
@@ -222,7 +167,7 @@ export default function Question2() {
               value={other.other1}
               onChange={handleOther}
               style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
-              disabled={isNone || isDontknow ? true : false}
+              disabled={isDontknow ? true : false}
             ></Form.Control>
             <Form.Control
               type="text"
@@ -231,7 +176,7 @@ export default function Question2() {
               onChange={handleOther}
               placeholder="Other country 2 (please specify)"
               style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
-              disabled={isNone || isDontknow ? true : false}
+              disabled={isDontknow ? true : false}
             ></Form.Control>
             <Form.Control
               type="text"
@@ -240,7 +185,7 @@ export default function Question2() {
               onChange={handleOther}
               placeholder="Other country 3 (please specify)"
               style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
-              disabled={isNone || isDontknow ? true : false}
+              disabled={isDontknow ? true : false}
             ></Form.Control>
             <div
               style={{
@@ -252,49 +197,37 @@ export default function Question2() {
             >
               <Button
                 type="button"
-                variant={isNone ? "warning" : "light"}
-                style={{ marginRight: "2rem", width: "100%" }}
-                value="none"
-                onClick={handleNone}
-              >
-                My company <strong>does not</strong> operate internationally
-              </Button>
-              <Button
-                type="button"
                 variant={isDontknow ? "warning" : "light"}
-                style={{ width: "100%" }}
+                className="back-btn"
+                style={{ margin: 0 }}
                 value="Don't know"
                 onClick={handleDontknow}
               >
                 Don't know
               </Button>
             </div>
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
 
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
           </Form>
         </div>
       </Route>
-      {/* <Switch>
-        <Route path="/eng-q1">
-          <Question1 />
-        </Route>
-        <Route path="/eng-q3">
-          <Question3 />
-        </Route>
-      </Switch> */}
     </BrowserRouter>
   );
 }

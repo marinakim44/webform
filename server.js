@@ -12,7 +12,8 @@ const port = 3001;
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGO_URI).catch((err) => console.log(err));
+mongoose.connect(process.env.MONGO_URI);
+
 mongoose.connection.on("error", (err) => {
   console.log(err);
 });
@@ -33,20 +34,14 @@ const responseSchema = new mongoose.Schema(
     title: String,
     email: String,
     phone: String,
-    question1: {
-      a: String,
-      b: String,
-    },
+    question1: Object,
     question2: Array,
     question2none: Boolean,
     question2dontknow: Boolean,
-    question3: Array,
+    question3: Object,
     question4: Array,
     question4other: String,
-    question5: {
-      a: String,
-      b: String,
-    },
+    question5: Object,
     question6: String,
     question7: String,
     question8: String,
@@ -79,15 +74,8 @@ const responseSchema = new mongoose.Schema(
       a: String,
       b: String,
     },
-    question14: {
-      a: String,
-      b: String,
-      c: String,
-    },
-    question15: {
-      a: String,
-      b: String,
-    },
+    question14: Object,
+    question15: Object,
     question16: String,
     question17: {
       A: String,
@@ -122,17 +110,21 @@ const responseSchema = new mongoose.Schema(
       A: String,
       B: String,
     },
-    question22: {
-      revenue: String,
-      profit: String,
-      return: String,
-    },
+    question22revenue: Number,
+    question22profit: Number,
+    question22return: Number,
+    question22dontknowRevenue: Boolean,
+    question22dontknowProfit: Boolean,
+    question22dontknowReturn: Boolean,
     question23: String,
     question24: {
       A: Array,
       B: Array,
     },
     question25A: Array,
+    question25Anone: Boolean,
+    question25Adontknow: Boolean,
+    question25Aother: String,
     question25B: {
       A: String,
       B: String,
@@ -165,6 +157,7 @@ const responseSchema = new mongoose.Schema(
     questionD: String,
     questionE: String,
     questionF: String,
+    questionFother: String,
     questionG: String,
     questionH: String,
     questionI: String,
@@ -191,20 +184,18 @@ app.post("/allinputs", (req, res) => {
       title: req.body.title,
       email: req.body.email,
       phone: req.body.phone,
-      question1: {
-        a: req.body.q1a,
-        b: req.body.q1b,
-      },
+      question1: req.body.q1,
+      // question1: {
+      //   a: req.body.q1a,
+      //   b: req.body.q1b,
+      // },
       question2: req.body.q2,
       question2none: req.body.q2none,
       question2dontknow: req.body.q2dontknow,
       question3: req.body.q3,
       question4: req.body.q4,
       question4other: req.body.q4other,
-      question5: {
-        a: req.body.q5a,
-        b: req.body.q5b,
-      },
+      question5: req.body.q5,
       question6: req.body.q6,
       question7: req.body.q7,
       question8: req.body.q8,
@@ -229,10 +220,18 @@ app.post("/allinputs", (req, res) => {
       },
       question20: req.body.q20,
       question21: req.body.q21,
-      question22: req.body.q22,
+      question22revenue: req.body.q22revenue,
+      question22profit: req.body.q22profit,
+      question22return: req.body.q22return,
+      question22dontknowRevenue: req.body.dontknowRevenue,
+      question22dontknowProfit: req.body.dontknowProfit,
+      question22dontknowReturn: req.body.dontknowReturn,
       question23: req.body.q23,
       question24: req.body.q24,
       question25A: req.body.q25,
+      question25Anone: req.body.q25none,
+      question25Adontknow: req.body.q25dontknow,
+      question25Aother: req.body.q25other,
       question25B: req.body.q25b,
       question25Bnone: req.body.q25bNone,
       question25Bdontknow: req.body.q25bDontknow,
@@ -250,22 +249,21 @@ app.post("/allinputs", (req, res) => {
       questionD: req.body.qd,
       questionE: req.body.qe,
       questionF: req.body.qf,
+      questionFother: req.body.qfOther,
       questionG: req.body.qg,
       questionH: req.body.qh,
       questionI: req.body.qi,
       questionJ: req.body.qj,
     },
-    { upsert: true }
-    // function (err, doc) {
-    //   if (err) {
-    //     return res.status(500).send(err);
-    //   } else {
-    //     return res.status(200).send("Saved");
-    //   }
-    // }
-  ).catch((err) => {
-    console.log(err);
-  });
+    { upsert: true },
+    function (err, doc) {
+      if (err) {
+        return res.status(500).send(err);
+      } else {
+        return res.status(200).send("Saved");
+      }
+    }
+  );
 });
 
 //GET APIs

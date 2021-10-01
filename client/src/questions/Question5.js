@@ -6,16 +6,46 @@ import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question5() {
+  const rows = [
+    {
+      key: "A",
+      value: "Carbon-neutral commitment",
+      text: "Achieved when a company offsets its greenhouse gas (GHG) emissions to zero (e.g., by purchasing voluntary carbon credits)",
+    },
+    {
+      key: "B",
+      value: "Net-zero commitment",
+      text: "Achieved when a company reduces its greenhouse gas (GHG) emissions to near zero and removes its remaining unavoidable emissions",
+    },
+  ];
+  const columns = [
+    {
+      key: "yes",
+      value: "Yes, my company has made this commitment",
+    },
+    {
+      key: "no but",
+      value: "No, but my company is working toward making this commitment",
+    },
+    {
+      key: "no",
+      value: "No, my company has not made this commitment",
+    },
+    {
+      key: "dontknow",
+      value: "Don't know",
+    },
+  ];
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState({
-    carbonNeutral: "",
-    netZero: "",
+    A: "",
+    B: "",
   });
 
-  function handleClick(e) {
+  function handleChange(e) {
     const { name, value } = e.target;
     setInput((prevInput) => {
       return {
@@ -26,11 +56,10 @@ export default function Question5() {
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-
-    if (input.carbonNeutral !== "" && input.netZero !== "") {
-      localStorage.setItem("q5-carbonNeutral", input.carbonNeutral);
-      localStorage.setItem("q5-netZero", input.netZero);
+    if (input.A && input.B) {
+      localStorage.setItem("q5", JSON.stringify(input));
+      localStorage.setItem("q5-carbonNeutral", input.A);
+      localStorage.setItem("q5-netZero", input.B);
 
       const data = {
         uuid: localStorage.getItem("uuid"),
@@ -43,35 +72,31 @@ export default function Question5() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
       };
 
       axios.post("/allinputs", data);
 
-      if (input.netZero === "yes") {
+      if (input.B === "yes") {
         history.push("/eng-q6");
-      } else if (input.netZero === "no but") {
+      } else if (input.B === "no but") {
         history.push("/eng-q7");
-      } else if (input.netZero === "no") {
-        if (input.carbonNeutral === "yes") {
+      } else if (input.B === "no") {
+        if (input.A === "yes") {
           history.push("/eng-q10a");
-        } else if (input.carbonNeutral === "no but") {
+        } else if (input.A === "no but") {
           history.push("/eng-q10b");
-        } else if (
-          input.carbonNeutral === "dontKnow" ||
-          input.carbonNeutral === "no"
-        ) {
+        } else if (input.A === "dontknow" || input.A === "no") {
           history.push("/eng-q11");
         }
-      } else if (input.netZero === "dontKnow") {
-        if (input.carbonNeutral === "yes") {
+      } else if (input.B === "dontknow") {
+        if (input.A === "yes") {
           history.push("/eng-q10a");
-        } else if (input.carbonNeutral === "no but") {
+        } else if (input.A === "no but") {
           history.push("/eng-q10b");
-        } else if (input.carbonNeutral === "dontKnow") {
+        } else if (input.A === "dontknow") {
           history.push("/eng-q12");
-        } else if (input.carbonNeutral === "no") {
+        } else if (input.A === "no") {
           history.push("/eng-q11");
         }
       }
@@ -84,146 +109,88 @@ export default function Question5() {
     <BrowserRouter>
       <Route path="/eng-q5">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q5</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 6).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 6).toString() + "%",
+                width: ((100 / 39) * 6).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q5. Has your company made a: carbon-neutral commitment? net-zero
-            commitment? (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+          <p className="left-align-text">
+            Has your company made a: carbon-neutral commitment? net-zero
+            commitment? <br />
+            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
-            <Table bordered>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Yes, my company has made this commitment</th>
-                  <th>
-                    No, but my company is working toward making this commitment
-                  </th>
-                  <th>No, my company has not made this commitment</th>
-                  <th>Don't know</th>
-                </tr>
-              </thead>
+            <table className="table">
               <tbody>
                 <tr>
-                  <td className="left-align-text">
-                    Carbon-neutral commitment Achieved when a company offsets
-                    its greenhouse gas (GHG) emissions to zero (e.g., by
-                    purchasing voluntary carbon credits)
-                  </td>
-                  <td>
-                    <input
-                      name="carbonNeutral"
-                      value="yes"
-                      type="radio"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="carbonNeutral"
-                      value="no but"
-                      type="radio"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="carbonNeutral"
-                      value="no"
-                      type="radio"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="carbonNeutral"
-                      value="dontKnow"
-                      type="radio"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
+                  <td colSpan="2"></td>
+                  {columns.map((col) => {
+                    return (
+                      <td key={col.key}>
+                        <strong>{col.value}</strong>
+                      </td>
+                    );
+                  })}
                 </tr>
-                <tr>
-                  <td>
-                    Net-zero commitment Achieved when a company reduces its
-                    greenhouse gas (GHG) emissions to near zero and removes its
-                    remaining unavoidable emissions
-                  </td>
-                  <td>
-                    <input
-                      name="netZero"
-                      value="yes"
-                      type="radio"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="netZero"
-                      value="no but"
-                      type="radio"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="netZero"
-                      value="no"
-                      type="radio"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      name="netZero"
-                      value="dontKnow"
-                      type="radio"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr key={row.key} className="table-row">
+                      <td>{row.key}</td>
+                      <td
+                        className="left-align-text"
+                        style={{ width: "200px" }}
+                      >
+                        {row.value}
+                      </td>
+                      {columns.map((col) => {
+                        return (
+                          <td
+                            key={col.key}
+                            className="input-cell"
+                            style={{ width: "250px" }}
+                          >
+                            <label className="label-cell">
+                              <input
+                                name={row.key}
+                                value={col.key}
+                                type="radio"
+                                onChange={handleChange}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
-            </Table>
+            </table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
           </form>
         </div>
       </Route>

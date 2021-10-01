@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Table, Form, Row, Col } from "react-bootstrap";
+import { Button, Breadcrumb, Table, Form } from "react-bootstrap";
 import { useState } from "react";
 import "../App.css";
 import axios from "axios";
@@ -36,8 +36,7 @@ export default function Question23() {
         q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("countries")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
@@ -67,53 +66,21 @@ export default function Question23() {
     <BrowserRouter>
       <Route path="/eng-q23">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item>Q13</Breadcrumb.Item>
-            <Breadcrumb.Item>Q14</Breadcrumb.Item>
-            <Breadcrumb.Item>Q15</Breadcrumb.Item>
-            <Breadcrumb.Item>Q16</Breadcrumb.Item>
-            <Breadcrumb.Item>Q17</Breadcrumb.Item>
-            <Breadcrumb.Item>Q18</Breadcrumb.Item>
-            <Breadcrumb.Item>Q19</Breadcrumb.Item>
-            <Breadcrumb.Item>Q20</Breadcrumb.Item>
-            <Breadcrumb.Item>Q21</Breadcrumb.Item>
-            <Breadcrumb.Item>Q22</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q23</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 24).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 24).toString() + "%",
+                width: ((100 / 39) * 24).toString() + "%",
               }}
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q23. How would you describe your company's typical forecasting
-            accuracy regarding year-on-year revenue growth?
+          <p className="left-align-text">
+            How would you describe your company's typical forecasting accuracy
+            regarding year-on-year revenue growth?
           </p>
           <Form>
             <Table bordered>
@@ -140,89 +107,114 @@ export default function Question23() {
                 </tr>
 
                 <tr>
-                  <td>
-                    <input
-                      type="radio"
-                      name="option"
-                      value="Less or equal to 10% below actual"
-                      onClick={handleClick}
-                    ></input>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value="Less or equal to 10% below actual"
+                        onClick={handleClick}
+                      ></input>
+                    </label>
                   </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="option"
-                      value="6-9% below actual"
-                      onClick={handleClick}
-                    ></input>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value="6-9% below actual"
+                        onClick={handleClick}
+                      ></input>
+                    </label>
                   </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="option"
-                      value="3-5% below actual"
-                      onClick={handleClick}
-                    ></input>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value="3-5% below actual"
+                        onClick={handleClick}
+                      ></input>
+                    </label>
                   </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="option"
-                      value="Forecast is within +-2% of actual"
-                      onClick={handleClick}
-                    ></input>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value="Forecast is within +-2% of actual"
+                        onClick={handleClick}
+                      ></input>
+                    </label>
                   </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="option"
-                      value="3-5% above actual"
-                      onClick={handleClick}
-                    ></input>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value="3-5% above actual"
+                        onClick={handleClick}
+                      ></input>
+                    </label>
                   </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="option"
-                      value="6-9% above actual"
-                      onClick={handleClick}
-                    ></input>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value="6-9% above actual"
+                        onClick={handleClick}
+                      ></input>
+                    </label>
                   </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="option"
-                      value="More or equal to 10% above actual"
-                      onClick={handleClick}
-                    ></input>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value="More or equal to 10% above actual"
+                        onClick={handleClick}
+                      ></input>
+                    </label>
                   </td>
-                  <td>
-                    <input
-                      type="radio"
-                      name="option"
-                      value="Don't know"
-                      onClick={handleClick}
-                    ></input>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value="Don't know"
+                        onClick={handleClick}
+                      ></input>
+                    </label>
                   </td>
                 </tr>
               </tbody>
             </Table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </Form>
         </div>
       </Route>
