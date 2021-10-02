@@ -6,14 +6,23 @@ const mongoose = require("mongoose");
 const path = require("path");
 
 //below line for production
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3001;
 //below line for development
 // const port = 3001;
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGO_URI);
+//DB config
+const options = {
+  serverSelectionTimeoutMS: 60000,
+  socketTimeoutMS: 45000,
+  keepAlive: true,
+};
+mongoose.set("bufferCommands", false);
+mongoose.connect(process.env.MONGO_URI, options, function (err) {
+  console.log(err);
+});
 
 mongoose.connection.on("error", (err) => {
   console.log(err);
@@ -173,6 +182,7 @@ const responseSchema = new mongoose.Schema(
 );
 
 const Response = mongoose.model("Response", responseSchema);
+// await Model.createCollection();
 
 //POST APIs
 app.post("/allinputs", (req, res) => {
