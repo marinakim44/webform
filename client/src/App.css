@@ -2,18 +2,16 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: Arial;
 }
 body span {
   color: black;
-  /* background-image: url("https://images.hdqwalls.com/wallpapers/progamming-code-4k-nt.jpg"); */
 }
 .main {
   width: 90%;
   text-align: center;
-  margin: auto auto;
-  height: 100vh;
-  padding: 2rem;
-  background-color: rgb(233, 233, 233);
+  margin: 1rem auto 0;
+  height: 100%;
 }
 .main ol {
   margin: 0;
@@ -21,13 +19,6 @@ body span {
 }
 .main a {
   text-decoration: none;
-}
-.nav-div {
-  border-radius: 8px;
-  padding: 10px;
-  margin: 0;
-  margin-bottom: 2rem;
-  padding: 0;
 }
 .progressBarEmpty {
   width: 100%;
@@ -79,4 +70,48 @@ h1 {
   margin: 0;
   margin-top: 2rem;
   width: 200px;
+}
+
+.back-arrow {
+  color: "#000";
+  margin-right: 10px;
+}
+.next-arrow {
+  color: "#000";
+  margin-left: 10px;
+}
+
+.sticky-sub-div {
+  background-color: white;
+  position: sticky;
+  top: 0;
+  left: 5%;
+  z-index: 100;
+  width: 90%;
+  height: 120px;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+.table {
+  font-size: 14px;
+  vertical-align: middle;
+}
+.table-row {
+  vertical-align: middle;
+}
+.input-cell:hover {
+  background-color: rgba(226, 255, 223, 0.646);
+  cursor: pointer;
+  border-radius: 8px;
+  height: inherit;
+}
+.label-cell {
+  width: 100%;
+}
+.label-cell:hover {
+  cursor: pointer;
+}
+.radio-label-cell {
+  cursor: pointer;
+  display: block;
 }

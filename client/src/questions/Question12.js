@@ -1,207 +1,216 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import Question11 from "./Question11";
-import Question13 from "./Question13";
-
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { useState } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question12() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
+  const rows = [
+    {
+      key: "A",
+      value: "The industry’s long-term trends",
+    },
+    {
+      key: "B",
+      value: "The regulatory environment(s) in which my company operates",
+    },
+    {
+      key: "C",
+      value:
+        "Macro environmental forces (including demographic, cultural, environmental, technological)",
+    },
+    {
+      key: "D",
+      value: "My company’s specific assets, capabilities and relationships",
+    },
+  ];
+
+  const columns = [
+    {
+      key: 1,
+      value: "Very unfavourable",
+    },
+    {
+      key: 2,
+      value: "Moderately unfavourable",
+    },
+    {
+      key: 3,
+      value: "Slightly unfavourable",
+    },
+    {
+      key: 4,
+      value: "Neither favourable nor unfavourable",
+    },
+    {
+      key: 5,
+      value: "Slightly favourable",
+    },
+    {
+      key: 6,
+      value: "Moderately favourable",
+    },
+    {
+      key: 7,
+      value: "Very favourable",
+    },
+    {
+      key: 8,
+      value: "Don't know",
+    },
+  ];
+
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+  });
+
+  const [checked, setChecked] = useState([]);
+
+  function handleClick(e) {
+    const { name, value } = e.target;
+    setInput((prevInput) => {
+      return {
+        ...prevInput,
+        [name]: value,
+      };
+    });
+    if (!checked.includes(name)) {
+      checked.push(name);
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (checked.length < 4) {
+      handleShow();
+    } else {
+      localStorage.setItem("q12", JSON.stringify(input));
+      history.push("/eng-q13");
+
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5: JSON.parse(localStorage.getItem("q5")),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+        q12: JSON.parse(localStorage.getItem("q12")),
+      };
+
+      axios.post("/allinputs", data);
+    }
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q12">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q12</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 13).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 13).toString() + "%",
+                width: ((100 / 39) * 13).toString() + "%",
               }}
             ></div>
           </div>
-          <p>
-            Q12a. How favourable are the following factors with regard to your
-            company’s ability to reduce greenhouse gas (GHG) emissions?
-            (favourable factors are those that may help your company,
-            unfavourable factors are those that may hinder your company)
+          <ModalAlert show={show} close={handleClose} />
+          <p className="left-align-text">
+            How favourable are the following factors with regard to your
+            company’s ability to reduce greenhouse gas (GHG) emissions? <br />
+            <i>
+              (favourable factors are those that may help your company,
+              unfavourable factors are those that may hinder your company)
+            </i>
           </p>
           <form>
-            <Table bordered>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th>Very unfavourable</th>
-                  <th>Moderately...</th>
-                  <th>Slightly...</th>
-                  <th>Neither...</th>
-                  <th>Slightly favourable</th>
-                  <th>Moderately...</th>
-                  <th>Very...</th>
-                  <th>Don't know</th>
-                </tr>
-              </thead>
+            <table className="table">
               <tbody>
                 <tr>
-                  <td>A</td>
-                  <td>The industry’s long-term trends</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
+                  <th colSpan="2"></th>
+                  {columns.map((column) => {
+                    return (
+                      <th key={column.key}>
+                        <strong>{column.value}</strong>
+                      </th>
+                    );
+                  })}
                 </tr>
-                <tr>
-                  <td>B</td>
-                  <td>...</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>C</td>
-                  <td>...</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td>D</td>
-                  <td>...</td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                  <td>
-                    <input type="radio"></input>
-                  </td>
-                </tr>
+
+                {rows.map((row) => {
+                  return (
+                    <tr key={row.key} className="table-row">
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
+                      {columns.map((column) => {
+                        return (
+                          <td className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={column.value}
+                                onClick={handleClick}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
-            </Table>
-            <Link to="/eng-q11">
-              <Button variant="light" className="back-btn">
+            </table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
                 Back
               </Button>
-            </Link>
 
-            <Link to="/eng-q13">
-              <Button variant="danger" className="next-btn">
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
                 Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
               </Button>
-            </Link>
+            </div>
           </form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q11">
-          <Question11 />
-        </Route>
-        <Route path="/eng-q13">
-          <Question13 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

@@ -1,258 +1,185 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import EngStart from "../EngStart";
-import Question2 from "./Question2";
-import { Table, Button, Breadcrumb } from "react-bootstrap";
+import { Table, Button, Breadcrumb, Form } from "react-bootstrap";
 import "../App.css";
+import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question1() {
-  const [isChecked, setIsChecked] = useState(false);
+  const rows = [
+    {
+      key: "A",
+      value: "Global economic growth - next 12 months",
+    },
+    {
+      key: "B",
+      value: "Kazakhstan economic growth - next 12 months",
+    },
+  ];
+
+  const columns = [
+    {
+      key: "1",
+      value: "Decline significantly",
+    },
+    {
+      key: "2",
+      value: "Decline moderately",
+    },
+    {
+      key: "3",
+      value: "Decline slightly",
+    },
+    {
+      key: "4",
+      value: "Stay the same",
+    },
+    {
+      key: "5",
+      value: "Improve slightly",
+    },
+    {
+      key: "6",
+      value: "Improve moderately",
+    },
+    {
+      key: "7",
+      value: "Improve significantly",
+    },
+    {
+      key: "8",
+      value: "Don't know",
+    },
+  ];
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
   const [input, setInput] = useState({
-    A: [],
-    B: [],
+    A: "",
+    B: "",
   });
 
-  function handleClick(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    const letter = name.slice(-1);
-    setIsChecked(!isChecked);
-    setInput((prevInput) => {
+
+    setInput((prev) => {
       return {
-        ...prevInput,
-        [letter]: [value],
+        ...prev,
+        [name]: value,
       };
     });
-    console.log(input);
-  }
+  };
+
+  const handleSubmit = () => {
+    if (input.A && input.B) {
+      localStorage.setItem("q1", JSON.stringify(input));
+      history.push("/eng-q2");
+
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1: JSON.parse(localStorage.getItem("q1")),
+      };
+      axios.post("/allinputs", data);
+    } else {
+      handleShow();
+    }
+  };
 
   return (
     <BrowserRouter>
       <Route path="/eng-q1">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item active>Q1</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 2).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 2).toString() + "%",
+                width: ((100 / 39) * 2).toString() + "%",
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
-            <span>
-              Q1. How do you believe economic growth (i.e., gross domestic
-              product) will change, if at all, over the next 12 months in:{" "}
-              <br />
+            <p>
+              How do you believe economic growth (i.e., gross domestic product)
+              will change, if at all, over the next 12 months in: <br />
               <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
                 A) the global economy?
               </span>
               <br />
               <span style={{ marginLeft: "2rem" }}>B) Kazakhstan economy?</span>
-            </span>
+            </p>
           </div>
-          <form>
-            <Table bordered style={{ color: "black" }}>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th></th>
-                  <th>Decline significantly</th>
-                  <th>Decline moderately</th>
-                  <th>Decline slightly</th>
-                  <th>Stay the same</th>
-                  <th>Improve significantly</th>
-                  <th>Improve moderately</th>
-                  <th>Improve slightly</th>
-                  <th>Don't know</th>
-                </tr>
-              </thead>
+          <Form>
+            <table className="table">
               <tbody>
                 <tr>
-                  <td>A</td>
-                  <td className="left-align-text">
-                    Global economic growth - next 12 months
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="declineSignificantlyA"
-                      value="Decline significantly"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="declineModeratelyA"
-                      value="Decline moderately"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="declineSlightlyA"
-                      value="Decline slightly"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="sameA"
-                      value="Stay the same"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="improveSlightlyA"
-                      value="Improve slightly"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="improveModeratelyA"
-                      value="Improve moderately"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="improveSignificantlyA"
-                      value="Improve significantly"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="dontknowA"
-                      value="Don't know"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
+                  <td colSpan="2"></td>
+                  {columns.map((col) => {
+                    return (
+                      <td key={col.key}>
+                        <strong>{col.value}</strong>
+                      </td>
+                    );
+                  })}
                 </tr>
-                <tr>
-                  <td>B</td>
-                  <td className="left-align-text">
-                    Kazakhstan economic growth - next 12 months
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="declineSignificantlyB"
-                      value="Decline significantly"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="declineModeratelyB"
-                      value="Decline moderately"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="declineSlightlyB"
-                      value="Decline slightly"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="sameB"
-                      value="Stay the same"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="improveSlightlyB"
-                      value="Improve slightly"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="improveModeratelyB"
-                      value="Improve moderately"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="improveSignificantlyB"
-                      value="Improve significantly"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="Don't know"
-                      value="Don't know"
-                      onClick={handleClick}
-                    ></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr key={row.key} className="table-row">
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
+
+                      {columns.map((col) => {
+                        return (
+                          <td key={col.key} className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                name={row.key}
+                                value={col.value}
+                                type="radio"
+                                onChange={handleChange}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
-            </Table>
+            </table>
 
             <div className="back-next-btns">
-              <Link to="/eng-start">
-                <Button variant="light" className="back-btn">
-                  <i
-                    class="fas fa-chevron-left"
-                    style={{ color: "#000", marginRight: "10px" }}
-                  ></i>
-                  Back
-                </Button>
-              </Link>
-              <Link to="/eng-q2">
-                <Button variant="danger" className="next-btn">
-                  Next
-                  <i
-                    class="fas fa-chevron-right"
-                    style={{ color: "#fff", marginLeft: "10px" }}
-                  ></i>
-                </Button>
-              </Link>
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
             </div>
-          </form>
+          </Form>
         </div>
       </Route>
-      <Switch>
-        <Route path="/eng-start">
-          <EngStart />
-        </Route>
-        <Route path="/eng-q2">
-          <Question2 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

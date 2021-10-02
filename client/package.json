@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://powerful-falls-19450.herokuapp.com",
+  "proxy": "https://frozen-springs-09656.herokuapp.com/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
@@ -13,12 +13,18 @@
     "axios": "^0.21.4",
     "bootstrap": "^5.1.1",
     "react": "^17.0.2",
+    "react-animated-progress-bar": "^1.0.4",
     "react-bootstrap": "^1.6.3",
+    "react-bootstrap-range-slider": "^3.0.2",
     "react-dom": "^17.0.2",
+    "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "react-select": "^4.3.1",
     "reactstrap": "^8.10.0",
+    "redux": "^4.1.1",
+    "redux-thunk": "^2.3.0",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

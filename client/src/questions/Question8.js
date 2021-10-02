@@ -1,11 +1,50 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import Question7 from "./Question7";
-import Question9 from "./Question9";
-
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { useState } from "react";
 import { Button, Form, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question8() {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
+  const [input, setInput] = useState("");
+
+  function handleClick(e) {
+    setInput(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    if (!input) {
+      handleShow();
+    } else {
+      localStorage.setItem("q8", input);
+
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5: JSON.parse(localStorage.getItem("q5")),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+      };
+
+      axios.post("/allinputs", data);
+
+      history.push("/eng-q10a");
+    }
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q8">
@@ -34,10 +73,11 @@ export default function Question8() {
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 9).toString() + "%",
+                width: ((100 / 39) * 9).toString() + "%",
               }}
             ></div>
           </div>
+          <ModalAlert show={show} close={handleClose} />
           <p>
             Q8. Has your company's approach to reducing greenhouse gas (GHG)
             emissions been independently assessed and validated (e.g., by SBTi)?
@@ -49,60 +89,83 @@ export default function Question8() {
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={
+                    "Yes, my company’s approach to reducing GHG emissions has been independently assessed and validated"
+                  }
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="yes"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={
+                    "No, but my company’s approach to reducing GHG emissions is currently being independently assessed and validated "
+                  }
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="no but"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={
+                    "No, my company’s approach to reducing GHG emissions has not been independently assessed and validated"
+                  }
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="no"
+                  onClick={handleClick}
                 />
                 <Form.Check
                   type={type}
                   id={`default-${type}`}
-                  label={`default ${type}`}
+                  label={"Don’t know"}
                   style={{
                     textAlign: "left",
                   }}
+                  name="option"
+                  value="don't know"
+                  onClick={handleClick}
                 />
               </div>
             ))}
-            <Link to="/eng-q7">
-              <Button variant="light" className="back-btn">
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
                 Back
               </Button>
-            </Link>
 
-            <Link to="/eng-q9">
-              <Button variant="danger" className="next-btn">
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
                 Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
               </Button>
-            </Link>
+            </div>
           </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q7">
-          <Question7 />
-        </Route>
-        <Route path="/eng-q9">
-          <Question9 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

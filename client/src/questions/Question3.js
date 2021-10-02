@@ -1,102 +1,186 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import { Table, Button, Breadcrumb } from "react-bootstrap";
-import Question2 from "./Question2";
-import Question4 from "./Question4";
-import Question5 from "./Question5";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import "../App.css";
+import ModalAlert from "../ModalAlert";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Question3() {
-  const [a, setA] = useState(false);
-  const [b, setB] = useState(false);
-  const [c, setC] = useState(false);
-  const [d, setD] = useState(false);
-  const [e, setE] = useState(false);
-  const [f, setF] = useState(false);
+  const rows = [
+    {
+      key: "A",
+      value: "Macroeconomic volatility",
+      text: "(including in GDP, unemployment, inflation)",
+    },
+    {
+      key: "B",
+      value: "Climate change",
+      text: "(including physical risks and transition risks such as policy & legal, markets, technology and reputation risks)",
+    },
+    {
+      key: "C",
+      value: "Social inequality",
+      text: "(including those stemming from gender, race and ethnicity, wealth)",
+    },
+    {
+      key: "D",
+      value: "Geopolitical conflict",
+      text: "(including resource and trade disputes, terrorism, interstate violence)",
+    },
+    {
+      key: "E",
+      value: "Cyber risks",
+      text: "(including hacking, surveillance, disinformation)",
+    },
+    {
+      key: "F",
+      value: "Health risks",
+      text: "(including COVID-19 and other pandemics, chronic illness, strains on mental health)",
+    },
+  ];
 
-  const listOfConcerns = [];
+  const columns = [
+    {
+      key: "1",
+      value: "Not concerned",
+    },
+    {
+      key: "2",
+      value: "Slightly concerned",
+    },
+    {
+      key: "3",
+      value: "Moderately concerned",
+    },
+    {
+      key: "4",
+      value: "Very concerned",
+    },
+    {
+      key: "5",
+      value: "Extremely concerned",
+    },
+    {
+      key: "6",
+      value: "Don't know",
+    },
+  ];
 
-  function handleA(e) {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
+  const [listOthers, setListOthers] = useState([]);
+  const [listOfConcerns, setListOfConcerns] = useState([]);
+  const [listAll, setListAll] = useState([]);
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+    C: "",
+    D: "",
+    E: "",
+    F: "",
+  });
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
+
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+
     if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
+      name === "A" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
     ) {
-      setA(true);
-      listOfConcerns.push("a");
-    } else {
-      setA(false);
+      if (!listOfConcerns.includes("Macroeconomic volatility")) {
+        listOfConcerns.push("Macroeconomic volatility");
+      }
     }
-  }
-
-  function handleB(e) {
-    const { name, value } = e.target;
     if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
+      name === "B" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
     ) {
-      setB(true);
-      listOfConcerns.push("b");
-    } else {
-      setB(false);
+      if (!listOfConcerns.includes("Climate change")) {
+        listOfConcerns.push("Climate change");
+      }
     }
-  }
-
-  function handleC(e) {
-    const { name, value } = e.target;
     if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
+      name === "C" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
     ) {
-      setC(true);
-      listOfConcerns.push("c");
-    } else {
-      setC(false);
+      if (!listOfConcerns.includes("Social inequality")) {
+        listOfConcerns.push("Social inequality");
+      }
     }
-  }
-
-  function handleD(e) {
-    const { name, value } = e.target;
     if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
+      name === "D" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
     ) {
-      setD(true);
-      listOfConcerns.push("d");
-    } else {
-      setD(false);
+      if (!listOfConcerns.includes("Geopolitical conflict")) {
+        listOfConcerns.push("Geopolitical conflict");
+      }
     }
-  }
-
-  function handleE(e) {
-    const { name, value } = e.target;
     if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
+      name === "E" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
     ) {
-      setE(true);
-      listOfConcerns.push("e");
-    } else {
-      setE(false);
+      if (!listOfConcerns.includes("Cyber risks")) {
+        listOfConcerns.push("Cyber risks");
+      }
     }
-  }
-
-  function handleF(e) {
-    const { name, value } = e.target;
     if (
-      value === "Moderately concerned" ||
-      value === "Very concerned" ||
-      value === "Extremely concerned"
+      name === "F" &&
+      (value === "Moderately concerned" ||
+        value === "Very concerned" ||
+        value === "Extremely concerned")
     ) {
-      setF(true);
-      listOfConcerns.push("f");
+      if (!listOfConcerns.includes("Health risks")) {
+        listOfConcerns.push("Health risks");
+      }
+    }
+  };
+
+  function handleSubmit(e) {
+    if (input.A && input.B && input.C && input.D && input.E && input.F) {
+      localStorage.setItem("q3", JSON.stringify(input));
+      localStorage.setItem("q3-concerns", JSON.stringify(listOfConcerns));
+
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+      };
+
+      axios.post("/allinputs", data);
+
+      if (listOfConcerns.length === 0) {
+        history.push("/eng-q5");
+      } else {
+        history.push("/eng-q4");
+      }
     } else {
-      setF(false);
+      handleShow();
     }
   }
 
@@ -104,393 +188,89 @@ export default function Question3() {
     <BrowserRouter>
       <Route path="/eng-q3">
         <div className="main">
-        <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item >Q1</Breadcrumb.Item>
-            <Breadcrumb.Item >Q2</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q3</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 4).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 4).toString() + "%",
+                width: ((100 / 39) * 4).toString() + "%",
               }}
             ></div>
           </div>
-          <p>
-            Q3. How concerned are you about the following global threats
-            negatively impacting your company over the next 12 months?
-            <br /> (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
-          </p>
+          <ModalAlert show={show} close={handleClose} />
+          <div className="left-align-text">
+            <p>
+              How concerned are you about the following global threats
+              negatively impacting your company over the next 12 months?
+              <br /> (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+            </p>
+          </div>
+
           <form>
-            <Table bordered>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Not concerned</th>
-                  <th>Slightly concerned</th>
-                  <th>Moderately concerned</th>
-                  <th>Very concerned</th>
-                  <th>Extremely concerned</th>
-                  <th>Don't know</th>
-                </tr>
-              </thead>
+            <table className="table">
               <tbody>
                 <tr>
-                  <td className="left-align-text">
-                    A) Macroeconomic volatility
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="notA"
-                      value="Not concerned"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="slightlyA"
-                      value="Slightly concerned"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="moderatelyA"
-                      value="Moderately concerned"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="veryA"
-                      value="Very concerned"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="extremelyA"
-                      value="Extremely concerned"
-                      onClick={handleA}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="dontknowA"
-                      value="Don't know"
-                      onClick={handleA}
-                    ></input>
-                  </td>
+                  <td colSpan="2"></td>
+                  {columns.map((col) => {
+                    return (
+                      <td key={col.key}>
+                        <strong>{col.value}</strong>
+                      </td>
+                    );
+                  })}
                 </tr>
-                <tr>
-                  <td className="left-align-text">B) Climate change</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="notB"
-                      value="Not concerned"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="slightlyB"
-                      value="Slightly concerned"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="moderatelyB"
-                      value="Moderately concerned"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="veryB"
-                      value="Very concerned"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="extremelyB"
-                      value="Extremely concerned"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="dontknowB"
-                      value="Don't know"
-                      onClick={handleB}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">C) Social inequality</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="notC"
-                      value="Not concerned"
-                      onClick={handleC}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="slightlyC"
-                      value="Slightly concerned"
-                      onClick={handleC}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="moderatelyC"
-                      value="Moderately concerned"
-                      onClick={handleC}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="veryC"
-                      value="Very concerned"
-                      onClick={handleC}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="extremelyC"
-                      value="Extremely concerned"
-                      onClick={handleC}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="dontknowC"
-                      value="Don't know"
-                      onClick={handleC}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">D) Geopolitical conflict</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="notD"
-                      value="Not concerned"
-                      onClick={handleD}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="slightlyD"
-                      value="Slightly concerned"
-                      onClick={handleD}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="moderatelyD"
-                      value="Moderately concerned"
-                      onClick={handleD}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="veryD"
-                      value="Very concerned"
-                      onClick={handleD}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="extremelyD"
-                      value="Extremely concerned"
-                      onClick={handleD}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="dontknowD"
-                      value="Don't know"
-                      onClick={handleD}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">E) Cyber risks</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="notE"
-                      value="Not concerned"
-                      onClick={handleE}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="slightlyE"
-                      value="Slightly concerned"
-                      onClick={handleE}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="moderatelyE"
-                      value="Moderately concerned"
-                      onClick={handleE}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="veryE"
-                      value="Very concerned"
-                      onClick={handleE}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="extremelyE"
-                      value="Extremely concerned"
-                      onClick={handleE}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="dontknowE"
-                      value="Don't know"
-                      onClick={handleE}
-                    ></input>
-                  </td>
-                </tr>
-                <tr>
-                  <td className="left-align-text">F) Healthh risks</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="notF"
-                      value="Not concerned"
-                      onClick={handleF}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="slightlyF"
-                      value="Slightly concerned"
-                      onClick={handleF}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="moderatelyF"
-                      value="Moderately concerned"
-                      onClick={handleF}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="veryF"
-                      value="Very concerned"
-                      onClick={handleF}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="extremelyF"
-                      value="Extremely concerned"
-                      onClick={handleF}
-                    ></input>
-                  </td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      name="dontknowF"
-                      value="Don't know"
-                      onClick={handleF}
-                    ></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr key={row.key} className="table-row">
+                      <td>{row.key}</td>
+                      <td className="left-align-text">
+                        <p style={{ margin: 0, padding: 0 }}>{row.value}</p>
+                        <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
+                      </td>
+                      {columns.map((col) => {
+                        return (
+                          <td className="input-cell" style={{ width: "100px" }}>
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={col.value}
+                                onChange={handleChange}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
-            </Table>
-
-            <Link to="/eng-q2">
-              <Button variant="light" className="back-btn">
+            </table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
                 Back
               </Button>
-            </Link>
 
-            <Link to={a || b || c || d || e || f ? "/eng-q4" : "/eng-q5"}>
-              <Button variant="danger" className="next-btn">
+              <Button
+                type="button"
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
                 Next
+                <i class="fas fa-chevron-right next-arrow"></i>
               </Button>
-            </Link>
+            </div>
           </form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q2">
-          <Question2 />
-        </Route>
-        <Route path="/eng-q4">
-          <Question4
-            a={a}
-            b={b}
-            c={c}
-            d={d}
-            e={e}
-            f={f}
-            list={listOfConcerns}
-          />
-        </Route>
-        <Route path="/eng-q5">
-          <Question5 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

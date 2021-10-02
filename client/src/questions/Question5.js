@@ -1,118 +1,199 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import Question4 from "./Question4";
-import Question6 from "./Question6";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { useState } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question5() {
+  const rows = [
+    {
+      key: "A",
+      value: "Carbon-neutral commitment",
+      text: "Achieved when a company offsets its greenhouse gas (GHG) emissions to zero (e.g., by purchasing voluntary carbon credits)",
+    },
+    {
+      key: "B",
+      value: "Net-zero commitment",
+      text: "Achieved when a company reduces its greenhouse gas (GHG) emissions to near zero and removes its remaining unavoidable emissions",
+    },
+  ];
+  const columns = [
+    {
+      key: "yes",
+      value: "Yes, my company has made this commitment",
+    },
+    {
+      key: "no but",
+      value: "No, but my company is working toward making this commitment",
+    },
+    {
+      key: "no",
+      value: "No, my company has not made this commitment",
+    },
+    {
+      key: "dontknow",
+      value: "Don't know",
+    },
+  ];
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
+  const [input, setInput] = useState({
+    A: "",
+    B: "",
+  });
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setInput((prevInput) => {
+      return {
+        ...prevInput,
+        [name]: value,
+      };
+    });
+  }
+
+  function handleSubmit(e) {
+    if (input.A && input.B) {
+      localStorage.setItem("q5", JSON.stringify(input));
+      localStorage.setItem("q5-carbonNeutral", input.A);
+      localStorage.setItem("q5-netZero", input.B);
+
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5: JSON.parse(localStorage.getItem("q5")),
+      };
+
+      axios.post("/allinputs", data);
+
+      if (input.B === "yes") {
+        history.push("/eng-q6");
+      } else if (input.B === "no but") {
+        history.push("/eng-q7");
+      } else if (input.B === "no") {
+        if (input.A === "yes") {
+          history.push("/eng-q10a");
+        } else if (input.A === "no but") {
+          history.push("/eng-q10b");
+        } else if (input.A === "dontknow" || input.A === "no") {
+          history.push("/eng-q11");
+        }
+      } else if (input.B === "dontknow") {
+        if (input.A === "yes") {
+          history.push("/eng-q10a");
+        } else if (input.A === "no but") {
+          history.push("/eng-q10b");
+        } else if (input.A === "dontknow") {
+          history.push("/eng-q12");
+        } else if (input.A === "no") {
+          history.push("/eng-q11");
+        }
+      }
+    } else {
+      handleShow();
+    }
+  }
+
   return (
     <BrowserRouter>
       <Route path="/eng-q5">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q5</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 6).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 6).toString() + "%",
+                width: ((100 / 39) * 6).toString() + "%",
               }}
             ></div>
           </div>
-          <p>
-            Q5. Has your company made a: carbon-neutral commitment? net-zero
-            commitment? (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+          <ModalAlert show={show} close={handleClose} />
+          <p className="left-align-text">
+            Has your company made a: carbon-neutral commitment? net-zero
+            commitment? <br />
+            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
           <form>
-            <Table bordered>
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Yes...</th>
-                  <th>No, but...</th>
-                  <th>No</th>
-                  <th>Don't know</th>
-                </tr>
-              </thead>
+            <table className="table">
               <tbody>
                 <tr>
-                  <td>
-                    Carbon-neutral commitment Achieved when a company offsets
-                    its greenhouse gas (GHG) emissions to zero (e.g., by
-                    purchasing voluntary carbon credits)
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
+                  <td colSpan="2"></td>
+                  {columns.map((col) => {
+                    return (
+                      <td key={col.key}>
+                        <strong>{col.value}</strong>
+                      </td>
+                    );
+                  })}
                 </tr>
-                <tr>
-                  <td>
-                    Net-zero commitment Achieved when a company reduces its
-                    greenhouse gas (GHG) emissions to near zero and removes its
-                    remaining unavoidable emissions
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                  <td>
-                    <input type="checkbox"></input>
-                  </td>
-                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr key={row.key} className="table-row">
+                      <td>{row.key}</td>
+                      <td
+                        className="left-align-text"
+                        style={{ width: "200px" }}
+                      >
+                        {row.value}
+                      </td>
+                      {columns.map((col) => {
+                        return (
+                          <td
+                            key={col.key}
+                            className="input-cell"
+                            style={{ width: "250px" }}
+                          >
+                            <label className="label-cell">
+                              <input
+                                name={row.key}
+                                value={col.key}
+                                type="radio"
+                                onChange={handleChange}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
               </tbody>
-            </Table>
-            <Link to="/eng-q4">
-              <Button variant="light" className="back-btn">
+            </table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
                 Back
               </Button>
-            </Link>
 
-            <Link to="/eng-q6">
-              <Button variant="danger" className="next-btn">
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
                 Next
+                <i class="fas fa-chevron-right next-arrow"></i>
               </Button>
-            </Link>
+            </div>
           </form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q4">
-          <Question4 />
-        </Route>
-        <Route path="/eng-q6">
-          <Question6 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }

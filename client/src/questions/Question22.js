@@ -1,78 +1,197 @@
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState } from "react";
-import Question21 from "./Question21";
-import Question23 from "./Question23";
 import { Button, Breadcrumb, Form, Row, Col, Table } from "react-bootstrap";
 import "../App.css";
+import axios from "axios";
+import ModalAlert from "../ModalAlert";
 
 export default function Question22() {
-  const [isClicked1, setIsClicked1] = useState(false);
-  const [isClicked2, setIsClicked2] = useState(false);
-  const [isClicked3, setIsClicked3] = useState(false);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
+  const [revenue, setRevenue] = useState("");
+  const [profit, setProfit] = useState("");
+  const [returnInput, setReturnInput] = useState("");
 
-  function handleClick1(e) {
-    setIsClicked1(!isClicked1);
+  const [dontknowRevenue, setDontknowRevenue] = useState(false);
+  const [dontknowProfit, setDontknowProfit] = useState(false);
+  const [dontknowReturn, setDontknowReturn] = useState(false);
+  const [errorRevenue, setErrorRevenue] = useState(false);
+  const [errorProfit, setErrorProfit] = useState(false);
+  const [errorReturn, setErrorReturn] = useState(false);
+
+  function handleDontknowRevenue(e) {
+    if (dontknowRevenue) {
+      setErrorRevenue(false);
+    }
+    setDontknowRevenue(!dontknowRevenue);
   }
-  function handleClick2(e) {
-    setIsClicked2(!isClicked2);
+
+  function handleDontknowProfit(e) {
+    if (dontknowProfit) {
+      setErrorProfit(false);
+    }
+    setDontknowProfit(!dontknowProfit);
   }
-  function handleClick3(e) {
-    setIsClicked3(!isClicked3);
+
+  function handleDontknowReturn(e) {
+    if (dontknowReturn) {
+      setErrorReturn(false);
+    }
+    setDontknowReturn(!dontknowReturn);
+  }
+
+  function validate(number) {
+    const re = /[0-9]/;
+    return re.test(number);
+  }
+
+  function handleChangeRevenue(e) {
+    const { name, value } = e.target;
+
+    setRevenue(value);
+  }
+
+  function handleChangeProfit(e) {
+    const { name, value } = e.target;
+
+    setProfit(value);
+  }
+
+  function handleChangeReturn(e) {
+    const { name, value } = e.target;
+
+    setReturnInput(value);
+  }
+
+  function handleBlurRevenue() {
+    if (validate(revenue)) {
+      setErrorRevenue(false);
+    } else {
+      setErrorRevenue(true);
+    }
+  }
+
+  function handleFocusRevenue() {
+    if (errorRevenue) {
+      setErrorRevenue(false);
+    }
+  }
+
+  function handleBlurProfit() {
+    if (validate(profit)) {
+      if (profit) {
+        setErrorProfit(false);
+      }
+    } else {
+      setErrorProfit(true);
+    }
+  }
+
+  function handleFocusProfit() {
+    if (errorProfit) {
+      setErrorProfit(false);
+    }
+  }
+
+  function handleBlurReturn() {
+    if (validate(returnInput)) {
+      setErrorReturn(false);
+    } else {
+      setErrorReturn(true);
+    }
+  }
+
+  function handleFocusReturn() {
+    if (errorReturn) {
+      setErrorReturn(false);
+    }
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (
+      (!revenue && !dontknowRevenue) ||
+      (!profit && !dontknowProfit) ||
+      (!returnInput && !dontknowReturn)
+    ) {
+      handleShow();
+    } else {
+      localStorage.setItem("q22-revenue", revenue);
+      localStorage.setItem("q22-profit", profit);
+      localStorage.setItem("q22-return", returnInput);
+      localStorage.setItem("q22-dontknowRevenue", dontknowRevenue);
+      localStorage.setItem("q22-dontknowProfit", dontknowProfit);
+      localStorage.setItem("q22-dontknowReturn", dontknowReturn);
+      history.push("/eng-q23");
+
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5: JSON.parse(localStorage.getItem("q5")),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+        q12: JSON.parse(localStorage.getItem("q12")),
+        q13a: localStorage.getItem("q13a"),
+        q13b: localStorage.getItem("q13b"),
+        q14: JSON.parse(localStorage.getItem("q14")),
+        q15: JSON.parse(localStorage.getItem("q15")),
+        q16: localStorage.getItem("q16"),
+        q17: JSON.parse(localStorage.getItem("q17")),
+        q18: JSON.parse(localStorage.getItem("q18")),
+        q19: JSON.parse(localStorage.getItem("q19")),
+        q20: JSON.parse(localStorage.getItem("q20")),
+        q21: JSON.parse(localStorage.getItem("q21")),
+        q22revenue: localStorage.getItem("q22-revenue"),
+        q22profit: localStorage.getItem("q22-profit"),
+        q22return: localStorage.getItem("q22-return"),
+        q22dontknowRevenue: localStorage.getItem("q22-dontknowRevenue"),
+        q22dontknowProfit: localStorage.getItem("q22-dontknowProfit"),
+        q22dontknowReturn: localStorage.getItem("q22-dontknowReturn"),
+      };
+
+      axios.post("/allinputs", data);
+    }
   }
 
   return (
     <BrowserRouter>
       <Route path="/eng-q22">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>Q10</Breadcrumb.Item>
-            <Breadcrumb.Item>Q11</Breadcrumb.Item>
-            <Breadcrumb.Item>Q12</Breadcrumb.Item>
-            <Breadcrumb.Item>Q13</Breadcrumb.Item>
-            <Breadcrumb.Item>Q14</Breadcrumb.Item>
-            <Breadcrumb.Item>Q15</Breadcrumb.Item>
-            <Breadcrumb.Item>Q16</Breadcrumb.Item>
-            <Breadcrumb.Item>Q17</Breadcrumb.Item>
-            <Breadcrumb.Item>Q18</Breadcrumb.Item>
-            <Breadcrumb.Item>Q19</Breadcrumb.Item>
-            <Breadcrumb.Item>Q20</Breadcrumb.Item>
-            <Breadcrumb.Item>Q21</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q22</Breadcrumb.Item>
-          </Breadcrumb>
+          <h2 style={{ textAlign: "left" }}>
+            {Math.round(((100 / 39) * 23).toString())}% completed
+          </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 41) * 23).toString() + "%",
+                width: ((100 / 39) * 23).toString() + "%",
               }}
             ></div>
           </div>
-          <p>
-            Q22. What was your company’s revenue growth, profit margin and
-            return on assets (ROA) for the last fiscal year? (PLEASE PROVIDE
-            YOUR ANSWER TO THE NEAREST PERCENTAGE POINT IN THE BOX BELOW)
+          <ModalAlert show={show} close={handleClose} />
+          <p className="left-align-text">
+            What was your company’s revenue growth, profit margin and return on
+            assets (ROA) for the last fiscal year? <br />
+            (PLEASE PROVIDE YOUR ANSWER TO THE NEAREST PERCENTAGE POINT IN THE
+            BOX BELOW)
           </p>
           <Form>
-            <Table style={{ width: "70%" }}>
+            <Table style={{ width: "70%" }} borderless>
               <tbody>
                 <tr>
                   <td style={{ textAlign: "left" }}>
@@ -81,9 +200,32 @@ export default function Question22() {
                   <td style={{ textAlign: "left" }}>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                       <Col>
+                        {errorRevenue && !dontknowRevenue ? (
+                          <p
+                            style={{
+                              color: "#dc3545",
+                              fontStyle: "italic",
+                              fontSize: "12px",
+                              textAlign: "left",
+                              width: "100%",
+                              margin: 0,
+                              padding: 0,
+                            }}
+                          >
+                            *Please specify whole number
+                          </p>
+                        ) : (
+                          ""
+                        )}
                         <Form.Control
                           type="text"
                           placeholder="Specify whole number"
+                          name="revenue"
+                          value={revenue}
+                          onChange={handleChangeRevenue}
+                          disabled={dontknowRevenue ? true : false}
+                          onBlur={handleBlurRevenue}
+                          onFocus={handleFocusRevenue}
                         />
                       </Col>
                       <Form.Label
@@ -98,11 +240,13 @@ export default function Question22() {
                   <td style={{ textAlign: "left" }}>
                     <Button
                       variant="outline-dark"
-                      onClick={handleClick1}
+                      name="revenue"
+                      value="Don't know"
+                      onClick={handleDontknowRevenue}
                       style={{
-                        backgroundColor: isClicked1 ? "#dc3545" : "",
-                        color: isClicked1 ? "white" : "",
-                        borderColor: isClicked1 ? "#dc3545" : "",
+                        backgroundColor: dontknowRevenue ? "#dc3545" : "",
+                        color: dontknowRevenue ? "white" : "",
+                        borderColor: dontknowRevenue ? "#dc3545" : "",
                       }}
                     >
                       Don't know
@@ -114,9 +258,32 @@ export default function Question22() {
                   <td>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                       <Col>
+                        {errorProfit && !dontknowProfit ? (
+                          <p
+                            style={{
+                              color: "#dc3545",
+                              fontStyle: "italic",
+                              fontSize: "12px",
+                              textAlign: "left",
+                              width: "100%",
+                              margin: 0,
+                              padding: 0,
+                            }}
+                          >
+                            *Please specify whole number
+                          </p>
+                        ) : (
+                          ""
+                        )}
                         <Form.Control
                           type="text"
                           placeholder="Specify whole number"
+                          name="profit"
+                          value={profit}
+                          onChange={handleChangeProfit}
+                          disabled={dontknowProfit ? true : false}
+                          onBlur={handleBlurProfit}
+                          onFocus={handleFocusProfit}
                         />
                       </Col>
                       <Form.Label
@@ -131,11 +298,14 @@ export default function Question22() {
                   <td style={{ textAlign: "left" }}>
                     <Button
                       variant="outline-dark"
-                      onClick={handleClick2}
+                      // onClick={handleDontknow}
+                      name="profit"
+                      value="Don't know"
+                      onClick={handleDontknowProfit}
                       style={{
-                        backgroundColor: isClicked2 ? "#dc3545" : "",
-                        color: isClicked2 ? "white" : "",
-                        borderColor: isClicked2 ? "#dc3545" : "",
+                        backgroundColor: dontknowProfit ? "#dc3545" : "",
+                        color: dontknowProfit ? "white" : "",
+                        borderColor: dontknowProfit ? "#dc3545" : "",
                       }}
                     >
                       Don't know
@@ -147,9 +317,32 @@ export default function Question22() {
                   <td>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                       <Col>
+                        {errorReturn && !dontknowReturn ? (
+                          <p
+                            style={{
+                              color: "#dc3545",
+                              fontStyle: "italic",
+                              fontSize: "12px",
+                              textAlign: "left",
+                              width: "100%",
+                              margin: 0,
+                              padding: 0,
+                            }}
+                          >
+                            *Please specify whole number
+                          </p>
+                        ) : (
+                          ""
+                        )}
                         <Form.Control
                           type="text"
                           placeholder="Specify whole number"
+                          name="return"
+                          value={returnInput}
+                          onChange={handleChangeReturn}
+                          disabled={dontknowReturn ? true : false}
+                          onBlur={handleBlurReturn}
+                          onFocus={handleFocusReturn}
                         />
                       </Col>
                       <Form.Label
@@ -164,11 +357,13 @@ export default function Question22() {
                   <td style={{ textAlign: "left" }}>
                     <Button
                       variant="outline-dark"
-                      onClick={handleClick3}
+                      onClick={handleDontknowReturn}
+                      name="return"
+                      value="Don't know"
                       style={{
-                        backgroundColor: isClicked3 ? "#dc3545" : "",
-                        color: isClicked3 ? "white" : "",
-                        borderColor: isClicked3 ? "#dc3545" : "",
+                        backgroundColor: dontknowReturn ? "#dc3545" : "",
+                        color: dontknowReturn ? "white" : "",
+                        borderColor: dontknowReturn ? "#dc3545" : "",
                       }}
                       className="test-button"
                     >
@@ -178,30 +373,34 @@ export default function Question22() {
                 </tr>
               </tbody>
             </Table>
-
-            <Link to="/eng-q21">
-              <Button variant="light" className="back-btn">
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
                 Back
               </Button>
-            </Link>
 
-            <Link to="/eng-q23">
-              <Button variant="danger" className="next-btn">
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
                 Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
               </Button>
-            </Link>
+            </div>
           </Form>
         </div>
       </Route>
-
-      <Switch>
-        <Route path="/eng-q21">
-          <Question21 />
-        </Route>
-        <Route path="/eng-q23">
-          <Question23 />
-        </Route>
-      </Switch>
     </BrowserRouter>
   );
 }
