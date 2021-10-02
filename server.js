@@ -18,7 +18,22 @@ const options = {
   serverSelectionTimeoutMS: 60000,
   socketTimeoutMS: 45000,
   keepAlive: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 };
+
+mongoose.connect(process.env.MONGO_URI, options, function (err) {
+  console.log(err);
+});
+// const connectDB = async () => {
+//   try {
+//     await mongoose.connect(process.env.MONGO_URI, options);
+//   } catch (err) {
+//     console.error(err.message);
+//     process.exit(1);
+//   }
+// };
+
 mongoose.set("bufferCommands", false);
 mongoose.connect(process.env.MONGO_URI, options, function (err) {
   console.log(err);
