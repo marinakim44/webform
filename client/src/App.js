@@ -136,7 +136,7 @@ export default function App() {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <div
+          {/* <div
             style={{
               textAlign: "left",
               display: "flex",
@@ -197,7 +197,7 @@ export default function App() {
             >
               END
             </div>
-          </div>
+          </div> */}
         </div>
       </Route>
       <Switch>
