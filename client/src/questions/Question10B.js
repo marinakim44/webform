@@ -1,11 +1,15 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Table, Breadcrumb } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question10B() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -127,10 +131,10 @@ export default function Question10B() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q10b">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q10b">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 11).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -144,46 +148,45 @@ export default function Question10B() {
           <ModalAlert show={show} close={handleClose} />
           <p className="left-align-text">
             How influential are the following factors behind the carbon-neutral
-            and/or net-zero commitment your company is developing? <br />{" "}
-            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+            and/or net-zero commitment your company is developing?
           </p>
-          <form>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <th colSpan="2"></th>
-                  {columns.map((column) => {
-                    return <th key={column.value}>{column.value}</th>;
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+          </p>
+        </div>
+
+        {width <= 768 ? (
+          <div>
+            {rows.map((row) => {
+              return (
+                <div>
+                  <strong>
+                    <p>
+                      {row.key}) {row.value}
+                    </p>
+                  </strong>
+                  {columns.map((col) => {
+                    return (
+                      <div className="m-div left-align-text">
+                        <label className="m-label">
+                          <input
+                            type="radio"
+                            name={row.key}
+                            value={col.value}
+                            onClick={handleClick}
+                            className="m-input"
+                          ></input>
+                          {col.value}
+                        </label>
+                      </div>
+                    );
                   })}
-                </tr>
-                {rows.map((row) => {
-                  return (
-                    <tr
-                      key={row.key}
-                      className="table-row"
-                      style={{ padding: 0 }}
-                    >
-                      <td>{row.key}</td>
-                      <td className="left-align-text">{row.value}</td>
-                      {columns.map((column) => {
-                        return (
-                          <td key={column.key} className="input-cell">
-                            <label className="label-cell">
-                              <input
-                                type="radio"
-                                name={row.key}
-                                value={column.value}
-                                onClick={handleClick}
-                              ></input>
-                            </label>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                </div>
+              );
+            })}
             <div className="back-next-btns">
               <Button
                 variant="secondary"
@@ -203,9 +206,48 @@ export default function Question10B() {
                 <i class="fas fa-chevron-right next-arrow"></i>
               </Button>
             </div>
+          </div>
+        ) : (
+          <form>
+            <table className="table">
+              <tbody>
+                <tr>
+                  <th colSpan="2"></th>
+                  {columns.map((column) => {
+                    return <th key={column.value}>{column.value}</th>;
+                  })}
+                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr
+                      key={row.key}
+                      className="table-row"
+                      style={{ padding: 0 }}
+                    >
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
+                      {columns.map((col) => {
+                        return (
+                          <td key={col.key} className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={col.value}
+                                onClick={handleClick}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </form>
-        </div>
-      </Route>
-    </BrowserRouter>
+        )}
+      </div>
+    </Route>
   );
 }

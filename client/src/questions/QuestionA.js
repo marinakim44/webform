@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionA() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -154,112 +159,95 @@ export default function QuestionA() {
     <BrowserRouter>
       <Route path="/eng-qa">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 30).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 30).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 30).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 30).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              If willing, would you please record your gender below?
+            </p>
+            <p
+              className="left-align-text"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            If willing, would you please record your gender below? (PLEASE
-            SELECT ONE RESPONSE)
-          </p>
           <Form>
-            <Form.Group style={{ width: "40%", textAlign: "left" }}>
-              <div>
-                <input
-                  type="radio"
-                  id="female"
-                  value="Female"
-                  onClick={handleClick}
-                  name="option"
-                ></input>
-                <label for="#female" style={{ marginLeft: "8px" }}>
+            <Form.Group className="left-align-text">
+              <div className="m-div">
+                <label className="m-label label-cell">
+                  <input
+                    type="radio"
+                    value="Female"
+                    onClick={handleClick}
+                    name="option"
+                    className="m-input radio-input"
+                  ></input>
                   Female
                 </label>
               </div>
-              <div>
-                <input
-                  type="radio"
-                  id="male"
-                  value="Male"
-                  onClick={handleClick}
-                  name="option"
-                ></input>
-                <label for="#male" style={{ marginLeft: "8px" }}>
+              <div className="m-div">
+                <label className="m-label">
+                  <input
+                    type="radio"
+                    value="Male"
+                    onClick={handleClick}
+                    name="option"
+                    className="m-input radio-input"
+                  ></input>
                   Male
                 </label>
               </div>
-              <div>
-                <input
-                  type="radio"
-                  id="not"
-                  value="Prefer not to say"
-                  onClick={handleClick}
-                  name="option"
-                ></input>
-                <label for="#not" style={{ marginLeft: "8px" }}>
+              <div className="m-div">
+                <label className="m-label">
+                  <input
+                    type="radio"
+                    id="not"
+                    value="Prefer not to say"
+                    onClick={handleClick}
+                    name="option"
+                    className="m-input radio-input"
+                  ></input>
                   Prefer not to say
                 </label>
               </div>
-              {/* <div>
-                <input
-                  type="radio"
-                  name="option"
-                  value="Other (please specify)"
-                  id="other"
-                  onClick={handleOther}
-                ></input>
-                <label for="#other" style={{ marginLeft: "8px" }}>
-                  Other
-                </label>
-              </div> */}
             </Form.Group>
-
-            {/* {isOther ? (
-              <Form.Group style={{ width: "40%", textAlign: "left" }}>
-                <input
-                  type="text"
-                  placeholder="Other (please specify)"
-                  onChange={handleChange}
-                  value={other}
-                ></input>
-              </Form.Group>
-            ) : (
-              ""
-            )} */}
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </Form>
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              Back
+            </Button>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              Next
+              <i
+                className="fas fa-chevron-right"
+                style={{ marginLeft: "8px" }}
+              ></i>
+            </Button>
+          </div>
         </div>
       </Route>
     </BrowserRouter>

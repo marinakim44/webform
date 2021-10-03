@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Breadcrumb, Form, Row, Col, Table } from "react-bootstrap";
+import { Button, Form, Row, Col, Table } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question22() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -169,10 +174,10 @@ export default function Question22() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q22">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q22">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 23).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -186,15 +191,228 @@ export default function Question22() {
           <ModalAlert show={show} close={handleClose} />
           <p className="left-align-text">
             What was your company’s revenue growth, profit margin and return on
-            assets (ROA) for the last fiscal year? <br />
-            (PLEASE PROVIDE YOUR ANSWER TO THE NEAREST PERCENTAGE POINT IN THE
-            BOX BELOW)
+            assets (ROA) for the last fiscal year?
           </p>
+          <p
+            className="left-align-text"
+            style={{
+              margin: width <= 480 ? "1rem 0" : "",
+            }}
+          >
+            <i>
+              PLEASE PROVIDE YOUR ANSWER TO THE NEAREST PERCENTAGE POINT IN THE
+              BOX BELOW
+            </i>
+          </p>
+        </div>
+        {width <= 768 ? (
+          <div>
+            <Row>
+              <Col sm={6}>
+                <strong>
+                  <p
+                    className="left-align-text"
+                    style={{ marginBottom: width <= 480 ? "1rem" : "" }}
+                  >
+                    Revenue growth - last fiscal year
+                  </p>
+                </strong>
+              </Col>
+            </Row>
+            {errorRevenue && !dontknowRevenue ? (
+              <p
+                style={{
+                  color: "#dc3545",
+                  fontStyle: "italic",
+                  fontSize: "12px",
+                  textAlign: "left",
+                  width: "100%",
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                *Please specify whole number
+              </p>
+            ) : (
+              ""
+            )}
+            <Row>
+              <Col sm={8}>
+                <Form.Control
+                  type="text"
+                  placeholder="Specify whole number"
+                  name="revenue"
+                  value={revenue}
+                  onChange={handleChangeRevenue}
+                  disabled={dontknowRevenue ? true : false}
+                  onBlur={handleBlurRevenue}
+                  onFocus={handleFocusRevenue}
+                  className="m-input-22"
+                />
+              </Col>
+              <Col>
+                <Button
+                  variant="light"
+                  name="revenue"
+                  value="Don't know"
+                  onClick={handleDontknowRevenue}
+                  style={{
+                    backgroundColor: dontknowRevenue ? "#dc3545" : "",
+                    color: dontknowRevenue ? "white" : "",
+                    borderColor: dontknowRevenue ? "#dc3545" : "",
+                  }}
+                  className="m-dontknow-22"
+                >
+                  Don't know
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <strong>
+                  <p className="left-align-text">
+                    Profit growth - last fiscal year
+                  </p>
+                </strong>
+              </Col>
+            </Row>
+            {errorProfit && !dontknowProfit ? (
+              <p
+                style={{
+                  color: "#dc3545",
+                  fontStyle: "italic",
+                  fontSize: "12px",
+                  textAlign: "left",
+                  width: "100%",
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                *Please specify whole number
+              </p>
+            ) : (
+              ""
+            )}
+            <Row>
+              <Col sm={8}>
+                <Form.Control
+                  type="text"
+                  placeholder="Specify whole number"
+                  name="profit"
+                  value={profit}
+                  onChange={handleChangeProfit}
+                  disabled={dontknowProfit ? true : false}
+                  onBlur={handleBlurProfit}
+                  onFocus={handleFocusProfit}
+                  className="m-input-22"
+                />
+              </Col>
+              <Col>
+                <Button
+                  variant="light"
+                  name="profit"
+                  value="Don't know"
+                  onClick={handleDontknowProfit}
+                  style={{
+                    backgroundColor: dontknowProfit ? "#dc3545" : "",
+                    color: dontknowProfit ? "white" : "",
+                    borderColor: dontknowProfit ? "#dc3545" : "",
+                  }}
+                  className="m-dontknow-22"
+                >
+                  Don't know
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <strong>
+                  <p className="left-align-text">
+                    Return growth - last fiscal year
+                  </p>
+                </strong>
+              </Col>
+            </Row>
+            {errorReturn && !dontknowReturn ? (
+              <p
+                style={{
+                  color: "#dc3545",
+                  fontStyle: "italic",
+                  fontSize: "12px",
+                  textAlign: "left",
+                  width: "100%",
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                *Please specify whole number
+              </p>
+            ) : (
+              ""
+            )}
+            <Row>
+              <Col sm={8}>
+                <Form.Control
+                  type="text"
+                  placeholder="Specify whole number"
+                  name="return"
+                  value={returnInput}
+                  onChange={handleChangeReturn}
+                  disabled={dontknowReturn ? true : false}
+                  onBlur={handleBlurReturn}
+                  onFocus={handleFocusReturn}
+                  className="m-input-22"
+                />
+              </Col>
+              <Col>
+                <Button
+                  variant="light"
+                  name="return"
+                  value="Don't know"
+                  onClick={handleDontknowReturn}
+                  style={{
+                    backgroundColor: dontknowReturn ? "#dc3545" : "",
+                    color: dontknowReturn ? "white" : "",
+                    borderColor: dontknowReturn ? "#dc3545" : "",
+                  }}
+                  className="m-dontknow-22"
+                >
+                  Don't know
+                </Button>
+              </Col>
+            </Row>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
+          </div>
+        ) : (
           <Form>
             <Table style={{ width: "70%" }} borderless>
               <tbody>
                 <tr>
-                  <td style={{ textAlign: "left" }}>
+                  <td className="left-align-text">
                     Revenue growth - last fiscal year
                   </td>
                   <td style={{ textAlign: "left" }}>
@@ -399,8 +617,8 @@ export default function Question22() {
               </Button>
             </div>
           </Form>
-        </div>
-      </Route>
-    </BrowserRouter>
+        )}
+      </div>
+    </Route>
   );
 }

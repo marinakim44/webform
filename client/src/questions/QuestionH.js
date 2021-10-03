@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionH() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -87,10 +92,10 @@ export default function QuestionH() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-qh">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-qh">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 37).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -104,75 +109,96 @@ export default function QuestionH() {
           <ModalAlert show={show} close={handleClose} />
           <p className="left-align-text">
             Does your company have any form of government ownership or backing?
-            <br />
-            (PLEASE SELECT ONE RESPONSE)
           </p>
-          <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Yes"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="Yes"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"No"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="No"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don't know"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="Don't know"
-                  onClick={handleClick}
-                />
-              </div>
-            ))}
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
-          </Form>
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE</i>
+          </p>
         </div>
-      </Route>
-    </BrowserRouter>
+        <Form>
+          <div
+            className={
+              width <= 768
+                ? "left-align-text m-div"
+                : "left-align-text-no-margin"
+            }
+          >
+            <label className="label-cell m-label">
+              <input
+                type="radio"
+                name="option"
+                value="Yes"
+                className="radio-input m-input"
+                onClick={handleClick}
+              ></input>
+              Yes
+            </label>
+          </div>
+          <div
+            className={
+              width <= 768
+                ? "left-align-text m-div"
+                : "left-align-text-no-margin"
+            }
+          >
+            <label className="label-cell m-label">
+              <input
+                type="radio"
+                name="option"
+                value="No"
+                className="radio-input m-input"
+                onClick={handleClick}
+              ></input>
+              No
+            </label>
+          </div>
+          <div
+            className={
+              width <= 768
+                ? "left-align-text m-div"
+                : "left-align-text-no-margin"
+            }
+          >
+            <label className="label-cell m-label">
+              <input
+                type="radio"
+                name="option"
+                value="Don't know"
+                className="radio-input m-input"
+                onClick={handleClick}
+              ></input>
+              Don't know
+            </label>
+          </div>
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              Back
+            </Button>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              Next
+              <i
+                className="fas fa-chevron-right"
+                style={{ marginLeft: "8px" }}
+              ></i>
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </Route>
   );
 }

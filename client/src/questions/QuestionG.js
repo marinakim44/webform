@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionG() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -90,61 +95,67 @@ export default function QuestionG() {
     <BrowserRouter>
       <Route path="/eng-qg">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 36).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 36).toString() + "%",
-              }}
-            ></div>
+          <div className="sticky-sub-div">
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 36).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 36).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Are more than 32% of the voting rights in your company held by a
+              family?
+            </p>
+            <p
+              className="question"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Are more than 32% of the voting rights in your company held by a
-            family? <br />
-            (PLEASE SELECT ONE RESPONSE)
-          </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Yes"}
-                  style={{
-                    textAlign: "left",
-                  }}
+            <div className="left-align-text m-div">
+              <label className="label-cell m-label">
+                <input
+                  type="radio"
                   name="option"
                   value="Yes"
+                  className="radio-input m-input"
                   onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"No"}
-                  style={{
-                    textAlign: "left",
-                  }}
+                ></input>
+                Yes
+              </label>
+            </div>
+            <div className="left-align-text m-div">
+              <label className="label-cell">
+                <input
+                  type="radio"
                   name="option"
                   value="No"
+                  className="radio-input m-input"
                   onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don't know"}
-                  style={{
-                    textAlign: "left",
-                  }}
+                ></input>
+                No
+              </label>
+            </div>
+            <div className="left-align-text m-div">
+              <label className="label-cell">
+                <input
+                  type="radio"
                   name="option"
                   value="Don't know"
+                  className="radio-input m-input"
                   onClick={handleClick}
-                />
-              </div>
-            ))}
+                ></input>
+                Don't know
+              </label>
+            </div>
             <div className="back-next-btns">
               <Button
                 variant="secondary"

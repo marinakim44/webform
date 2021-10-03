@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Table } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question21() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -95,10 +100,10 @@ export default function Question21() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q21">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q21">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 22).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -112,74 +117,106 @@ export default function Question21() {
           <ModalAlert show={show} close={handleClose} />
           <p className="left-align-text">
             How confident are you about your company’s prospects for revenue
-            growth over: the next 12 months? the next three years? <br />{" "}
-            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+            growth over: the next 12 months? the next three years?
           </p>
-          <form>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <td colSpan="2"></td>
-
+          <p
+            className="left-align-text"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+          </p>
+        </div>
+        {width <= 768 ? (
+          <div className="left-align-text">
+            {rows.map((row) => {
+              return (
+                <div>
+                  <strong>
+                    <p>
+                      {row.key}) {row.value}
+                    </p>
+                  </strong>
                   {columns.map((col) => {
                     return (
-                      <td style={{ width: "150px" }}>
-                        <strong>{col}</strong>
-                      </td>
+                      <div className="m-div">
+                        <label className="m-label">
+                          <input
+                            type="radio"
+                            name={row.key}
+                            value={col}
+                            onClick={handleClick}
+                            className="m-input"
+                          ></input>
+                          {col}
+                        </label>
+                      </div>
                     );
                   })}
-                </tr>
-                {rows.map((row) => {
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <table className="table">
+            <tbody>
+              <tr>
+                <td colSpan="2"></td>
+
+                {columns.map((col) => {
                   return (
-                    <tr className="table-row">
-                      <td>{row.key}</td>
-                      <td className="left-align-text">{row.value}</td>
-                      {columns.map((col) => {
-                        return (
-                          <td className="input-cell">
-                            <label className="label-cell">
-                              <input
-                                type="radio"
-                                name={row.key}
-                                value={col}
-                                onClick={handleClick}
-                              ></input>
-                            </label>
-                          </td>
-                        );
-                      })}
-                    </tr>
+                    <td style={{ width: "150px" }}>
+                      <strong>{col}</strong>
+                    </td>
                   );
                 })}
-              </tbody>
-            </table>
-            <div class="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
-          </form>
+              </tr>
+              {rows.map((row) => {
+                return (
+                  <tr className="table-row">
+                    <td>{row.key}</td>
+                    <td className="left-align-text">{row.value}</td>
+                    {columns.map((col) => {
+                      return (
+                        <td className="input-cell">
+                          <label className="label-cell">
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col}
+                              onClick={handleClick}
+                            ></input>
+                          </label>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+
+        <div class="back-next-btns">
+          <Button
+            variant="secondary"
+            className="back-btn"
+            onClick={() => history.goBack()}
+          >
+            <i
+              className="fas fa-chevron-left"
+              style={{ marginRight: "8px" }}
+            ></i>
+            Back
+          </Button>
+          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
+            Next
+            <i
+              className="fas fa-chevron-right"
+              style={{ marginLeft: "8px" }}
+            ></i>
+          </Button>
         </div>
-      </Route>
-    </BrowserRouter>
+      </div>
+    </Route>
   );
 }

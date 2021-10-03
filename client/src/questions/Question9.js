@@ -1,11 +1,15 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Form, Breadcrumb } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question9() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -48,10 +52,10 @@ export default function Question9() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q9">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q9">
+      <div className="main">
+        <div className="sticky-sub-div">
+          <h2 className="percent">
             {Math.round(((100 / 39) * 10).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -66,127 +70,84 @@ export default function Question9() {
           <p className="left-align-text">
             Will your company’s approach to reducing greenhouse gas (GHG)
             emissions be independently assessed and validated (e.g., by SBTi)?
-            <br />
-            (PLEASE SELECT ONE RESPONSE)
           </p>
-          <Form>
-            <div style={{ textAlign: "left" }}>
-              <label style={{ display: "block" }}>
-                <input
-                  type="radio"
-                  name="option"
-                  style={{ marginRight: "8px" }}
-                  onChange={handleClick}
-                  value="yes"
-                />
-                Yes, my company’s approach to reducing GHG emissions will be
-                independently assessed and validated
-              </label>
-              <label style={{ display: "block" }}>
-                <input
-                  type="radio"
-                  name="option"
-                  style={{ marginRight: "8px" }}
-                  onChange={handleClick}
-                  value="no"
-                />
-                No, my company’s approach to reducing GHG emissions will not be
-                independently assessed and validated
-              </label>
-              <label style={{ display: "block" }}>
-                <input
-                  type="radio"
-                  name="option"
-                  style={{ marginRight: "8px" }}
-                  onChange={handleClick}
-                  value="dontknow"
-                />
-                Don't know
-              </label>
-            </div>
-            {/* {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3 left-align-text">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={
-                    "Yes, my company’s approach to reducing GHG emissions will be independently assessed and validated"
-                  }
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="yes"
-                  onClick={handleClick}
-                />
-
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={
-                    "No, my company’s approach to reducing GHG emissions will not be independently assessed and validated"
-                  }
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="no"
-                  onClick={handleClick}
-                />
-
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don’t know"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="don't know"
-                  onClick={handleClick}
-                />
-              </div>
-            ))} */}
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
-          </Form>
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE</i>
+          </p>
         </div>
-      </Route>
+        <Form className="left-align-text">
+          <div className="m-div">
+            <label className="m-label">
+              <input
+                type="radio"
+                name="option"
+                style={{ marginRight: "8px" }}
+                onChange={handleClick}
+                value="yes"
+                className="m-input"
+              />
+              Yes, my company’s approach to reducing GHG emissions will be
+              independently assessed and validated
+            </label>
+          </div>
+          <div className="m-div">
+            <label className="m-label">
+              <input
+                type="radio"
+                name="option"
+                style={{ marginRight: "8px" }}
+                onChange={handleClick}
+                value="no"
+                className="m-input"
+              />
+              No, my company’s approach to reducing GHG emissions will not be
+              independently assessed and validated
+            </label>
+          </div>
+          <div className="m-div">
+            <label className="m-label">
+              <input
+                type="radio"
+                name="option"
+                style={{ marginRight: "8px" }}
+                onChange={handleClick}
+                value="dontknow"
+                className="m-input"
+              />
+              Don't know
+            </label>
+          </div>
 
-      {/* <Switch>
-        <Route path="/eng-q8">
-          <Question8 />
-        </Route>
-        <Route path="/eng-q10a">
-          <Question10A />
-        </Route>
-        <Route path="/eng-q10b">
-          <Question10B />
-        </Route>
-      </Switch> */}
-    </BrowserRouter>
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              Back
+            </Button>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              Next
+              <i
+                className="fas fa-chevron-right"
+                style={{ marginLeft: "8px" }}
+              ></i>
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </Route>
   );
 }

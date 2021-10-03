@@ -1,11 +1,17 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Table, Button, Breadcrumb, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
+import "../Small.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question1() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const rows = [
     {
       key: "A",
@@ -93,10 +99,10 @@ export default function Question1() {
   };
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q1">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q1" exact>
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 2).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -107,9 +113,10 @@ export default function Question1() {
               }}
             ></div>
           </div>
+
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
-            <p>
+            <p className="question">
               How do you believe economic growth (i.e., gross domestic product)
               will change, if at all, over the next 12 months in: <br />
               <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
@@ -118,7 +125,87 @@ export default function Question1() {
               <br />
               <span style={{ marginLeft: "2rem" }}>B) Kazakhstan economy?</span>
             </p>
+            <i>
+              <p
+                className="question"
+                style={{ margin: width <= 480 ? "1rem 0" : "" }}
+              >
+                PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
+              </p>
+            </i>
           </div>
+        </div>
+        {width <= 768 ? (
+          <div>
+            <p className="question">
+              <span style={{ fontWeight: "bold", color: "#dc3545" }}>
+                Global&nbsp;
+              </span>
+              economic growth - next 12 months
+            </p>
+            <div className="left-align-text">
+              {columns.map((col) => {
+                return (
+                  <div className="m-div">
+                    <label className="m-label">
+                      <input
+                        type="radio"
+                        name="A"
+                        className="m-input"
+                        value={col.value}
+                        onChange={handleChange}
+                      ></input>
+                      {col.value}
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+            <p className="question">
+              <span style={{ fontWeight: "bold", color: "#dc3545" }}>
+                Kazakhstan&nbsp;
+              </span>
+              economic growth - next 12 months
+            </p>
+            <div className="left-align-text">
+              {columns.map((col) => {
+                return (
+                  <div className="m-div">
+                    <label className="m-label">
+                      <input
+                        type="radio"
+                        name="B"
+                        className="m-input"
+                        value={col.value}
+                        onChange={handleChange}
+                      ></input>
+                      {col.value}
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
+          </div>
+        ) : (
           <Form>
             <table className="table">
               <tbody>
@@ -174,12 +261,12 @@ export default function Question1() {
                 onClick={handleSubmit}
               >
                 Next
-                <i class="fas fa-chevron-right next-arrow"></i>
+                <i className="fas fa-chevron-right next-arrow"></i>
               </Button>
             </div>
           </Form>
-        </div>
-      </Route>
-    </BrowserRouter>
+        )}
+      </div>
+    </Route>
   );
 }

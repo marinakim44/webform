@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Form, Row, Col } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionB() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -21,7 +26,7 @@ export default function QuestionB() {
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("qb", input);
+      localStorage.setItem("qb-string", input);
       history.push("/eng-qc");
 
       const data = {
@@ -71,7 +76,7 @@ export default function QuestionB() {
         q28: localStorage.getItem("q28"),
         qa: localStorage.getItem("qa"),
         qaOther: localStorage.getItem("qa-other"),
-        qb: localStorage.getItem("qb"),
+        qbString: localStorage.getItem("qb-string"),
       };
 
       axios.post("/allinputs", data);
@@ -82,44 +87,43 @@ export default function QuestionB() {
     <BrowserRouter>
       <Route path="/eng-qb">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 31).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 31).toString() + "%",
-              }}
-            ></div>
-          </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            How long have you been CEO of this company? <br />
-            (PLEASE PROVIDE YOUR ANSWER TO THE NEAREST FULL YEAR IN THE BOX
-            BELOW)
-          </p>
-          <Form>
-            <Form.Group
-              as={Row}
-              controlId="formHorizontalEmail"
-              style={{ width: "25%" }}
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 31).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 31).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              How long have you been CEO of this company?
+            </p>
+            <p
+              className="question"
+              style={{ margin: width <= 768 ? "" : 0 }}
+              style={{ margin: width <= 480 ? "1rem 0 0" : "" }}
             >
+              <i>
+                PLEASE PROVIDE YOUR ANSWER TO THE NEAREST FULL YEAR IN THE BOX
+                BELOW
+              </i>
+            </p>
+          </div>
+          <Form>
+            <Form.Group as={Row} controlId="formHorizontalEmail">
               <Col>
                 <Form.Control
-                  type="text"
                   placeholder="Specify whole number"
                   value={input}
                   onChange={handleChange}
+                  className="input-text"
                 />
               </Col>
-              <Form.Label
-                column
-                sm={2}
-                style={{ textAlign: "left", paddingLeft: 0 }}
-              >
-                year(s)
-              </Form.Label>
             </Form.Group>
             <div className="back-next-btns">
               <Button

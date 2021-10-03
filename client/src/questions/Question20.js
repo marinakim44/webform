@@ -1,12 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Table } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
-import ProgressBar from "react-animated-progress-bar";
 
 export default function Question20() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -158,10 +162,10 @@ export default function Question20() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q20">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q20">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 21).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -172,27 +176,75 @@ export default function Question20() {
               }}
             ></div>
           </div>
-          {/* </div> */}
-          {/* <ProgressBar
-            width="400px"
-            height="10px"
-            rect
-            fontColor="gray"
-            percentage={(100 / 39) * 21}
-            rectPadding="1px"
-            rectBorderRadius="20px"
-            trackPathColor="transparent"
-            bgColor="#dc3545"
-            trackBorderColor="grey"
-          /> */}
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p
+            className="left-align-text"
+            style={{ marginBottom: width <= 768 ? "" : "1rem" }}
+          >
             Thinking about the customers who have regularly purchased your
             products/services, how often would you say they take the following
-            actions: <br />
-            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
+            actions:
           </p>
+          <p
+            className={width <= 768 ? "question" : "left-align-text"}
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+          </p>
+        </div>
 
+        {width <= 768 ? (
+          <div className="left-align-text">
+            {rows.map((row) => {
+              return (
+                <div>
+                  <p>
+                    <strong>
+                      {row.key}) {row.title}
+                    </strong>
+                  </p>
+                  <p>{row.value}</p>
+                  {columns
+                    .filter((col) => col.key !== 8)
+                    .map((col) => {
+                      return (
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col.title}
+                              onChange={handleClick}
+                              className="m-input"
+                            />
+                            <strong>{col.title}</strong> ({col.value})
+                          </label>
+                        </div>
+                      );
+                    })}
+                  {columns
+                    .filter((col) => col.key === 8)
+                    .map((col) => {
+                      return (
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col.title}
+                              onChange={handleClick}
+                              className="m-input"
+                            />
+                            <strong>{col.title}</strong>
+                          </label>
+                        </div>
+                      );
+                    })}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
           <form>
             <div style={{ overflow: "auto", height: "420px" }}>
               <table className="table">
@@ -253,34 +305,30 @@ export default function Question20() {
                 </tbody>
               </table>
             </div>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </form>
+        )}
+        <div className="back-next-btns">
+          <Button
+            variant="secondary"
+            className="back-btn"
+            onClick={() => history.goBack()}
+          >
+            <i
+              className="fas fa-chevron-left"
+              style={{ marginRight: "8px" }}
+            ></i>
+            Back
+          </Button>
+
+          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
+            Next
+            <i
+              className="fas fa-chevron-right"
+              style={{ marginLeft: "8px" }}
+            ></i>
+          </Button>
         </div>
-      </Route>
-    </BrowserRouter>
+      </div>
+    </Route>
   );
 }

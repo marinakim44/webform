@@ -1,11 +1,17 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Table, Dropdown, Breadcrumb } from "react-bootstrap";
+import { Button, Table, Dropdown, Row, Col } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
+import "../Small.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question13() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -71,10 +77,10 @@ export default function Question13() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q13">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q13">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 14).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -95,9 +101,159 @@ export default function Question13() {
               B) major initiatives does your company have underway in support of
               those strategic objectives? (in total)
             </p>
-            <br />
-            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+          </p>
+        </div>
+        {width <= 768 ? (
+          <div style={{ textAlign: "left" }}>
+            <Row style={{ verticalAlign: "middle" }}>
+              <Col sm={6}>
+                <p>
+                  <strong>A) Overarching strategic objectives</strong>
+                </p>
+                <p>
+                  <i>Increasing market share</i>
+                </p>
+              </Col>
+              <Col>
+                <Dropdown onSelect={handleSelectA} className="s-q13">
+                  <Dropdown.Toggle
+                    variant="light"
+                    id="dropdown-basic"
+                    style={{
+                      width: "150px",
+                      margin: "auto auto",
+                      height: "50px",
+                    }}
+                    disabled={isCheckedA ? true : false}
+                  >
+                    {inputA ? inputA : "Select number"}
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item eventKey="1">1</Dropdown.Item>
+                    <Dropdown.Item eventKey="2">2</Dropdown.Item>
+                    <Dropdown.Item eventKey="3">3</Dropdown.Item>
+                    <Dropdown.Item eventKey="4">4</Dropdown.Item>
+                    <Dropdown.Item eventKey="5">5</Dropdown.Item>
+                    <Dropdown.Item eventKey="6">6</Dropdown.Item>
+                    <Dropdown.Item eventKey="7">7</Dropdown.Item>
+                    <Dropdown.Item eventKey="8">8</Dropdown.Item>
+                    <Dropdown.Item eventKey="9">9</Dropdown.Item>
+                    <Dropdown.Item eventKey="10">10</Dropdown.Item>
+                    <Dropdown.Item eventKey="11 or more">
+                      11 or more
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Col>
+              <Col>
+                <Button
+                  type="button"
+                  variant={isCheckedA ? "warning" : "light"}
+                  value="Don't know"
+                  onClick={handleClickOtherA}
+                  style={{ height: "48px" }}
+                  className="dropdown-btn"
+                >
+                  Don't know
+                </Button>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={6}>
+                <p>
+                  <strong>
+                    B) Major initiatives underway in support of those strategic
+                    objectives (in total)
+                  </strong>
+                </p>
+                <p>
+                  <i>
+                    <ul>
+                      <li>Releasing a new advertising campaign</li>
+                      <li>Launching a new product/service</li>
+                      <li>Acquiring a competitor</li>
+                    </ul>
+                  </i>
+                </p>
+              </Col>
+              <Col>
+                <Dropdown onSelect={handleSelectB} className="s-q13">
+                  <Dropdown.Toggle
+                    variant="light"
+                    id="dropdown-basic"
+                    style={{
+                      width: "150px",
+                      margin: "auto auto",
+                      height: "50px",
+                    }}
+                    disabled={isCheckedB ? true : false}
+                  >
+                    {inputB ? inputB : "Select number"}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item eventKey="1-5">1-5</Dropdown.Item>
+                    <Dropdown.Item eventKey="6-10">6-10</Dropdown.Item>
+                    <Dropdown.Item eventKey="11-15">11-15</Dropdown.Item>
+                    <Dropdown.Item eventKey="16-20">16-20</Dropdown.Item>
+                    <Dropdown.Item eventKey="21-25">21-25</Dropdown.Item>
+                    <Dropdown.Item eventKey="25-30">25-30</Dropdown.Item>
+                    <Dropdown.Item eventKey="31-35">31-35</Dropdown.Item>
+                    <Dropdown.Item eventKey="36-40">36-40</Dropdown.Item>
+                    <Dropdown.Item eventKey="39-45">39-45</Dropdown.Item>
+                    <Dropdown.Item eventKey="46-50">46-50</Dropdown.Item>
+                    <Dropdown.Item eventKey="51 or more">
+                      51 or more
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Col>
+              <Col>
+                <Button
+                  type="button"
+                  variant={isCheckedB ? "warning" : "light"}
+                  value="Don't know"
+                  onClick={handleClickOtherB}
+                  style={{ height: "48px" }}
+                  className="dropdown-btn"
+                >
+                  Don't know
+                </Button>
+              </Col>
+            </Row>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
+          </div>
+        ) : (
           <form>
             <Table bordered>
               <tbody>
@@ -105,8 +261,7 @@ export default function Question13() {
                   <td style={{ verticalAlign: "middle" }}>A</td>
                   <td style={{ verticalAlign: "middle", textAlign: "left" }}>
                     <strong>Overarching strategic objectives</strong>
-                    <p></p>
-                    Increasing market share
+                    <p>Increasing market share</p>
                   </td>
                   <td>
                     <Dropdown onSelect={handleSelectA}>
@@ -137,32 +292,20 @@ export default function Question13() {
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <td
-                    style={{
-                      margin: 0,
-                      verticalAlign: "middle",
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      id="dontknowa"
-                      style={{
-                        margin: 0,
-                        verticalAlign: "middle",
-                      }}
-                      name="a"
-                      value="Don't know"
-                      checked={isCheckedA ? true : false}
-                      onClick={handleClickOtherA}
-                    ></input>
-                    <label
-                      for="#dontknowa"
-                      style={{
-                        margin: 0,
-                        marginLeft: "8px",
-                        verticalAlign: "middle",
-                      }}
-                    >
+                  <td>
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        style={{
+                          margin: 0,
+                          marginRight: "8px",
+                          verticalAlign: "middle",
+                        }}
+                        name="a"
+                        value="Don't know"
+                        checked={isCheckedA ? true : false}
+                        onClick={handleClickOtherA}
+                      ></input>
                       Don't know
                     </label>
                   </td>
@@ -223,35 +366,28 @@ export default function Question13() {
                       </Dropdown.Menu>
                     </Dropdown>
                   </td>
-                  <td
-                    style={{
-                      margin: 0,
-                      verticalAlign: "middle",
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      id="dontknowb"
-                      style={{ verticalAlign: "middle", margin: 0, padding: 0 }}
-                      name="b"
-                      value="Don't know"
-                      checked={isCheckedB ? true : false}
-                      onClick={handleClickOtherB}
-                    ></input>
-                    <label
-                      for="#dontknowb"
-                      style={{
-                        margin: 0,
-                        marginLeft: "8px",
-                        verticalAlign: "middle",
-                      }}
-                    >
+                  <td style={{ verticalAlign: "middle" }}>
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        style={{
+                          verticalAlign: "middle",
+                          margin: 0,
+                          marginRight: "8px",
+                          padding: 0,
+                        }}
+                        name="b"
+                        value="Don't know"
+                        checked={isCheckedB ? true : false}
+                        onClick={handleClickOtherB}
+                      ></input>
                       Don't know
                     </label>
                   </td>
                 </tr>
               </tbody>
             </Table>
+
             <div className="back-next-btns">
               <Button
                 variant="secondary"
@@ -278,8 +414,8 @@ export default function Question13() {
               </Button>
             </div>
           </form>
-        </div>
-      </Route>
-    </BrowserRouter>
+        )}
+      </div>
+    </Route>
   );
 }

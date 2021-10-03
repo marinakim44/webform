@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Breadcrumb, Table } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question18() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -131,10 +136,10 @@ export default function Question18() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q18">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q18">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 19).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -149,14 +154,70 @@ export default function Question18() {
           <p className="left-align-text">
             Thinking about the taxes your company pays, to what extent do you
             agree/disagree with the following statements?
-            <br /> (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
           </p>
+          <p
+            className="left-align-text"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+          </p>
+        </div>
+
+        {width <= 768 ? (
+          <div className="left-align-text">
+            {rows.map((row) => {
+              return (
+                <div>
+                  <strong>
+                    <p className="question">
+                      {row.key}) {row.value}
+                    </p>
+                  </strong>
+                  {columns.map((col) => {
+                    return (
+                      <div className="m-div">
+                        <label className="m-label">
+                          <input
+                            type="radio"
+                            name={row.key}
+                            value={col.value}
+                            onClick={handleClick}
+                            className="m-input"
+                          ></input>
+                          {col.value}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
+          </div>
+        ) : (
           <form>
-            <Table bordered>
-              <tbody>
+            <table className="table">
+              <thead>
                 <tr>
                   <td colSpan="2"></td>
-
                   {columns.map((col) => {
                     return (
                       <td style={{ width: "110px", verticalAlign: "middle" }}>
@@ -165,6 +226,8 @@ export default function Question18() {
                     );
                   })}
                 </tr>
+              </thead>
+              <tbody>
                 {rows.map((row) => {
                   return (
                     <tr className="table-row">
@@ -188,7 +251,7 @@ export default function Question18() {
                   );
                 })}
               </tbody>
-            </Table>
+            </table>
             <div className="back-next-btns">
               <Button
                 variant="secondary"
@@ -209,8 +272,8 @@ export default function Question18() {
               </Button>
             </div>
           </form>
-        </div>
-      </Route>
-    </BrowserRouter>
+        )}
+      </div>
+    </Route>
   );
 }

@@ -4,16 +4,12 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-
-//below line for production
 const port = process.env.PORT || 3001;
-//below line for development
 // const port = 3001;
 
 app.use(express.json());
 app.use(cors());
 
-//DB config
 const options = {
   serverSelectionTimeoutMS: 60000,
   socketTimeoutMS: 45000,
@@ -25,14 +21,6 @@ const options = {
 mongoose.connect(process.env.MONGO_URI, options, function (err) {
   console.log(err);
 });
-// const connectDB = async () => {
-//   try {
-//     await mongoose.connect(process.env.MONGO_URI, options);
-//   } catch (err) {
-//     console.error(err.message);
-//     process.exit(1);
-//   }
-// };
 
 mongoose.set("bufferCommands", false);
 mongoose.connect(process.env.MONGO_URI, options, function (err) {
@@ -71,15 +59,7 @@ const responseSchema = new mongoose.Schema(
     question7: String,
     question8: String,
     question9: String,
-    question10: {
-      A: String,
-      B: String,
-      C: String,
-      D: String,
-      E: String,
-      F: String,
-      G: String,
-    },
+    question10A: Object,
     question11: {
       A: String,
       B: String,
@@ -176,7 +156,7 @@ const responseSchema = new mongoose.Schema(
     question28: String,
     questionA: String,
     questionAother: String,
-    questionB: Number,
+    questionB: String,
     questionC: String,
     questionCother: String,
     questionD: String,
@@ -211,10 +191,6 @@ app.post("/allinputs", (req, res) => {
       email: req.body.email,
       phone: req.body.phone,
       question1: req.body.q1,
-      // question1: {
-      //   a: req.body.q1a,
-      //   b: req.body.q1b,
-      // },
       question2: req.body.q2,
       question2none: req.body.q2none,
       question2dontknow: req.body.q2dontknow,
@@ -226,7 +202,7 @@ app.post("/allinputs", (req, res) => {
       question7: req.body.q7,
       question8: req.body.q8,
       question9: req.body.q9,
-      question10: req.body.q10,
+      question10A: req.body.q10a,
       question11: req.body.q11,
       question12: req.body.q12,
       question13: {
@@ -269,7 +245,7 @@ app.post("/allinputs", (req, res) => {
       question28: req.body.q28,
       questionA: req.body.qa,
       questionAother: req.body.qaOther,
-      questionB: req.body.qb,
+      questionB: req.body.qbString,
       questionC: req.body.qc,
       questionCother: req.body.qcOther,
       questionD: req.body.qd,

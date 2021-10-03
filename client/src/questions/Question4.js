@@ -1,12 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Table, Form, Breadcrumb } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
-import { questions } from "../questions";
 
 export default function Question4() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -133,88 +137,168 @@ export default function Question4() {
     <BrowserRouter>
       <Route path="/eng-q4">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 5).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 5).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 5).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 5).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <div className="left-align-text">
+              <span>
+                How do you anticipate your company could be impacted by the
+                following threat(s) over the next 12 months?
+                <i>
+                  <p
+                    className="question"
+                    style={{ margin: width <= 480 ? "1rem 0" : "" }}
+                  >
+                    PLEASE SELECT UP TO THREE RESPONSES PER EACH STATEMENT
+                  </p>
+                </i>
+              </span>
+            </div>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <div className="left-align-text">
-            <span>
-              How do you anticipate your company could be impacted by the
-              following threat(s) over the next 12 months? <br /> (PLEASE SELECT
-              UP TO THREE RESPONSES)
-            </span>
-          </div>
+          {width <= 768 ? (
+            <div className="left-align-text">
+              {concerns.map((concern) => {
+                return (
+                  <div>
+                    <p className="question">
+                      <strong>{concern}</strong>
+                    </p>
+                    {rows.map((row) => {
+                      return (
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="checkbox"
+                              className="m-input"
+                              name={concern}
+                              value={row.key}
+                              onClick={handleClick}
+                            ></input>
+                            {row.value}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              <Form.Group>
+                <Form.Control
+                  placeholder="Other (please specify)"
+                  onChange={handleChange}
+                  value={other}
+                  className="input-text"
+                ></Form.Control>
+              </Form.Group>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ color: "#fff", marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
 
-          <Form>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <th></th>
-                  {concerns.map((concern) => {
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ color: "#fff", marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <Form>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <th></th>
+                    {concerns.map((concern) => {
+                      return (
+                        <th>
+                          <span>{concern}</span>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                  {rows.map((row) => {
                     return (
-                      <th>
-                        <span>{concern}</span>
-                      </th>
+                      <tr className="table-row">
+                        <td className="left-align-text">{row.value}</td>
+                        {concerns.map((concern) => {
+                          return (
+                            <td className="input-cell">
+                              <label className="label-cell">
+                                <input
+                                  type="checkbox"
+                                  name={concern}
+                                  value={row.key}
+                                  onClick={handleClick}
+                                ></input>
+                              </label>
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
-                {rows.map((row) => {
-                  return (
-                    <tr className="table-row">
-                      <td className="left-align-text">{row.value}</td>
-                      {concerns.map((concern) => {
-                        return (
-                          <td className="input-cell">
-                            <label className="label-cell">
-                              <input
-                                type="checkbox"
-                                name={concern}
-                                value={row.key}
-                                onClick={handleClick}
-                              ></input>
-                            </label>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
 
-            <Form.Group>
-              <Form.Control
-                placeholder="Other (please specify)"
-                style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
-                onChange={handleChange}
-                value={other}
-              ></Form.Control>
-            </Form.Group>
+              <Form.Group>
+                <Form.Control
+                  placeholder="Other (please specify)"
+                  style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
+                  onChange={handleChange}
+                  value={other}
+                ></Form.Control>
+              </Form.Group>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ color: "#fff", marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
-          </Form>
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ color: "#fff", marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
+            </Form>
+          )}
         </div>
       </Route>
     </BrowserRouter>

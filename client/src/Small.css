@@ -1,0 +1,99 @@
+/* responsive for mobile phone: width smaller than 480px */
+@media (max-width: 480px) {
+  * {
+    font-size: 16px;
+  }
+  .main {
+    width: 80%;
+    text-align: center;
+    padding: 0;
+  }
+  .main h1 {
+    text-align: center;
+    margin: 0;
+  }
+  .main h2 {
+    font-size: 1.1rem;
+  }
+  .main p {
+    font-size: 14px;
+    margin: 0;
+  }
+  .lng-btn {
+    width: 100%;
+    height: 50px;
+    margin: 0 auto 2rem;
+    font-size: 18px;
+    text-align: center;
+  }
+  .lng-menu {
+    width: 100%;
+    margin: auto auto;
+  }
+  .lng-div {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  .lng-div p {
+    text-align: center;
+    padding: 0;
+    margin: auto auto;
+  }
+  .credentials-form {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+  .credentials-input {
+    margin: 0;
+    margin-bottom: 1rem;
+    padding: 0;
+    height: 50px;
+    width: 100%;
+  }
+  .back-btn,
+  .next-btn {
+    height: 50px;
+    font-size: 16px;
+    width: 140px;
+  }
+  .question {
+    font-size: 14px;
+    text-align: left;
+  }
+  .input-text {
+    height: 40px;
+  }
+  .dontknow-btn {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+  }
+  .s-q13 {
+    margin: 1rem 0 2rem;
+  }
+  .dropdown-btn {
+    margin: 1rem 0 2rem;
+  }
+  .input-text {
+    height: 40px;
+  }
+  .none-btn {
+    height: 60px;
+    font-size: 16px;
+    width: 140px;
+  }
+  .dontknow-btn {
+    width: 140px;
+  }
+  .m-input-22 {
+    height: 40px;
+    margin-bottom: 1rem;
+  }
+  .m-dontknow-22 {
+    height: 40px;
+    margin-top: 0;
+    margin-bottom: 2rem;
+  }
+}

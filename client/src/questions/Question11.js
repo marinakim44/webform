@@ -8,6 +8,10 @@ import Question10A from "./Question10A";
 import Switch from "react-bootstrap/esm/Switch";
 
 export default function Question11() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -141,95 +145,134 @@ export default function Question11() {
     <BrowserRouter>
       <Route path="/eng-q11">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item>Q8</Breadcrumb.Item>
-            <Breadcrumb.Item>Q9</Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link to="/eng-q10a">Q10</Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item active>Q11</Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 12).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 12).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 12).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              How accurate are the following statements regarding why your
+              company has not made a carbon-neutral or net-zero commitment?
+            </p>
+            <p
+              className="left-align-text"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q11. How accurate are the following statements regarding why your
-            company has not made a carbon-neutral or net-zero commitment?
-            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
-          </p>
-          <form>
-            <Table bordered style={{ fontSize: "14px" }}>
-              <thead>
-                <tr>
-                  <th colSpan="2"></th>
-                  {columns.map((column) => {
-                    return <th>{column.value}</th>;
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => {
-                  return (
-                    <tr>
-                      <td>{row.key}</td>
-                      <td>{row.value}</td>
-                      {columns.map((column) => {
-                        return (
-                          <td>
+          {width <= 768 ? (
+            <div className="left-align-text">
+              {rows.map((row) => {
+                return (
+                  <div className="left-align-text">
+                    <strong>
+                      <p>
+                        {row.key}) {row.value}
+                      </p>
+                    </strong>
+                    {columns.map((col) => {
+                      return (
+                        <div className="m-div">
+                          <label className="m-label">
                             <input
+                              className="m-input"
                               type="radio"
                               name={row.key}
-                              value={column.value}
+                              value={col.value}
                               onClick={handleClick}
                             ></input>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
+                            {col.value}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i className="fas fa-chevron-left back-arrow"></i>
+                  Back
+                </Button>
 
-            <Button
-              variant="light"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              Back
-            </Button>
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i className="fas fa-chevron-right next-arrow"></i>
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <form>
+              <Table bordered style={{ fontSize: "14px" }}>
+                <thead>
+                  <tr>
+                    <th colSpan="2"></th>
+                    {columns.map((column) => {
+                      return <th>{column.value}</th>;
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => {
+                    return (
+                      <tr>
+                        <td>{row.key}</td>
+                        <td>{row.value}</td>
+                        {columns.map((column) => {
+                          return (
+                            <td>
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={column.value}
+                                onClick={handleClick}
+                              ></input>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+              <div className="back-next-btns">
+                <Button
+                  variant="light"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i className="fas fa-chevron-left back-arrow"></i>
+                  Back
+                </Button>
 
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-            </Button>
-          </form>
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i className="fas fa-chevron-right next-arrow"></i>
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
       </Route>
       <Switch>

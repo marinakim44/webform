@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Table } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Table } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question24() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -169,29 +174,70 @@ export default function Question24() {
     <BrowserRouter>
       <Route path="/eng-q24">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 25).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 25).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 25).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 25).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Are the following non-financial related outcomes included in your:
+              <p style={{ margin: "4px auto 0 20px" }}>
+                A) company’s long-term corporate strategy?{" "}
+              </p>
+              <p style={{ margin: "0 auto 0 20px" }}>
+                B) personal annual bonus or long-term incentive plan?{" "}
+              </p>
+              <br /> <i>PLEASE SELECT ALL THAT APPLY</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Are the following non-financial related outcomes included in your:
-            <p style={{ margin: "4px auto 0 20px" }}>
-              A) company’s long-term corporate strategy?{" "}
-            </p>
-            <p style={{ margin: "0 auto 0 20px" }}>
-              B) personal annual bonus or long-term incentive plan?{" "}
-            </p>
-            <br /> (PLEASE SELECT ALL THAT APPLY)
-          </p>
-          <form>
+
+          {width <= 768 ? (
+            <div className="left-align-text">
+              {columns.map((col) => {
+                return (
+                  <div>
+                    <strong>
+                      <p>
+                        {col.key}) {col.value}
+                      </p>
+                    </strong>
+                    {rows.map((row) => {
+                      return (
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="checkbox"
+                              className="m-input"
+                              name={col.key}
+                              value={row.value}
+                              onChange={handleClick}
+                              disabled={
+                                (noneA && row.key !== "G" && col.key === "A") ||
+                                (noneB && row.key !== "G" && col.key === "B") ||
+                                (notA && row.key !== "H" && col.key === "A") ||
+                                (notB && row.key !== "H" && col.key === "B")
+                                  ? true
+                                  : false
+                              }
+                            ></input>
+                            {row.value}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
             <Table bordered>
               <tbody>
                 <tr>
@@ -243,32 +289,33 @@ export default function Question24() {
                 })}
               </tbody>
             </Table>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
+          )}
 
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
-          </form>
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              Back
+            </Button>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              Next
+              <i
+                className="fas fa-chevron-right"
+                style={{ marginLeft: "8px" }}
+              ></i>
+            </Button>
+          </div>
         </div>
       </Route>
     </BrowserRouter>

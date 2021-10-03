@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Table, Form } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question25B() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -327,8 +332,8 @@ export default function Question25B() {
     <BrowserRouter>
       <Route path="/eng-q25b">
         <div className="main">
-          <div style={{ width: "100%" }}>
-            <h2 style={{ textAlign: "left" }}>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
               {Math.round(((100 / 39) * 27).toString())}% completed
             </h2>
             <div className="progressBarEmpty">
@@ -339,118 +344,196 @@ export default function Question25B() {
                 }}
               ></div>
             </div>
-          </div>
-          <ModalAlert show={show} close={handleClose} />
 
-          <p className="left-align-text">
-            How effective do you think the government has been in achieving
-            these outcomes in Kazakhstan?
-            <br /> (Please select one response only per row)
-          </p>
-          <Form>
-            <div style={{ overflow: "auto", height: "320px" }}>
-              <table className="table">
-                <thead
-                  style={{
-                    position: "sticky",
-                    top: 0,
-                    zIndex: 1,
-                    backgroundColor: "#fff",
-                  }}
-                >
-                  <tr style={{ position: "sticky", top: 0 }}>
-                    <th
-                      colSpan="2"
-                      style={{ position: "sticky", top: 0, zIndex: 1 }}
-                    ></th>
+            <ModalAlert show={show} close={handleClose} />
+
+            <p className="left-align-text">
+              How effective do you think the government has been in achieving
+              these outcomes in Kazakhstan?
+            </p>
+            <p
+              className="left-align-text"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE ONLY PER ROW</i>
+            </p>
+          </div>
+
+          {width <= 768 ? (
+            <div className="left-align-text">
+              {rows.map((row) => {
+                return (
+                  <div>
+                    <strong>
+                      <p className="question">
+                        {row.key}) {row.value}
+                      </p>
+                    </strong>
                     {columns.map((col) => {
                       return (
-                        <th
-                          style={{
-                            position: "sticky",
-                            top: 0,
-                            zIndex: 1,
-                            width: "120px",
-                            verticalAlign: "middle",
-                          }}
-                        >
-                          {col}
-                        </th>
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col}
+                              onClick={handleClick}
+                              disabled={isNone || isDontknow ? true : false}
+                              className="m-input"
+                            ></input>
+                            {col}
+                          </label>
+                        </div>
                       );
                     })}
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((row) => {
-                    return (
-                      <tr className="table-row">
-                        <td>{row.key}</td>
-                        <td className="left-align-text">{row.value}</td>
-                        {columns.map((col) => {
-                          return (
-                            <td className="input-cell">
-                              <label className="label-cell">
-                                <input
-                                  type="radio"
-                                  name={row.key}
-                                  value={col}
-                                  onClick={handleClick}
-                                  disabled={isNone || isDontknow ? true : false}
-                                ></input>
-                              </label>
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "left",
-                width: "35%",
-                marginTop: "2rem",
-              }}
-            >
-              <Button
-                type="button"
-                variant={isNone ? "warning" : "light"}
-                style={{ marginRight: "2rem", width: "44%" }}
-                value="None of the above"
-                onClick={handleNone}
-              >
-                NONE OF THE ABOVE
-              </Button>
-            </div>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
+                  </div>
+                );
+              })}
+              <div className="dontknow-div">
+                <Button
+                  type="button"
+                  variant={isNone ? "warning" : "light"}
+                  className="none-btn"
+                  value="None of the above"
+                  onClick={handleNone}
+                >
+                  NONE OF THE ABOVE
+                </Button>
+              </div>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
 
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
             </div>
-          </Form>
+          ) : (
+            <Form>
+              <div style={{ overflow: "auto", height: "320px" }}>
+                <table className="table">
+                  <thead
+                    style={{
+                      position: "sticky",
+                      top: 0,
+                      zIndex: 1,
+                      backgroundColor: "#fff",
+                    }}
+                  >
+                    <tr style={{ position: "sticky", top: 0 }}>
+                      <th
+                        colSpan="2"
+                        style={{ position: "sticky", top: 0, zIndex: 1 }}
+                      ></th>
+                      {columns.map((col) => {
+                        return (
+                          <th
+                            style={{
+                              position: "sticky",
+                              top: 0,
+                              zIndex: 1,
+                              width: "120px",
+                              verticalAlign: "middle",
+                            }}
+                          >
+                            {col}
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row) => {
+                      return (
+                        <tr className="table-row">
+                          <td>{row.key}</td>
+                          <td className="left-align-text">{row.value}</td>
+                          {columns.map((col) => {
+                            return (
+                              <td className="input-cell">
+                                <label className="label-cell">
+                                  <input
+                                    type="radio"
+                                    name={row.key}
+                                    value={col}
+                                    onClick={handleClick}
+                                    disabled={
+                                      isNone || isDontknow ? true : false
+                                    }
+                                  ></input>
+                                </label>
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "left",
+                  width: "35%",
+                  marginTop: "2rem",
+                }}
+              >
+                <Button
+                  type="button"
+                  variant={isNone ? "warning" : "light"}
+                  style={{ marginRight: "2rem", width: "44%" }}
+                  value="None of the above"
+                  onClick={handleNone}
+                >
+                  NONE OF THE ABOVE
+                </Button>
+              </div>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
+
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
+            </Form>
+          )}
         </div>
       </Route>
     </BrowserRouter>

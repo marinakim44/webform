@@ -7,13 +7,18 @@ import {
 } from "react-router-dom";
 import QuestionI from "./QuestionI";
 import EngFinish from "../EngFinish";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionJ() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -106,10 +111,10 @@ export default function QuestionJ() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-qj">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-qj">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 40) * 39).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -122,62 +127,69 @@ export default function QuestionJ() {
           </div>
           <ModalAlert show={show} close={handleClose} />
           <p className="left-align-text">
-            How many employees does your company have? <br /> (PLEASE SELECT ONE
-            RESPONSE)
+            How many employees does your company have?
           </p>
-          <Form>
-            <Form.Group style={{ width: "40%", textAlign: "left" }}>
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE</i>
+          </p>
+        </div>
+        <Form>
+          <Form.Group>
+            <div className="left-align-text">
               {rows.map((row) => {
                 return (
-                  <Form.Check
-                    type="radio"
-                    value={row}
-                    onClick={handleClick}
-                    name="option"
-                    label={row}
-                  ></Form.Check>
+                  <div
+                    className={
+                      width <= 768 ? "m-div" : "left-align-text-no-margin"
+                    }
+                  >
+                    <label className="label-cell m-label">
+                      <input
+                        type="radio"
+                        value={row}
+                        onClick={handleClick}
+                        name="option"
+                        className="radio-input m-input"
+                      ></input>
+                      {row}
+                    </label>
+                  </div>
                 );
               })}
-            </Form.Group>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                <Link to="/eng-finish" style={{ color: "#fff" }}>
-                  <i
-                    className="fas fa-check"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                  Finish survey
-                </Link>
-              </Button>
             </div>
-          </Form>
-        </div>
-      </Route>
+          </Form.Group>
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              Back
+            </Button>
 
-      <Switch>
-        <Route path="/eng-qi">
-          <QuestionI />
-        </Route>
-        <Route path="/eng-finish">
-          <EngFinish />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+            <Button
+              variant="success"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              <i className="fas fa-check" style={{ marginRight: "8px" }}></i>
+              <Link
+                to="/eng-finish"
+                style={{ color: "#fff", textDecoration: "none" }}
+              >
+                Finish
+              </Link>
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </Route>
   );
 }

@@ -1,11 +1,15 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Form, Breadcrumb } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question16() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const rows = [
     {
       key: "1",
@@ -90,10 +94,10 @@ export default function Question16() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q16">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q16">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 17).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -108,145 +112,78 @@ export default function Question16() {
           <p className="left-align-text">
             During a typical review cycle, how many different profit and loss
             (P&L) statements do you personally examine?
-            <br /> (PLEASE SELECT ONE RESPONSE)
           </p>
-          <Form>
-            <div style={{ textAlign: "left" }}>
-              {rows.map((row) => {
-                return (
-                  <label style={{ display: "block" }}>
+          <p
+            className="left-align-text"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE</i>
+          </p>
+        </div>
+        {width <= 768 ? (
+          <div className="left-align-text">
+            {rows.map((row) => {
+              return (
+                <div className="m-div">
+                  <label className="m-label">
                     <input
                       type="radio"
                       name="option"
                       value={row.value}
-                      style={{ marginRight: "8px" }}
                       onChange={handleClick}
-                    ></input>
+                      className="m-input"
+                    />
                     {row.value}
                   </label>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <Form>
+            <div style={{ textAlign: "left" }}>
+              {rows.map((row) => {
+                return (
+                  <div className="m-div">
+                    <label className="m-label label-cell">
+                      <input
+                        type="radio"
+                        name="option"
+                        value={row.value}
+                        style={{ marginRight: "8px" }}
+                        onChange={handleClick}
+                        className="radio-input"
+                      ></input>
+                      {row.value}
+                    </label>
+                  </div>
                 );
               })}
             </div>
-            {/* {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"0"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="0"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"1"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="1"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"2-5"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="2-5"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"6-10"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="6-10"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"11-20"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="11-20"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"21-30"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="21-30"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"More than 30"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="More than 30"
-                  onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don't know"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="Don't know"
-                  onClick={handleClick}
-                />
-              </div>
-            ))} */}
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </Form>
+        )}
+        <div className="back-next-btns">
+          <Button
+            variant="secondary"
+            className="back-btn"
+            onClick={() => history.goBack()}
+          >
+            <i
+              className="fas fa-chevron-left"
+              style={{ marginRight: "8px" }}
+            ></i>
+            Back
+          </Button>
+
+          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
+            Next
+            <i
+              className="fas fa-chevron-right"
+              style={{ marginLeft: "8px" }}
+            ></i>
+          </Button>
         </div>
-      </Route>
-    </BrowserRouter>
+      </div>
+    </Route>
   );
 }

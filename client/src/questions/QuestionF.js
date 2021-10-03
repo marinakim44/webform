@@ -1,11 +1,23 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionF() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
+  const rows = [
+    "Family-run",
+    "Backed by private equity",
+    "A partnership",
+    "Owner-managed",
+    "Other",
+  ];
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -110,90 +122,73 @@ export default function QuestionF() {
     <BrowserRouter>
       <Route path="/eng-qf">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 35).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 35).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 35).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 35).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Is your company family-run, backed by private equity, a
+              partnership or owner-managed?
+            </p>
+            <p className="question">
+              <i>PLEASE SELECT ONE RESPONSE</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Is your company family-run, backed by private equity, a partnership
-            or owner-managed? (PLEASE SELECT ONE RESPONSE)
-          </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Family-run"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="Family-run"
-                  onChange={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Backed by private equity"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="Backed by private equity"
-                  onChange={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"A partnership"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="A partnership"
-                  onChange={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Owner-managed"}
-                  style={{
-                    textAlign: "left",
-                  }}
-                  name="option"
-                  value="Owner-managed"
-                  onChange={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Other"}
-                  style={{
-                    textAlign: "left",
-                  }}
+            {rows
+              .filter((row) => row !== "Other")
+              .map((row) => {
+                return (
+                  <div
+                    className={
+                      width <= 768
+                        ? "left-align-text m-div"
+                        : "left-align-text-no-margin"
+                    }
+                  >
+                    <label className="m-label label-cell">
+                      <input
+                        type="radio"
+                        className="m-input radio-input"
+                        name="option"
+                        value={row}
+                        onChange={handleClick}
+                      ></input>
+                      {row}
+                    </label>
+                  </div>
+                );
+              })}
+            <div className="left-align-text m-div">
+              <label className="m-label label-cell">
+                <input
+                  type="radio"
+                  className="m-input radio-input"
                   name="option"
                   value="Other"
                   onChange={handleOther}
-                />
-              </div>
-            ))}
+                ></input>
+                Other
+              </label>
+            </div>
 
             {isOther ? (
-              <Form.Group style={{ width: "40%", textAlign: "left" }}>
+              <Form.Group>
                 <Form.Control
                   type="text"
                   placeholder="Other (please specify)"
                   onChange={handleChange}
                   value={other}
+                  className="input-text"
                 ></Form.Control>
               </Form.Group>
             ) : (

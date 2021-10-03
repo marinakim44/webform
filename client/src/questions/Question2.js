@@ -22,6 +22,10 @@ const Menu = (props) => {
 };
 
 export default function Question2() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -118,10 +122,10 @@ export default function Question2() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q2">
-        <div className="main" style={{ display: "block", overflow: "scroll" }}>
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-q2">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 3).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -134,100 +138,88 @@ export default function Question2() {
           </div>
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
-            <p>
+            <p className="question">
               Which three countries/territories, excluding the country/territory
               in which you are based, do you consider most important for your
               company’s prospects for revenue growth over the next 12 months?
             </p>
           </div>
-
-          <Form>
-            <div
-              style={{
-                width: "35%",
-                margin: 0,
-                marginBottom: "2rem",
-              }}
-            >
-              <Creatable
-                isDisabled={isDontknow ? true : false}
-                components={{ Menu }}
-                isMulti
-                isValidNewOption={isValidNewOption}
-                options={countries}
-                closeMenuOnSelect={false}
-                placeholder="Please select 3 countries"
-                onChange={handleChange}
-              />
-            </div>
-            <Form.Control
-              type="text"
-              placeholder="Other country 1 (please specify)"
-              name="other1"
-              value={other.other1}
-              onChange={handleOther}
-              style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
-              disabled={isDontknow ? true : false}
-            ></Form.Control>
-            <Form.Control
-              type="text"
-              name="other2"
-              value={other.other2}
-              onChange={handleOther}
-              placeholder="Other country 2 (please specify)"
-              style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
-              disabled={isDontknow ? true : false}
-            ></Form.Control>
-            <Form.Control
-              type="text"
-              name="other3"
-              value={other.other3}
-              onChange={handleOther}
-              placeholder="Other country 3 (please specify)"
-              style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
-              disabled={isDontknow ? true : false}
-            ></Form.Control>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "left",
-                width: "35%",
-                marginTop: "2rem",
-              }}
-            >
-              <Button
-                type="button"
-                variant={isDontknow ? "warning" : "light"}
-                className="back-btn"
-                style={{ margin: 0 }}
-                value="Don't know"
-                onClick={handleDontknow}
-              >
-                Don't know
-              </Button>
-            </div>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i class="fas fa-chevron-right next-arrow"></i>
-              </Button>
-            </div>
-          </Form>
         </div>
-      </Route>
-    </BrowserRouter>
+
+        <Form style={{ width: "100%" }}>
+          <Creatable
+            isDisabled={isDontknow ? true : false}
+            components={{ Menu }}
+            isMulti
+            isValidNewOption={isValidNewOption}
+            options={countries}
+            closeMenuOnSelect={false}
+            placeholder="Please select 3 countries"
+            onChange={handleChange}
+            className="select-countries"
+          />
+
+          <Form.Control
+            type="text"
+            placeholder="Other country 1 (please specify)"
+            name="other1"
+            value={other.other1}
+            onChange={handleOther}
+            disabled={isDontknow ? true : false}
+            className="input-text"
+          ></Form.Control>
+          <Form.Control
+            type="text"
+            name="other2"
+            value={other.other2}
+            onChange={handleOther}
+            placeholder="Other country 2 (please specify)"
+            disabled={isDontknow ? true : false}
+            className="input-text"
+          ></Form.Control>
+          <Form.Control
+            type="text"
+            name="other3"
+            value={other.other3}
+            onChange={handleOther}
+            placeholder="Other country 3 (please specify)"
+            className="input-text"
+            disabled={isDontknow ? true : false}
+          ></Form.Control>
+          <div className="dontknow-div">
+            <Button
+              type="button"
+              variant={isDontknow ? "warning" : "light"}
+              className="back-btn"
+              style={{ margin: 0 }}
+              value="Don't know"
+              onClick={handleDontknow}
+              className="dontknow-btn"
+            >
+              Don't know
+            </Button>
+          </div>
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i className="fas fa-chevron-left back-arrow"></i>
+              Back
+            </Button>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              Next
+              <i class="fas fa-chevron-right next-arrow"></i>
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </Route>
   );
 }

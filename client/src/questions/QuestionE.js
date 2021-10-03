@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionE() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -92,49 +97,66 @@ export default function QuestionE() {
     <BrowserRouter>
       <Route path="/eng-qe">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 34).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 34).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 34).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 34).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Is your company privately owned or publicly listed?
+            </p>
+            <p
+              className="question"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Is your company privately owned or publicly listed? <br /> (PLEASE
-            SELECT ONE RESPONSE)
-          </p>
           <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Privately owned"}
+            <div
+              className={
+                width <= 768
+                  ? "left-align-text m-div"
+                  : "left-align-text-no-margin"
+              }
+            >
+              <label className="label-cell m-label">
+                <input
+                  type="radio"
                   name="option"
-                  style={{
-                    textAlign: "left",
-                  }}
                   value="Privately owned"
+                  className="radio-input m-input"
                   onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Publicly listed"}
+                ></input>
+                Privately owned
+              </label>
+            </div>
+            <div
+              className={
+                width <= 768
+                  ? "left-align-text m-div"
+                  : "left-align-text-no-margin"
+              }
+            >
+              <label className="label-cell m-label">
+                <input
+                  type="radio"
                   name="option"
-                  style={{
-                    textAlign: "left",
-                  }}
-                  value="Publicly listed"
+                  value="Publicly owned"
+                  className="radio-input m-input"
                   onClick={handleClick}
-                />
-              </div>
-            ))}
+                ></input>
+                Publicly owned
+              </label>
+            </div>
             <div className="back-next-btns">
               <Button
                 variant="secondary"

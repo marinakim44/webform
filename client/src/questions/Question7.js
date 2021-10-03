@@ -1,11 +1,15 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Form, Breadcrumb } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question7() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -61,70 +65,82 @@ export default function Question7() {
     <BrowserRouter>
       <Route path="/eng-q7">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 8).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 8).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 8).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 8).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Which science-based target, if any, will your company’s net-zero
+              commitment be aligned to?
+            </p>
+            <p
+              className="question"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Which science-based target, if any, will your company’s net-zero
-            commitment be aligned to? <br />
-            (PLEASE SELECT ONE RESPONSE)
-          </p>
-          <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  label={"Limiting global warming to 1.5° Celsius"}
-                  style={{
-                    textAlign: "left",
-                  }}
+          <Form className="left-align-text">
+            <div className="m-div">
+              <label className="m-label">
+                <input
+                  type="radio"
+                  className="m-input"
                   name="option"
                   value="Limiting global warming to 1.5° Celsius"
                   onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  label={"Limiting global warming to well below 2.0° Celsius"}
-                  style={{
-                    textAlign: "left",
-                  }}
+                ></input>
+                Limiting global warming to 1.5° Celsius
+              </label>
+            </div>
+            <div className="m-div">
+              <label className="m-label">
+                <input
+                  type="radio"
+                  className="m-input"
                   name="option"
                   value="Limiting global warming to well below 2.0° Celsius"
                   onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  label={
-                    "My company’s net-zero commitment will not be aligned to a science-based target"
-                  }
-                  style={{
-                    textAlign: "left",
-                  }}
+                ></input>
+                Limiting global warming to well below 2.0° Celsius
+              </label>
+            </div>
+            <div className="m-div">
+              <label className="m-label">
+                <input
+                  type="radio"
+                  className="m-input"
                   name="option"
-                  value="My company’s net-zero commitment will not be aligned to a science-based target"
+                  value="My company’s net-zero commitment will not be aligned to a
+                science-based target"
                   onClick={handleClick}
-                />
-                <Form.Check
-                  type={type}
-                  label={"Don’t know"}
-                  style={{
-                    textAlign: "left",
-                  }}
+                ></input>
+                My company’s net-zero commitment will not be aligned to a
+                science-based target
+              </label>
+            </div>
+            <div className="m-div">
+              <label className="m-label">
+                <input
+                  type="radio"
+                  className="m-input"
                   name="option"
                   value="Don't know"
                   onClick={handleClick}
-                />
-              </div>
-            ))}
+                ></input>
+                Don't know
+              </label>
+            </div>
+
             <div className="back-next-btns">
               <Button
                 variant="secondary"

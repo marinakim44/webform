@@ -1,12 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
-import { Breadcrumb } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question15() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const rows = [
     {
       key: "A",
@@ -94,63 +98,102 @@ export default function Question15() {
     <BrowserRouter>
       <Route path="/eng-q15">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 16).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 16).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 16).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 16).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Typically, how long does it take for your company to:
+              approve/green-light major initiatives once an idea has been
+              proposed? commit significant resources to new major initiatives?
+            </p>
+            <p
+              className="left-align-text"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Typically, how long does it take for your company to:
-            approve/green-light major initiatives once an idea has been
-            proposed? commit significant resources to new major initiatives?
-            <br />
-            (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
-          </p>
-          <form>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <td colSpan="2"></td>
-                  {columns.map((col) => {
+          {width <= 768 ? (
+            <div className="left-align-text">
+              {rows.map((row) => {
+                return (
+                  <div>
+                    <p>
+                      <strong>
+                        {row.key}) {row.value}
+                      </strong>
+                    </p>
+                    {columns.map((col) => {
+                      return (
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col}
+                              onClick={handleClick}
+                              className="m-input"
+                            />
+                            {col}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <form>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <td colSpan="2"></td>
+                    {columns.map((col) => {
+                      return (
+                        <td style={{ width: "120px", verticalAlign: "middle" }}>
+                          <strong>{col}</strong>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                  {rows.map((row) => {
                     return (
-                      <td style={{ width: "120px", verticalAlign: "middle" }}>
-                        <strong>{col}</strong>
-                      </td>
+                      <tr className="table-row">
+                        <td>{row.key}</td>
+                        <td className="left-align-text">{row.value}</td>
+                        {columns.map((col) => {
+                          return (
+                            <td className="input-cell">
+                              <label className="label-cell">
+                                <input
+                                  type="radio"
+                                  name={row.key}
+                                  value={col}
+                                  onClick={handleClick}
+                                ></input>
+                              </label>
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
-                {rows.map((row) => {
-                  return (
-                    <tr className="table-row">
-                      <td>{row.key}</td>
-                      <td className="left-align-text">{row.value}</td>
-                      {columns.map((col) => {
-                        return (
-                          <td className="input-cell">
-                            <label className="label-cell">
-                              <input
-                                type="radio"
-                                name={row.key}
-                                value={col}
-                                onClick={handleClick}
-                              ></input>
-                            </label>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </form>
+                </tbody>
+              </table>
+            </form>
+          )}
+
           <div className="back-next-btns">
             <Button
               variant="secondary"

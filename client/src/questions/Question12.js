@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Table, Breadcrumb } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question12() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -125,90 +130,138 @@ export default function Question12() {
     <BrowserRouter>
       <Route path="/eng-q12">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 13).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 13).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 13).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 13).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              How favourable are the following factors with regard to your
+              company’s ability to reduce greenhouse gas (GHG) emissions? <br />
+            </p>
+            <p
+              className="left-align-text"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>
+                (favourable factors are those that may help your company,
+                unfavourable factors are those that may hinder your company)
+              </i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            How favourable are the following factors with regard to your
-            company’s ability to reduce greenhouse gas (GHG) emissions? <br />
-            <i>
-              (favourable factors are those that may help your company,
-              unfavourable factors are those that may hinder your company)
-            </i>
-          </p>
-          <form>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <th colSpan="2"></th>
-                  {columns.map((column) => {
+          {width <= 768 ? (
+            <div className="left-align-text">
+              {rows.map((row) => {
+                return (
+                  <div>
+                    <p className="question">
+                      <strong>
+                        {row.key}) {row.value}
+                      </strong>
+                    </p>
+                    {columns.map((col) => {
+                      return (
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col.value}
+                              onClick={handleClick}
+                              className="m-input"
+                            />
+                            {col.value}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i className="fas fa-chevron-left back-arrow"></i>
+                  Back
+                </Button>
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i className="fas fa-chevron-right next-arrow"></i>
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <form>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th colSpan="2"></th>
+                    {columns.map((column) => {
+                      return <th>{column.value}</th>;
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => {
                     return (
-                      <th key={column.key}>
-                        <strong>{column.value}</strong>
-                      </th>
+                      <tr>
+                        <td>{row.key}</td>
+                        <td className="left-align-text">{row.value}</td>
+                        {columns.map((column) => {
+                          return (
+                            <td className="input-cell">
+                              <label className="label-cell">
+                                <input
+                                  type="radio"
+                                  name={row.key}
+                                  value={column.value}
+                                  onClick={handleClick}
+                                ></input>
+                              </label>
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
+                </tbody>
+              </table>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i className="fas fa-chevron-left back-arrow"></i>
+                  Back
+                </Button>
 
-                {rows.map((row) => {
-                  return (
-                    <tr key={row.key} className="table-row">
-                      <td>{row.key}</td>
-                      <td className="left-align-text">{row.value}</td>
-                      {columns.map((column) => {
-                        return (
-                          <td className="input-cell">
-                            <label className="label-cell">
-                              <input
-                                type="radio"
-                                name={row.key}
-                                value={column.value}
-                                onClick={handleClick}
-                              ></input>
-                            </label>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
-          </form>
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i className="fas fa-chevron-right next-arrow"></i>
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
       </Route>
     </BrowserRouter>

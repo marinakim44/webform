@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import ModalAlert from "../ModalAlert";
 import "../App.css";
+import "../Medium.css";
 import axios from "axios";
 
 export default function Question19() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -164,10 +169,10 @@ export default function Question19() {
   }
 
   return (
-    <BrowserRouter>
-      <Route>
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route>
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 20).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -182,9 +187,87 @@ export default function Question19() {
           <p className="left-align-text">
             What actions has your company taken, if any, to prepare for
             potential global tax policy change that would make all countries
-            commit to an effective corporate tax rate of at least 15%? <br />
-            (PLEASE SELECT ALL THAT APPLY)
+            commit to an effective corporate tax rate of at least 15%?
           </p>
+          <p
+            className="left-align-text"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ALL THAT APPLY</i>
+          </p>
+        </div>
+        {width <= 768 ? (
+          <div className="left-align-text">
+            {rows.map((row) => {
+              return (
+                <div className="m-div">
+                  <label>
+                    <input
+                      style={{ marginRight: "8px" }}
+                      type="checkbox"
+                      name={row.key}
+                      value={row.value}
+                      onChange={handleChange}
+                      disabled={none || dontknow ? true : false}
+                    />
+                    {row.value}
+                  </label>
+                </div>
+              );
+            })}
+            <div style={{ width: "100%" }}>
+              <Form.Control
+                type="text"
+                placeholder="Other (please specify)"
+                disabled={dontknow || none ? true : false}
+                onChange={handleChangeOther}
+                className="input-text"
+                style={{ marginTop: "2rem" }}
+              ></Form.Control>
+            </div>
+            <div className="back-next-btns">
+              <Button
+                variant={none ? "warning" : "light"}
+                type="button"
+                onClick={handleNone}
+                className="back-btn none-btn"
+                style={{ margin: 0, marginTop: "1rem" }}
+              >
+                NONE
+              </Button>
+              <Button
+                variant={dontknow ? "warning" : "light"}
+                type="button"
+                onClick={handleDontknow}
+                className="next-btn dontknow-btn"
+                style={{ margin: 0, marginTop: "1rem" }}
+              >
+                DON'T KNOW
+              </Button>
+            </div>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+                style={{ marginTop: "1rem" }}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Back
+              </Button>
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+                style={{ marginTop: "1rem" }}
+              >
+                Next
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
+          </div>
+        ) : (
           <Form style={{ textAlign: "left" }}>
             {rows.map((row) => {
               return (
@@ -215,7 +298,7 @@ export default function Question19() {
               variant={none ? "warning" : "light"}
               type="button"
               onClick={handleNone}
-              style={{ width: "15%", marginRight: "1rem" }}
+              style={{ width: "15.5%", marginRight: "1rem" }}
             >
               NONE
             </Button>
@@ -223,7 +306,7 @@ export default function Question19() {
               variant={dontknow ? "warning" : "light"}
               type="button"
               onClick={handleDontknow}
-              style={{ width: "15%", marginRight: "1rem" }}
+              style={{ width: "15.5%", marginRight: "1rem" }}
             >
               DON'T KNOW
             </Button>
@@ -247,8 +330,8 @@ export default function Question19() {
               </Button>
             </div>
           </Form>
-        </div>
-      </Route>
-    </BrowserRouter>
+        )}
+      </div>
+    </Route>
   );
 }

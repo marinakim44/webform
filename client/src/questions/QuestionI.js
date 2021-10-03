@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionI() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -99,10 +104,10 @@ export default function QuestionI() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-qi">
-        <div className="main">
-          <h2 style={{ textAlign: "left" }}>
+    <Route path="/eng-qi">
+      <div className="main">
+        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <h2 className="percent">
             {Math.round(((100 / 39) * 38).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
@@ -115,52 +120,67 @@ export default function QuestionI() {
           </div>
           <ModalAlert show={show} close={handleClose} />
           <p className="left-align-text">
-            What was your company’s revenue in the last fiscal year? (PLEASE
-            SELECT ONE RESPONSE)  
+            What was your company’s revenue in the last fiscal year?
           </p>
-          <Form>
-            <Form.Group style={{ width: "40%", textAlign: "left" }}>
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE</i>
+          </p>
+        </div>
+        <Form>
+          <Form.Group>
+            <div class="left-align-text">
               {rows.map((row) => {
                 return (
-                  <Form.Check
-                    type="radio"
-                    id={row}
-                    value={row}
-                    onClick={handleClick}
-                    name="option"
-                    label={row}
-                  ></Form.Check>
+                  <div
+                    className={
+                      width <= 768 ? "m-div" : "left-align-text-no-margin"
+                    }
+                  >
+                    <label className="m-label label-cell">
+                      <input
+                        type="radio"
+                        value={row}
+                        onClick={handleClick}
+                        name="option"
+                        className="m-input radio-input"
+                      ></input>
+                      {row}
+                    </label>
+                  </div>
                 );
               })}
-            </Form.Group>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
             </div>
-          </Form>
-        </div>
-      </Route>
-    </BrowserRouter>
+          </Form.Group>
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              Back
+            </Button>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              Next
+              <i
+                className="fas fa-chevron-right"
+                style={{ marginLeft: "8px" }}
+              ></i>
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </Route>
   );
 }

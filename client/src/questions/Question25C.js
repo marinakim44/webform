@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { Button, Breadcrumb, Table, Form, Col, Row } from "react-bootstrap";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Button, Table, Form, Col, Row } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import { useState } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question25C() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -254,148 +259,212 @@ export default function Question25C() {
     <BrowserRouter>
       <Route path="/eng-q25c">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 28).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 28).toString() + "%",
-              }}
-            ></div>
-          </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Which three of these outcomes do you think should be government
-            priorities in Kazakhstan?
-            <br />
-            (Select all that apply)
-          </p>
-          <Form>
-            <Row>
-              <Col>
-                <Table>
-                  <tbody>
-                    {rows
-                      .filter((row) => row.index < 8)
-                      .map((row) => {
-                        return (
-                          <tr>
-                            <td>{row.key}</td>
-                            <td className="left-align-text">{row.value}</td>
-                            <td>
-                              <label
-                                className="label-cell"
-                                style={{
-                                  width: "150px",
-                                }}
-                              >
-                                <input
-                                  type="checkbox"
-                                  name={row.key}
-                                  value={row.value}
-                                  onChange={handleClick}
-                                  disabled={none || dontknow ? true : false}
-                                ></input>
-                              </label>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </Table>
-              </Col>
-              <Col>
-                <Table>
-                  <tbody>
-                    {rows
-                      .filter((row) => row.index >= 8)
-                      .map((row) => {
-                        return (
-                          <tr>
-                            <td>{row.key}</td>
-                            <td
-                              className="left-align-text"
-                              onClick={handleClick}
-                            >
-                              {row.value}
-                            </td>
-                            <td>
-                              <label
-                                className="label-cell"
-                                style={{
-                                  width: "150px",
-                                }}
-                              >
-                                <input
-                                  type="checkbox"
-                                  name={row.key}
-                                  value={row.value}
-                                  onChange={handleClick}
-                                  disabled={none || dontknow ? true : false}
-                                ></input>
-                              </label>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </Table>
-              </Col>
-            </Row>
-            <Form.Control
-              type="text"
-              placeholder="Other (please specify)"
-              style={{ width: "33.5%", marginTop: "1rem" }}
-              onChange={handleChange}
-              value={other}
-              disabled={none || dontknow ? true : false}
-            ></Form.Control>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "left",
-                width: "33.5%",
-                marginTop: "2rem",
-              }}
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 28).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 28).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Which three of these outcomes do you think should be government
+              priorities in Kazakhstan?
+            </p>
+            <p
+              className="left-align-text"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
-              <Button
-                type="button"
-                variant={none ? "warning" : "light"}
-                style={{ marginRight: "2rem", width: "46%" }}
-                value="None of the above"
-                onClick={handleNone}
-              >
-                NONE OF THE ABOVE
-              </Button>
-            </div>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
+              <i>SELECT ALL THAT APPLY</i>
+            </p>
+          </div>
+          {width <= 768 ? (
+            <div className="left-align-text">
+              {rows.map((row) => {
+                return (
+                  <div className="m-div">
+                    <label className="m-label">
+                      <input
+                        className="m-input"
+                        type="checkbox"
+                        name={row.key}
+                        value={row.value}
+                        onChange={handleClick}
+                        disabled={none || dontknow ? true : false}
+                      ></input>
+                      {row.value}
+                    </label>
+                  </div>
+                );
+              })}
+              <div>
+                <Button
+                  type="button"
+                  variant={none ? "warning" : "light"}
+                  className="none-btn"
+                  value="None of the above"
+                  onClick={handleNone}
+                >
+                  NONE OF THE ABOVE
+                </Button>
+              </div>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
 
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
             </div>
-          </Form>
+          ) : (
+            <Form>
+              <Row>
+                <Col>
+                  <Table>
+                    <tbody>
+                      {rows
+                        .filter((row) => row.index < 8)
+                        .map((row) => {
+                          return (
+                            <tr>
+                              <td>{row.key}</td>
+                              <td className="left-align-text">{row.value}</td>
+                              <td>
+                                <label
+                                  className="label-cell"
+                                  style={{
+                                    width: "150px",
+                                  }}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    name={row.key}
+                                    value={row.value}
+                                    onChange={handleClick}
+                                    disabled={none || dontknow ? true : false}
+                                  ></input>
+                                </label>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </Table>
+                </Col>
+                <Col>
+                  <Table>
+                    <tbody>
+                      {rows
+                        .filter((row) => row.index >= 8)
+                        .map((row) => {
+                          return (
+                            <tr>
+                              <td>{row.key}</td>
+                              <td
+                                className="left-align-text"
+                                onClick={handleClick}
+                              >
+                                {row.value}
+                              </td>
+                              <td>
+                                <label
+                                  className="label-cell"
+                                  style={{
+                                    width: "150px",
+                                  }}
+                                >
+                                  <input
+                                    type="checkbox"
+                                    name={row.key}
+                                    value={row.value}
+                                    onChange={handleClick}
+                                    disabled={none || dontknow ? true : false}
+                                  ></input>
+                                </label>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </Table>
+                </Col>
+              </Row>
+              <Form.Control
+                type="text"
+                placeholder="Other (please specify)"
+                style={{ width: "33.5%", marginTop: "1rem" }}
+                onChange={handleChange}
+                value={other}
+                disabled={none || dontknow ? true : false}
+              ></Form.Control>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "left",
+                  width: "33.5%",
+                  marginTop: "2rem",
+                }}
+              >
+                <Button
+                  type="button"
+                  variant={none ? "warning" : "light"}
+                  style={{ marginRight: "2rem", width: "46%" }}
+                  value="None of the above"
+                  onClick={handleNone}
+                >
+                  NONE OF THE ABOVE
+                </Button>
+              </div>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
+
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
+            </Form>
+          )}
         </div>
       </Route>
     </BrowserRouter>

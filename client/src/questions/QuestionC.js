@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Breadcrumb, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function QuestionC() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -105,81 +110,106 @@ export default function QuestionC() {
     <BrowserRouter>
       <Route path="/eng-qc">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 32).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 32).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 32).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 32).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Which of these most accurately describes your role?
+            </p>
+            <p
+              className="question"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Which of these most accurately describes your role? (PLEASE SELECT
-            ONE RESPONSE)
-          </p>
           <Form>
-            <Form.Group style={{ width: "60%", textAlign: "left" }}>
-              <div>
-                <input
-                  type="radio"
-                  id="option1"
-                  value="CEO of a single or multi-entity parent company"
-                  onChange={handleClick}
-                  name="option"
-                ></input>
-                <label for="#option1" style={{ marginLeft: "8px" }}>
+            <Form.Group>
+              <div
+                className={
+                  width <= 768
+                    ? "left-align-text m-div"
+                    : "left-align-text-no-margin"
+                }
+              >
+                <label className="label-cell m-label">
+                  <input
+                    type="radio"
+                    value="CEO of a single or multi-entity parent company"
+                    onChange={handleClick}
+                    name="option"
+                    className="radio-input m-input"
+                  ></input>
                   CEO of a single or multi-entity parent company
                 </label>
               </div>
-              <div>
-                <input
-                  type="radio"
-                  id="option2"
-                  value="CEO of an entity within a multi-entity parent company"
-                  onChange={handleClick}
-                  name="option"
-                ></input>
-                <label for="#option2" style={{ marginLeft: "8px" }}>
+              <div
+                className={
+                  width <= 768
+                    ? "left-align-text m-div"
+                    : "left-align-text-no-margin"
+                }
+              >
+                <label className="label-cell m-label">
+                  <input
+                    type="radio"
+                    value="CEO of an entity within a multi-entity parent company"
+                    onChange={handleClick}
+                    name="option"
+                    className="radio-input m-input"
+                  ></input>
                   CEO of an entity within a multi-entity parent company
                 </label>
               </div>
-              <div>
-                <input
-                  type="radio"
-                  id="not"
-                  value="Prefer not to say"
-                  onChange={handleClick}
-                  name="option"
-                ></input>
-                <label for="#not" style={{ marginLeft: "8px" }}>
+              <div
+                className={
+                  width <= 768
+                    ? "left-align-text m-div"
+                    : "left-align-text-no-margin"
+                }
+              >
+                <label className="label-cell m-label">
+                  <input
+                    type="radio"
+                    value="Prefer not to say"
+                    onChange={handleClick}
+                    name="option"
+                    className="radio-input m-input"
+                  ></input>
                   Prefer not to say
                 </label>
               </div>
-              <div>
-                <input
-                  type="radio"
-                  name="option"
-                  value="Other"
-                  onChange={handleClickOther}
-                ></input>
-                <label for="#other" style={{ marginLeft: "8px" }}>
+              <div className="left-align-text m-div">
+                <label className="label-cell m-label">
+                  <input
+                    type="radio"
+                    name="option"
+                    value="Other"
+                    onChange={handleClickOther}
+                    className="radio-input m-input"
+                  ></input>
                   Other
                 </label>
               </div>
             </Form.Group>
             {isOther ? (
-              <Form.Group
-                style={{ width: "40%", textAlign: "left", marginTop: "1rem" }}
-              >
+              <Form.Group>
                 <Form.Control
                   type="text"
                   placeholder="Other (please specify)"
                   onChange={handleChange}
                   value={other}
+                  className="specify-other"
                 ></Form.Control>
               </Form.Group>
             ) : (

@@ -6,6 +6,10 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function Question3() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const rows = [
     {
       key: "A",
@@ -188,87 +192,151 @@ export default function Question3() {
     <BrowserRouter>
       <Route path="/eng-q3">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 4).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 4).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 4).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 4).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <div className="left-align-text">
+              <p>
+                How concerned are you about the following global threats
+                negatively impacting your company over the next 12 months?
+              </p>
+              <i>
+                <p
+                  className="question"
+                  style={{ margin: width <= 480 ? "1rem 0" : "" }}
+                >
+                  PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT
+                </p>
+              </i>
+            </div>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <div className="left-align-text">
-            <p>
-              How concerned are you about the following global threats
-              negatively impacting your company over the next 12 months?
-              <br /> (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
-            </p>
-          </div>
-
-          <form>
-            <table className="table">
-              <tbody>
-                <tr>
-                  <td colSpan="2"></td>
-                  {columns.map((col) => {
-                    return (
-                      <td key={col.key}>
-                        <strong>{col.value}</strong>
-                      </td>
-                    );
-                  })}
-                </tr>
-                {rows.map((row) => {
-                  return (
-                    <tr key={row.key} className="table-row">
-                      <td>{row.key}</td>
-                      <td className="left-align-text">
-                        <p style={{ margin: 0, padding: 0 }}>{row.value}</p>
-                        <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
-                      </td>
+          {width <= 768 ? (
+            <div>
+              {rows.map((row) => {
+                return (
+                  <>
+                    <div className="left-align-text">
+                      <p className="question">
+                        <strong>{row.value}</strong>
+                      </p>
+                      <p>{row.text}</p>
                       {columns.map((col) => {
                         return (
-                          <td className="input-cell" style={{ width: "100px" }}>
-                            <label className="label-cell">
+                          <div className="m-div">
+                            <label className="m-label">
                               <input
                                 type="radio"
                                 name={row.key}
+                                className="m-input"
                                 value={col.value}
                                 onChange={handleChange}
                               ></input>
+                              {col.value}
                             </label>
-                          </td>
+                          </div>
                         );
                       })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
+                    </div>
+                  </>
+                );
+              })}
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i className="fas fa-chevron-left back-arrow"></i>
+                  Back
+                </Button>
 
-              <Button
-                type="button"
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i class="fas fa-chevron-right next-arrow"></i>
-              </Button>
+                <Button
+                  type="button"
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i class="fas fa-chevron-right next-arrow"></i>
+                </Button>
+              </div>
             </div>
-          </form>
+          ) : (
+            <form>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <td colSpan="2"></td>
+                    {columns.map((col) => {
+                      return (
+                        <td key={col.key}>
+                          <strong>{col.value}</strong>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                  {rows.map((row) => {
+                    return (
+                      <tr key={row.key} className="table-row">
+                        <td>{row.key}</td>
+                        <td className="left-align-text">
+                          <p style={{ margin: 0, padding: 0 }}>{row.value}</p>
+                          <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
+                        </td>
+                        {columns.map((col) => {
+                          return (
+                            <td
+                              className="input-cell"
+                              style={{ width: "100px" }}
+                            >
+                              <label className="label-cell">
+                                <input
+                                  type="radio"
+                                  name={row.key}
+                                  value={col.value}
+                                  onChange={handleChange}
+                                ></input>
+                              </label>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i className="fas fa-chevron-left back-arrow"></i>
+                  Back
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i class="fas fa-chevron-right next-arrow"></i>
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
       </Route>
     </BrowserRouter>

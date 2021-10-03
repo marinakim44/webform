@@ -1,0 +1,157 @@
+/* responsive for tablets: width smaller than 768px */
+@media (max-width: 768px) {
+  p {
+    font-size: 16px;
+  }
+  .main {
+    text-align: center;
+    width: 80%;
+    margin: auto auto;
+  }
+  .main .intro-heading {
+    text-align: center;
+    margin: 4rem auto;
+    width: 80%;
+  }
+  .main .intro-text {
+    text-align: justify;
+    margin: 1rem auto 2rem;
+    width: 100%;
+  }
+  .lng-btn {
+    margin-top: 3rem;
+    height: 60px;
+    font-size: 22px;
+  }
+  .lng-menu {
+    width: 40%;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .lng-menu a {
+    text-decoration: none;
+    color: black;
+  }
+  .lng-div {
+    background-color: rgb(244, 244, 244);
+    border-radius: 8px;
+    height: 40px;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .m-credentials-input {
+    margin: 1rem 0;
+    height: 60px;
+  }
+  .percent {
+    text-align: left;
+    margin-top: 2rem;
+  }
+  .progressBarEmpty {
+    width: 100%;
+    margin: 0 auto 40px;
+    border-radius: 8px;
+    height: 10px;
+    background-color: lightgray;
+  }
+  .progressBarFilled {
+    background-color: #dc3545;
+    border-radius: 8px;
+    height: 10px;
+  }
+  .back-next-btns {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+  .lng-btn,
+  .back-btn,
+  .next-btn {
+    margin-top: 3rem;
+    width: 250px;
+    height: 60px;
+    font-size: 22px;
+  }
+  .question {
+    text-align: left;
+    margin-top: 2rem;
+  }
+  .left-align-text {
+    text-align: left;
+    vertical-align: middle;
+  }
+  .m-div {
+    padding: 12px;
+    background-color: rgb(244, 244, 244);
+    border-radius: 8px;
+    margin: 1rem 0;
+  }
+  .m-label {
+    width: 100%;
+  }
+  .m-label:hover {
+    cursor: pointer;
+  }
+  .m-input {
+    margin-right: 8px;
+    padding: 0;
+  }
+  .m-radio-div {
+    background-color: red;
+    height: 200px;
+  }
+  .sticky-sub-div {
+    background-color: white;
+    position: sticky;
+    top: 0;
+    left: 5%;
+    z-index: 100;
+    margin: 0 auto;
+    padding: 1rem 0;
+  }
+  .back-arrow {
+    margin-right: 10px;
+  }
+  .next-arrow {
+    margin-left: 10px;
+  }
+  .select-countries,
+  .input-text {
+    width: 100%;
+    margin: 1rem auto;
+    height: 60px;
+  }
+  .dontknow-div {
+    text-align: left;
+    margin-top: 2rem;
+  }
+  .dontknow-btn {
+    width: 250px;
+    height: 60px;
+    font-size: 22px;
+  }
+  .none-btn {
+    height: 60px;
+    width: 250px;
+  }
+  .m-input-22 {
+    height: 60px;
+    margin-bottom: 2rem;
+  }
+  .m-dontknow-22 {
+    height: 60px;
+    width: 100%;
+  }
+  .m-none-dontknow-div {
+    display: flex;
+    justify-content: space-between;
+  }
+  .m-none-btn,
+  .m-dontknow-btn {
+    height: 60px;
+    width: 40.5%;
+  }
+}

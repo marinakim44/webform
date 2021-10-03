@@ -1,11 +1,16 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState } from "react";
-import { Button, Form, Breadcrumb } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question8() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -49,95 +54,83 @@ export default function Question8() {
     <BrowserRouter>
       <Route path="/eng-q8">
         <div className="main">
-          <Breadcrumb className="nav-div">
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/">
-                Home
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <Link className="before-link" to="/eng-start">
-                Credentials
-              </Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Q1</Breadcrumb.Item>
-            <Breadcrumb.Item>Q2</Breadcrumb.Item>
-            <Breadcrumb.Item>Q3</Breadcrumb.Item>
-            <Breadcrumb.Item>Q4</Breadcrumb.Item>
-            <Breadcrumb.Item>Q5</Breadcrumb.Item>
-            <Breadcrumb.Item>Q6</Breadcrumb.Item>
-            <Breadcrumb.Item>Q7</Breadcrumb.Item>
-            <Breadcrumb.Item active>Q8</Breadcrumb.Item>
-          </Breadcrumb>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 9).toString() + "%",
-              }}
-            ></div>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 9).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 9).toString() + "%",
+                }}
+              ></div>
+            </div>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Has your company's approach to reducing greenhouse gas (GHG)
+              emissions been independently assessed and validated (e.g., by
+              SBTi)?
+            </p>
+            <p className="question">
+              <i>PLEASE SELECT ONE RESPONSE</i>
+            </p>
           </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p>
-            Q8. Has your company's approach to reducing greenhouse gas (GHG)
-            emissions been independently assessed and validated (e.g., by SBTi)?
-            (PLEASE SELECT ONE RESPONSE)
-          </p>
-          <Form>
-            {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={
-                    "Yes, my company’s approach to reducing GHG emissions has been independently assessed and validated"
-                  }
-                  style={{
-                    textAlign: "left",
-                  }}
+          <form className="left-align-text">
+            <div className="m-div">
+              <label className="m-label">
+                <input
+                  type="radio"
+                  className="m-input radio-input"
                   name="option"
                   value="yes"
                   onClick={handleClick}
                 />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={
-                    "No, but my company’s approach to reducing GHG emissions is currently being independently assessed and validated "
-                  }
-                  style={{
-                    textAlign: "left",
-                  }}
+                Yes, my company’s approach to reducing GHG emissions has been
+                independently assessed and validated
+              </label>
+            </div>
+
+            <div className="m-div">
+              <label className="m-label">
+                <input
+                  type="radio"
+                  className="m-input radio-input"
                   name="option"
-                  value="no but"
+                  value="yes"
                   onClick={handleClick}
                 />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={
-                    "No, my company’s approach to reducing GHG emissions has not been independently assessed and validated"
-                  }
-                  style={{
-                    textAlign: "left",
-                  }}
+                No, but my company’s approach to reducing GHG emissions is
+                currently being independently assessed and validated
+              </label>
+            </div>
+            <div className="m-div">
+              <label className="m-label radio-input">
+                <input
+                  type="radio"
+                  className="m-input radio-input"
                   name="option"
-                  value="no"
+                  value="yes"
                   onClick={handleClick}
                 />
-                <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label={"Don’t know"}
-                  style={{
-                    textAlign: "left",
-                  }}
+                No, my company’s approach to reducing GHG emissions has not been
+                independently assessed and validated
+              </label>
+            </div>
+
+            <div className="m-div">
+              <label className="m-label">
+                <input
+                  type="radio"
+                  className="m-input radio-input"
                   name="option"
                   value="don't know"
                   onClick={handleClick}
                 />
-              </div>
-            ))}
+                Don't know
+              </label>
+            </div>
+
             <div className="back-next-btns">
               <Button
                 variant="secondary"
@@ -163,7 +156,7 @@ export default function Question8() {
                 ></i>
               </Button>
             </div>
-          </Form>
+          </form>
         </div>
       </Route>
     </BrowserRouter>

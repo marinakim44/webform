@@ -6,6 +6,10 @@ import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question14() {
+  const width = window.screen.width;
+  window.onload = function () {
+    window.scrollTo(0, 0);
+  };
   const rows = [
     {
       key: "A",
@@ -130,94 +134,160 @@ export default function Question14() {
     <BrowserRouter>
       <Route path="/eng-q14">
         <div className="main">
-          <h2 style={{ textAlign: "left" }}>
-            {Math.round(((100 / 39) * 15).toString())}% completed
-          </h2>
-          <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{
-                width: ((100 / 39) * 15).toString() + "%",
-              }}
-            ></div>
-          </div>
-          <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Typically, how frequently does your company formally: assess its
-            major initiatives? change its major initiatives? update its
-            workforce about its major initiatives?
-            <br /> (PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT)
-          </p>
-          <form>
-            <Table bordered className="table">
-              <tbody>
-                <tr style={{ fontWeight: "bold", color: "#dc3545" }}>
-                  <td colSpan="2" rowSpan="2"></td>
-                  <td colSpan="3">Less often</td>
-                  <td rowSpan="2">Every year</td>
-                  <td colSpan="3">More often</td>
-                  <td rowSpan="2">Don't know</td>
-                </tr>
-                <tr>
-                  {columns
-                    .filter(
-                      (col) =>
-                        col.value !== "Every year" && col.value !== "Don't know"
-                    )
-                    .map((col) => {
-                      return <td>{col.value}</td>;
-                    })}
-                </tr>
-                {rows.map((row) => {
-                  return (
-                    <tr className="table-row">
-                      <td>{row.key}</td>
-                      <td className="left-align-text">{row.value}</td>
-                      {columns.map((col) => {
-                        return (
-                          <td className="input-cell">
-                            <label className="label-cell">
-                              <input
-                                type="radio"
-                                name={row.key}
-                                value={col.value}
-                                onClick={handleClick}
-                              ></input>
-                            </label>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
+          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+            <h2 className="percent">
+              {Math.round(((100 / 39) * 15).toString())}% completed
+            </h2>
+            <div className="progressBarEmpty">
+              <div
+                className="progressBarFilled"
+                style={{
+                  width: ((100 / 39) * 15).toString() + "%",
+                }}
+              ></div>
             </div>
-          </form>
+            <ModalAlert show={show} close={handleClose} />
+            <p className="left-align-text">
+              Typically, how frequently does your company formally: assess its
+              major initiatives? change its major initiatives? update its
+              workforce about its major initiatives?
+            </p>
+            <p
+              className="left-align-text"
+              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+            >
+              <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+            </p>
+          </div>
+          {width <= 768 ? (
+            <div className="left-align-text">
+              {rows.map((row) => {
+                return (
+                  <div>
+                    <p className="question">
+                      <strong>
+                        {row.key}) {row.value}
+                      </strong>
+                    </p>
+                    {columns.map((col) => {
+                      return (
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="radio"
+                              name={row.key}
+                              value={col.value}
+                              onClick={handleClick}
+                              className="m-input"
+                            />
+
+                            {col.value}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
+
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <form>
+              <Table bordered className="table">
+                <tbody>
+                  <tr style={{ fontWeight: "bold", color: "#dc3545" }}>
+                    <td colSpan="2" rowSpan="2"></td>
+                    <td colSpan="3">Less often</td>
+                    <td rowSpan="2">Every year</td>
+                    <td colSpan="3">More often</td>
+                    <td rowSpan="2">Don't know</td>
+                  </tr>
+                  <tr>
+                    {columns
+                      .filter(
+                        (col) =>
+                          col.value !== "Every year" &&
+                          col.value !== "Don't know"
+                      )
+                      .map((col) => {
+                        return <td>{col.value}</td>;
+                      })}
+                  </tr>
+                  {rows.map((row) => {
+                    return (
+                      <tr className="table-row">
+                        <td>{row.key}</td>
+                        <td className="left-align-text">{row.value}</td>
+                        {columns.map((col) => {
+                          return (
+                            <td className="input-cell">
+                              <label className="label-cell">
+                                <input
+                                  type="radio"
+                                  name={row.key}
+                                  value={col.value}
+                                  onClick={handleClick}
+                                ></input>
+                              </label>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </Table>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Back
+                </Button>
+
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
       </Route>
     </BrowserRouter>

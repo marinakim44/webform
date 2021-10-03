@@ -1,5 +1,6 @@
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import EngStart from "./EngStart";
 
 function RusStart() {
   return (
@@ -9,13 +10,16 @@ function RusStart() {
           <h1>Russian - survey start</h1>
           <p>Under development, please choose English language</p>
 
-          <Link to="/eng-start">
-            <Button variant="danger" className="next-btn">
-              Switch to English
-            </Button>
-          </Link>
+          <Button variant="danger" className="next-btn">
+            <Link to="/eng-start">Switch to English</Link>
+          </Button>
         </div>
       </Route>
+      <Switch>
+        <Route>
+          <EngStart />
+        </Route>
+      </Switch>
     </BrowserRouter>
   );
 }
