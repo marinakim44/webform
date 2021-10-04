@@ -100,8 +100,8 @@ export default function Question1() {
 
   return (
     <Route path="/eng-q1" exact>
-      <div className="main" style={{ height: "100%" }}>
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+      <div className="main">
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 2).toString())}% completed
           </h2>

@@ -96,7 +96,7 @@ export default function Question16() {
   return (
     <Route path="/eng-q16">
       <div className="main">
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 17).toString())}% completed
           </h2>
@@ -114,7 +114,7 @@ export default function Question16() {
             (P&L) statements do you personally examine?
           </p>
           <p
-            className="left-align-text"
+            className="question"
             style={{ margin: width <= 480 ? "1rem 0" : "" }}
           >
             <i>PLEASE SELECT ONE RESPONSE</i>

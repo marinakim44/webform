@@ -86,11 +86,7 @@ export default function App() {
       <div className="main-root">
         <Nav />
         <Route exact path="/">
-          <div
-            className="main"
-            style={{ height: width <= 480 ? "100%" : "" }}
-            style={{ height: width > 1200 ? "100vh" : "" }}
-          >
+          <div className="main">
             <div className="start-text">
               <h1 className="intro-heading">
                 25th Annual Global CEO Survey Questionnaire

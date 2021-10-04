@@ -110,7 +110,7 @@ export default function QuestionC() {
     <BrowserRouter>
       <Route path="/eng-qc">
         <div className="main">
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 32).toString())}% completed
             </h2>

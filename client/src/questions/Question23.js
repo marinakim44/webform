@@ -81,7 +81,7 @@ export default function Question23() {
     <BrowserRouter>
       <Route path="/eng-q23">
         <div className="main">
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 24).toString())}% completed
             </h2>
@@ -94,7 +94,7 @@ export default function Question23() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="left-align-text" style={{ marginBottom: "1rem" }}>
               How would you describe your company's typical forecasting accuracy
               regarding year-on-year revenue growth?
             </p>
@@ -147,7 +147,7 @@ export default function Question23() {
             <Form>
               <Table bordered>
                 <tbody>
-                  <tr style={{ color: "#dc3545", fontWeight: "bold" }}>
+                  <tr style={{ color: "#db536a", fontWeight: "bold" }}>
                     <td colSpan="3">Forecast is below actual</td>
                     <td rowSpan="2" style={{ verticalAlign: "middle" }}>
                       Forecast is within +-2% of actual

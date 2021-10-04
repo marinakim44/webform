@@ -113,7 +113,7 @@ export default function QuestionJ() {
   return (
     <Route path="/eng-qj">
       <div className="main">
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 40) * 39).toString())}% completed
           </h2>

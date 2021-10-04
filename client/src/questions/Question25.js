@@ -257,7 +257,7 @@ export default function Question25() {
     <BrowserRouter>
       <Route path="/eng-q25">
         <div className="main" style={{ height: "100%" }}>
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 26).toString())}% completed
             </h2>
@@ -275,7 +275,7 @@ export default function Question25() {
               priorities in Kazakhstan?
             </p>
             <p
-              className="left-align-text"
+              className="question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
               <i>PLEASE SELECT UP TO THREE RESPONSES ONLY</i>
@@ -424,34 +424,27 @@ export default function Question25() {
               <Form.Control
                 type="text"
                 placeholder="Other (please specify)"
-                style={{ width: "33.5%", marginTop: "1rem" }}
+                style={{ width: "415px", marginTop: "1rem" }}
                 onChange={handleChange}
                 value={other}
                 disabled={none || dontknow ? true : false}
               ></Form.Control>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "left",
-                  width: "33.5%",
-                  marginTop: "2rem",
-                }}
-              >
+              <div style={{ textAlign: "left", padding: "1rem 0" }}>
                 <Button
                   type="button"
                   variant={none ? "warning" : "light"}
-                  style={{ marginRight: "2rem", width: "100%" }}
                   value="None of the above"
                   onClick={handleNone}
+                  className="none-btn"
                 >
                   NONE OF THE ABOVE
                 </Button>
                 <Button
                   type="button"
                   variant={dontknow ? "warning" : "light"}
-                  style={{ width: "100%" }}
                   value="Don't know"
                   onClick={handleDontknow}
+                  className="dontknow-btn"
                 >
                   DON'T KNOW
                 </Button>

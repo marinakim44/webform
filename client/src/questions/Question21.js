@@ -101,8 +101,8 @@ export default function Question21() {
 
   return (
     <Route path="/eng-q21">
-      <div className="main" style={{ height: "100%" }}>
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+      <div className="main">
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 22).toString())}% completed
           </h2>
@@ -120,7 +120,7 @@ export default function Question21() {
             growth over: the next 12 months? the next three years?
           </p>
           <p
-            className="left-align-text"
+            className="question"
             style={{ margin: width <= 480 ? "1rem 0" : "" }}
           >
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>

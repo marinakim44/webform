@@ -170,8 +170,8 @@ export default function Question19() {
 
   return (
     <Route>
-      <div className="main" style={{ height: "100%" }}>
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+      <div className="main">
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 20).toString())}% completed
           </h2>
@@ -190,7 +190,7 @@ export default function Question19() {
             commit to an effective corporate tax rate of at least 15%?
           </p>
           <p
-            className="left-align-text"
+            className="question"
             style={{ margin: width <= 480 ? "1rem 0" : "" }}
           >
             <i>PLEASE SELECT ALL THAT APPLY</i>
@@ -302,11 +302,12 @@ export default function Question19() {
               onChange={handleChangeOther}
               style={{ margin: "1rem 0", width: "45%" }}
             ></Form.Control>
+
             <Button
               variant={none ? "warning" : "light"}
               type="button"
               onClick={handleNone}
-              style={{ width: "15.5%", marginRight: "1rem" }}
+              className="none-btn"
             >
               NONE
             </Button>
@@ -314,7 +315,7 @@ export default function Question19() {
               variant={dontknow ? "warning" : "light"}
               type="button"
               onClick={handleDontknow}
-              style={{ width: "15.5%", marginRight: "1rem" }}
+              className="dontknow-btn"
             >
               DON'T KNOW
             </Button>

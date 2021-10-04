@@ -135,7 +135,7 @@ function EngStart() {
   return (
     <Route path="/eng-start">
       <div className="main">
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 38) * 1).toString())}% completed
           </h2>

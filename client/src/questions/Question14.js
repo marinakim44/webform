@@ -133,8 +133,8 @@ export default function Question14() {
   return (
     <BrowserRouter>
       <Route path="/eng-q14">
-        <div className="main" style={{ height: "100%" }}>
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="main">
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 15).toString())}% completed
             </h2>
@@ -153,7 +153,7 @@ export default function Question14() {
               workforce about its major initiatives?
             </p>
             <p
-              className="left-align-text"
+              className="question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
               <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>

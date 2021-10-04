@@ -173,8 +173,8 @@ export default function Question24() {
   return (
     <BrowserRouter>
       <Route path="/eng-q24">
-        <div className="main" style={{ height: "100%" }}>
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="main">
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 25).toString())}% completed
             </h2>
@@ -195,7 +195,9 @@ export default function Question24() {
               <p style={{ margin: "0 auto 0 20px" }}>
                 B) personal annual bonus or long-term incentive plan?{" "}
               </p>
-              <br /> <i>PLEASE SELECT ALL THAT APPLY</i>
+            </p>
+            <p className="question">
+              <i>PLEASE SELECT ALL THAT APPLY</i>
             </p>
           </div>
 

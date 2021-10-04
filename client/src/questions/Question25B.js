@@ -332,7 +332,7 @@ export default function Question25B() {
     <BrowserRouter>
       <Route path="/eng-q25b">
         <div className="main" style={{ height: "100%" }}>
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 27).toString())}% completed
             </h2>
@@ -500,7 +500,7 @@ export default function Question25B() {
                 <Button
                   type="button"
                   variant={isNone ? "warning" : "light"}
-                  style={{ marginRight: "2rem", width: "44%" }}
+                  className="none-btn"
                   value="None of the above"
                   onClick={handleNone}
                 >

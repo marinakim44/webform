@@ -85,7 +85,7 @@ export default function Question28() {
     <BrowserRouter>
       <Route path="/eng-q28">
         <div className="main">
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 29).toString())}% completed
             </h2>

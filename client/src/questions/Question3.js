@@ -212,7 +212,8 @@ export default function Question3() {
               </p>
               <i>
                 <p className="question">
-                  PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT
+                  PLEASE SCROLL THE TABLE IF REQUIRED AND SELECT ONE RESPONSE
+                  FOR EACH STATEMENT
                 </p>
               </i>
             </div>
@@ -269,60 +270,62 @@ export default function Question3() {
               </div>
             </div>
           ) : (
-            <form style={{ overflow: "auto", height: "420px" }}>
-              <table className="table">
-                <thead
-                  style={{
-                    position: "sticky",
-                    top: 0,
-                    zIndex: 1,
-                    backgroundColor: "#fff",
-                  }}
-                >
-                  <tr style={{ position: "sticky", top: 0 }}>
-                    <td colSpan="2"></td>
-                    {columns.map((col) => {
+            <form>
+              <div style={{ overflow: "auto", height: "350px" }}>
+                <table className="table">
+                  <thead
+                    style={{
+                      position: "sticky",
+                      top: 0,
+                      zIndex: 1,
+                      backgroundColor: "#fff",
+                    }}
+                  >
+                    <tr style={{ position: "sticky", top: 0 }}>
+                      <td colSpan="2"></td>
+                      {columns.map((col) => {
+                        return (
+                          <td key={col.key}>
+                            <strong>{col.value}</strong>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row) => {
                       return (
-                        <td key={col.key}>
-                          <strong>{col.value}</strong>
-                        </td>
+                        <tr key={row.key} className="table-row">
+                          <td>{row.key}</td>
+                          <td className="left-align-text">
+                            <p style={{ margin: 0, padding: 0 }}>
+                              <strong>{row.value}</strong>
+                            </p>
+                            <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
+                          </td>
+                          {columns.map((col) => {
+                            return (
+                              <td
+                                className="input-cell"
+                                style={{ width: "100px" }}
+                              >
+                                <label className="label-cell">
+                                  <input
+                                    type="radio"
+                                    name={row.key}
+                                    value={col.value}
+                                    onChange={handleChange}
+                                  ></input>
+                                </label>
+                              </td>
+                            );
+                          })}
+                        </tr>
                       );
                     })}
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.map((row) => {
-                    return (
-                      <tr key={row.key} className="table-row">
-                        <td>{row.key}</td>
-                        <td className="left-align-text">
-                          <p style={{ margin: 0, padding: 0 }}>
-                            <strong>{row.value}</strong>
-                          </p>
-                          <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
-                        </td>
-                        {columns.map((col) => {
-                          return (
-                            <td
-                              className="input-cell"
-                              style={{ width: "100px" }}
-                            >
-                              <label className="label-cell">
-                                <input
-                                  type="radio"
-                                  name={row.key}
-                                  value={col.value}
-                                  onChange={handleChange}
-                                ></input>
-                              </label>
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
               <div className="back-next-btns">
                 <Button
                   variant="secondary"

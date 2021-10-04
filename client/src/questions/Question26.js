@@ -83,7 +83,7 @@ export default function Question26() {
     <BrowserRouter>
       <Route path="/eng-q26">
         <div className="main">
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 29).toString())}% completed
             </h2>
@@ -96,7 +96,7 @@ export default function Question26() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="left-align-text question">
               What changes have you noticed in Kazakhstan's investment climate
               during 2021?
             </p>

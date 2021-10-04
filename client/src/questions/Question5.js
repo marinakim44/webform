@@ -113,8 +113,8 @@ export default function Question5() {
   return (
     <BrowserRouter>
       <Route path="/eng-q5">
-        <div className="main" style={{ height: "100%" }}>
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="main">
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 6).toString())}% completed
             </h2>

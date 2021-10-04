@@ -133,7 +133,7 @@ export default function Question10B() {
   return (
     <Route path="/eng-q10b">
       <div className="main">
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 11).toString())}% completed
           </h2>

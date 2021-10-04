@@ -259,7 +259,7 @@ export default function Question25C() {
     <BrowserRouter>
       <Route path="/eng-q25c">
         <div className="main" style={{ height: "100%" }}>
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 28).toString())}% completed
             </h2>
@@ -277,7 +277,7 @@ export default function Question25C() {
               priorities in Kazakhstan?
             </p>
             <p
-              className="left-align-text"
+              className="question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
               <i>SELECT ALL THAT APPLY</i>
@@ -431,7 +431,7 @@ export default function Question25C() {
                 <Button
                   type="button"
                   variant={none ? "warning" : "light"}
-                  style={{ marginRight: "2rem", width: "46%" }}
+                  className="none-btn"
                   value="None of the above"
                   onClick={handleNone}
                 >

@@ -5,7 +5,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
 const port = process.env.PORT || 3001;
-// const port = 3001;
 
 app.use(express.json());
 app.use(cors());
@@ -52,7 +51,7 @@ const responseSchema = new mongoose.Schema(
     question2none: Boolean,
     question2dontknow: Boolean,
     question3: Object,
-    question4: Array,
+    question4: Object,
     question4other: String,
     question5: Object,
     question6: String,

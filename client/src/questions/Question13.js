@@ -79,7 +79,7 @@ export default function Question13() {
   return (
     <Route path="/eng-q13">
       <div className="main">
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 14).toString())}% completed
           </h2>
@@ -268,7 +268,7 @@ export default function Question13() {
                       <Dropdown.Toggle
                         variant="light"
                         id="dropdown-basic"
-                        className="lng-btn"
+                        className="select-btn"
                         style={{ margin: "2px" }}
                         disabled={isCheckedA ? true : false}
                       >
@@ -341,7 +341,7 @@ export default function Question13() {
                       <Dropdown.Toggle
                         variant="light"
                         id="dropdown-basic"
-                        className="lng-btn"
+                        className="select-btn"
                         style={{
                           margin: "2px",
                         }}

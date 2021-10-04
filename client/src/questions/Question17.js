@@ -149,8 +149,8 @@ export default function Question17() {
   return (
     <BrowserRouter>
       <Route path="/eng-q17">
-        <div className="main" style={{ height: "100%" }}>
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="main">
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 18).toString())}% completed
             </h2>
@@ -168,7 +168,7 @@ export default function Question17() {
               processes?
             </p>
             <p
-              className="left-align-text"
+              className="question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
               <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
@@ -225,63 +225,70 @@ export default function Question17() {
             </div>
           ) : (
             <form>
-              <Table bordered className="table">
-                <tbody>
-                  <tr style={{ fontWeight: "bold", color: "#dc3545" }}>
-                    <td colSpan="2" rowSpan="2"></td>
-                    <td colSpan="3">Less often</td>
-                    <td
-                      rowSpan="2"
-                      style={{ width: "120px", verticalAlign: "middle" }}
+              <div style={{ overflow: "auto", height: "320px" }}>
+                <Table bordered className="table">
+                  <thead
+                    style={{
+                      position: "sticky",
+                      top: 0,
+                      backgroundColor: "white",
+                      verticalAlign: "middle",
+                    }}
+                  >
+                    <tr
+                      style={{
+                        fontWeight: "bold",
+                        color: "#db536a",
+                      }}
                     >
-                      Every year
-                    </td>
-                    <td colSpan="3">More often</td>
-                    <td
-                      rowSpan="2"
-                      style={{ width: "120px", verticalAlign: "middle" }}
-                    >
-                      Not applicable / Don't know
-                    </td>
-                  </tr>
-                  <tr>
-                    {columns
-                      .filter(
-                        (col) =>
-                          col.value !== "Every year" &&
-                          col.value !== "Not applicable / Don't know"
-                      )
-                      .map((column) => {
-                        return (
-                          <td style={{ width: "120px" }}>{column.value}</td>
-                        );
-                      })}
-                  </tr>
-
-                  {rows.map((row) => {
-                    return (
-                      <tr className="table-row">
-                        <td>{row.key}</td>
-                        <td className="left-align-text">{row.value}</td>
-                        {columns.map((column) => {
-                          return (
-                            <td className="input-cell">
-                              <label className="label-cell">
-                                <input
-                                  type="radio"
-                                  name={row.key}
-                                  value={column.value}
-                                  onClick={handleClick}
-                                ></input>
-                              </label>
-                            </td>
-                          );
+                      <td colSpan="2" rowSpan="2"></td>
+                      <td colSpan="3">Less often</td>
+                      <td rowSpan="2" style={{ verticalAlign: "middle" }}>
+                        Every year
+                      </td>
+                      <td colSpan="3">More often</td>
+                      <td rowSpan="2" style={{ verticalAlign: "middle" }}>
+                        Not applicable / Don't know
+                      </td>
+                    </tr>
+                    <tr>
+                      {columns
+                        .filter(
+                          (col) =>
+                            col.value !== "Every year" &&
+                            col.value !== "Not applicable / Don't know"
+                        )
+                        .map((column) => {
+                          return <td>{column.value}</td>;
                         })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </Table>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((row) => {
+                      return (
+                        <tr className="table-row">
+                          <td>{row.key}</td>
+                          <td className="left-align-text">{row.value}</td>
+                          {columns.map((column) => {
+                            return (
+                              <td className="input-cell">
+                                <label className="label-cell">
+                                  <input
+                                    type="radio"
+                                    name={row.key}
+                                    value={column.value}
+                                    onClick={handleClick}
+                                  ></input>
+                                </label>
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              </div>
               <div className="back-next-btns">
                 <Button
                   variant="secondary"

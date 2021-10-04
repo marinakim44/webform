@@ -176,7 +176,7 @@ export default function Question22() {
   return (
     <Route path="/eng-q22">
       <div className="main">
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 23).toString())}% completed
           </h2>
@@ -194,7 +194,7 @@ export default function Question22() {
             assets (ROA) for the last fiscal year?
           </p>
           <p
-            className="left-align-text"
+            className="question"
             style={{
               margin: width <= 480 ? "1rem 0" : "",
             }}
@@ -252,14 +252,13 @@ export default function Question22() {
               </Col>
               <Col>
                 <Button
-                  variant="light"
                   name="revenue"
                   value="Don't know"
                   onClick={handleDontknowRevenue}
                   style={{
-                    backgroundColor: dontknowRevenue ? "#dc3545" : "",
+                    backgroundColor: dontknowRevenue ? "#db536a" : "#dedede",
                     color: dontknowRevenue ? "white" : "",
-                    borderColor: dontknowRevenue ? "#dc3545" : "",
+                    borderColor: dontknowRevenue ? "#db536a" : "",
                   }}
                   className="m-dontknow-22"
                 >

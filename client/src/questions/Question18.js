@@ -137,8 +137,8 @@ export default function Question18() {
 
   return (
     <Route path="/eng-q18">
-      <div className="main" style={{ height: "100%" }}>
-        <div className={width <= 768 ? "sticky-sub-div" : ""}>
+      <div className="main">
+        <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 19).toString())}% completed
           </h2>
@@ -156,7 +156,7 @@ export default function Question18() {
             agree/disagree with the following statements?
           </p>
           <p
-            className="left-align-text"
+            className="question"
             style={{ margin: width <= 480 ? "1rem 0" : "" }}
           >
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
@@ -214,44 +214,53 @@ export default function Question18() {
           </div>
         ) : (
           <form>
-            <table className="table">
-              <thead>
-                <tr>
-                  <td colSpan="2"></td>
-                  {columns.map((col) => {
+            <div style={{ overflow: "auto", height: "320px" }}>
+              <table className="table">
+                <thead
+                  style={{
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <tr>
+                    <td colSpan="2"></td>
+                    {columns.map((col) => {
+                      return (
+                        <td style={{ width: "110px", verticalAlign: "middle" }}>
+                          <strong>{col.value}</strong>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => {
                     return (
-                      <td style={{ width: "110px", verticalAlign: "middle" }}>
-                        <strong>{col.value}</strong>
-                      </td>
+                      <tr className="table-row">
+                        <td>{row.key}</td>
+                        <td className="left-align-text">{row.value}</td>
+                        {columns.map((col) => {
+                          return (
+                            <td className="input-cell">
+                              <label className="label-cell">
+                                <input
+                                  type="radio"
+                                  name={row.key}
+                                  value={col.value}
+                                  onClick={handleClick}
+                                ></input>
+                              </label>
+                            </td>
+                          );
+                        })}
+                      </tr>
                     );
                   })}
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => {
-                  return (
-                    <tr className="table-row">
-                      <td>{row.key}</td>
-                      <td className="left-align-text">{row.value}</td>
-                      {columns.map((col) => {
-                        return (
-                          <td className="input-cell">
-                            <label className="label-cell">
-                              <input
-                                type="radio"
-                                name={row.key}
-                                value={col.value}
-                                onClick={handleClick}
-                              ></input>
-                            </label>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
             <div className="back-next-btns">
               <Button
                 variant="secondary"

@@ -90,7 +90,7 @@ export default function QuestionD() {
     <BrowserRouter>
       <Route path="/eng-qd">
         <div className="main">
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 33).toString())}% completed
             </h2>

@@ -159,7 +159,7 @@ export default function QuestionA() {
     <BrowserRouter>
       <Route path="/eng-qa">
         <div className="main">
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 30).toString())}% completed
             </h2>
@@ -176,7 +176,7 @@ export default function QuestionA() {
               If willing, would you please record your gender below?
             </p>
             <p
-              className="left-align-text"
+              className="question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
               <i>PLEASE SELECT ONE RESPONSE</i>

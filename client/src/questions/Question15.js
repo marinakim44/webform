@@ -98,7 +98,7 @@ export default function Question15() {
     <BrowserRouter>
       <Route path="/eng-q15">
         <div className="main" style={{ height: "100%" }}>
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 16).toString())}% completed
             </h2>
@@ -117,7 +117,7 @@ export default function Question15() {
               proposed? commit significant resources to new major initiatives?
             </p>
             <p
-              className="left-align-text"
+              className="question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
               <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
@@ -161,7 +161,7 @@ export default function Question15() {
                     <td colSpan="2"></td>
                     {columns.map((col) => {
                       return (
-                        <td style={{ width: "120px", verticalAlign: "middle" }}>
+                        <td>
                           <strong>{col}</strong>
                         </td>
                       );

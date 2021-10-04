@@ -39,7 +39,7 @@ h1 {
 /* responsive for desktop: width larger than 769px */
 @media (min-width: 769px) {
   .nav-bar {
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
     margin-bottom: 0 !important;
     padding: 0;
@@ -57,25 +57,18 @@ h1 {
   .logo {
     width: 100px;
   }
-  .main-root {
-    height: 100%;
-    margin: 0 auto;
-    margin-top: 0 !important;
-    padding: 0;
-    top: 0;
-    width: 80%;
-  }
   .main {
     top: 90px;
     text-align: center;
     padding: 0.5rem 3rem;
     background-color: white;
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
     height: 100vh;
   }
   .main .intro-heading {
     text-align: center;
+    margin: 1rem auto;
   }
   .main .intro-text {
     text-align: justify;
@@ -89,10 +82,11 @@ h1 {
   }
   .percent {
     text-align: left;
+    margin-top: 1rem;
   }
   .progressBarEmpty {
     width: 100%;
-    margin: 0 auto 20px;
+    margin: 1rem auto 2rem;
     border-radius: 8px;
     height: 10px;
   }
@@ -141,7 +135,7 @@ h1 {
     position: sticky;
     top: 100px;
     z-index: 100;
-    padding: 1rem 0;
+    padding: 0;
     margin-top: 0;
   }
   .table {
@@ -241,8 +235,16 @@ h1 {
   .dontknow-btn {
     width: 200px;
   }
+  .none-btn {
+    width: 200px;
+    margin-right: 1rem;
+  }
   .question {
-    margin: 0;
+    margin: 1rem 0;
     text-align: left;
+  }
+  .select-btn {
+    background-color: #dedede;
+    width: 80%;
   }
 }
