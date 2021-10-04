@@ -1,5 +1,5 @@
 import { Route, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
@@ -9,9 +9,9 @@ import ModalAlert from "../ModalAlert";
 
 export default function Question1() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const rows = [
     {
       key: "A",
@@ -100,7 +100,7 @@ export default function Question1() {
 
   return (
     <Route path="/eng-q1" exact>
-      <div className="main">
+      <div className="main" style={{ height: "100%" }}>
         <div className={width <= 768 ? "sticky-sub-div" : ""}>
           <h2 className="percent">
             {Math.round(((100 / 39) * 2).toString())}% completed

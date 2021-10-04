@@ -2,15 +2,15 @@ import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question25B() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -331,7 +331,7 @@ export default function Question25B() {
   return (
     <BrowserRouter>
       <Route path="/eng-q25b">
-        <div className="main">
+        <div className="main" style={{ height: "100%" }}>
           <div className={width <= 768 ? "sticky-sub-div" : ""}>
             <h2 className="percent">
               {Math.round(((100 / 39) * 27).toString())}% completed

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import ModalAlert from "../ModalAlert";
 import "../App.css";
@@ -8,9 +8,9 @@ import axios from "axios";
 
 export default function Question19() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -170,7 +170,7 @@ export default function Question19() {
 
   return (
     <Route>
-      <div className="main">
+      <div className="main" style={{ height: "100%" }}>
         <div className={width <= 768 ? "sticky-sub-div" : ""}>
           <h2 className="percent">
             {Math.round(((100 / 39) * 20).toString())}% completed
@@ -231,16 +231,24 @@ export default function Question19() {
                 type="button"
                 onClick={handleNone}
                 className="back-btn none-btn"
-                style={{ margin: 0, marginTop: "1rem" }}
+                style={{
+                  margin: 0,
+                  marginTop: "1rem",
+                  height: width > 480 ? "60px" : "70px",
+                }}
               >
-                NONE
+                NONE OF THE ABOVE
               </Button>
               <Button
                 variant={dontknow ? "warning" : "light"}
                 type="button"
                 onClick={handleDontknow}
                 className="next-btn dontknow-btn"
-                style={{ margin: 0, marginTop: "1rem" }}
+                style={{
+                  margin: 0,
+                  marginTop: "1rem",
+                  height: width > 480 ? "60px" : "70px",
+                }}
               >
                 DON'T KNOW
               </Button>

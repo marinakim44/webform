@@ -3,14 +3,33 @@
   p {
     font-size: 16px;
   }
+  .nav-bar {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0;
+    padding-right: 1rem;
+    background-color: #2d2d2d;
+  }
+  .nav-bar-text {
+    color: #fff;
+    font-weight: bold;
+    width: 200px;
+    text-align: right;
+  }
+  .logo {
+    width: 100px;
+  }
   .main {
     text-align: center;
     width: 80%;
     margin: auto auto;
+    background-color: white;
+    padding: 1rem 2rem;
+    height: 100vh;
   }
   .main .intro-heading {
     text-align: center;
-    margin: 4rem auto;
+    margin: 2rem auto;
     width: 80%;
   }
   .main .intro-text {
@@ -19,7 +38,7 @@
     width: 100%;
   }
   .lng-btn {
-    margin-top: 3rem;
+    margin: 1rem;
     height: 60px;
     font-size: 22px;
   }
@@ -106,10 +125,8 @@
   .sticky-sub-div {
     background-color: white;
     position: sticky;
-    top: 0;
-    left: 5%;
+    top: 100px;
     z-index: 100;
-    margin: 0 auto;
     padding: 1rem 0;
   }
   .back-arrow {

@@ -2,14 +2,14 @@ import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../App.css";
 import ModalAlert from "../ModalAlert";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function Question3() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const rows = [
     {
       key: "A",
@@ -103,7 +103,7 @@ export default function Question3() {
         value === "Extremely concerned")
     ) {
       if (!listOfConcerns.includes("Macroeconomic volatility")) {
-        listOfConcerns.push("Macroeconomic volatility");
+        listOfConcerns.push("A Macroeconomic volatility");
       }
     }
     if (
@@ -113,7 +113,7 @@ export default function Question3() {
         value === "Extremely concerned")
     ) {
       if (!listOfConcerns.includes("Climate change")) {
-        listOfConcerns.push("Climate change");
+        listOfConcerns.push("B Climate change");
       }
     }
     if (
@@ -123,7 +123,7 @@ export default function Question3() {
         value === "Extremely concerned")
     ) {
       if (!listOfConcerns.includes("Social inequality")) {
-        listOfConcerns.push("Social inequality");
+        listOfConcerns.push("C Social inequality");
       }
     }
     if (
@@ -133,7 +133,7 @@ export default function Question3() {
         value === "Extremely concerned")
     ) {
       if (!listOfConcerns.includes("Geopolitical conflict")) {
-        listOfConcerns.push("Geopolitical conflict");
+        listOfConcerns.push("D Geopolitical conflict");
       }
     }
     if (
@@ -143,7 +143,7 @@ export default function Question3() {
         value === "Extremely concerned")
     ) {
       if (!listOfConcerns.includes("Cyber risks")) {
-        listOfConcerns.push("Cyber risks");
+        listOfConcerns.push("E Cyber risks");
       }
     }
     if (
@@ -153,7 +153,7 @@ export default function Question3() {
         value === "Extremely concerned")
     ) {
       if (!listOfConcerns.includes("Health risks")) {
-        listOfConcerns.push("Health risks");
+        listOfConcerns.push("F Health risks");
       }
     }
   };
@@ -192,7 +192,7 @@ export default function Question3() {
     <BrowserRouter>
       <Route path="/eng-q3">
         <div className="main">
-          <div className={width <= 768 ? "sticky-sub-div" : ""}>
+          <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 4).toString())}% completed
             </h2>
@@ -211,10 +211,7 @@ export default function Question3() {
                 negatively impacting your company over the next 12 months?
               </p>
               <i>
-                <p
-                  className="question"
-                  style={{ margin: width <= 480 ? "1rem 0" : "" }}
-                >
+                <p className="question">
                   PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT
                 </p>
               </i>
@@ -272,10 +269,17 @@ export default function Question3() {
               </div>
             </div>
           ) : (
-            <form>
+            <form style={{ overflow: "auto", height: "420px" }}>
               <table className="table">
-                <tbody>
-                  <tr>
+                <thead
+                  style={{
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                    backgroundColor: "#fff",
+                  }}
+                >
+                  <tr style={{ position: "sticky", top: 0 }}>
                     <td colSpan="2"></td>
                     {columns.map((col) => {
                       return (
@@ -285,12 +289,16 @@ export default function Question3() {
                       );
                     })}
                   </tr>
+                </thead>
+                <tbody>
                   {rows.map((row) => {
                     return (
                       <tr key={row.key} className="table-row">
                         <td>{row.key}</td>
                         <td className="left-align-text">
-                          <p style={{ margin: 0, padding: 0 }}>{row.value}</p>
+                          <p style={{ margin: 0, padding: 0 }}>
+                            <strong>{row.value}</strong>
+                          </p>
                           <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
                         </td>
                         {columns.map((col) => {

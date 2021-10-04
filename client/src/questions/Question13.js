@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Table, Dropdown, Row, Col } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
@@ -9,9 +9,9 @@ import ModalAlert from "../ModalAlert";
 
 export default function Question13() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -128,7 +128,7 @@ export default function Question13() {
                     style={{
                       width: "150px",
                       margin: "auto auto",
-                      height: "50px",
+                      height: width > 480 ? "60px" : "40px",
                     }}
                     disabled={isCheckedA ? true : false}
                   >
@@ -158,7 +158,7 @@ export default function Question13() {
                   variant={isCheckedA ? "warning" : "light"}
                   value="Don't know"
                   onClick={handleClickOtherA}
-                  style={{ height: "48px" }}
+                  style={{ height: width > 480 ? "60px" : "40px" }}
                   className="dropdown-btn"
                 >
                   Don't know
@@ -191,7 +191,7 @@ export default function Question13() {
                     style={{
                       width: "150px",
                       margin: "auto auto",
-                      height: "50px",
+                      height: width > 480 ? "60px" : "40px",
                     }}
                     disabled={isCheckedB ? true : false}
                   >
@@ -220,7 +220,7 @@ export default function Question13() {
                   variant={isCheckedB ? "warning" : "light"}
                   value="Don't know"
                   onClick={handleClickOtherB}
-                  style={{ height: "48px" }}
+                  style={{ height: width > 480 ? "60px" : "40px" }}
                   className="dropdown-btn"
                 >
                   Don't know

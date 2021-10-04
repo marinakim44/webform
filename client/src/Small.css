@@ -1,12 +1,16 @@
 /* responsive for mobile phone: width smaller than 480px */
 @media (max-width: 480px) {
   * {
-    font-size: 16px;
+    font-size: 12px;
+  }
+  .nav-bar {
+    width: 90%;
   }
   .main {
-    width: 80%;
+    width: 90%;
     text-align: center;
-    padding: 0;
+    padding: 1rem 2rem;
+    height: 100vh;
   }
   .main h1 {
     text-align: center;
@@ -25,15 +29,20 @@
     margin: 0 auto 2rem;
     font-size: 18px;
     text-align: center;
+    vertical-align: middle;
+    justify-content: center;
+    background-color: #db536a;
   }
   .lng-menu {
     width: 100%;
     margin: auto auto;
+    vertical-align: middle;
   }
   .lng-div {
     text-align: center;
     margin: 0;
     padding: 0;
+    vertical-align: middle;
   }
   .lng-div p {
     text-align: center;
@@ -58,9 +67,16 @@
     font-size: 16px;
     width: 140px;
   }
+  .next-btn {
+    background-color: #db536a;
+  }
+  .bak-btn {
+    background-color: #7d7d7d;
+  }
   .question {
     font-size: 14px;
     text-align: left;
+    margin: 0.5rem 0 1rem;
   }
   .input-text {
     height: 40px;

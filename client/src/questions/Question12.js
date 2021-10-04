@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
@@ -8,9 +8,9 @@ import ModalAlert from "../ModalAlert";
 
 export default function Question12() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -129,7 +129,7 @@ export default function Question12() {
   return (
     <BrowserRouter>
       <Route path="/eng-q12">
-        <div className="main">
+        <div className="main" style={{ height: "100%" }}>
           <div className={width <= 768 ? "sticky-sub-div" : ""}>
             <h2 className="percent">
               {Math.round(((100 / 39) * 13).toString())}% completed

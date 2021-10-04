@@ -1,11 +1,11 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import { components } from "react-select";
 import ModalAlert from "../ModalAlert";
 import Creatable from "react-select";
 import "../App.css";
 import { countries } from "../countries.js";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Menu = (props) => {
@@ -23,9 +23,9 @@ const Menu = (props) => {
 
 export default function Question2() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

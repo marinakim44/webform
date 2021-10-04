@@ -1,5 +1,5 @@
 import { Route, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ModalAlert from "./ModalAlert";
 import "./App.css";
 import { Button, Form } from "react-bootstrap";
@@ -7,9 +7,9 @@ import axios from "axios";
 
 function EngStart() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);

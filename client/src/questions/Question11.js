@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
@@ -9,9 +9,9 @@ import Switch from "react-bootstrap/esm/Switch";
 
 export default function Question11() {
   const width = window.screen.width;
-  window.onload = function () {
+  useEffect(() => {
     window.scrollTo(0, 0);
-  };
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
