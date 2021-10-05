@@ -11,6 +11,18 @@ export default function Question13() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q13-checkedA")) {
+      setIsCheckedA(localStorage.getItem("q13-checkedA"));
+    }
+    if (localStorage.getItem("q13-checkedB")) {
+      setIsCheckedB(localStorage.getItem("q13-checkedB"));
+    }
+    if (localStorage.getItem("q13a")) {
+      setInputA(localStorage.getItem("q13a"));
+    }
+    if (localStorage.getItem("q13b")) {
+      setInputB(localStorage.getItem("q13b"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -23,19 +35,23 @@ export default function Question13() {
 
   function handleSelectA(e) {
     setInputA(e);
+    localStorage.setItem("q13-checkedA", inputA);
   }
 
   function handleSelectB(e) {
     setInputB(e);
+    localStorage.setItem("q13-checkedB", inputB);
   }
 
   function handleClickOtherA(e) {
     setIsCheckedA(!isCheckedA);
     setInputA("");
+    localStorage.setItem("q13-checkedA", isCheckedA);
   }
   function handleClickOtherB(e) {
     setIsCheckedB(!isCheckedB);
     setInputB("");
+    localStorage.setItem("q13-checkedB", isCheckedB);
   }
 
   function handleSubmit(e) {
@@ -76,9 +92,13 @@ export default function Question13() {
     }
   }
 
+  function goBack() {
+    history.goBack();
+  }
+
   return (
     <Route path="/eng-q13">
-      <div className="main">
+      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 14).toString())}% completed
@@ -125,14 +145,10 @@ export default function Question13() {
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
-                    style={{
-                      width: "150px",
-                      margin: "auto auto",
-                      height: width > 480 ? "60px" : "40px",
-                    }}
                     disabled={isCheckedA ? true : false}
+                    className="dropdown-toggle"
                   >
-                    {inputA ? inputA : "Select number"}
+                    {inputA ? inputA : "Select"}
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
@@ -158,7 +174,6 @@ export default function Question13() {
                   variant={isCheckedA ? "warning" : "light"}
                   value="Don't know"
                   onClick={handleClickOtherA}
-                  style={{ height: width > 480 ? "60px" : "40px" }}
                   className="dropdown-btn"
                 >
                   Don't know
@@ -188,14 +203,10 @@ export default function Question13() {
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
-                    style={{
-                      width: "150px",
-                      margin: "auto auto",
-                      height: width > 480 ? "60px" : "40px",
-                    }}
+                    className="dropdown-toggle"
                     disabled={isCheckedB ? true : false}
                   >
-                    {inputB ? inputB : "Select number"}
+                    {inputB ? inputB : "Select"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item eventKey="1-5">1-5</Dropdown.Item>
@@ -220,7 +231,6 @@ export default function Question13() {
                   variant={isCheckedB ? "warning" : "light"}
                   value="Don't know"
                   onClick={handleClickOtherB}
-                  style={{ height: width > 480 ? "60px" : "40px" }}
                   className="dropdown-btn"
                 >
                   Don't know
@@ -228,11 +238,7 @@ export default function Question13() {
               </Col>
             </Row>
             <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
+              <Button variant="secondary" className="back-btn" onClick={goBack}>
                 <i
                   className="fas fa-chevron-left"
                   style={{ marginRight: "8px" }}
@@ -269,7 +275,6 @@ export default function Question13() {
                         variant="light"
                         id="dropdown-basic"
                         className="select-btn"
-                        style={{ margin: "2px" }}
                         disabled={isCheckedA ? true : false}
                       >
                         {inputA ? inputA : "Select number"}
@@ -342,9 +347,6 @@ export default function Question13() {
                         variant="light"
                         id="dropdown-basic"
                         className="select-btn"
-                        style={{
-                          margin: "2px",
-                        }}
                         disabled={isCheckedB ? true : false}
                       >
                         {inputB ? inputB : "Select number"}
@@ -389,11 +391,7 @@ export default function Question13() {
             </Table>
 
             <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
+              <Button variant="secondary" className="back-btn" onClick={goBack}>
                 <i
                   className="fas fa-chevron-left"
                   style={{ marginRight: "8px" }}

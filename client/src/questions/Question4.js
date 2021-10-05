@@ -242,8 +242,8 @@ export default function Question4() {
               {concerns.map((concern) => {
                 return (
                   <div>
-                    <p className="question">
-                      <strong>{concern}</strong>
+                    <p className="question" style={{ color: "#db536a" }}>
+                      <strong>{concern.substring(2)}</strong>
                     </p>
                     {rows.map((row) => {
                       return (
@@ -255,6 +255,14 @@ export default function Question4() {
                               name={concern}
                               value={row.key}
                               onChange={handleClick}
+                              disabled={
+                                input[concern.slice(0, 1)].length === 3 &&
+                                !input[concern.slice(0, 1)].includes(
+                                  `${concern.slice(0, 1)}: ${row.key}`
+                                )
+                                  ? true
+                                  : false
+                              }
                             ></input>
                             {row.value}
                           </label>
@@ -267,8 +275,8 @@ export default function Question4() {
               <Form.Group>
                 <Form.Control
                   placeholder="Other (please specify)"
-                  // onChange={handleChange}
-                  // value={other}
+                  onChange={handleChange}
+                  value={other}
                   className="input-text"
                 ></Form.Control>
               </Form.Group>
@@ -276,7 +284,7 @@ export default function Question4() {
                 <Button
                   variant="secondary"
                   className="back-btn"
-                  onClick={() => history.goBack()}
+                  onClick={() => history.push("/eng-q3")}
                 >
                   <i
                     className="fas fa-chevron-left"
@@ -288,7 +296,7 @@ export default function Question4() {
                 <Button
                   variant="danger"
                   className="next-btn"
-                  // onClick={handleSubmit}
+                  onClick={handleSubmit}
                 >
                   Next
                   <i
@@ -356,7 +364,7 @@ export default function Question4() {
                 <Button
                   variant="secondary"
                   className="back-btn"
-                  onClick={() => history.goBack()}
+                  onClick={() => history.push("/eng-q3")}
                 >
                   <i
                     className="fas fa-chevron-left"

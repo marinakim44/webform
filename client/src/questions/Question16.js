@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import "../App.css";
 import { useState, useEffect } from "react";
@@ -9,6 +9,13 @@ export default function Question16() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q16checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q16checked")));
+    }
+    if (localStorage.getItem("q16")) {
+      setInput(localStorage.getItem("q16"));
+    }
+    console.log(checked, input);
   }, []);
   const rows = [
     {
@@ -49,9 +56,32 @@ export default function Question16() {
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+    option4: false,
+    option5: false,
+    option6: false,
+    option7: false,
+    option8: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    console.log(checked, input);
+    const { value } = e.target;
+    setInput(value);
+
+    //SAVING PREVIOUS INPUT
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
+
+    localStorage.setItem("q16checked", JSON.stringify(checked));
+    console.log(checked, input);
   }
 
   function handleSubmit(e) {
@@ -129,9 +159,10 @@ export default function Question16() {
                     <input
                       type="radio"
                       name="option"
-                      value={row.value}
+                      value={`option${row.key}`}
                       onChange={handleClick}
                       className="m-input"
+                      checked={checked[`option${row.key}`] ? true : false}
                     />
                     {row.value}
                   </label>
@@ -149,10 +180,10 @@ export default function Question16() {
                       <input
                         type="radio"
                         name="option"
-                        value={row.value}
-                        style={{ marginRight: "8px" }}
+                        value={`option${row.key}`}
                         onChange={handleClick}
-                        className="radio-input"
+                        className="m-input radio-input"
+                        checked={checked[`option${row.key}`] ? true : false}
                       ></input>
                       {row.value}
                     </label>

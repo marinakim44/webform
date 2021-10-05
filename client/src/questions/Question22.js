@@ -18,7 +18,6 @@ export default function Question22() {
   const [revenue, setRevenue] = useState("");
   const [profit, setProfit] = useState("");
   const [returnInput, setReturnInput] = useState("");
-
   const [dontknowRevenue, setDontknowRevenue] = useState(false);
   const [dontknowProfit, setDontknowProfit] = useState(false);
   const [dontknowReturn, setDontknowReturn] = useState(false);
@@ -175,7 +174,7 @@ export default function Question22() {
 
   return (
     <Route path="/eng-q22">
-      <div className="main">
+      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 23).toString())}% completed
@@ -251,19 +250,18 @@ export default function Question22() {
                 />
               </Col>
               <Col>
-                <Button
+                <button
                   name="revenue"
                   value="Don't know"
                   onClick={handleDontknowRevenue}
                   style={{
-                    backgroundColor: dontknowRevenue ? "#db536a" : "#dedede",
+                    backgroundColor: dontknowRevenue ? "#db536a" : "",
                     color: dontknowRevenue ? "white" : "",
-                    borderColor: dontknowRevenue ? "#db536a" : "",
                   }}
                   className="m-dontknow-22"
                 >
                   Don't know
-                </Button>
+                </button>
               </Col>
             </Row>
             <Row>
@@ -307,20 +305,18 @@ export default function Question22() {
                 />
               </Col>
               <Col>
-                <Button
-                  variant="light"
+                <button
                   name="profit"
                   value="Don't know"
                   onClick={handleDontknowProfit}
                   style={{
-                    backgroundColor: dontknowProfit ? "#dc3545" : "",
+                    backgroundColor: dontknowProfit ? "#db536a" : "",
                     color: dontknowProfit ? "white" : "",
-                    borderColor: dontknowProfit ? "#dc3545" : "",
                   }}
                   className="m-dontknow-22"
                 >
                   Don't know
-                </Button>
+                </button>
               </Col>
             </Row>
             <Row>
@@ -364,20 +360,18 @@ export default function Question22() {
                 />
               </Col>
               <Col>
-                <Button
-                  variant="light"
+                <button
                   name="return"
                   value="Don't know"
                   onClick={handleDontknowReturn}
                   style={{
-                    backgroundColor: dontknowReturn ? "#dc3545" : "",
-                    color: dontknowReturn ? "white" : "",
-                    borderColor: dontknowReturn ? "#dc3545" : "",
+                    backgroundColor: dontknowReturn ? "#db536a" : "#dedede",
+                    color: dontknowReturn ? "white" : "black",
                   }}
                   className="m-dontknow-22"
                 >
                   Don't know
-                </Button>
+                </button>
               </Col>
             </Row>
             <div className="back-next-btns">

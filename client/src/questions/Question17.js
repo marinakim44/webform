@@ -179,7 +179,7 @@ export default function Question17() {
               {rows.map((row) => {
                 return (
                   <div>
-                    <p className="question">
+                    <p className="question" style={{ color: "#db536a" }}>
                       <strong>
                         {row.key}) {row.value}
                       </strong>

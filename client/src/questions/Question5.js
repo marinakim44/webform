@@ -8,8 +8,18 @@ import ModalAlert from "../ModalAlert";
 
 export default function Question5() {
   const width = window.screen.width;
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q5checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q5checkedA")));
+    }
+    if (localStorage.getItem("q5checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q5checkedB")));
+    }
+    if (localStorage.getItem("q5")) {
+      setInput(JSON.parse(localStorage.getItem("q5")));
+    }
   }, []);
   const rows = [
     {
@@ -25,19 +35,19 @@ export default function Question5() {
   ];
   const columns = [
     {
-      key: "yes",
+      key: "1",
       value: "Yes, my company has made this commitment",
     },
     {
-      key: "no but",
+      key: "2",
       value: "No, but my company is working toward making this commitment",
     },
     {
-      key: "no",
+      key: "3",
       value: "No, my company has not made this commitment",
     },
     {
-      key: "dontknow",
+      key: "4",
       value: "Don't know",
     },
   ];
@@ -49,15 +59,50 @@ export default function Question5() {
     A: "",
     B: "",
   });
+  const [checkedA, setCheckedA] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+  });
+  const [checkedB, setCheckedB] = useState({
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+  });
 
   function handleChange(e) {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prevInput) => {
       return {
         ...prevInput,
         [name]: value,
       };
     });
+
+    //SAVING PREVIOUS INPUT
+    if (name === "A") {
+      Object.keys(checkedA)
+        .filter((v) => v === index)
+        .map((v) => (checkedA[v] = true));
+      Object.keys(checkedA)
+        .filter((v) => v !== index)
+        .map((v) => (checkedA[v] = false));
+
+      localStorage.setItem("q5checkedA", JSON.stringify(checkedA));
+    }
+    if (name === "B") {
+      Object.keys(checkedB)
+        .filter((v) => v === index)
+        .map((v) => (checkedB[v] = true));
+      Object.keys(checkedB)
+        .filter((v) => v !== index)
+        .map((v) => (checkedB[v] = false));
+
+      localStorage.setItem("q5checkedB", JSON.stringify(checkedB));
+    }
   }
 
   function handleSubmit(e) {
@@ -82,31 +127,39 @@ export default function Question5() {
 
       axios.post("/allinputs", data);
 
-      if (input.B === "yes") {
+      if (input.B === "1") {
         history.push("/eng-q6");
-      } else if (input.B === "no but") {
+      } else if (input.B === "2") {
         history.push("/eng-q7");
-      } else if (input.B === "no") {
-        if (input.A === "yes") {
+      } else if (input.B === "3") {
+        if (input.A === "1") {
           history.push("/eng-q10a");
-        } else if (input.A === "no but") {
+        } else if (input.A === "2") {
           history.push("/eng-q10b");
-        } else if (input.A === "dontknow" || input.A === "no") {
+        } else if (input.A === "4" || input.A === "3") {
           history.push("/eng-q11");
         }
-      } else if (input.B === "dontknow") {
-        if (input.A === "yes") {
+      } else if (input.B === "4") {
+        if (input.A === "1") {
           history.push("/eng-q10a");
-        } else if (input.A === "no but") {
+        } else if (input.A === "2") {
           history.push("/eng-q10b");
-        } else if (input.A === "dontknow") {
+        } else if (input.A === "4") {
           history.push("/eng-q12");
-        } else if (input.A === "no") {
+        } else if (input.A === "3") {
           history.push("/eng-q11");
         }
       }
     } else {
       handleShow();
+    }
+  }
+
+  function goBack() {
+    if (JSON.parse(localStorage.getItem("q3-concerns")).length > 0) {
+      history.push("/eng-q4");
+    } else {
+      history.push("/eng-q3");
     }
   }
 
@@ -150,7 +203,7 @@ export default function Question5() {
               {rows.map((row) => {
                 return (
                   <div>
-                    <p className="question">
+                    <p className="question" style={{ color: "#db536a" }}>
                       <strong>
                         {row.key}) {row.value}
                       </strong>
@@ -165,6 +218,12 @@ export default function Question5() {
                               value={col.key}
                               type="radio"
                               onChange={handleChange}
+                              checked={
+                                row.key === "A"
+                                  ? checkedA[`${row.key}${col.key}`]
+                                  : checkedB[`${row.key}${col.key}`]
+                              }
+                              autoComplete="on"
                             ></input>
                             {col.value}
                           </label>
@@ -231,6 +290,12 @@ export default function Question5() {
                                   value={col.key}
                                   type="radio"
                                   onChange={handleChange}
+                                  checked={
+                                    row.key === "A"
+                                      ? checkedA[`${row.key}${col.key}`]
+                                      : checkedB[`${row.key}${col.key}`]
+                                  }
+                                  autoComplete="on"
                                 ></input>
                               </label>
                             </td>
@@ -245,7 +310,7 @@ export default function Question5() {
                 <Button
                   variant="secondary"
                   className="back-btn"
-                  onClick={() => history.goBack()}
+                  onClick={goBack}
                 >
                   <i className="fas fa-chevron-left back-arrow"></i>
                   Back

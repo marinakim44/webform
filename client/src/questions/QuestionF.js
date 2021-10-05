@@ -124,13 +124,13 @@ export default function QuestionF() {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 35).toString())}% completed
+              {Math.round(((100 / 39) * 37).toString())}% completed
             </h2>
             <div className="progressBarEmpty">
               <div
                 className="progressBarFilled"
                 style={{
-                  width: ((100 / 39) * 35).toString() + "%",
+                  width: ((100 / 39) * 37).toString() + "%",
                 }}
               ></div>
             </div>

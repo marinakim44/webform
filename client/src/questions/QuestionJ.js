@@ -112,7 +112,7 @@ export default function QuestionJ() {
 
   return (
     <Route path="/eng-qj">
-      <div className="main">
+      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 40) * 39).toString())}% completed
@@ -174,11 +174,7 @@ export default function QuestionJ() {
               Back
             </Button>
 
-            <Button
-              variant="success"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
+            <Button className="finish-btn" onClick={handleSubmit}>
               <i className="fas fa-check" style={{ marginRight: "8px" }}></i>
               <Link
                 to="/eng-finish"

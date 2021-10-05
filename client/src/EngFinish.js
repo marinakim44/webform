@@ -1,21 +1,24 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { useEffect } from "react";
 import "./App.css";
-import App from "./App";
-import QuestionJ from "./questions/QuestionJ";
 
 export default function EngFinish() {
+  const width = window.screen.width;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Route path="/eng-finish">
-      <div className="main">
+      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 40) * 40).toString())}% completed
+            {Math.round(((100 / 39) * 39).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 40) * 40).toString() + "%",
+                width: ((100 / 39) * 39).toString() + "%",
               }}
             ></div>
           </div>

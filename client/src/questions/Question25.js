@@ -145,8 +145,18 @@ export default function Question25() {
           input.push(`${name}: ${value}`);
         }
       } else {
-        setChecked(false);
-        setDisabled(true);
+        setChecked((prev) => {
+          return {
+            ...prev,
+            [name]: !checked[name],
+          };
+        });
+        setDisabled((prev) => {
+          return {
+            ...prev,
+            [name]: !disabled[name],
+          };
+        });
       }
     }
 
@@ -156,6 +166,31 @@ export default function Question25() {
   const handleChange = (e) => {
     setOther(e.target.value);
   };
+
+  // const handleNone = () => {
+  //   setNone(!none);
+  //   console.log(none);
+  //   if (!none) {
+  //     setNone(!none);
+  //     setDontknow(false);
+  //     setInput([]);
+  //     setChecked(false);
+  //     setDisabled(true);
+  //   } else {
+  //     setNone(!none);
+  //   }
+  // };
+
+  // const handleDontknow = () => {
+  //   setDontknow(!dontknow);
+
+  //   if (!dontknow) {
+  //     setNone(false);
+  //     setInput([]);
+  //     setChecked(false);
+  //     setDisabled(true);
+  //   }
+  // };
 
   const handleNone = () => {
     if (dontknow) {
@@ -242,8 +277,8 @@ export default function Question25() {
         q22: JSON.parse(localStorage.getItem("q22")),
         q23: localStorage.getItem("q23"),
         q24: JSON.parse(localStorage.getItem("q24")),
-        q25none: localStorage.getItem("q25none"),
-        q25dontknow: localStorage.getItem("q25dontknow"),
+        q25none: localStorage.getItem("q25-none"),
+        q25dontknow: localStorage.getItem("q25-dontknow"),
         q25other: localStorage.getItem("q25-other"),
         q25: JSON.parse(localStorage.getItem("q25")),
       };
@@ -292,7 +327,15 @@ export default function Question25() {
                         name={row.key}
                         value={row.value}
                         onChange={handleClick}
-                        disabled={none || dontknow ? true : false}
+                        checked={checked[row.key] ? true : false}
+                        disabled={
+                          (input.length === 3 &&
+                            !input.includes(`${row.key}: ${row.value}`)) ||
+                          none ||
+                          dontknow
+                            ? true
+                            : false
+                        }
                         className="m-input"
                       ></input>
                       {row.value}
@@ -307,9 +350,8 @@ export default function Question25() {
                   value="None of the above"
                   onClick={handleNone}
                   className="m-none-btn none-btn"
-                  style={{ height: width > 480 ? "60px" : "70px" }}
                 >
-                  NONE
+                  NONE OF THE ABOVE
                 </Button>
                 <Button
                   type="button"
@@ -317,7 +359,6 @@ export default function Question25() {
                   value="Don't know"
                   onClick={handleDontknow}
                   className="m-dontknow-btn dontknow-btn"
-                  style={{ height: width > 480 ? "60px" : "70px" }}
                 >
                   DON'T KNOW
                 </Button>
@@ -373,7 +414,18 @@ export default function Question25() {
                                     name={row.key}
                                     value={row.value}
                                     onChange={handleClick}
-                                    disabled={none || dontknow ? true : false}
+                                    checked={checked[row.key] ? true : false}
+                                    disabled={
+                                      (input.length === 3 &&
+                                        !input.includes(
+                                          `${row.key}: ${row.value}`
+                                        )) ||
+                                      none ||
+                                      dontknow
+                                        ? true
+                                        : false
+                                    }
+                                    className="m-input"
                                   ></input>
                                 </label>
                               </td>

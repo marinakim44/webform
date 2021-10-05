@@ -187,25 +187,6 @@ export default function Question10B() {
                 </div>
               );
             })}
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i class="fas fa-chevron-right next-arrow"></i>
-              </Button>
-            </div>
           </div>
         ) : (
           <form>
@@ -247,6 +228,21 @@ export default function Question10B() {
             </table>
           </form>
         )}
+        <div className="back-next-btns">
+          <Button
+            variant="secondary"
+            className="back-btn"
+            onClick={() => history.goBack()}
+          >
+            <i className="fas fa-chevron-left back-arrow"></i>
+            Back
+          </Button>
+
+          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
+            Next
+            <i class="fas fa-chevron-right next-arrow"></i>
+          </Button>
+        </div>
       </div>
     </Route>
   );

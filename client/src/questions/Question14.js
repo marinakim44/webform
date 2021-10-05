@@ -6,10 +6,23 @@ import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
 export default function Question14() {
+  const history = useHistory();
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    if (localStorage.getItem("q14-checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q14-checkedA")));
+    }
+    if (localStorage.getItem("q14-checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q14-checkedB")));
+    }
+    if (localStorage.getItem("q14-checkedC")) {
+      setCheckedC(JSON.parse(localStorage.getItem("q14-checkedC")));
+    }
+    if (localStorage.getItem("q14")) {
+      setInput(JSON.parse(localStorage.getItem("q14")));
+    }
+  }, [history]);
   const rows = [
     {
       key: "A",
@@ -71,7 +84,6 @@ export default function Question14() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const history = useHistory();
   const [input, setInput] = useState({
     A: "",
     B: "",
@@ -79,23 +91,101 @@ export default function Question14() {
   });
 
   const [checked, setChecked] = useState([]);
+  const [checkedA, setCheckedA] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+    A7: false,
+    A8: false,
+  });
+  const [checkedB, setCheckedB] = useState({
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+    B7: false,
+    B8: false,
+  });
+  const [checkedC, setCheckedC] = useState({
+    C1: false,
+    C2: false,
+    C3: false,
+    C4: false,
+    C5: false,
+    C6: false,
+    C7: false,
+    C8: false,
+  });
 
   function handleClick(e) {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prevInput) => {
       return {
         ...prevInput,
         [name]: value,
       };
     });
+
     if (!checked.includes(name)) {
       checked.push(name);
+    }
+
+    //SAVING PREVIOUS INPUT
+    if (name === "A") {
+      Object.keys(checkedA)
+        .filter((v) => v === index)
+        .map((v) => (checkedA[v] = true));
+      Object.keys(checkedA)
+        .filter((v) => v !== index)
+        .map((v) => (checkedA[v] = false));
+
+      localStorage.setItem("q14-checkedA", JSON.stringify(checkedA));
+    }
+    if (name === "B") {
+      Object.keys(checkedB)
+        .filter((v) => v === index)
+        .map((v) => (checkedB[v] = true));
+      Object.keys(checkedB)
+        .filter((v) => v !== index)
+        .map((v) => (checkedB[v] = false));
+
+      localStorage.setItem("q14-checkedB", JSON.stringify(checkedB));
+    }
+    if (name === "C") {
+      Object.keys(checkedC)
+        .filter((v) => v === index)
+        .map((v) => (checkedC[v] = true));
+      Object.keys(checkedC)
+        .filter((v) => v !== index)
+        .map((v) => (checkedC[v] = false));
+
+      localStorage.setItem("q14-checkedC", JSON.stringify(checkedC));
+    }
+  }
+
+  function goBack() {
+    history.goBack();
+    if (localStorage.getItem("q14-checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q14-checkedA")));
+    }
+    if (localStorage.getItem("q14-checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q14-checkedB")));
+    }
+    if (localStorage.getItem("q14-checkedC")) {
+      setCheckedC(JSON.parse(localStorage.getItem("q14-checkedC")));
+    }
+    if (localStorage.getItem("q14")) {
+      setInput(JSON.parse(localStorage.getItem("q14")));
     }
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-
     if (checked.length < 3) {
       handleShow();
     } else {
@@ -164,7 +254,7 @@ export default function Question14() {
               {rows.map((row) => {
                 return (
                   <div>
-                    <p className="question">
+                    <p className="question" style={{ color: "#db536a" }}>
                       <strong>
                         {row.key}) {row.value}
                       </strong>
@@ -176,9 +266,19 @@ export default function Question14() {
                             <input
                               type="radio"
                               name={row.key}
-                              value={col.value}
+                              value={col.key}
                               onClick={handleClick}
                               className="m-input"
+                              checked={
+                                row.key === "A"
+                                  ? checkedA[`${row.key}${col.key}`]
+                                  : row.key === "B"
+                                  ? checkedB[`${row.key}${col.key}`]
+                                  : row.key === "C"
+                                  ? checkedC[`${row.key}${col.key}`]
+                                  : ""
+                              }
+                              autoComplete="on"
                             />
 
                             {col.value}
@@ -249,8 +349,18 @@ export default function Question14() {
                                 <input
                                   type="radio"
                                   name={row.key}
-                                  value={col.value}
+                                  value={col.key}
                                   onClick={handleClick}
+                                  checked={
+                                    row.key === "A"
+                                      ? checkedA[`${row.key}${col.key}`]
+                                      : row.key === "B"
+                                      ? checkedB[`${row.key}${col.key}`]
+                                      : row.key === "C"
+                                      ? checkedC[`${row.key}${col.key}`]
+                                      : ""
+                                  }
+                                  autoComplete="on"
                                 ></input>
                               </label>
                             </td>
@@ -265,7 +375,7 @@ export default function Question14() {
                 <Button
                   variant="secondary"
                   className="back-btn"
-                  onClick={() => history.goBack()}
+                  onClick={goBack}
                 >
                   <i
                     className="fas fa-chevron-left"

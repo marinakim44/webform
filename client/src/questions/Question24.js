@@ -207,7 +207,7 @@ export default function Question24() {
                 return (
                   <div>
                     <strong>
-                      <p>
+                      <p className="question" style={{ color: "#db536a" }}>
                         {col.key}) {col.value}
                       </p>
                     </strong>

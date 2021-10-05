@@ -56,9 +56,6 @@ import axios from "axios";
 export default function App() {
   const width = window.screen.width;
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  useEffect(() => {
     const id = uuidv4();
     localStorage.setItem("uuid", id);
     console.log(id);
@@ -73,7 +70,7 @@ export default function App() {
       uuid: localStorage.getItem("uuid"),
     };
 
-    axios.post("/allinputs", data);
+    axios.post("https://ancient-ridge-93546.herokuapp.com/allinputs", data);
   }
 
   function chooseRus(e) {
@@ -126,11 +123,15 @@ export default function App() {
             </div>
             <Dropdown>
               <Dropdown.Toggle
-                variant="danger"
                 id="dropdown-basic"
                 className="lng-btn"
+                variant=""
+                style={{
+                  width: width > 768 ? "250px" : "",
+                  marginTop: width > 768 ? "2rem" : "",
+                }}
               >
-                Choose language
+                Select language
               </Dropdown.Toggle>
               <Dropdown.Menu className="lng-menu">
                 <Dropdown.Item onClick={chooseEng} value="English">

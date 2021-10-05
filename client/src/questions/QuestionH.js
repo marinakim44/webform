@@ -93,16 +93,16 @@ export default function QuestionH() {
 
   return (
     <Route path="/eng-qh">
-      <div className="main">
+      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 37).toString())}% completed
+            {Math.round(((100 / 39) * 38).toString())}% completed
           </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 39) * 37).toString() + "%",
+                width: ((100 / 39) * 38).toString() + "%",
               }}
             ></div>
           </div>

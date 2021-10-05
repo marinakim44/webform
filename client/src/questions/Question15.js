@@ -10,6 +10,15 @@ export default function Question15() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q15-checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q15-checkedA")));
+    }
+    if (localStorage.getItem("q15-checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q15-checkedB")));
+    }
+    if (localStorage.getItem("q15")) {
+      setInput(JSON.parse(localStorage.getItem("q15")));
+    }
   }, []);
   const rows = [
     {
@@ -23,14 +32,38 @@ export default function Question15() {
     },
   ];
   const columns = [
-    "Up to three months",
-    "4-6 months",
-    "7-12 months",
-    "13-18 months",
-    "19-24 months",
-    "25-36 months",
-    "More than 36 months",
-    "Don't know",
+    {
+      key: "1",
+      value: "Up to three months",
+    },
+    {
+      key: "2",
+      value: "4-6 months",
+    },
+    {
+      key: "3",
+      value: "7-12 months",
+    },
+    {
+      key: "4",
+      value: "13-18 months",
+    },
+    {
+      key: "5",
+      value: "19-24 months",
+    },
+    {
+      key: "6",
+      value: "25-36 months",
+    },
+    {
+      key: "7",
+      value: "More than 36 months",
+    },
+    {
+      key: "8",
+      value: "Don't know",
+    },
   ];
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -42,24 +75,71 @@ export default function Question15() {
   });
 
   const [checked, setChecked] = useState([]);
+  const [checkedA, setCheckedA] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+    A7: false,
+    A8: false,
+  });
+  const [checkedB, setCheckedB] = useState({
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+    B7: false,
+    B8: false,
+  });
 
   function handleClick(e) {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prevInput) => {
       return {
         ...prevInput,
         [name]: value,
       };
     });
-    if (!checked.includes(name)) {
-      checked.push(name);
+    // if (!checked.includes(name)) {
+    //   checked.push(name);
+    // }
+
+    //SAVING PREVIOUS INPUT
+    if (name === "A") {
+      Object.keys(checkedA)
+        .filter((v) => v === index)
+        .map((v) => (checkedA[v] = true));
+      Object.keys(checkedA)
+        .filter((v) => v !== index)
+        .map((v) => (checkedA[v] = false));
+
+      localStorage.setItem("q15-checkedA", JSON.stringify(checkedA));
     }
+    if (name === "B") {
+      Object.keys(checkedB)
+        .filter((v) => v === index)
+        .map((v) => (checkedB[v] = true));
+      Object.keys(checkedB)
+        .filter((v) => v !== index)
+        .map((v) => (checkedB[v] = false));
+
+      localStorage.setItem("q15-checkedB", JSON.stringify(checkedB));
+    }
+  }
+
+  function goBack() {
+    window.location.replace("/eng-q14");
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 2) {
+    if (!input.A && !input.B) {
       handleShow();
     } else {
       localStorage.setItem("q15", JSON.stringify(input));
@@ -97,7 +177,7 @@ export default function Question15() {
   return (
     <BrowserRouter>
       <Route path="/eng-q15">
-        <div className="main" style={{ height: "100%" }}>
+        <div className="main" style={{ height: width > 768 ? "100vh" : "" }}>
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 16).toString())}% completed
@@ -129,7 +209,7 @@ export default function Question15() {
                 return (
                   <div>
                     <p>
-                      <strong>
+                      <strong style={{ color: "#db536a" }}>
                         {row.key}) {row.value}
                       </strong>
                     </p>
@@ -140,11 +220,19 @@ export default function Question15() {
                             <input
                               type="radio"
                               name={row.key}
-                              value={col}
-                              onClick={handleClick}
+                              value={col.key}
+                              onChange={handleClick}
                               className="m-input"
+                              checked={
+                                row.key === "A"
+                                  ? checkedA[`${row.key}${col.key}`]
+                                  : row.key === "B"
+                                  ? checkedB[`${row.key}${col.key}`]
+                                  : ""
+                              }
+                              autoComplete="on"
                             />
-                            {col}
+                            {col.value}
                           </label>
                         </div>
                       );
@@ -162,7 +250,7 @@ export default function Question15() {
                     {columns.map((col) => {
                       return (
                         <td>
-                          <strong>{col}</strong>
+                          <strong>{col.value}</strong>
                         </td>
                       );
                     })}
@@ -179,8 +267,16 @@ export default function Question15() {
                                 <input
                                   type="radio"
                                   name={row.key}
-                                  value={col}
-                                  onClick={handleClick}
+                                  value={col.key}
+                                  onChange={handleClick}
+                                  checked={
+                                    row.key === "A"
+                                      ? checkedA[`${row.key}${col.key}`]
+                                      : row.key === "B"
+                                      ? checkedB[`${row.key}${col.key}`]
+                                      : ""
+                                  }
+                                  autoComplete="on"
                                 ></input>
                               </label>
                             </td>
@@ -195,11 +291,7 @@ export default function Question15() {
           )}
 
           <div className="back-next-btns">
-            <Button
-              variant="secondary"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
+            <Button variant="secondary" className="back-btn" onClick={goBack}>
               <i
                 className="fas fa-chevron-left"
                 style={{ marginRight: "8px" }}

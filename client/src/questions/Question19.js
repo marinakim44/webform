@@ -230,12 +230,7 @@ export default function Question19() {
                 variant={none ? "warning" : "light"}
                 type="button"
                 onClick={handleNone}
-                className="back-btn none-btn"
-                style={{
-                  margin: 0,
-                  marginTop: "1rem",
-                  height: width > 480 ? "60px" : "70px",
-                }}
+                className="none-btn"
               >
                 NONE OF THE ABOVE
               </Button>
@@ -243,12 +238,7 @@ export default function Question19() {
                 variant={dontknow ? "warning" : "light"}
                 type="button"
                 onClick={handleDontknow}
-                className="next-btn dontknow-btn"
-                style={{
-                  margin: 0,
-                  marginTop: "1rem",
-                  height: width > 480 ? "60px" : "70px",
-                }}
+                className="dontknow-btn"
               >
                 DON'T KNOW
               </Button>
@@ -258,7 +248,6 @@ export default function Question19() {
                 variant="secondary"
                 className="back-btn"
                 onClick={() => history.goBack()}
-                style={{ marginTop: "1rem" }}
               >
                 <i className="fas fa-chevron-left back-arrow"></i>
                 Back
@@ -268,7 +257,6 @@ export default function Question19() {
                 variant="danger"
                 className="next-btn"
                 onClick={handleSubmit}
-                style={{ marginTop: "1rem" }}
               >
                 Next
                 <i class="fas fa-chevron-right next-arrow"></i>

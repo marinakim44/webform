@@ -198,7 +198,7 @@ export default function Question20() {
             {rows.map((row) => {
               return (
                 <div>
-                  <p>
+                  <p className="question" style={{ color: "#db536a" }}>
                     <strong>
                       {row.key}) {row.title}
                     </strong>

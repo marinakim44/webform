@@ -11,7 +11,9 @@ function RusStart() {
           <p>Under development, please choose English language</p>
 
           <Button variant="danger" className="next-btn">
-            <Link to="/eng-start">Switch to English</Link>
+            <Link to="/eng-start" style={{ color: "white" }}>
+              Switch to English
+            </Link>
           </Button>
         </div>
       </Route>

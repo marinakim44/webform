@@ -9,6 +9,46 @@ function EngStart() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("name")) {
+      setInput((prev) => {
+        return {
+          ...prev,
+          name: localStorage.getItem("name"),
+        };
+      });
+    }
+    if (localStorage.getItem("company")) {
+      setInput((prev) => {
+        return {
+          ...prev,
+          company: localStorage.getItem("company"),
+        };
+      });
+    }
+    if (localStorage.getItem("title")) {
+      setInput((prev) => {
+        return {
+          ...prev,
+          title: localStorage.getItem("title"),
+        };
+      });
+    }
+    if (localStorage.getItem("email")) {
+      setInput((prev) => {
+        return {
+          ...prev,
+          email: localStorage.getItem("email"),
+        };
+      });
+    }
+    if (localStorage.getItem("phone")) {
+      setInput((prev) => {
+        return {
+          ...prev,
+          phone: localStorage.getItem("phone"),
+        };
+      });
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -127,23 +167,18 @@ function EngStart() {
         email: input.email,
         phone: input.phone,
       };
-      axios.post("/allinputs", data);
+      axios.post("https://ancient-ridge-93546.herokuapp.com/allinputs", data);
       history.push("/eng-q1");
     }
   }
 
   return (
     <Route path="/eng-start">
-      <div className="main">
+      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
         <div className="sticky-sub-div">
-          <h2 className="percent">
-            {Math.round(((100 / 38) * 1).toString())}% completed
-          </h2>
+          <h2 className="percent">0% completed</h2>
           <div className="progressBarEmpty">
-            <div
-              className="progressBarFilled"
-              style={{ width: ((100 / 38) * 1).toString() + "%" }}
-            ></div>
+            <div className="progressBarFilled" style={{ width: "0%" }}></div>
           </div>
         </div>
         <ModalAlert show={show} close={handleClose} />
@@ -167,6 +202,7 @@ function EngStart() {
             )}
             <Form.Control
               autoFocus="true"
+              autoComplete="off"
               type="text"
               placeholder="Full name*"
               name="name"
@@ -199,6 +235,7 @@ function EngStart() {
             <Form.Control
               type="text"
               placeholder="Company name*"
+              autoComplete="off"
               name="company"
               value={input.company}
               onChange={handleChange}
@@ -232,7 +269,7 @@ function EngStart() {
               name="title"
               value={input.title}
               onChange={handleChange}
-              autoComplete="on"
+              autoComplete="off"
               onBlur={handleBlurTitle}
               onFocus={handleFocusTitle}
               className="credentials-input m-credentials-input"
@@ -279,7 +316,7 @@ function EngStart() {
               name="email"
               value={input.email}
               onChange={handleChange}
-              autoComplete="on"
+              autoComplete="off"
               onBlur={handleBlurEmail}
               onFocus={handleFocusEmail}
               className="credentials-input m-credentials-input"
@@ -291,7 +328,7 @@ function EngStart() {
               name="phone"
               value={input.phone}
               onChange={handleChange}
-              autoComplete="on"
+              autoComplete="off"
               className="credentials-input m-credentials-input"
             ></Form.Control>
           </Form.Group>

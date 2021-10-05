@@ -10,6 +10,21 @@ export default function Question12() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q12checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q12checkedA")));
+    }
+    if (localStorage.getItem("q12checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q12checkedB")));
+    }
+    if (localStorage.getItem("q12checkedC")) {
+      setCheckedC(JSON.parse(localStorage.getItem("q12checkedC")));
+    }
+    if (localStorage.getItem("q12checkedD")) {
+      setCheckedD(JSON.parse(localStorage.getItem("q12checkedD")));
+    }
+    if (localStorage.getItem("q12")) {
+      setInput(JSON.parse(localStorage.getItem("q12")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -78,24 +93,107 @@ export default function Question12() {
   });
 
   const [checked, setChecked] = useState([]);
+  const [checkedA, setCheckedA] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+    A7: false,
+    A8: false,
+  });
+  const [checkedB, setCheckedB] = useState({
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+    B7: false,
+    B8: false,
+  });
+  const [checkedC, setCheckedC] = useState({
+    C1: false,
+    C2: false,
+    C3: false,
+    C4: false,
+    C5: false,
+    C6: false,
+    C7: false,
+    C8: false,
+  });
+  const [checkedD, setCheckedD] = useState({
+    D1: false,
+    D2: false,
+    D3: false,
+    D4: false,
+    D5: false,
+    D6: false,
+    D7: false,
+    D8: false,
+  });
 
   function handleClick(e) {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prevInput) => {
       return {
         ...prevInput,
         [name]: value,
       };
     });
-    if (!checked.includes(name)) {
-      checked.push(name);
+    // if (!checked.includes(name)) {
+    //   checked.push(name);
+    // }
+
+    //SAVING PREVIOUS INPUT
+    if (name === "A") {
+      Object.keys(checkedA)
+        .filter((v) => v === index)
+        .map((v) => (checkedA[v] = true));
+      Object.keys(checkedA)
+        .filter((v) => v !== index)
+        .map((v) => (checkedA[v] = false));
+
+      localStorage.setItem("q12checkedA", JSON.stringify(checkedA));
+    }
+    if (name === "B") {
+      Object.keys(checkedB)
+        .filter((v) => v === index)
+        .map((v) => (checkedB[v] = true));
+      Object.keys(checkedB)
+        .filter((v) => v !== index)
+        .map((v) => (checkedB[v] = false));
+
+      localStorage.setItem("q12checkedB", JSON.stringify(checkedB));
+    }
+    if (name === "C") {
+      Object.keys(checkedC)
+        .filter((v) => v === index)
+        .map((v) => (checkedC[v] = true));
+      Object.keys(checkedC)
+        .filter((v) => v !== index)
+        .map((v) => (checkedC[v] = false));
+
+      localStorage.setItem("q12checkedC", JSON.stringify(checkedC));
+    }
+    if (name === "D") {
+      Object.keys(checkedD)
+        .filter((v) => v === index)
+        .map((v) => (checkedD[v] = true));
+      Object.keys(checkedD)
+        .filter((v) => v !== index)
+        .map((v) => (checkedD[v] = false));
+
+      localStorage.setItem("q12checkedD", JSON.stringify(checkedD));
     }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 4) {
+    if (!input.A && !input.B && !input.C && !input.D) {
       handleShow();
     } else {
       localStorage.setItem("q12", JSON.stringify(input));
@@ -148,7 +246,7 @@ export default function Question12() {
               company’s ability to reduce greenhouse gas (GHG) emissions? <br />
             </p>
             <p
-              className="left-align-text"
+              className="left-align-text question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
               <i>
@@ -162,7 +260,7 @@ export default function Question12() {
               {rows.map((row) => {
                 return (
                   <div>
-                    <p className="question">
+                    <p className="question" style={{ color: "#db536a" }}>
                       <strong>
                         {row.key}) {row.value}
                       </strong>
@@ -174,9 +272,20 @@ export default function Question12() {
                             <input
                               type="radio"
                               name={row.key}
-                              value={col.value}
-                              onClick={handleClick}
+                              value={col.key}
+                              onChange={handleClick}
                               className="m-input"
+                              checked={
+                                row.key === "A"
+                                  ? checkedA[`${row.key}${col.key}`]
+                                  : row.key === "B"
+                                  ? checkedB[`${row.key}${col.key}`]
+                                  : row.key === "C"
+                                  ? checkedC[`${row.key}${col.key}`]
+                                  : row.key === "D"
+                                  ? checkedD[`${row.key}${col.key}`]
+                                  : ""
+                              }
                             />
                             {col.value}
                           </label>
@@ -222,15 +331,27 @@ export default function Question12() {
                       <tr>
                         <td>{row.key}</td>
                         <td className="left-align-text">{row.value}</td>
-                        {columns.map((column) => {
+                        {columns.map((col) => {
                           return (
                             <td className="input-cell">
                               <label className="label-cell">
                                 <input
                                   type="radio"
                                   name={row.key}
-                                  value={column.value}
-                                  onClick={handleClick}
+                                  value={col.key}
+                                  onChange={handleClick}
+                                  checked={
+                                    row.key === "A"
+                                      ? checkedA[`${row.key}${col.key}`]
+                                      : row.key === "B"
+                                      ? checkedB[`${row.key}${col.key}`]
+                                      : row.key === "C"
+                                      ? checkedC[`${row.key}${col.key}`]
+                                      : row.key === "D"
+                                      ? checkedD[`${row.key}${col.key}`]
+                                      : ""
+                                  }
+                                  autoComplete="on"
                                 ></input>
                               </label>
                             </td>

@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
+import "../Small.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
@@ -91,10 +93,10 @@ export default function Question7() {
           </div>
           <Form className="left-align-text">
             <div className="m-div">
-              <label className="m-label">
+              <label className="m-label label-cell">
                 <input
                   type="radio"
-                  className="m-input"
+                  className="m-input radio-input"
                   name="option"
                   value="Limiting global warming to 1.5° Celsius"
                   onClick={handleClick}
@@ -103,10 +105,10 @@ export default function Question7() {
               </label>
             </div>
             <div className="m-div">
-              <label className="m-label">
+              <label className="m-label label-cell">
                 <input
                   type="radio"
-                  className="m-input"
+                  className="m-input radio-input"
                   name="option"
                   value="Limiting global warming to well below 2.0° Celsius"
                   onClick={handleClick}
@@ -115,10 +117,10 @@ export default function Question7() {
               </label>
             </div>
             <div className="m-div">
-              <label className="m-label">
+              <label className="m-label label-cell">
                 <input
                   type="radio"
-                  className="m-input"
+                  className="m-input radio-input"
                   name="option"
                   value="My company’s net-zero commitment will not be aligned to a
                 science-based target"
@@ -129,10 +131,10 @@ export default function Question7() {
               </label>
             </div>
             <div className="m-div">
-              <label className="m-label">
+              <label className="m-label label-cell">
                 <input
                   type="radio"
-                  className="m-input"
+                  className="m-input radio-input"
                   name="option"
                   value="Don't know"
                   onClick={handleClick}

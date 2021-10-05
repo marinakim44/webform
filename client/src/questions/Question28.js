@@ -84,16 +84,16 @@ export default function Question28() {
   return (
     <BrowserRouter>
       <Route path="/eng-q28">
-        <div className="main">
+        <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 29).toString())}% completed
+              {Math.round(((100 / 39) * 31).toString())}% completed
             </h2>
             <div className="progressBarEmpty">
               <div
                 className="progressBarFilled"
                 style={{
-                  width: ((100 / 39) * 29).toString() + "%",
+                  width: ((100 / 39) * 31).toString() + "%",
                 }}
               ></div>
             </div>

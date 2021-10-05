@@ -25,6 +25,30 @@ export default function Question2() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q2other1")) {
+      setOther((prev) => {
+        return {
+          ...prev,
+          other1: localStorage.getItem("q2other1"),
+        };
+      });
+    }
+    if (localStorage.getItem("q2other2")) {
+      setOther((prev) => {
+        return {
+          ...prev,
+          other2: localStorage.getItem("q2other2"),
+        };
+      });
+    }
+    if (localStorage.getItem("q2other3")) {
+      setOther((prev) => {
+        return {
+          ...prev,
+          other3: localStorage.getItem("q2other3"),
+        };
+      });
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -90,12 +114,15 @@ export default function Question2() {
     } else {
       if (other.other1) {
         selectedOptions.push(other.other1);
+        localStorage.setItem("q2other1", other.other1);
       }
       if (other.other2) {
         selectedOptions.push(other.other2);
+        localStorage.setItem("q2other2", other.other2);
       }
       if (other.other3) {
         selectedOptions.push(other.other3);
+        localStorage.setItem("q2other3", other.other3);
       }
 
       localStorage.setItem("q2", JSON.stringify(selectedOptions));
@@ -115,7 +142,7 @@ export default function Question2() {
         q2dontknow: localStorage.getItem("q2-dontknow"),
       };
 
-      axios.post("/allinputs", data);
+      axios.post("https://ancient-ridge-93546.herokuapp.com/allinputs", data);
 
       history.push("/eng-q3");
     }
@@ -123,7 +150,7 @@ export default function Question2() {
 
   return (
     <Route path="/eng-q2">
-      <div className="main">
+      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 3).toString())}% completed
