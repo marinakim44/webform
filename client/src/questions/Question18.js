@@ -338,7 +338,7 @@ export default function Question18() {
                     <td colSpan="2"></td>
                     {columns.map((col) => {
                       return (
-                        <td style={{ width: "110px", verticalAlign: "middle" }}>
+                        <td style={{ verticalAlign: "middle" }}>
                           <strong>{col.value}</strong>
                         </td>
                       );
