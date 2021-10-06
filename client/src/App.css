@@ -68,10 +68,13 @@ h1 {
   }
   .main .intro-heading {
     text-align: center;
-    margin: 1rem auto;
+    margin: 2rem auto;
+    width: 70%;
   }
   .main .intro-text {
     text-align: justify;
+    width: 85%;
+    margin: 1rem auto;
   }
   .main ol {
     margin: 0;
@@ -150,6 +153,7 @@ h1 {
     cursor: pointer;
     border-radius: 8px;
     height: inherit;
+    text-align: center;
   }
   .label-cell {
     width: 100%;

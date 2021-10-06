@@ -8,25 +8,52 @@ import ModalAlert from "../ModalAlert";
 
 export default function Question8() {
   const width = window.screen.width;
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+    option4: false,
+  });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (localStorage.getItem("q8")) {
+      setInput(localStorage.getItem("q8"));
+    }
+    if (localStorage.getItem("q8-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q8-checked")));
+    }
+  }, []);
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    //SAVING PREVIOUS INPUT
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
 
+  useEffect(() => {
+    localStorage.setItem("q8-checked", JSON.stringify(checked));
+    localStorage.setItem("q8", input);
+  }, [input, checked]);
+
   function handleSubmit(e) {
+    e.preventDefault();
+
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("q8", input);
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -83,8 +110,9 @@ export default function Question8() {
                   type="radio"
                   className="m-input radio-input"
                   name="option"
-                  value="yes"
+                  value="option1"
                   onClick={handleClick}
+                  checked={checked.option1 ? true : false}
                 />
                 Yes, my company’s approach to reducing GHG emissions has been
                 independently assessed and validated
@@ -97,8 +125,9 @@ export default function Question8() {
                   type="radio"
                   className="m-input radio-input"
                   name="option"
-                  value="yes"
+                  value="option2"
                   onClick={handleClick}
+                  checked={checked.option2 ? true : false}
                 />
                 No, but my company’s approach to reducing GHG emissions is
                 currently being independently assessed and validated
@@ -110,8 +139,9 @@ export default function Question8() {
                   type="radio"
                   className="m-input radio-input"
                   name="option"
-                  value="yes"
+                  value="option3"
                   onClick={handleClick}
+                  checked={checked.option3 ? true : false}
                 />
                 No, my company’s approach to reducing GHG emissions has not been
                 independently assessed and validated
@@ -124,8 +154,9 @@ export default function Question8() {
                   type="radio"
                   className="m-input radio-input"
                   name="option"
-                  value="don't know"
+                  value="option4"
                   onClick={handleClick}
+                  checked={checked.option4 ? true : false}
                 />
                 Don't know
               </label>

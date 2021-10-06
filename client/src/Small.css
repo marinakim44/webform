@@ -1,28 +1,30 @@
 /* responsive for mobile phone: width smaller than 480px */
 @media (max-width: 480px) {
-  * {
-    font-size: 12px;
+  body {
+    background: #db536a;
   }
   .nav-bar {
-    width: 90%;
+    width: 100%;
+    height: 70px;
+    padding: 0;
+    padding-left: 0.5rem;
+    padding-right: 1rem;
+    font-size: 12px;
+  }
+  .logo {
+    width: 70px;
   }
   .main {
-    width: 90%;
+    width: 100%;
     text-align: center;
     padding: 1rem 2rem;
-    height: 100vh;
+    height: 100%;
   }
   .main h1 {
     text-align: center;
     margin: 0;
   }
-  .main h2 {
-    font-size: 1.1rem;
-  }
-  .main p {
-    font-size: 14px;
-    margin: 0;
-  }
+
   .lng-btn {
     width: 100%;
     height: 50px;
@@ -41,8 +43,9 @@
   .lng-div {
     text-align: center;
     margin: 0;
-    padding: 0;
+    padding: 1rem;
     vertical-align: middle;
+    font-size: 18px;
   }
   .lng-div p {
     text-align: center;
@@ -62,28 +65,25 @@
     width: 100%;
   }
   .back-btn,
-  .next-btn {
+  .next-btn,
+  .finish-btn {
     height: 50px;
-    font-size: 16px;
+    font-size: 18px;
     width: 140px;
   }
-  .next-btn {
-    background-color: #db536a;
-  }
-  .bak-btn {
-    background-color: #7d7d7d;
-  }
+
   .question {
-    font-size: 14px;
+    font-size: 16px;
     text-align: left;
-    margin: 0.5rem 0 1rem;
+    margin: 0.8rem 0 1rem;
   }
   .input-text {
     height: 40px;
   }
-  .dontknow-btn {
-    width: 100%;
-    height: 40px;
+  .dontknow-btn,
+  .none-btn {
+    width: 140px;
+    height: 60px;
     font-size: 16px;
   }
   .s-q13 {
@@ -94,11 +94,6 @@
   }
   .input-text {
     height: 40px;
-  }
-  .none-btn {
-    height: 60px;
-    font-size: 16px;
-    width: 140px;
   }
   .dontknow-btn {
     width: 140px;
@@ -111,5 +106,15 @@
     height: 40px;
     margin-top: 0;
     margin-bottom: 2rem;
+  }
+  .sticky-sub-div {
+    margin-top: 0;
+    top: 70px;
+  }
+  .percent {
+    font-size: 22px;
+  }
+  .m-label {
+    font-size: 14px;
   }
 }

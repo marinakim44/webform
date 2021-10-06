@@ -10,6 +10,7 @@ import axios from "axios";
 
 const Menu = (props) => {
   const optionSelectedLength = props.getValue().length || 0;
+
   return (
     <components.Menu {...props}>
       {optionSelectedLength < 3 ? (
@@ -142,7 +143,7 @@ export default function Question2() {
         q2dontknow: localStorage.getItem("q2-dontknow"),
       };
 
-      axios.post("https://ancient-ridge-93546.herokuapp.com/allinputs", data);
+      axios.post("/allinputs", data);
 
       history.push("/eng-q3");
     }

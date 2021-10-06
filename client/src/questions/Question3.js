@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../App.css";
 import ModalAlert from "../ModalAlert";
@@ -7,32 +7,10 @@ import axios from "axios";
 
 export default function Question3() {
   const width = window.screen.width;
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-
-    if (localStorage.getItem("q3checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q3checkedA")));
-    }
-    if (localStorage.getItem("q3checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q3checkedB")));
-    }
-    if (localStorage.getItem("q3checkedC")) {
-      setCheckedC(JSON.parse(localStorage.getItem("q3checkedC")));
-    }
-    if (localStorage.getItem("q3checkedD")) {
-      setCheckedD(JSON.parse(localStorage.getItem("q3checkedD")));
-    }
-    if (localStorage.getItem("q3checkedE")) {
-      setCheckedE(JSON.parse(localStorage.getItem("q3checkedE")));
-    }
-    if (localStorage.getItem("q3checkedF")) {
-      setCheckedF(JSON.parse(localStorage.getItem("q3checkedF")));
-    }
-    if (localStorage.getItem("q3")) {
-      setInput(JSON.parse(localStorage.getItem("q3")));
-    }
-  }, []);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
   const rows = [
     {
       key: "A",
@@ -93,13 +71,7 @@ export default function Question3() {
     },
   ];
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const history = useHistory();
-  const [listOthers, setListOthers] = useState([]);
-  const [listOfConcerns, setListOfConcerns] = useState([]);
-  const [listAll, setListAll] = useState([]);
+  const [concerns, setConcerns] = useState([]);
   const [input, setInput] = useState({
     A: "",
     B: "",
@@ -108,47 +80,43 @@ export default function Question3() {
     E: "",
     F: "",
   });
-  const [checkedA, setCheckedA] = useState({
+
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
     A4: false,
     A5: false,
     A6: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
     B4: false,
     B5: false,
     B6: false,
-  });
-  const [checkedC, setCheckedC] = useState({
+
     C1: false,
     C2: false,
     C3: false,
     C4: false,
     C5: false,
     C6: false,
-  });
-  const [checkedD, setCheckedD] = useState({
+
     D1: false,
     D2: false,
     D3: false,
     D4: false,
     D5: false,
     D6: false,
-  });
-  const [checkedE, setCheckedE] = useState({
+
     E1: false,
     E2: false,
     E3: false,
     E4: false,
     E5: false,
     E6: false,
-  });
-  const [checkedF, setCheckedF] = useState({
+
     F1: false,
     F2: false,
     F3: false,
@@ -157,7 +125,21 @@ export default function Question3() {
     F6: false,
   });
 
-  const handleChange = (e) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    if (localStorage.getItem("q3-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q3-checked")));
+    }
+    if (localStorage.getItem("q3")) {
+      setInput(JSON.parse(localStorage.getItem("q3")));
+    }
+    if (localStorage.getItem("q3-concerns")) {
+      setConcerns(JSON.parse(localStorage.getItem("q3-concerns")));
+    }
+  }, []);
+
+  function handleChange(e) {
     const { name, value } = e.target;
     const index = name + value;
 
@@ -168,324 +150,254 @@ export default function Question3() {
       };
     });
 
-    if (name === "A" && (value === "3" || value === "4" || value === "5")) {
-      if (!listOfConcerns.includes("Macroeconomic volatility")) {
-        listOfConcerns.push("A Macroeconomic volatility");
-      }
-    }
-    if (name === "B" && (value === "3" || value === "4" || value === "5")) {
-      if (!listOfConcerns.includes("Climate change")) {
-        listOfConcerns.push("B Climate change");
-      }
-    }
-    if (name === "C" && (value === "3" || value === "4" || value === "5")) {
-      if (!listOfConcerns.includes("Social inequality")) {
-        listOfConcerns.push("C Social inequality");
-      }
-    }
-    if (name === "D" && (value === "3" || value === "4" || value === "5")) {
-      if (!listOfConcerns.includes("Geopolitical conflict")) {
-        listOfConcerns.push("D Geopolitical conflict");
-      }
-    }
-    if (name === "E" && (value === "3" || value === "4" || value === "5")) {
-      if (!listOfConcerns.includes("Cyber risks")) {
-        listOfConcerns.push("E Cyber risks");
-      }
-    }
-    if (name === "F" && (value === "3" || value === "4" || value === "5")) {
-      if (!listOfConcerns.includes("Health risks")) {
-        listOfConcerns.push("F Health risks");
-      }
-    }
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
 
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
-
-      localStorage.setItem("q3checkedA", JSON.stringify(checkedA));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-
-      localStorage.setItem("q3checkedB", JSON.stringify(checkedB));
-    }
-    if (name === "C") {
-      Object.keys(checkedC)
-        .filter((v) => v === index)
-        .map((v) => (checkedC[v] = true));
-      Object.keys(checkedC)
-        .filter((v) => v !== index)
-        .map((v) => (checkedC[v] = false));
-
-      localStorage.setItem("q3checkedC", JSON.stringify(checkedC));
-    }
-    if (name === "D") {
-      Object.keys(checkedD)
-        .filter((v) => v === index)
-        .map((v) => (checkedD[v] = true));
-      Object.keys(checkedD)
-        .filter((v) => v !== index)
-        .map((v) => (checkedD[v] = false));
-
-      localStorage.setItem("q3checkedD", JSON.stringify(checkedD));
-    }
-    if (name === "F") {
-      Object.keys(checkedF)
-        .filter((v) => v === index)
-        .map((v) => (checkedF[v] = true));
-      Object.keys(checkedF)
-        .filter((v) => v !== index)
-        .map((v) => (checkedF[v] = false));
-
-      localStorage.setItem("q3checkedF", JSON.stringify(checkedF));
-    }
-    if (name === "E") {
-      Object.keys(checkedE)
-        .filter((v) => v === index)
-        .map((v) => (checkedE[v] = true));
-      Object.keys(checkedE)
-        .filter((v) => v !== index)
-        .map((v) => (checkedE[v] = false));
-
-      localStorage.setItem("q3checkedE", JSON.stringify(checkedE));
-    }
-  };
-
-  function goBack() {
-    history.push("/eng-q2");
+    Object.keys(checked)
+      .filter((el) => el === index)
+      .map((el) => {
+        checked[el] = true;
+      });
+    Object.keys(checked)
+      .filter((el) => el !== index && el.slice(0, 1) === name)
+      .map((el) => {
+        checked[el] = false;
+      });
   }
 
+  useEffect(() => {
+    localStorage.setItem("q3", JSON.stringify(input));
+    localStorage.setItem("q3-checked", JSON.stringify(checked));
+
+    if (input.A === "3" || input.A === "4" || input.A === "5") {
+      if (!concerns.includes("A Macroeconomic volatility")) {
+        concerns.push("A Macroeconomic volatility");
+      }
+    } else {
+      if (concerns.includes("A Macroeconomic volatility")) {
+        concerns.pop("A Macroeconomic volatility");
+      }
+    }
+    if (input.B === "3" || input.B === "4" || input.B === "5") {
+      if (!concerns.includes("B Climate change")) {
+        concerns.push("B Climate change");
+      }
+    } else {
+      if (concerns.includes("B Climate change")) {
+        concerns.pop("B Climate change");
+      }
+    }
+    if (input.C === "3" || input.C === "4" || input.C === "5") {
+      if (!concerns.includes("C Social inequality")) {
+        concerns.push("C Social inequality");
+      }
+    } else {
+      if (concerns.includes("C Social inequality")) {
+        concerns.pop("C Social inequality");
+      }
+    }
+    if (input.D === "3" || input.D === "4" || input.D === "5") {
+      if (!concerns.includes("D Geopolitical conflict")) {
+        concerns.push("D Geopolitical conflict");
+      }
+    } else {
+      if (concerns.includes("D Geopolitical conflict")) {
+        concerns.pop("D Geopolitical conflict");
+      }
+    }
+    if (input.E === "3" || input.E === "4" || input.E === "5") {
+      if (!concerns.includes("E Cyber risks")) {
+        concerns.push("E Cyber risks");
+      }
+    } else {
+      if (concerns.includes("E Cyber risks")) {
+        concerns.pop("E Cyber risks");
+      }
+    }
+    if (input.F === "3" || input.F === "4" || input.F === "5") {
+      if (!concerns.includes("F Health risks")) {
+        concerns.push("F Health risks");
+      }
+    } else {
+      if (concerns.includes("F Health risks")) {
+        concerns.pop("F Health risks");
+      }
+    }
+    localStorage.setItem("q3-concerns", JSON.stringify(concerns));
+  }, [input, checked, concerns]);
+
   function handleSubmit(e) {
+    e.preventDefault();
+
     if (input.A && input.B && input.C && input.D && input.E && input.F) {
-      localStorage.setItem("q3", JSON.stringify(input));
-      localStorage.setItem("q3-concerns", JSON.stringify(listOfConcerns));
-
-      const data = {
-        uuid: localStorage.getItem("uuid"),
-        name: localStorage.getItem("name"),
-        company: localStorage.getItem("company"),
-        title: localStorage.getItem("title"),
-        email: localStorage.getItem("email"),
-        phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
-        q3: JSON.parse(localStorage.getItem("q3")),
-      };
-
-      axios.post("/allinputs", data);
-
-      if (listOfConcerns.length === 0) {
-        history.push("/eng-q5");
-      } else {
+      if (concerns.length > 0) {
         history.push("/eng-q4");
+      } else {
+        history.push("/eng-q5");
       }
     } else {
       handleShow();
     }
+
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1: JSON.parse(localStorage.getItem("q1")),
+      q2: JSON.parse(localStorage.getItem("q2")),
+      q3: JSON.parse(localStorage.getItem("q3")),
+    };
+
+    axios.post("/allinputs", data);
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q3">
-        <div className="main">
-          <div className="sticky-sub-div">
-            <h2 className="percent">
-              {Math.round(((100 / 39) * 4).toString())}% completed
-            </h2>
-            <div className="progressBarEmpty">
-              <div
-                className="progressBarFilled"
-                style={{
-                  width: ((100 / 39) * 4).toString() + "%",
-                }}
-              ></div>
-            </div>
-            <ModalAlert show={show} close={handleClose} />
-            <div className="left-align-text">
-              <p>
-                How concerned are you about the following global threats
-                negatively impacting your company over the next 12 months?
-              </p>
-              <i>
-                <p className="question">
-                  PLEASE SCROLL THE TABLE IF REQUIRED AND SELECT ONE RESPONSE
-                  FOR EACH STATEMENT
-                </p>
-              </i>
-            </div>
+    <Route path="/eng-q3">
+      <div className="main">
+        <div className="sticky-sub-div">
+          <h2 className="percent">
+            {Math.round(((100 / 39) * 4).toString())}% completed
+          </h2>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 39) * 4).toString() + "%",
+              }}
+            ></div>
           </div>
-          {width <= 768 ? (
-            <div>
-              {rows.map((row) => {
-                return (
-                  <>
-                    <div className="left-align-text">
-                      <p className="question" style={{ color: "#db536a" }}>
-                        <strong>{row.value}</strong>
-                      </p>
-                      <p>{row.text}</p>
-                      {columns.map((col) => {
-                        return (
-                          <div className="m-div">
-                            <label className="m-label">
-                              <input
-                                type="radio"
-                                name={row.key}
-                                className="m-input"
-                                value={col.value}
-                                onChange={handleChange}
-                                checked={
-                                  row.key === "A"
-                                    ? checkedA[`${row.key}${col.key}`]
-                                    : row.key === "B"
-                                    ? checkedB[`${row.key}${col.key}`]
-                                    : row.key === "C"
-                                    ? checkedC[`${row.key}${col.key}`]
-                                    : row.key === "D"
-                                    ? checkedD[`${row.key}${col.key}`]
-                                    : row.key === "E"
-                                    ? checkedE[`${row.key}${col.key}`]
-                                    : checkedF[`${row.key}${col.key}`]
-                                }
-                                autoComplete="on"
-                              ></input>
-                              {col.value}
-                            </label>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </>
-                );
-              })}
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-
-                <Button
-                  type="button"
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i class="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <form>
-              <div style={{ overflow: "auto", height: "350px" }}>
-                <table className="table">
-                  <thead
-                    style={{
-                      position: "sticky",
-                      top: 0,
-                      zIndex: 1,
-                      backgroundColor: "#fff",
-                    }}
-                  >
-                    <tr style={{ position: "sticky", top: 0 }}>
-                      <td colSpan="2"></td>
-                      {columns.map((col) => {
-                        return (
-                          <td key={col.key}>
-                            <strong>{col.value}</strong>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {rows.map((row) => {
+          <ModalAlert show={show} close={handleClose} />
+          <div className="left-align-text">
+            <p>
+              How concerned are you about the following global threats
+              negatively impacting your company over the next 12 months?
+            </p>
+            <i>
+              <p className="question">
+                PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT
+              </p>
+            </i>
+          </div>
+        </div>
+        {width <= 768 ? (
+          <div>
+            {rows.map((row) => {
+              return (
+                <>
+                  <div className="left-align-text">
+                    <p className="question" style={{ color: "#db536a" }}>
+                      <strong>{row.value}</strong>
+                    </p>
+                    <p>{row.text}</p>
+                    {columns.map((col) => {
                       return (
-                        <tr key={row.key} className="table-row">
-                          <td>{row.key}</td>
-                          <td className="left-align-text">
-                            <p style={{ margin: 0, padding: 0 }}>
-                              <strong>{row.value}</strong>
-                            </p>
-                            <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
-                          </td>
-                          {columns.map((col) => {
-                            return (
-                              <td
-                                className="input-cell"
-                                style={{ width: "100px" }}
-                              >
-                                <label className="label-cell">
-                                  <input
-                                    type="radio"
-                                    name={row.key}
-                                    value={col.key}
-                                    onChange={handleChange}
-                                    checked={
-                                      row.key === "A"
-                                        ? checkedA[`${row.key}${col.key}`]
-                                        : row.key === "B"
-                                        ? checkedB[`${row.key}${col.key}`]
-                                        : row.key === "C"
-                                        ? checkedC[`${row.key}${col.key}`]
-                                        : row.key === "D"
-                                        ? checkedD[`${row.key}${col.key}`]
-                                        : row.key === "E"
-                                        ? checkedE[`${row.key}${col.key}`]
-                                        : checkedF[`${row.key}${col.key}`]
-                                    }
-                                    autoComplete="on"
-                                  ></input>
-                                </label>
-                              </td>
-                            );
-                          })}
-                        </tr>
+                        <div className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="radio"
+                              name={row.key}
+                              className="m-input"
+                              value={col.key}
+                              checked={checked[`${row.key}${col.key}`]}
+                            ></input>
+                            {col.value}
+                          </label>
+                        </div>
                       );
                     })}
-                  </tbody>
-                </table>
-              </div>
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={goBack}
+                  </div>
+                </>
+              );
+            })}
+          </div>
+        ) : (
+          <form>
+            <div style={{ overflow: "auto", height: "400px" }}>
+              <table className="table">
+                <thead
+                  style={{
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 1,
+                    backgroundColor: "#fff",
+                  }}
                 >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
+                  <tr style={{ position: "sticky", top: 0 }}>
+                    <td colSpan="2"></td>
+                    {columns.map((col) => {
+                      return (
+                        <td key={col.key}>
+                          <strong>{col.value}</strong>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row) => {
+                    return (
+                      <tr key={row.key} className="table-row">
+                        <td>{row.key}</td>
+                        <td className="left-align-text">
+                          <p style={{ margin: 0, padding: 0 }}>
+                            <strong>{row.value}</strong>
+                          </p>
+                          <p style={{ margin: 0, padding: 0 }}>{row.text}</p>
+                        </td>
+                        {columns.map((col) => {
+                          return (
+                            <td
+                              className="input-cell"
+                              style={{ width: "100px" }}
+                            >
+                              <label className="label-cell">
+                                <input
+                                  type="radio"
+                                  name={row.key}
+                                  value={col.key}
+                                  onChange={handleChange}
+                                  checked={checked[`${row.key}${col.key}`]}
+                                ></input>
+                              </label>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </form>
+        )}
+        <div className="back-next-btns">
+          <Button
+            variant="secondary"
+            className="back-btn"
+            onClick={() => history.goBack()}
+          >
+            <i className="fas fa-chevron-left back-arrow"></i>
+            Back
+          </Button>
 
-                <Button
-                  type="button"
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i class="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
-            </form>
-          )}
+          <Button
+            type="button"
+            variant="danger"
+            className="next-btn"
+            onClick={handleSubmit}
+          >
+            Next
+            <i class="fas fa-chevron-right next-arrow"></i>
+          </Button>
         </div>
-      </Route>
-    </BrowserRouter>
+      </div>
+    </Route>
   );
 }

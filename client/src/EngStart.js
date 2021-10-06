@@ -116,7 +116,7 @@ function EngStart() {
   }
 
   function validateEmail(email) {
-    const re = /[a-z]+@[a-z]+.[a-z]+/;
+    const re = /.+@[a-z]+.[a-z]+/;
     return re.test(email);
   }
 
@@ -167,7 +167,7 @@ function EngStart() {
         email: input.email,
         phone: input.phone,
       };
-      axios.post("https://ancient-ridge-93546.herokuapp.com/allinputs", data);
+      axios.post("/allinputs", data);
       history.push("/eng-q1");
     }
   }

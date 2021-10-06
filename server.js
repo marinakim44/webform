@@ -18,7 +18,11 @@ const options = {
 };
 
 mongoose.connect(process.env.MONGO_URI, options, function (err) {
-  console.log(err);
+  if (!err) {
+    console.log("Mongodb connected...");
+  } else {
+    console.log(err);
+  }
 });
 
 mongoose.set("bufferCommands", false);
@@ -51,7 +55,7 @@ const responseSchema = new mongoose.Schema(
     question2none: Boolean,
     question2dontknow: Boolean,
     question3: Object,
-    question4: Object,
+    question4: Array,
     question4other: String,
     question5: Object,
     question6: String,
@@ -295,5 +299,5 @@ if (process.env.NODE_ENV === "production") {
 
 //server
 app.listen(port, function () {
-  console.log("Express is running");
+  console.log("Express server launched...");
 });

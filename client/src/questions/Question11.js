@@ -2,6 +2,8 @@ import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, Table, Breadcrumb } from "react-bootstrap";
 import "../App.css";
+import "../Medium.css";
+import "../Small.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 import Question10A from "./Question10A";
@@ -144,7 +146,7 @@ export default function Question11() {
   return (
     <BrowserRouter>
       <Route path="/eng-q11">
-        <div className="main">
+        <div className="main" style={{ height: "100%" }}>
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 12).toString())}% completed
@@ -163,7 +165,7 @@ export default function Question11() {
               company has not made a carbon-neutral or net-zero commitment?
             </p>
             <p
-              className="left-align-text"
+              className="question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
               <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
@@ -175,7 +177,7 @@ export default function Question11() {
                 return (
                   <div className="left-align-text">
                     <strong>
-                      <p>
+                      <p className="question" style={{ color: "#db536a" }}>
                         {row.key}) {row.value}
                       </p>
                     </strong>
@@ -209,9 +211,9 @@ export default function Question11() {
                 </Button>
 
                 <Button
-                  variant="danger"
                   className="next-btn"
                   onClick={handleSubmit}
+                  style={{ border: "none" }}
                 >
                   Next
                   <i className="fas fa-chevron-right next-arrow"></i>
@@ -237,13 +239,16 @@ export default function Question11() {
                         <td>{row.value}</td>
                         {columns.map((column) => {
                           return (
-                            <td>
-                              <input
-                                type="radio"
-                                name={row.key}
-                                value={column.value}
-                                onClick={handleClick}
-                              ></input>
+                            <td className="input-cell">
+                              <label className="label-cell">
+                                <input
+                                  type="radio"
+                                  className="m-input"
+                                  name={row.key}
+                                  value={column.value}
+                                  onClick={handleClick}
+                                ></input>
+                              </label>
                             </td>
                           );
                         })}
@@ -254,7 +259,7 @@ export default function Question11() {
               </Table>
               <div className="back-next-btns">
                 <Button
-                  variant="light"
+                  variant="secondary"
                   className="back-btn"
                   onClick={() => history.goBack()}
                 >

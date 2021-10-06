@@ -10,6 +10,27 @@ export default function Question20() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q20-checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q20-checkedA")));
+    }
+    if (localStorage.getItem("q20-checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q20-checkedB")));
+    }
+    if (localStorage.getItem("q20-checkedC")) {
+      setCheckedC(JSON.parse(localStorage.getItem("q20-checkedC")));
+    }
+    if (localStorage.getItem("q20-checkedD")) {
+      setCheckedD(JSON.parse(localStorage.getItem("q20-checkedD")));
+    }
+    if (localStorage.getItem("q20-checkedE")) {
+      setCheckedE(JSON.parse(localStorage.getItem("q20-checkedE")));
+    }
+    if (localStorage.getItem("q20-checkedF")) {
+      setCheckedF(JSON.parse(localStorage.getItem("q20-checkedF")));
+    }
+    if (localStorage.getItem("q20")) {
+      setInput(JSON.parse(localStorage.getItem("q20")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -104,9 +125,70 @@ export default function Question20() {
   });
 
   const [checked, setChecked] = useState([]);
+  const [checkedA, setCheckedA] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+    A7: false,
+    A8: false,
+  });
+  const [checkedB, setCheckedB] = useState({
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+    B7: false,
+    B8: false,
+  });
+  const [checkedC, setCheckedC] = useState({
+    C1: false,
+    C2: false,
+    C3: false,
+    C4: false,
+    C5: false,
+    C6: false,
+    C7: false,
+    C8: false,
+  });
+  const [checkedD, setCheckedD] = useState({
+    D1: false,
+    D2: false,
+    D3: false,
+    D4: false,
+    D5: false,
+    D6: false,
+    D7: false,
+    D8: false,
+  });
+  const [checkedE, setCheckedE] = useState({
+    E1: false,
+    E2: false,
+    E3: false,
+    E4: false,
+    E5: false,
+    E6: false,
+    E7: false,
+    E8: false,
+  });
+  const [checkedF, setCheckedF] = useState({
+    F1: false,
+    F2: false,
+    F3: false,
+    F4: false,
+    F5: false,
+    F6: false,
+    F7: false,
+    F8: false,
+  });
 
   function handleClick(e) {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prev) => {
       return {
         ...prev,
@@ -116,12 +198,86 @@ export default function Question20() {
     if (!checked.includes(name)) {
       checked.push(name);
     }
+
+    //SAVING PREVIOUS INPUT
+    if (name === "A") {
+      Object.keys(checkedA)
+        .filter((v) => v === index)
+        .map((v) => (checkedA[v] = true));
+      Object.keys(checkedA)
+        .filter((v) => v !== index)
+        .map((v) => (checkedA[v] = false));
+    }
+    //SAVING PREVIOUS INPUT
+    if (name === "B") {
+      Object.keys(checkedB)
+        .filter((v) => v === index)
+        .map((v) => (checkedB[v] = true));
+      Object.keys(checkedB)
+        .filter((v) => v !== index)
+        .map((v) => (checkedB[v] = false));
+    }
+    //SAVING PREVIOUS INPUT
+    if (name === "C") {
+      Object.keys(checkedC)
+        .filter((v) => v === index)
+        .map((v) => (checkedC[v] = true));
+      Object.keys(checkedC)
+        .filter((v) => v !== index)
+        .map((v) => (checkedC[v] = false));
+    }
+    //SAVING PREVIOUS INPUT
+    if (name === "D") {
+      Object.keys(checkedD)
+        .filter((v) => v === index)
+        .map((v) => (checkedD[v] = true));
+      Object.keys(checkedD)
+        .filter((v) => v !== index)
+        .map((v) => (checkedD[v] = false));
+    }
+    //SAVING PREVIOUS INPUT
+    if (name === "E") {
+      Object.keys(checkedE)
+        .filter((v) => v === index)
+        .map((v) => (checkedE[v] = true));
+      Object.keys(checkedE)
+        .filter((v) => v !== index)
+        .map((v) => (checkedE[v] = false));
+    }
+    //SAVING PREVIOUS INPUT
+    if (name === "F") {
+      Object.keys(checkedF)
+        .filter((v) => v === index)
+        .map((v) => (checkedF[v] = true));
+      Object.keys(checkedF)
+        .filter((v) => v !== index)
+        .map((v) => (checkedF[v] = false));
+    }
   }
+
+  useEffect(() => {
+    localStorage.setItem("q20-checkedA", JSON.stringify(checkedA));
+    localStorage.setItem("q20-checkedB", JSON.stringify(checkedB));
+    localStorage.setItem("q20-checkedC", JSON.stringify(checkedC));
+    localStorage.setItem("q20-checkedD", JSON.stringify(checkedD));
+    localStorage.setItem("q20-checkedE", JSON.stringify(checkedE));
+    localStorage.setItem("q20-checkedF", JSON.stringify(checkedF));
+    localStorage.setItem("q20", JSON.stringify(input));
+  }, [
+    input,
+    checkedA,
+    checkedB,
+    checkedC,
+    checkedD,
+    checkedE,
+    checkedF,
+    checked,
+  ]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 6) {
+    if (!input.A && !input.B && !input.C && !input.D && !input.E && !input.F) {
       handleShow();
     } else {
       localStorage.setItem("q20", JSON.stringify(input));
@@ -213,9 +369,24 @@ export default function Question20() {
                             <input
                               type="radio"
                               name={row.key}
-                              value={col.title}
+                              value={col.key}
                               onChange={handleClick}
                               className="m-input"
+                              checked={
+                                row.key === "A"
+                                  ? checkedA[`${row.key}${col.key}`]
+                                  : row.key === "B"
+                                  ? checkedB[`${row.key}${col.key}`]
+                                  : row.key === "C"
+                                  ? checkedC[`${row.key}${col.key}`]
+                                  : row.key === "D"
+                                  ? checkedD[`${row.key}${col.key}`]
+                                  : row.key === "E"
+                                  ? checkedE[`${row.key}${col.key}`]
+                                  : row.key === "F"
+                                  ? checkedF[`${row.key}${col.key}`]
+                                  : ""
+                              }
                             />
                             <strong>{col.title}</strong> ({col.value})
                           </label>
@@ -231,9 +402,24 @@ export default function Question20() {
                             <input
                               type="radio"
                               name={row.key}
-                              value={col.title}
+                              value={col.key}
                               onChange={handleClick}
                               className="m-input"
+                              checked={
+                                row.key === "A"
+                                  ? checkedA[`${row.key}${col.key}`]
+                                  : row.key === "B"
+                                  ? checkedB[`${row.key}${col.key}`]
+                                  : row.key === "C"
+                                  ? checkedC[`${row.key}${col.key}`]
+                                  : row.key === "D"
+                                  ? checkedD[`${row.key}${col.key}`]
+                                  : row.key === "E"
+                                  ? checkedE[`${row.key}${col.key}`]
+                                  : row.key === "F"
+                                  ? checkedF[`${row.key}${col.key}`]
+                                  : ""
+                              }
                             />
                             <strong>{col.title}</strong>
                           </label>
@@ -292,8 +478,23 @@ export default function Question20() {
                                 <input
                                   type="radio"
                                   name={row.key}
-                                  value={col.title}
+                                  value={col.key}
                                   onClick={handleClick}
+                                  checked={
+                                    row.key === "A"
+                                      ? checkedA[`${row.key}${col.key}`]
+                                      : row.key === "B"
+                                      ? checkedB[`${row.key}${col.key}`]
+                                      : row.key === "C"
+                                      ? checkedC[`${row.key}${col.key}`]
+                                      : row.key === "D"
+                                      ? checkedD[`${row.key}${col.key}`]
+                                      : row.key === "E"
+                                      ? checkedE[`${row.key}${col.key}`]
+                                      : row.key === "F"
+                                      ? checkedF[`${row.key}${col.key}`]
+                                      : ""
+                                  }
                                 ></input>
                               </label>
                             </td>

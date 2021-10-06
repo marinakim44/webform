@@ -22,7 +22,10 @@ export default function Question14() {
     if (localStorage.getItem("q14")) {
       setInput(JSON.parse(localStorage.getItem("q14")));
     }
-  }, [history]);
+    if (localStorage.getItem("q14-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q14-checked")));
+    }
+  }, []);
   const rows = [
     {
       key: "A",
@@ -144,8 +147,6 @@ export default function Question14() {
       Object.keys(checkedA)
         .filter((v) => v !== index)
         .map((v) => (checkedA[v] = false));
-
-      localStorage.setItem("q14-checkedA", JSON.stringify(checkedA));
     }
     if (name === "B") {
       Object.keys(checkedB)
@@ -154,8 +155,6 @@ export default function Question14() {
       Object.keys(checkedB)
         .filter((v) => v !== index)
         .map((v) => (checkedB[v] = false));
-
-      localStorage.setItem("q14-checkedB", JSON.stringify(checkedB));
     }
     if (name === "C") {
       Object.keys(checkedC)
@@ -164,32 +163,23 @@ export default function Question14() {
       Object.keys(checkedC)
         .filter((v) => v !== index)
         .map((v) => (checkedC[v] = false));
-
-      localStorage.setItem("q14-checkedC", JSON.stringify(checkedC));
     }
   }
 
-  function goBack() {
-    history.goBack();
-    if (localStorage.getItem("q14-checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q14-checkedA")));
-    }
-    if (localStorage.getItem("q14-checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q14-checkedB")));
-    }
-    if (localStorage.getItem("q14-checkedC")) {
-      setCheckedC(JSON.parse(localStorage.getItem("q14-checkedC")));
-    }
-    if (localStorage.getItem("q14")) {
-      setInput(JSON.parse(localStorage.getItem("q14")));
-    }
-  }
+  useEffect(() => {
+    localStorage.setItem("q14-checkedA", JSON.stringify(checkedA));
+    localStorage.setItem("q14-checkedB", JSON.stringify(checkedB));
+    localStorage.setItem("q14-checkedC", JSON.stringify(checkedC));
+    localStorage.setItem("q14-checked", JSON.stringify(checked));
+    localStorage.setItem("q14", JSON.stringify(input));
+  }, [input, checkedA, checkedB, checkedC, checked]);
 
   function handleSubmit(e) {
+    e.preventDefault();
+
     if (checked.length < 3) {
       handleShow();
     } else {
-      localStorage.setItem("q14", JSON.stringify(input));
       history.push("/eng-q15");
 
       const data = {
@@ -375,7 +365,7 @@ export default function Question14() {
                 <Button
                   variant="secondary"
                   className="back-btn"
-                  onClick={goBack}
+                  onClick={() => history.goBack()}
                 >
                   <i
                     className="fas fa-chevron-left"

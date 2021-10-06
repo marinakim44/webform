@@ -10,6 +10,15 @@ export default function Question22() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q22-revenue")) {
+      setRevenue(localStorage.getItem("q22-revenue"));
+    }
+    if (localStorage.getItem("q22-profit")) {
+      setProfit(localStorage.getItem("q22-profit"));
+    }
+    if (localStorage.getItem("q22-return")) {
+      setReturnInput(localStorage.getItem("q22-return"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -26,24 +35,28 @@ export default function Question22() {
   const [errorReturn, setErrorReturn] = useState(false);
 
   function handleDontknowRevenue(e) {
-    if (dontknowRevenue) {
-      setErrorRevenue(false);
-    }
     setDontknowRevenue(!dontknowRevenue);
+    if (!dontknowRevenue) {
+      setErrorRevenue(false);
+      setRevenue("");
+    }
   }
 
   function handleDontknowProfit(e) {
-    if (dontknowProfit) {
-      setErrorProfit(false);
-    }
     setDontknowProfit(!dontknowProfit);
+    if (!dontknowProfit) {
+      setErrorProfit(false);
+      setProfit("");
+    }
   }
 
   function handleDontknowReturn(e) {
-    if (dontknowReturn) {
-      setErrorReturn(false);
-    }
     setDontknowReturn(!dontknowReturn);
+
+    if (!dontknowReturn) {
+      setErrorReturn(false);
+      setReturnInput("");
+    }
   }
 
   function validate(number) {
@@ -113,6 +126,22 @@ export default function Question22() {
     }
   }
 
+  useEffect(() => {
+    localStorage.setItem("q22-revenue", revenue);
+    localStorage.setItem("q22-profit", profit);
+    localStorage.setItem("q22-return", returnInput);
+    // localStorage.setItem("q22-dontknowRevenue", dontknowRevenue);
+    // localStorage.setItem("q22-dontknowProfit", dontknowProfit);
+    // localStorage.setItem("q22-dontknowReturn", dontknowReturn);
+  }, [
+    revenue,
+    profit,
+    returnInput,
+    // dontknowRevenue,
+    // dontknowProfit,
+    // dontknowReturn,
+  ]);
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -123,12 +152,6 @@ export default function Question22() {
     ) {
       handleShow();
     } else {
-      localStorage.setItem("q22-revenue", revenue);
-      localStorage.setItem("q22-profit", profit);
-      localStorage.setItem("q22-return", returnInput);
-      localStorage.setItem("q22-dontknowRevenue", dontknowRevenue);
-      localStorage.setItem("q22-dontknowProfit", dontknowProfit);
-      localStorage.setItem("q22-dontknowReturn", dontknowReturn);
       history.push("/eng-q23");
 
       const data = {
@@ -174,7 +197,10 @@ export default function Question22() {
 
   return (
     <Route path="/eng-q22">
-      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
+      <div
+        className="main"
+        style={{ height: width <= 768 && width > 480 ? "100vh" : "" }}
+      >
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 23).toString())}% completed

@@ -164,7 +164,7 @@ export default function Question10B() {
               return (
                 <div>
                   <strong>
-                    <p>
+                    <p className="question" style={{ color: "#db536a" }}>
                       {row.key}) {row.value}
                     </p>
                   </strong>

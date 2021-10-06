@@ -1,8 +1,9 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
+import "../Small.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
@@ -10,6 +11,21 @@ export default function Question18() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q18-checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q18-checkedA")));
+    }
+    if (localStorage.getItem("q18-checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q18-checkedB")));
+    }
+    if (localStorage.getItem("q18-checkedC")) {
+      setCheckedC(JSON.parse(localStorage.getItem("q18-checkedC")));
+    }
+    if (localStorage.getItem("q18-checkedD")) {
+      setCheckedD(JSON.parse(localStorage.getItem("q18-checkedD")));
+    }
+    if (localStorage.getItem("q18")) {
+      setInput(JSON.parse(localStorage.getItem("q18")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -79,9 +95,50 @@ export default function Question18() {
   });
 
   const [checked, setChecked] = useState([]);
+  const [checkedA, setCheckedA] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+    A7: false,
+    A8: false,
+  });
+  const [checkedB, setCheckedB] = useState({
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+    B7: false,
+    B8: false,
+  });
+  const [checkedC, setCheckedC] = useState({
+    C1: false,
+    C2: false,
+    C3: false,
+    C4: false,
+    C5: false,
+    C6: false,
+    C7: false,
+    C8: false,
+  });
+  const [checkedD, setCheckedD] = useState({
+    D1: false,
+    D2: false,
+    D3: false,
+    D4: false,
+    D5: false,
+    D6: false,
+    D7: false,
+    D8: false,
+  });
 
   function handleClick(e) {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prev) => {
       return {
         ...prev,
@@ -91,12 +148,54 @@ export default function Question18() {
     if (!checked.includes(name)) {
       checked.push(name);
     }
+
+    //SAVING PREVIOUS INPUT
+    if (name === "A") {
+      Object.keys(checkedA)
+        .filter((v) => v === index)
+        .map((v) => (checkedA[v] = true));
+      Object.keys(checkedA)
+        .filter((v) => v !== index)
+        .map((v) => (checkedA[v] = false));
+    }
+    if (name === "B") {
+      Object.keys(checkedB)
+        .filter((v) => v === index)
+        .map((v) => (checkedB[v] = true));
+      Object.keys(checkedB)
+        .filter((v) => v !== index)
+        .map((v) => (checkedB[v] = false));
+    }
+    if (name === "C") {
+      Object.keys(checkedC)
+        .filter((v) => v === index)
+        .map((v) => (checkedC[v] = true));
+      Object.keys(checkedC)
+        .filter((v) => v !== index)
+        .map((v) => (checkedC[v] = false));
+    }
+    if (name === "D") {
+      Object.keys(checkedD)
+        .filter((v) => v === index)
+        .map((v) => (checkedD[v] = true));
+      Object.keys(checkedD)
+        .filter((v) => v !== index)
+        .map((v) => (checkedD[v] = false));
+    }
   }
+
+  useEffect(() => {
+    localStorage.setItem("q18-checkedA", JSON.stringify(checkedA));
+    localStorage.setItem("q18-checkedB", JSON.stringify(checkedB));
+    localStorage.setItem("q18-checkedC", JSON.stringify(checkedC));
+    localStorage.setItem("q18-checkedD", JSON.stringify(checkedD));
+    localStorage.setItem("q18", JSON.stringify(input));
+  }, [input, checkedA, checkedB, checkedC, checkedD, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 4) {
+    if (!input.A && !input.B && !input.C && !input.D) {
       handleShow();
     } else {
       localStorage.setItem("q18", JSON.stringify(input));
@@ -180,9 +279,20 @@ export default function Question18() {
                           <input
                             type="radio"
                             name={row.key}
-                            value={col.value}
-                            onClick={handleClick}
+                            value={col.key}
+                            onChange={handleClick}
                             className="m-input"
+                            checked={
+                              row.key === "A"
+                                ? checkedA[`${row.key}${col.key}`]
+                                : row.key === "B"
+                                ? checkedB[`${row.key}${col.key}`]
+                                : row.key === "C"
+                                ? checkedC[`${row.key}${col.key}`]
+                                : row.key === "D"
+                                ? checkedD[`${row.key}${col.key}`]
+                                : ""
+                            }
                           ></input>
                           {col.value}
                         </label>
@@ -214,7 +324,7 @@ export default function Question18() {
           </div>
         ) : (
           <form>
-            <div style={{ overflow: "auto", height: "320px" }}>
+            <div style={{ overflow: "auto", height: "420px" }}>
               <table className="table">
                 <thead
                   style={{
@@ -248,8 +358,19 @@ export default function Question18() {
                                 <input
                                   type="radio"
                                   name={row.key}
-                                  value={col.value}
-                                  onClick={handleClick}
+                                  value={col.key}
+                                  onChange={handleClick}
+                                  checked={
+                                    row.key === "A"
+                                      ? checkedA[`${row.key}${col.key}`]
+                                      : row.key === "B"
+                                      ? checkedB[`${row.key}${col.key}`]
+                                      : row.key === "C"
+                                      ? checkedC[`${row.key}${col.key}`]
+                                      : row.key === "D"
+                                      ? checkedD[`${row.key}${col.key}`]
+                                      : ""
+                                  }
                                 ></input>
                               </label>
                             </td>
@@ -260,25 +381,26 @@ export default function Question18() {
                   })}
                 </tbody>
               </table>
-            </div>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
 
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i class="fas fa-chevron-right next-arrow"></i>
-              </Button>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i className="fas fa-chevron-left back-arrow"></i>
+                  Back
+                </Button>
+
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Next
+                  <i class="fas fa-chevron-right next-arrow"></i>
+                </Button>
+              </div>
             </div>
           </form>
         )}

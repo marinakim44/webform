@@ -1,5 +1,9 @@
 /* responsive for tablets: width smaller than 768px */
 @media (max-width: 768px) {
+  body {
+    background-image: url("./back3.gif");
+    background-attachment: fixed;
+  }
   p {
     font-size: 16px;
   }
@@ -38,14 +42,19 @@
     width: 100%;
   }
   .lng-btn {
-    margin: 1rem;
+    margin: 1rem auto;
     height: 60px;
     font-size: 22px;
+    color: white;
+    width: 100%;
+  }
+  .lng-btn:active {
+    color: white;
   }
   .lng-menu {
-    width: 250px;
+    width: 100%;
     text-align: center;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
   }
   .lng-menu a {

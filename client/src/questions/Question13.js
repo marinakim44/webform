@@ -98,7 +98,10 @@ export default function Question13() {
 
   return (
     <Route path="/eng-q13">
-      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
+      <div
+        className="main"
+        style={{ height: width <= 768 && width > 480 ? "100vh" : "" }}
+      >
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 14).toString())}% completed

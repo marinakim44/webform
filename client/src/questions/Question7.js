@@ -54,123 +54,117 @@ export default function Question7() {
       ) {
         history.push("/eng-q9");
       } else {
-        if (JSON.parse(localStorage.getItem("q5")).A === "yes") {
-          history.push("/eng-q10a");
-        } else if (JSON.parse(localStorage.getItem("q5")).A === "no but") {
-          history.push("/eng-q10b");
-        }
+        history.push("/eng-q10b");
       }
     }
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q7">
-        <div className="main">
-          <div className="sticky-sub-div">
-            <h2 className="percent">
-              {Math.round(((100 / 39) * 8).toString())}% completed
-            </h2>
-            <div className="progressBarEmpty">
-              <div
-                className="progressBarFilled"
-                style={{
-                  width: ((100 / 39) * 8).toString() + "%",
-                }}
-              ></div>
-            </div>
-            <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
-              Which science-based target, if any, will your company’s net-zero
-              commitment be aligned to?
-            </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>PLEASE SELECT ONE RESPONSE</i>
-            </p>
+    <Route path="/eng-q7">
+      <div className="main" style={{ height: width <= 480 ? "100vh" : "" }}>
+        <div className="sticky-sub-div">
+          <h2 className="percent">
+            {Math.round(((100 / 39) * 8).toString())}% completed
+          </h2>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 39) * 8).toString() + "%",
+              }}
+            ></div>
           </div>
-          <Form className="left-align-text">
-            <div className="m-div">
-              <label className="m-label label-cell">
-                <input
-                  type="radio"
-                  className="m-input radio-input"
-                  name="option"
-                  value="Limiting global warming to 1.5° Celsius"
-                  onClick={handleClick}
-                ></input>
-                Limiting global warming to 1.5° Celsius
-              </label>
-            </div>
-            <div className="m-div">
-              <label className="m-label label-cell">
-                <input
-                  type="radio"
-                  className="m-input radio-input"
-                  name="option"
-                  value="Limiting global warming to well below 2.0° Celsius"
-                  onClick={handleClick}
-                ></input>
-                Limiting global warming to well below 2.0° Celsius
-              </label>
-            </div>
-            <div className="m-div">
-              <label className="m-label label-cell">
-                <input
-                  type="radio"
-                  className="m-input radio-input"
-                  name="option"
-                  value="My company’s net-zero commitment will not be aligned to a
-                science-based target"
-                  onClick={handleClick}
-                ></input>
-                My company’s net-zero commitment will not be aligned to a
-                science-based target
-              </label>
-            </div>
-            <div className="m-div">
-              <label className="m-label label-cell">
-                <input
-                  type="radio"
-                  className="m-input radio-input"
-                  name="option"
-                  value="Don't know"
-                  onClick={handleClick}
-                ></input>
-                Don't know
-              </label>
-            </div>
-
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
-          </Form>
+          <ModalAlert show={show} close={handleClose} />
+          <p className="left-align-text">
+            Which science-based target, if any, will your company’s net-zero
+            commitment be aligned to?
+          </p>
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE</i>
+          </p>
         </div>
-      </Route>
-    </BrowserRouter>
+        <Form className="left-align-text">
+          <div className="m-div">
+            <label className="m-label label-cell">
+              <input
+                type="radio"
+                className="m-input radio-input"
+                name="option"
+                value="Limiting global warming to 1.5° Celsius"
+                onClick={handleClick}
+              ></input>
+              Limiting global warming to 1.5° Celsius
+            </label>
+          </div>
+          <div className="m-div">
+            <label className="m-label label-cell">
+              <input
+                type="radio"
+                className="m-input radio-input"
+                name="option"
+                value="Limiting global warming to well below 2.0° Celsius"
+                onClick={handleClick}
+              ></input>
+              Limiting global warming to well below 2.0° Celsius
+            </label>
+          </div>
+          <div className="m-div">
+            <label className="m-label label-cell">
+              <input
+                type="radio"
+                className="m-input radio-input"
+                name="option"
+                value="My company’s net-zero commitment will not be aligned to a
+                science-based target"
+                onClick={handleClick}
+              ></input>
+              My company’s net-zero commitment will not be aligned to a
+              science-based target
+            </label>
+          </div>
+          <div className="m-div">
+            <label className="m-label label-cell">
+              <input
+                type="radio"
+                className="m-input radio-input"
+                name="option"
+                value="Don't know"
+                onClick={handleClick}
+              ></input>
+              Don't know
+            </label>
+          </div>
+
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              Back
+            </Button>
+
+            <Button
+              variant="danger"
+              className="next-btn"
+              onClick={handleSubmit}
+            >
+              Next
+              <i
+                className="fas fa-chevron-right"
+                style={{ marginLeft: "8px" }}
+              ></i>
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </Route>
   );
 }

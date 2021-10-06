@@ -133,7 +133,7 @@ export default function Question15() {
   }
 
   function goBack() {
-    window.location.replace("/eng-q14");
+    history.push("/eng-q14");
   }
 
   function handleSubmit(e) {

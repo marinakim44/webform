@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import ModalAlert from "../ModalAlert";
@@ -10,6 +10,21 @@ export default function Question19() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q19")) {
+      setInput(JSON.parse(localStorage.getItem("q19")));
+    }
+    // if (localStorage.getItem("q19-none")) {
+    //   setNone(localStorage.getItem("q19-none"));
+    // }
+    // if (localStorage.getItem("q19-dontknow")) {
+    //   setDontknow(localStorage.getItem("q19-dontknow"));
+    // }
+    if (localStorage.getItem("q19-other")) {
+      setOther(localStorage.getItem("q19-other"));
+    }
+    if (localStorage.getItem("q19-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q19-checked")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -53,37 +68,71 @@ export default function Question19() {
     key2: false,
     key3: false,
     key4: false,
+    key5: false,
+    key6: false,
   });
   const [disabled, setDisabled] = useState({
     key1: false,
     key2: false,
     key3: false,
     key4: false,
+    key5: false,
+    key6: false,
   });
   const [other, setOther] = useState("");
 
   function clearAll() {
     setChecked((prev) => {
-      return { ...prev, key1: false, key2: false, key3: false, key4: false };
+      return {
+        ...prev,
+        key1: false,
+        key2: false,
+        key3: false,
+        key4: false,
+        key5: false,
+        key6: false,
+      };
     });
     setDisabled((prev) => {
-      return { ...prev, key1: false, key2: false, key3: false, key4: false };
+      return {
+        ...prev,
+        key1: false,
+        key2: false,
+        key3: false,
+        key4: false,
+        key5: false,
+        key6: false,
+      };
     });
     setInput([]);
   }
 
   function handleChange(e) {
-    const { name, value } = e.target;
+    const { name } = e.target;
 
-    setChecked((prev) => {
-      return {
-        ...prev,
-        [name]: !checked[name],
-      };
-    });
-    if (checked) {
-      if (!input.includes(value)) {
-        input.push(value);
+    if (checked[name]) {
+      setChecked((prev) => {
+        return {
+          ...prev,
+          [name]: false,
+        };
+      });
+    } else {
+      setChecked((prev) => {
+        return {
+          ...prev,
+          [name]: true,
+        };
+      });
+    }
+
+    if (!checked[name]) {
+      if (!input.includes(name)) {
+        input.push(name);
+      }
+    } else {
+      if (input.includes(name)) {
+        input.pop(name);
       }
     }
   }
@@ -99,7 +148,6 @@ export default function Question19() {
     setNone(!none);
 
     if (none) {
-      clearAll();
       setDontknow(false);
     }
   }
@@ -111,25 +159,27 @@ export default function Question19() {
     setDontknow(!dontknow);
 
     if (dontknow) {
-      clearAll();
       setNone(false);
     }
   }
 
+  useEffect(() => {
+    localStorage.setItem("q19", JSON.stringify(input));
+    localStorage.setItem("q19-none", none);
+    localStorage.setItem("q19-dontknow", dontknow);
+    localStorage.setItem("q19-other", other);
+    localStorage.setItem("q19-checked", JSON.stringify(checked));
+  }, [input, none, dontknow, other, checked]);
+
   function handleSubmit(e) {
-    if (none || dontknow) {
-      setChecked(false);
-      setInput([]);
-      setDontknow(false);
-    }
-    if (!none && !dontknow && input.length === 0 && !other) {
+    e.preventDefault();
+    if (
+      JSON.parse(
+        localStorage.getItem("q19").length === 0 && !none && !dontknow && !other
+      )
+    ) {
       handleShow();
     } else {
-      localStorage.setItem("q19", JSON.stringify(input));
-      localStorage.setItem("q19-none", none);
-      localStorage.setItem("q19-dontknow", dontknow);
-      localStorage.setItem("q19-other", other);
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -206,7 +256,7 @@ export default function Question19() {
                       style={{ marginRight: "8px" }}
                       type="checkbox"
                       name={row.key}
-                      value={row.value}
+                      value={row.key}
                       onChange={handleChange}
                       disabled={none || dontknow ? true : false}
                     />
@@ -273,9 +323,10 @@ export default function Question19() {
                       style={{ marginRight: "8px" }}
                       type="checkbox"
                       name={row.key}
-                      value={row.value}
+                      value={row.key}
                       onChange={handleChange}
                       disabled={none || dontknow ? true : false}
+                      checked={checked[`${row.key}`]}
                     />
                     {row.value}
                   </label>

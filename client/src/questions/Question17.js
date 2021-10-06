@@ -10,6 +10,30 @@ export default function Question17() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q17-checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q17-checkedA")));
+    }
+    if (localStorage.getItem("q17-checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q17-checkedB")));
+    }
+    if (localStorage.getItem("q17-checkedC")) {
+      setCheckedC(JSON.parse(localStorage.getItem("q17-checkedC")));
+    }
+    if (localStorage.getItem("q17-checkedD")) {
+      setCheckedD(JSON.parse(localStorage.getItem("q17-checkedD")));
+    }
+    if (localStorage.getItem("q17-checkedE")) {
+      setCheckedE(JSON.parse(localStorage.getItem("q17-checkedE")));
+    }
+    if (localStorage.getItem("q17-checkedF")) {
+      setCheckedF(JSON.parse(localStorage.getItem("q17-checkedF")));
+    }
+    if (localStorage.getItem("q17-checkedG")) {
+      setCheckedG(JSON.parse(localStorage.getItem("q17-checkedG")));
+    }
+    if (localStorage.getItem("q17")) {
+      setInput(JSON.parse(localStorage.getItem("q17")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -92,9 +116,80 @@ export default function Question17() {
   });
 
   const [checked, setChecked] = useState([]);
+  const [checkedA, setCheckedA] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+    A7: false,
+    A8: false,
+  });
+  const [checkedB, setCheckedB] = useState({
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+    B7: false,
+    B8: false,
+  });
+  const [checkedC, setCheckedC] = useState({
+    C1: false,
+    C2: false,
+    C3: false,
+    C4: false,
+    C5: false,
+    C6: false,
+    C7: false,
+    C8: false,
+  });
+  const [checkedD, setCheckedD] = useState({
+    D1: false,
+    D2: false,
+    D3: false,
+    D4: false,
+    D5: false,
+    D6: false,
+    D7: false,
+    D8: false,
+  });
+  const [checkedE, setCheckedE] = useState({
+    E1: false,
+    E2: false,
+    E3: false,
+    E4: false,
+    E5: false,
+    E6: false,
+    E7: false,
+    E8: false,
+  });
+  const [checkedF, setCheckedF] = useState({
+    F1: false,
+    F2: false,
+    F3: false,
+    F4: false,
+    F5: false,
+    F6: false,
+    F7: false,
+    F8: false,
+  });
+  const [checkedG, setCheckedG] = useState({
+    G1: false,
+    G2: false,
+    G3: false,
+    G4: false,
+    G5: false,
+    G6: false,
+    G7: false,
+    G8: false,
+  });
 
   function handleClick(e) {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prevInput) => {
       return {
         ...prevInput,
@@ -104,15 +199,100 @@ export default function Question17() {
     if (!checked.includes(name)) {
       checked.push(name);
     }
+    //SAVING PREVIOUS INPUT
+    if (name === "A") {
+      Object.keys(checkedA)
+        .filter((v) => v === index)
+        .map((v) => (checkedA[v] = true));
+      Object.keys(checkedA)
+        .filter((v) => v !== index)
+        .map((v) => (checkedA[v] = false));
+    }
+    if (name === "B") {
+      Object.keys(checkedB)
+        .filter((v) => v === index)
+        .map((v) => (checkedB[v] = true));
+      Object.keys(checkedB)
+        .filter((v) => v !== index)
+        .map((v) => (checkedB[v] = false));
+    }
+    if (name === "C") {
+      Object.keys(checkedC)
+        .filter((v) => v === index)
+        .map((v) => (checkedC[v] = true));
+      Object.keys(checkedC)
+        .filter((v) => v !== index)
+        .map((v) => (checkedC[v] = false));
+    }
+    if (name === "D") {
+      Object.keys(checkedD)
+        .filter((v) => v === index)
+        .map((v) => (checkedD[v] = true));
+      Object.keys(checkedD)
+        .filter((v) => v !== index)
+        .map((v) => (checkedD[v] = false));
+    }
+    if (name === "E") {
+      Object.keys(checkedE)
+        .filter((v) => v === index)
+        .map((v) => (checkedE[v] = true));
+      Object.keys(checkedE)
+        .filter((v) => v !== index)
+        .map((v) => (checkedE[v] = false));
+    }
+    if (name === "F") {
+      Object.keys(checkedF)
+        .filter((v) => v === index)
+        .map((v) => (checkedF[v] = true));
+      Object.keys(checkedF)
+        .filter((v) => v !== index)
+        .map((v) => (checkedF[v] = false));
+    }
+    if (name === "G") {
+      Object.keys(checkedG)
+        .filter((v) => v === index)
+        .map((v) => (checkedG[v] = true));
+      Object.keys(checkedG)
+        .filter((v) => v !== index)
+        .map((v) => (checkedG[v] = false));
+    }
   }
+
+  useEffect(() => {
+    localStorage.setItem("q17-checkedA", JSON.stringify(checkedA));
+    localStorage.setItem("q17-checkedB", JSON.stringify(checkedB));
+    localStorage.setItem("q17-checkedC", JSON.stringify(checkedC));
+    localStorage.setItem("q17-checkedD", JSON.stringify(checkedD));
+    localStorage.setItem("q17-checkedE", JSON.stringify(checkedE));
+    localStorage.setItem("q17-checkedF", JSON.stringify(checkedF));
+    localStorage.setItem("q17-checkedG", JSON.stringify(checkedG));
+    localStorage.setItem("q17", JSON.stringify(input));
+  }, [
+    input,
+    checkedA,
+    checkedB,
+    checkedC,
+    checkedD,
+    checkedE,
+    checkedF,
+    checkedG,
+    checked,
+  ]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 7) {
+    if (
+      !input.A &&
+      !input.B &&
+      !input.C &&
+      !input.D &&
+      !input.E &&
+      !input.F &&
+      !input.G
+    ) {
       handleShow();
     } else {
-      localStorage.setItem("q17", JSON.stringify(input));
       history.push("/eng-q18");
 
       const data = {
@@ -191,9 +371,26 @@ export default function Question17() {
                             <input
                               type="radio"
                               name={row.key}
-                              value={col.value}
-                              style={{ marginRight: "8px" }}
+                              value={col.key}
+                              className="m-input"
                               onChange={handleClick}
+                              checked={
+                                row.key === "A"
+                                  ? checkedA[`${row.key}${col.key}`]
+                                  : row.key === "B"
+                                  ? checkedB[`${row.key}${col.key}`]
+                                  : row.key === "C"
+                                  ? checkedC[`${row.key}${col.key}`]
+                                  : row.key === "D"
+                                  ? checkedD[`${row.key}${col.key}`]
+                                  : row.key === "E"
+                                  ? checkedE[`${row.key}${col.key}`]
+                                  : row.key === "F"
+                                  ? checkedF[`${row.key}${col.key}`]
+                                  : row.key === "G"
+                                  ? checkedG[`${row.key}${col.key}`]
+                                  : ""
+                              }
                             ></input>
                             {col.value}
                           </label>
@@ -225,7 +422,7 @@ export default function Question17() {
             </div>
           ) : (
             <form>
-              <div style={{ overflow: "auto", height: "320px" }}>
+              <div style={{ overflow: "auto", height: "420px" }}>
                 <Table bordered className="table">
                   <thead
                     style={{
@@ -269,15 +466,32 @@ export default function Question17() {
                         <tr className="table-row">
                           <td>{row.key}</td>
                           <td className="left-align-text">{row.value}</td>
-                          {columns.map((column) => {
+                          {columns.map((col) => {
                             return (
                               <td className="input-cell">
                                 <label className="label-cell">
                                   <input
                                     type="radio"
                                     name={row.key}
-                                    value={column.value}
+                                    value={col.key}
                                     onClick={handleClick}
+                                    checked={
+                                      row.key === "A"
+                                        ? checkedA[`${row.key}${col.key}`]
+                                        : row.key === "B"
+                                        ? checkedB[`${row.key}${col.key}`]
+                                        : row.key === "C"
+                                        ? checkedC[`${row.key}${col.key}`]
+                                        : row.key === "D"
+                                        ? checkedD[`${row.key}${col.key}`]
+                                        : row.key === "E"
+                                        ? checkedE[`${row.key}${col.key}`]
+                                        : row.key === "F"
+                                        ? checkedF[`${row.key}${col.key}`]
+                                        : row.key === "G"
+                                        ? checkedG[`${row.key}${col.key}`]
+                                        : ""
+                                    }
                                   ></input>
                                 </label>
                               </td>
@@ -288,25 +502,26 @@ export default function Question17() {
                     })}
                   </tbody>
                 </Table>
-              </div>
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
 
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i class="fas fa-chevron-right next-arrow"></i>
-                </Button>
+                <div className="back-next-btns">
+                  <Button
+                    variant="secondary"
+                    className="back-btn"
+                    onClick={() => history.goBack()}
+                  >
+                    <i className="fas fa-chevron-left back-arrow"></i>
+                    Back
+                  </Button>
+
+                  <Button
+                    variant="danger"
+                    className="next-btn"
+                    onClick={handleSubmit}
+                  >
+                    Next
+                    <i class="fas fa-chevron-right next-arrow"></i>
+                  </Button>
+                </div>
               </div>
             </form>
           )}

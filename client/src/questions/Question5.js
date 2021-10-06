@@ -106,6 +106,8 @@ export default function Question5() {
   }
 
   function handleSubmit(e) {
+    e.preventDefault();
+
     if (input.A && input.B) {
       localStorage.setItem("q5", JSON.stringify(input));
       localStorage.setItem("q5-carbonNeutral", input.A);
@@ -152,14 +154,6 @@ export default function Question5() {
       }
     } else {
       handleShow();
-    }
-  }
-
-  function goBack() {
-    if (JSON.parse(localStorage.getItem("q3-concerns")).length > 0) {
-      history.push("/eng-q4");
-    } else {
-      history.push("/eng-q3");
     }
   }
 
@@ -310,7 +304,7 @@ export default function Question5() {
                 <Button
                   variant="secondary"
                   className="back-btn"
-                  onClick={goBack}
+                  onClick={() => history.goBack()}
                 >
                   <i className="fas fa-chevron-left back-arrow"></i>
                   Back

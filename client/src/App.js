@@ -70,7 +70,7 @@ export default function App() {
       uuid: localStorage.getItem("uuid"),
     };
 
-    axios.post("https://ancient-ridge-93546.herokuapp.com/allinputs", data);
+    axios.post("/allinputs", data);
   }
 
   function chooseRus(e) {
@@ -80,210 +80,209 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="main-root">
-        <Nav />
-        <Route exact path="/">
-          <div className="main">
-            <div className="start-text">
-              <h1 className="intro-heading">
-                25th Annual Global CEO Survey Questionnaire
-              </h1>
-              <p className="intro-text">
-                For more than two decades, PwC's Annual Global CEO Survey has
-                opened a unique window on the thinking of chief executives
-                around the world. This year, we're celebrating our 25th
-                anniversary of Global CEO Survey and 10th anniversary in
-                Kazakhstan. <br />
-                <br /> It is our hope that the survey results—historically
-                released in Davos on the eve of the Annual Meeting of the World
-                Economic Forum—will stimulate fresh thinking and enduring
-                insights on the relationship between external forces, strategic
-                objectives, organisational responses and corporate performance.
-                Many of this year’s questions reflect our aspiration to dig
-                deeper, and we want to thank you in advance for your
-                participation.
-                <br />
-                <br /> Kazakhstan’s findings of the report will be released in
-                cooperation with Forbes Kazakhstan in April 2022. <br />
-                <br />
-                <i>
-                  This research is conducted in accordance with the Market
-                  Research Society Code of Conduct, which is designed to
-                  safeguard participant confidentiality and anonymity. If you
-                  complete the survey, your responses will be combined with
-                  others at the aggregate, industry, region and
-                  country/territory level to reveal a consensus of opinion on
-                  these issues. Your data may also be combined with other
-                  research conducted by PwC or publicly available information in
-                  order to obtain further insight. All responses will be kept
-                  completely confidential, and individual responses will never
-                  be attributed without your prior consent.
-                </i>
-              </p>
-            </div>
-            <Dropdown>
-              <Dropdown.Toggle
-                id="dropdown-basic"
-                className="lng-btn"
-                variant=""
-                style={{
-                  width: width > 768 ? "250px" : "",
-                  marginTop: width > 768 ? "2rem" : "",
-                }}
-              >
-                Select language
-              </Dropdown.Toggle>
-              <Dropdown.Menu className="lng-menu">
-                <Dropdown.Item onClick={chooseEng} value="English">
-                  <Link to="/eng-start">
-                    <div className="lng-div">English</div>
-                  </Link>
-                </Dropdown.Item>
-
-                <Dropdown.Item onClick={chooseRus}>
-                  <Link to="/rus-start">
-                    <div className="lng-div">Russian</div>
-                  </Link>
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+      <Nav />
+      <Route exact path="/">
+        <div
+          className="main"
+          style={{ height: width <= 768 && width >= 480 ? "100vh" : "" }}
+        >
+          <div className="start-text">
+            <h1 className="intro-heading">
+              25th Annual Global CEO Survey Questionnaire
+            </h1>
+            <p className="intro-text">
+              For more than two decades, PwC's Annual Global CEO Survey has
+              opened a unique window on the thinking of chief executives around
+              the world. This year, we're celebrating our 25th anniversary of
+              Global CEO Survey and 10th anniversary in Kazakhstan. <br />
+              <br /> It is our hope that the survey results—historically
+              released in Davos on the eve of the Annual Meeting of the World
+              Economic Forum—will stimulate fresh thinking and enduring insights
+              on the relationship between external forces, strategic objectives,
+              organisational responses and corporate performance. Many of this
+              year’s questions reflect our aspiration to dig deeper, and we want
+              to thank you in advance for your participation.
+              <br />
+              <br /> Kazakhstan’s findings of the report will be released in
+              cooperation with Forbes Kazakhstan in April 2022. <br />
+              <br />
+              <i>
+                This research is conducted in accordance with the Market
+                Research Society Code of Conduct, which is designed to safeguard
+                participant confidentiality and anonymity. If you complete the
+                survey, your responses will be combined with others at the
+                aggregate, industry, region and country/territory level to
+                reveal a consensus of opinion on these issues. Your data may
+                also be combined with other research conducted by PwC or
+                publicly available information in order to obtain further
+                insight. All responses will be kept completely confidential, and
+                individual responses will never be attributed without your prior
+                consent.
+              </i>
+            </p>
           </div>
+          <Dropdown>
+            <Dropdown.Toggle
+              id="dropdown-basic"
+              className="lng-btn"
+              variant=""
+              style={{
+                width: width > 768 ? "250px" : "",
+                marginTop: width > 768 ? "2rem" : "",
+              }}
+            >
+              Select language
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="lng-menu">
+              <Dropdown.Item onClick={chooseEng} value="English">
+                <Link to="/eng-start">
+                  <div className="lng-div">English</div>
+                </Link>
+              </Dropdown.Item>
+
+              <Dropdown.Item onClick={chooseRus}>
+                <Link to="/rus-start">
+                  <div className="lng-div">Russian</div>
+                </Link>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      </Route>
+      <Switch>
+        <Route exact path="/eng-start">
+          <EngStart />
         </Route>
-        <Switch>
-          <Route exact path="/eng-start">
-            <EngStart />
-          </Route>
-          <Route exact path="/rus-start">
-            <RusStart />
-          </Route>
-          <Route exact path="/eng-q1">
-            <Question1 />
-          </Route>
-          <Route exact path="/eng-q2">
-            <Question2 />
-          </Route>
-          <Route exact path="/eng-q3">
-            <Question3 />
-          </Route>
-          <Route exact path="/eng-q4">
-            <Question4 />
-          </Route>
-          <Route exact path="/eng-q5">
-            <Question5 />
-          </Route>
-          <Route exact path="/eng-q6">
-            <Question6 />
-          </Route>
-          <Route exact path="/eng-q7">
-            <Question7 />
-          </Route>
-          <Route exact path="/eng-q8">
-            <Question8 />
-          </Route>
-          <Route exact path="/eng-q9">
-            <Question9 />
-          </Route>
-          <Route exact path="/eng-q10a">
-            <Question10A />
-          </Route>
-          <Route exact path="/eng-q10b">
-            <Question10B />
-          </Route>
-          <Route exact path="/eng-q11">
-            <Question11 />
-          </Route>
-          <Route exact path="/eng-q12">
-            <Question12 />
-          </Route>
-          <Route exact path="/eng-q13">
-            <Question13 />
-          </Route>
-          <Route exact path="/eng-q14">
-            <Question14 />
-          </Route>
-          <Route exact path="/eng-q15">
-            <Question15 />
-          </Route>
-          <Route exact path="/eng-q16">
-            <Question16 />
-          </Route>
-          <Route exact path="/eng-q17">
-            <Question17 />
-          </Route>
-          <Route exact path="/eng-q18">
-            <Question18 />
-          </Route>
-          <Route exact path="/eng-q19">
-            <Question19 />
-          </Route>
-          <Route exact path="/eng-q20">
-            <Question20 />
-          </Route>
-          <Route exact path="/eng-q21">
-            <Question21 />
-          </Route>
-          <Route exact path="/eng-q22">
-            <Question22 />
-          </Route>
-          <Route exact path="/eng-q23">
-            <Question23 />
-          </Route>
-          <Route exact path="/eng-q24">
-            <Question24 />
-          </Route>
-          <Route exact path="/eng-q25">
-            <Question25 />
-          </Route>
-          <Route exact path="/eng-q25b">
-            <Question25B />
-          </Route>
-          <Route exact path="/eng-q25c">
-            <Question25C />
-          </Route>
-          <Route exact path="/eng-q26">
-            <Question26 />
-          </Route>
-          <Route exact path="/eng-q27">
-            <Question27 />
-          </Route>
-          <Route exact path="/eng-q28">
-            <Question28 />
-          </Route>
-          <Route exact path="/eng-qa">
-            <QuestionA />
-          </Route>
-          <Route exact path="/eng-qb">
-            <QuestionB />
-          </Route>
-          <Route exact path="/eng-qc">
-            <QuestionC />
-          </Route>
-          <Route exact path="/eng-qd">
-            <QuestionD />
-          </Route>
-          <Route exact path="/eng-qe">
-            <QuestionE />
-          </Route>
-          <Route exact path="/eng-qf">
-            <QuestionF />
-          </Route>
-          <Route exact path="/eng-qg">
-            <QuestionG />
-          </Route>
-          <Route exact path="/eng-qh">
-            <QuestionH />
-          </Route>
-          <Route exact path="/eng-qi">
-            <QuestionI />
-          </Route>
-          <Route exact path="/eng-qj">
-            <QuestionJ />
-          </Route>
-          <Route exact path="/eng-finish">
-            <EngFinish />
-          </Route>
-        </Switch>
-      </div>
+        <Route exact path="/rus-start">
+          <RusStart />
+        </Route>
+        <Route exact path="/eng-q1">
+          <Question1 />
+        </Route>
+        <Route exact path="/eng-q2">
+          <Question2 />
+        </Route>
+        <Route exact path="/eng-q3">
+          <Question3 />
+        </Route>
+        <Route exact path="/eng-q4">
+          <Question4 />
+        </Route>
+        <Route exact path="/eng-q5">
+          <Question5 />
+        </Route>
+        <Route exact path="/eng-q6">
+          <Question6 />
+        </Route>
+        <Route exact path="/eng-q7">
+          <Question7 />
+        </Route>
+        <Route exact path="/eng-q8">
+          <Question8 />
+        </Route>
+        <Route exact path="/eng-q9">
+          <Question9 />
+        </Route>
+        <Route exact path="/eng-q10a">
+          <Question10A />
+        </Route>
+        <Route exact path="/eng-q10b">
+          <Question10B />
+        </Route>
+        <Route exact path="/eng-q11">
+          <Question11 />
+        </Route>
+        <Route exact path="/eng-q12">
+          <Question12 />
+        </Route>
+        <Route exact path="/eng-q13">
+          <Question13 />
+        </Route>
+        <Route exact path="/eng-q14">
+          <Question14 />
+        </Route>
+        <Route exact path="/eng-q15">
+          <Question15 />
+        </Route>
+        <Route exact path="/eng-q16">
+          <Question16 />
+        </Route>
+        <Route exact path="/eng-q17">
+          <Question17 />
+        </Route>
+        <Route exact path="/eng-q18">
+          <Question18 />
+        </Route>
+        <Route exact path="/eng-q19">
+          <Question19 />
+        </Route>
+        <Route exact path="/eng-q20">
+          <Question20 />
+        </Route>
+        <Route exact path="/eng-q21">
+          <Question21 />
+        </Route>
+        <Route exact path="/eng-q22">
+          <Question22 />
+        </Route>
+        <Route exact path="/eng-q23">
+          <Question23 />
+        </Route>
+        <Route exact path="/eng-q24">
+          <Question24 />
+        </Route>
+        <Route exact path="/eng-q25">
+          <Question25 />
+        </Route>
+        <Route exact path="/eng-q25b">
+          <Question25B />
+        </Route>
+        <Route exact path="/eng-q25c">
+          <Question25C />
+        </Route>
+        <Route exact path="/eng-q26">
+          <Question26 />
+        </Route>
+        <Route exact path="/eng-q27">
+          <Question27 />
+        </Route>
+        <Route exact path="/eng-q28">
+          <Question28 />
+        </Route>
+        <Route exact path="/eng-qa">
+          <QuestionA />
+        </Route>
+        <Route exact path="/eng-qb">
+          <QuestionB />
+        </Route>
+        <Route exact path="/eng-qc">
+          <QuestionC />
+        </Route>
+        <Route exact path="/eng-qd">
+          <QuestionD />
+        </Route>
+        <Route exact path="/eng-qe">
+          <QuestionE />
+        </Route>
+        <Route exact path="/eng-qf">
+          <QuestionF />
+        </Route>
+        <Route exact path="/eng-qg">
+          <QuestionG />
+        </Route>
+        <Route exact path="/eng-qh">
+          <QuestionH />
+        </Route>
+        <Route exact path="/eng-qi">
+          <QuestionI />
+        </Route>
+        <Route exact path="/eng-qj">
+          <QuestionJ />
+        </Route>
+        <Route exact path="/eng-finish">
+          <EngFinish />
+        </Route>
+      </Switch>
     </BrowserRouter>
   );
 }

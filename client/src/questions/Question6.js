@@ -45,6 +45,8 @@ export default function Question6() {
   }
 
   function handleSubmit(e) {
+    e.preventDefault();
+
     if (!input) {
       handleShow();
     } else {
@@ -68,48 +70,12 @@ export default function Question6() {
       axios.post("/allinputs", data);
 
       if (
-        localStorage.getItem("q6") === "1" ||
-        localStorage.getItem("q6") === "2"
+        localStorage.getItem("q6") === "option1" ||
+        localStorage.getItem("q6") === "option2"
       ) {
-        if (localStorage.getItem("q5-carbonNeutral") === "1") {
-          history.push("/eng-q8");
-        } else if (localStorage.getItem("q5-netZero") === "2") {
-          history.push("/eng-q9");
-        } else if (
-          (localStorage.getItem("q5-carbonNeutral") === "3" &&
-            localStorage.getItem("q5-netZer0") === "3") ||
-          (localStorage.getItem("q5-carbonNeutral") === "4" &&
-            localStorage.getItem("q5-netZero") === "3") ||
-          (localStorage.getItem("q5-carbonNeutral") === "3" &&
-            localStorage.getItem("q5-netZero") === "4")
-        ) {
-          history.push("/eng-q11");
-        } else {
-          history.push("/eng-q12");
-        }
+        history.push("/eng-q8");
       } else {
-        if (
-          localStorage.getItem("q5-carbonNeutral") === "1" ||
-          localStorage.getItem("q5-netZero") === "1"
-        ) {
-          history.push("/eng-q10a");
-        }
-        if (
-          localStorage.getItem("q5-carbonNeutral") === "2" ||
-          localStorage.getItem("q5-netZero") === "2"
-        ) {
-          history.push("/eng-q10b");
-        }
-        if (
-          (localStorage.getItem("q5-carbonNeutral") === "3" &&
-            localStorage.getItem("q5-netZero") === "3") ||
-          (localStorage.getItem("q5-carbonNeutral") === "4" &&
-            localStorage.getItem("q5-netZero") === "3") ||
-          (localStorage.getItem("q5-carbonNeutral") === "3" &&
-            localStorage.getItem("q5-netZero") === "4")
-        ) {
-          history.push("/eng-q11");
-        }
+        history.push("/eng-q10a");
       }
     }
   }
@@ -150,7 +116,6 @@ export default function Question6() {
                     onClick={handleClick}
                     className="m-input radio-input"
                     checked={checked.option1 ? true : false}
-                    autoComplete="on"
                   />
                   Limiting global warming to 1.5° Celsius
                 </label>

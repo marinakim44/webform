@@ -117,6 +117,10 @@ export default function Question24() {
     }
   }
 
+  useEffect(() => {
+    localStorage.setItem("q24", JSON.stringify(input));
+  });
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log(input);
@@ -128,7 +132,6 @@ export default function Question24() {
     } else if (input.B.length === 0) {
       handleShow();
     } else {
-      localStorage.setItem("q24", JSON.stringify(input));
       history.push("/eng-q25");
 
       const data = {

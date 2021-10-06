@@ -12,16 +12,14 @@ export default function Question1() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    if (localStorage.getItem("q1checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q1checkedA")));
-    }
-    if (localStorage.getItem("q1checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q1checkedB")));
+    if (localStorage.getItem("q1-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q1-checked")));
     }
     if (localStorage.getItem("q1")) {
       setInput(JSON.parse(localStorage.getItem("q1")));
     }
   }, []);
+
   const rows = [
     {
       key: "A",
@@ -72,11 +70,13 @@ export default function Question1() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
+
   const [input, setInput] = useState({
     A: "",
     B: "",
   });
-  const [checkedA, setCheckedA] = useState({
+
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
@@ -85,8 +85,6 @@ export default function Question1() {
     A6: false,
     A7: false,
     A8: false,
-  });
-  const [checkedB, setCheckedB] = useState({
     B1: false,
     B2: false,
     B3: false,
@@ -97,7 +95,7 @@ export default function Question1() {
     B8: false,
   });
 
-  const handleChange = (e) => {
+  function handleChange(e) {
     const { name, value } = e.target;
     const index = name + value;
 
@@ -107,52 +105,52 @@ export default function Question1() {
         [name]: value,
       };
     });
-    console.log(input);
 
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
-
-      localStorage.setItem("q1checkedA", JSON.stringify(checkedA));
-    }
-
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-
-      localStorage.setItem("q1checkedB", JSON.stringify(checkedB));
-    }
-    console.log(checkedA);
-    console.log(checkedB);
-  };
-
-  const handleSubmit = () => {
-    if (input.A && input.B) {
-      localStorage.setItem("q1", JSON.stringify(input));
-      history.push("/eng-q2");
-
-      const data = {
-        uuid: localStorage.getItem("uuid"),
-        name: localStorage.getItem("name"),
-        company: localStorage.getItem("company"),
-        title: localStorage.getItem("title"),
-        email: localStorage.getItem("email"),
-        phone: localStorage.getItem("phone"),
-        q1: JSON.parse(localStorage.getItem("q1")),
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
       };
-      axios.post("https://ancient-ridge-93546.herokuapp.com/allinputs", data);
+    });
+
+    Object.keys(checked)
+      .filter((el) => el === index)
+      .map((el) => {
+        checked[el] = true;
+      });
+    Object.keys(checked)
+      .filter((el) => el !== index && el.slice(0, 1) === name)
+      .map((el) => {
+        checked[el] = false;
+      });
+  }
+
+  useEffect(() => {
+    localStorage.setItem("q1", JSON.stringify(input));
+    localStorage.setItem("q1-checked", JSON.stringify(checked));
+  }, [input, checked]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (input.A && input.B) {
+      history.push("/eng-q2");
     } else {
       handleShow();
     }
-  };
+
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1: JSON.parse(localStorage.getItem("q1")),
+    };
+
+    axios.post("/allinputs", data);
+  }
 
   return (
     <Route path="/eng-q1" exact>
@@ -192,76 +190,35 @@ export default function Question1() {
           </div>
         </div>
         {width <= 768 ? (
-          <div>
-            <p className="question">
-              <span style={{ fontWeight: "bold", color: "#dc3545" }}>
-                Global&nbsp;
-              </span>
-              economic growth - next 12 months
-            </p>
-            <div className="left-align-text">
-              {columns.map((col) => {
-                return (
-                  <div className="m-div">
-                    <label className="m-label">
-                      <input
-                        type="radio"
-                        name="A"
-                        className="m-input"
-                        value={col.value}
-                        onChange={handleChange}
-                        autoComplete="on"
-                      ></input>
-                      {col.value}
-                    </label>
-                  </div>
-                );
-              })}
-            </div>
-            <p className="question">
-              <span style={{ fontWeight: "bold", color: "#dc3545" }}>
-                Kazakhstan&nbsp;
-              </span>
-              economic growth - next 12 months
-            </p>
-            <div className="left-align-text">
-              {columns.map((col) => {
-                return (
-                  <div className="m-div">
-                    <label className="m-label">
-                      <input
-                        type="radio"
-                        name="B"
-                        className="m-input"
-                        autoComplete="on"
-                        value={col.value}
-                        onChange={handleChange}
-                      ></input>
-                      {col.value}
-                    </label>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i class="fas fa-chevron-right next-arrow"></i>
-              </Button>
-            </div>
+          <div className="left-align-text">
+            {rows.map((row) => {
+              return (
+                <div>
+                  <strong>
+                    <p style={{ color: "#db536a" }} className="question">
+                      {row.key}) ${row.value}
+                    </p>
+                  </strong>
+                  {columns.map((col) => {
+                    return (
+                      <div className="m-div">
+                        <label className="m-label">
+                          <input
+                            className="m-input"
+                            name={row.key}
+                            value={col.key}
+                            type="radio"
+                            onChange={handleChange}
+                            checked={checked[`${row.key}${col.key}`]}
+                          ></input>
+                          {col.value}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })}
           </div>
         ) : (
           <Form>
@@ -292,12 +249,7 @@ export default function Question1() {
                                 value={col.key}
                                 type="radio"
                                 onChange={handleChange}
-                                checked={
-                                  row.key === "A"
-                                    ? checkedA[`${row.key}${col.key}`]
-                                    : checkedB[`${row.key}${col.key}`]
-                                }
-                                autoComplete="on"
+                                checked={checked[`${row.key}${col.key}`]}
                               ></input>
                             </label>
                           </td>
@@ -308,28 +260,23 @@ export default function Question1() {
                 })}
               </tbody>
             </table>
-
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i className="fas fa-chevron-right next-arrow"></i>
-              </Button>
-            </div>
           </Form>
         )}
+        <div className="back-next-btns">
+          <Button
+            variant="secondary"
+            className="back-btn"
+            onClick={() => history.goBack()}
+          >
+            <i className="fas fa-chevron-left back-arrow"></i>
+            Back
+          </Button>
+
+          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
+            Next
+            <i className="fas fa-chevron-right next-arrow"></i>
+          </Button>
+        </div>
       </div>
     </Route>
   );

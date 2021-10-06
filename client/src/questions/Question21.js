@@ -10,6 +10,15 @@ export default function Question21() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q21-checkedA")) {
+      setCheckedA(JSON.parse(localStorage.getItem("q21-checkedA")));
+    }
+    if (localStorage.getItem("q21-checkedB")) {
+      setCheckedB(JSON.parse(localStorage.getItem("q21-checkedB")));
+    }
+    if (localStorage.getItem("q21")) {
+      setInput(JSON.parse(localStorage.getItem("q21")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -27,12 +36,30 @@ export default function Question21() {
   ];
 
   const columns = [
-    "Not confident",
-    "Slightly confident",
-    "Moderately confident",
-    "Very confident",
-    "Extremely confident",
-    "Don't know",
+    {
+      key: "1",
+      value: "Not confident",
+    },
+    {
+      key: "2",
+      value: "Slightly confident",
+    },
+    {
+      key: "3",
+      value: "Moderately confident",
+    },
+    {
+      key: "4",
+      value: "Very confident",
+    },
+    {
+      key: "5",
+      value: "Extremely confident",
+    },
+    {
+      key: "6",
+      value: "Don't know",
+    },
   ];
 
   const [input, setInput] = useState({
@@ -41,9 +68,26 @@ export default function Question21() {
   });
 
   const [checked, setChecked] = useState([]);
+  const [checkedA, setCheckedA] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+  });
+  const [checkedB, setCheckedB] = useState({
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+  });
 
   function handleClick(e) {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prev) => {
       return {
         ...prev,
@@ -53,12 +97,34 @@ export default function Question21() {
     if (!checked.includes(name)) {
       checked.push(name);
     }
+    if (name === "A") {
+      Object.keys(checkedA)
+        .filter((v) => v === index)
+        .map((v) => (checkedA[v] = true));
+      Object.keys(checkedA)
+        .filter((v) => v !== index)
+        .map((v) => (checkedA[v] = false));
+    }
+    if (name === "B") {
+      Object.keys(checkedB)
+        .filter((v) => v === index)
+        .map((v) => (checkedB[v] = true));
+      Object.keys(checkedB)
+        .filter((v) => v !== index)
+        .map((v) => (checkedB[v] = false));
+    }
   }
+
+  useEffect(() => {
+    localStorage.setItem("q21-checkedA", JSON.stringify(checkedA));
+    localStorage.setItem("q21-checkedB", JSON.stringify(checkedB));
+    localStorage.setItem("q21", JSON.stringify(input));
+  }, [input, checkedA, checkedB, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 2) {
+    if (!input.A && !input.B) {
       handleShow();
     } else {
       localStorage.setItem("q21", JSON.stringify(input));
@@ -143,9 +209,16 @@ export default function Question21() {
                           <input
                             type="radio"
                             name={row.key}
-                            value={col}
+                            value={col.key}
                             onClick={handleClick}
                             className="m-input"
+                            checked={
+                              row.key === "A"
+                                ? checkedA[`${row.key}${col.key}`]
+                                : row.key === "B"
+                                ? checkedB[`${row.key}${col.key}`]
+                                : ""
+                            }
                           ></input>
                           {col}
                         </label>
@@ -165,7 +238,7 @@ export default function Question21() {
                 {columns.map((col) => {
                   return (
                     <td style={{ width: "150px" }}>
-                      <strong>{col}</strong>
+                      <strong>{col.value}</strong>
                     </td>
                   );
                 })}
@@ -182,8 +255,15 @@ export default function Question21() {
                             <input
                               type="radio"
                               name={row.key}
-                              value={col}
+                              value={col.key}
                               onClick={handleClick}
+                              checked={
+                                row.key === "A"
+                                  ? checkedA[`${row.key}${col.key}`]
+                                  : row.key === "B"
+                                  ? checkedB[`${row.key}${col.key}`]
+                                  : ""
+                              }
                             ></input>
                           </label>
                         </td>

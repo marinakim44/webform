@@ -185,8 +185,6 @@ export default function Question10A() {
       Object.keys(checkedA)
         .filter((v) => v !== index)
         .map((v) => (checkedA[v] = false));
-
-      localStorage.setItem("q10a-checkedA", JSON.stringify(checkedA));
     }
     if (name === "B") {
       Object.keys(checkedB)
@@ -195,8 +193,6 @@ export default function Question10A() {
       Object.keys(checkedB)
         .filter((v) => v !== index)
         .map((v) => (checkedB[v] = false));
-
-      localStorage.setItem("q10a-checkedB", JSON.stringify(checkedB));
     }
     if (name === "C") {
       Object.keys(checkedC)
@@ -205,8 +201,6 @@ export default function Question10A() {
       Object.keys(checkedC)
         .filter((v) => v !== index)
         .map((v) => (checkedC[v] = false));
-
-      localStorage.setItem("q10a-checkedC", JSON.stringify(checkedC));
     }
     if (name === "D") {
       Object.keys(checkedD)
@@ -215,8 +209,6 @@ export default function Question10A() {
       Object.keys(checkedD)
         .filter((v) => v !== index)
         .map((v) => (checkedD[v] = false));
-
-      localStorage.setItem("q10a-checkedD", JSON.stringify(checkedD));
     }
     if (name === "E") {
       Object.keys(checkedE)
@@ -225,8 +217,6 @@ export default function Question10A() {
       Object.keys(checkedE)
         .filter((v) => v !== index)
         .map((v) => (checkedE[v] = false));
-
-      localStorage.setItem("q10a-checkedE", JSON.stringify(checkedE));
     }
     if (name === "F") {
       Object.keys(checkedF)
@@ -235,8 +225,6 @@ export default function Question10A() {
       Object.keys(checkedF)
         .filter((v) => v !== index)
         .map((v) => (checkedF[v] = false));
-
-      localStorage.setItem("q10a-checkedF", JSON.stringify(checkedF));
     }
     if (name === "G") {
       Object.keys(checkedG)
@@ -245,14 +233,31 @@ export default function Question10A() {
       Object.keys(checkedG)
         .filter((v) => v !== index)
         .map((v) => (checkedG[v] = false));
-
-      localStorage.setItem("q10a-checkedG", JSON.stringify(checkedG));
     }
   }
 
+  useEffect(() => {
+    localStorage.setItem("q10a-checkedA", JSON.stringify(checkedA));
+    localStorage.setItem("q10a-checkedB", JSON.stringify(checkedB));
+    localStorage.setItem("q10a-checkedC", JSON.stringify(checkedC));
+    localStorage.setItem("q10a-checkedD", JSON.stringify(checkedD));
+    localStorage.setItem("q10a-checkedE", JSON.stringify(checkedE));
+    localStorage.setItem("q10a-checkedF", JSON.stringify(checkedF));
+    localStorage.setItem("q10a-checkedG", JSON.stringify(checkedG));
+    localStorage.setItem("q10a", JSON.stringify(input));
+  }, [
+    input,
+    checkedA,
+    checkedB,
+    checkedC,
+    checkedD,
+    checkedE,
+    checkedF,
+    checked,
+  ]);
+
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(history);
 
     if (
       !input.A &&
@@ -265,8 +270,6 @@ export default function Question10A() {
     ) {
       handleShow();
     } else {
-      localStorage.setItem("q10a", JSON.stringify(input));
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -354,7 +357,6 @@ export default function Question10A() {
                                   ? checkedG[`${row.key}${col.key}`]
                                   : ""
                               }
-                              autoComplete="on"
                             />
                             {col.value}
                           </label>
