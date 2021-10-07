@@ -11,15 +11,39 @@ export default function Question7() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q7-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q7-checked")));
+    }
+    if (localStorage.getItem("q7")) {
+      setInput(localStorage.getItem("q7"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+    option4: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    //SAVING PREVIOUS INPUT
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
+
+    localStorage.setItem("q7-checked", JSON.stringify(checked));
+    localStorage.setItem("q7", input);
   }
 
   function handleSubmit(e) {
@@ -48,10 +72,7 @@ export default function Question7() {
 
       axios.post("/allinputs", data);
 
-      if (
-        input === "Limiting global warming to 1.5° Celsius" ||
-        input === "Limiting global warming to well below 2.0° Celsius"
-      ) {
+      if (input === "option1" || input === "option2") {
         history.push("/eng-q9");
       } else {
         history.push("/eng-q10b");
@@ -93,8 +114,9 @@ export default function Question7() {
                 type="radio"
                 className="m-input radio-input"
                 name="option"
-                value="Limiting global warming to 1.5° Celsius"
+                value="option1"
                 onClick={handleClick}
+                checked={checked.option1}
               ></input>
               Limiting global warming to 1.5° Celsius
             </label>
@@ -105,8 +127,9 @@ export default function Question7() {
                 type="radio"
                 className="m-input radio-input"
                 name="option"
-                value="Limiting global warming to well below 2.0° Celsius"
+                value="option2"
                 onClick={handleClick}
+                checked={checked.option2}
               ></input>
               Limiting global warming to well below 2.0° Celsius
             </label>
@@ -117,9 +140,9 @@ export default function Question7() {
                 type="radio"
                 className="m-input radio-input"
                 name="option"
-                value="My company’s net-zero commitment will not be aligned to a
-                science-based target"
+                value="option3"
                 onClick={handleClick}
+                checked={checked.option3}
               ></input>
               My company’s net-zero commitment will not be aligned to a
               science-based target
@@ -131,8 +154,9 @@ export default function Question7() {
                 type="radio"
                 className="m-input radio-input"
                 name="option"
-                value="Don't know"
+                value="option4"
                 onClick={handleClick}
+                checked={checked.option4}
               ></input>
               Don't know
             </label>

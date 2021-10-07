@@ -277,10 +277,9 @@ export default function Question20() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!input.A && !input.B && !input.C && !input.D && !input.E && !input.F) {
+    if (Object.entries(input).filter((el) => el[1] === "").length > 0) {
       handleShow();
     } else {
-      localStorage.setItem("q20", JSON.stringify(input));
       history.push("/eng-q21");
 
       const data = {

@@ -7,29 +7,6 @@ import "../Medium.css";
 import axios from "axios";
 
 export default function Question19() {
-  const width = window.screen.width;
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (localStorage.getItem("q19")) {
-      setInput(JSON.parse(localStorage.getItem("q19")));
-    }
-    // if (localStorage.getItem("q19-none")) {
-    //   setNone(localStorage.getItem("q19-none"));
-    // }
-    // if (localStorage.getItem("q19-dontknow")) {
-    //   setDontknow(localStorage.getItem("q19-dontknow"));
-    // }
-    if (localStorage.getItem("q19-other")) {
-      setOther(localStorage.getItem("q19-other"));
-    }
-    if (localStorage.getItem("q19-checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q19-checked")));
-    }
-  }, []);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const history = useHistory();
   const rows = [
     {
       key: "key1",
@@ -60,6 +37,12 @@ export default function Question19() {
     },
   ];
 
+  const width = window.screen.width;
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const history = useHistory();
+
   const [none, setNone] = useState(false);
   const [dontknow, setDontknow] = useState(false);
   const [input, setInput] = useState([]);
@@ -81,87 +64,86 @@ export default function Question19() {
   });
   const [other, setOther] = useState("");
 
-  function clearAll() {
-    setChecked((prev) => {
-      return {
-        ...prev,
-        key1: false,
-        key2: false,
-        key3: false,
-        key4: false,
-        key5: false,
-        key6: false,
-      };
-    });
-    setDisabled((prev) => {
-      return {
-        ...prev,
-        key1: false,
-        key2: false,
-        key3: false,
-        key4: false,
-        key5: false,
-        key6: false,
-      };
-    });
-    setInput([]);
-  }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (localStorage.getItem("q19")) {
+      setInput(JSON.parse(localStorage.getItem("q19")));
+    }
+    // if (localStorage.getItem("q19-none")) {
+    //   setNone(localStorage.getItem("q19-none"));
+    // }
+    // if (localStorage.getItem("q19-dontknow")) {
+    //   setDontknow(localStorage.getItem("q19-dontknow"));
+    // }
+    if (localStorage.getItem("q19-other")) {
+      setOther(localStorage.getItem("q19-other"));
+    }
+    if (localStorage.getItem("q19-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q19-checked")));
+    }
+  }, []);
 
   function handleChange(e) {
     const { name } = e.target;
 
-    if (checked[name]) {
-      setChecked((prev) => {
-        return {
-          ...prev,
-          [name]: false,
-        };
-      });
-    } else {
-      setChecked((prev) => {
-        return {
-          ...prev,
-          [name]: true,
-        };
-      });
-    }
-
-    if (!checked[name]) {
-      if (!input.includes(name)) {
-        input.push(name);
-      }
-    } else {
-      if (input.includes(name)) {
-        input.pop(name);
-      }
-    }
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [name]: !checked[name],
+      };
+    });
   }
+
+  useEffect(() => {
+    Object.entries(checked)
+      .filter((el) => el[1] === true)
+      .map((x) => {
+        if (!input.includes(x[0])) {
+          input.push(x[0]);
+        }
+      });
+
+    Object.entries(checked)
+      .filter((el) => el[1] === false)
+      .map((x) => {
+        if (input.includes(x[0])) {
+          input.pop(x[0]);
+        }
+      });
+
+    console.log(checked);
+    console.log(input);
+  }, [checked, input]);
 
   function handleChangeOther(e) {
     setOther(e.target.value);
   }
 
   function handleNone() {
-    if (dontknow) {
-      setDontknow(false);
-    }
     setNone(!none);
-
-    if (none) {
-      setDontknow(false);
-    }
   }
 
   function handleDontknow() {
-    if (none) {
-      setNone(false);
-    }
     setDontknow(!dontknow);
+  }
 
+  useEffect(() => {
+    if (none) {
+      setDontknow(false);
+      setInput([]);
+      setChecked(false);
+      setDisabled(true);
+    }
+  }, [none]);
+
+  useEffect(() => {
     if (dontknow) {
       setNone(false);
+      setInput([]);
+      setChecked(false);
+      setDisabled(true);
     }
-  }
+  }, [dontknow]);
 
   useEffect(() => {
     localStorage.setItem("q19", JSON.stringify(input));
@@ -173,11 +155,7 @@ export default function Question19() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (
-      JSON.parse(
-        localStorage.getItem("q19").length === 0 && !none && !dontknow && !other
-      )
-    ) {
+    if (input.length === 0 && none === false && dontknow === false && !other) {
       handleShow();
     } else {
       const data = {
@@ -259,6 +237,7 @@ export default function Question19() {
                       value={row.key}
                       onChange={handleChange}
                       disabled={none || dontknow ? true : false}
+                      checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
                   </label>
@@ -325,8 +304,10 @@ export default function Question19() {
                       name={row.key}
                       value={row.key}
                       onChange={handleChange}
-                      disabled={none || dontknow ? true : false}
-                      checked={checked[`${row.key}`]}
+                      disabled={
+                        none === true || dontknow === true ? true : false
+                      }
+                      checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
                   </label>
@@ -336,6 +317,7 @@ export default function Question19() {
             <Form.Control
               type="text"
               placeholder="Other (please specify)"
+              value={none || dontknow ? "" : other}
               style={{ width: "45%" }}
               disabled={dontknow || none ? true : false}
               onChange={handleChangeOther}

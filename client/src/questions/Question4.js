@@ -1,5 +1,5 @@
 import { Route, useHistory } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, ListGroup } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "../App.css";
 import "../Medium.css";
@@ -40,7 +40,7 @@ export default function Question4() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const concerns = JSON.parse(localStorage.getItem("q3-concerns"));
+  const [concerns, setConcerns] = useState([]);
   const [input, setInput] = useState([]);
   const [checked, setChecked] = useState({
     A1: false,
@@ -109,18 +109,22 @@ export default function Question4() {
 
   const errors = [];
   const [other, setOther] = useState("");
+  const [list, setList] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
+    console.log(concerns);
     if (localStorage.getItem("q4-checked")) {
       setChecked(JSON.parse(localStorage.getItem("q4-checked")));
     }
-    if (localStorage.getItem("q4-disabled")) {
-      setChecked(JSON.parse(localStorage.getItem("q4-disabled")));
+    if (localStorage.getItem("q4-other")) {
+      setOther(localStorage.getItem("q4-other"));
     }
-    if (localStorage.getItem("q4")) {
-      setInput(JSON.parse(localStorage.getItem("q4")));
+    if (localStorage.getItem("q4-list")) {
+      setList(JSON.parse(localStorage.getItem("q4-list")));
+    }
+    if (localStorage.getItem("q3-concerns")) {
+      setConcerns(JSON.parse(localStorage.getItem("q3-concerns")));
     }
   }, []);
 
@@ -128,65 +132,55 @@ export default function Question4() {
     const { name, value } = e.target;
     const index = name + value;
 
-    if (checked[index]) {
-      setChecked((prev) => {
-        return {
-          ...prev,
-          [index]: false,
-        };
-      });
-    } else {
-      setChecked((prev) => {
-        return {
-          ...prev,
-          [index]: true,
-        };
-      });
-    }
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: !checked[index],
+      };
+    });
+  }
 
-    concerns
-      .filter((el) => el.slice(0, 1) === name)
-      .map((el) => {
-        var i = el.slice(0, 1) + value;
+  useEffect(() => {
+    concerns.forEach((element) => {
+      var i = element.slice(0, 1);
 
-        if (!checked[index]) {
-          if (!input.includes(i)) {
-            if (input.filter((el) => el.slice(0, 1) === name).length < 3) {
-              input.push(i);
+      Object.entries(checked)
+        .filter((el) => el[0].slice(0, 1) === i)
+        .map((v) => {
+          if (v[1] === true) {
+            if (list.filter((l) => l.slice(0, 1) === i).length < 3) {
+              if (!list.includes(v[0])) {
+                list.push(v[0]);
+              }
+            }
+          } else {
+            if (list.includes(v[0])) {
+              list.pop(v[0]);
             }
           }
-        } else {
-          if (input.includes(i)) {
-            input.pop(i);
-          }
-        }
-      });
-  }
+        });
+    });
+
+    localStorage.setItem("q4-checked", JSON.stringify(checked));
+    localStorage.setItem("q4-disabled", JSON.stringify(disabled));
+    localStorage.setItem("q4-other", other);
+    localStorage.setItem("q4-list", JSON.stringify(list));
+  }, [checked, disabled, other, list]);
 
   const handleOther = (e) => {
     setOther(e.target.value);
   };
 
-  useEffect(() => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     concerns.forEach((el) => {
-      if (
-        input.filter((item) => item.slice(0, 1) === el.slice(0, 1)).length === 0
-      ) {
-        errors.push(el.slice(0, 1));
+      var i = el.slice(0, 1);
+
+      if (!list.filter((l) => l.slice(0, 1) === i).length > 0) {
+        errors.push(i);
       }
     });
 
-    localStorage.setItem("q4", JSON.stringify(input));
-    localStorage.setItem("q4-checked", JSON.stringify(checked));
-    localStorage.setItem("q4-disabled", JSON.stringify(disabled));
-    localStorage.setItem("q4-other", other);
-
-    console.log(checked);
-    console.log(input);
-  }, [checked, disabled, input, other]);
-
-  function handleSubmit(e) {
-    e.preventDefault();
     if (errors.length > 0) {
       handleShow();
     } else {
@@ -200,15 +194,16 @@ export default function Question4() {
         q1: JSON.parse(localStorage.getItem("q1")),
         q2: JSON.parse(localStorage.getItem("q2")),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q4: JSON.parse(localStorage.getItem("q4")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
         q4other: localStorage.getItem("q4-other"),
       };
 
       axios.post("/allinputs", data);
-
+      console.log(JSON.parse(localStorage.getItem("q4-list")));
       history.push("/eng-q5");
     }
-  }
+  };
+
   return (
     <Route path="/eng-q4">
       <div className="main">
@@ -247,7 +242,7 @@ export default function Question4() {
               return (
                 <div key={concern}>
                   <p className="question" style={{ color: "#db536a" }}>
-                    <strong>{concern.substring(2)}</strong>
+                    <strong>{concern}</strong>
                   </p>
                   {rows.map((row) => {
                     return (
@@ -258,18 +253,6 @@ export default function Question4() {
                             name={concern.slice(0, 1)}
                             value={row.key}
                             onChange={handleChange}
-                            disabled={
-                              input.filter(
-                                (el) => el.slice(0, 1) === concern.slice(0, 1)
-                              ).length === 3 &&
-                              !input
-                                .filter(
-                                  (el) => el.slice(0, 1) === concern.slice(0, 1)
-                                )
-                                .includes(`${concern.slice(0, 1)}${row.key}`)
-                                ? true
-                                : false
-                            }
                             checked={
                               checked[`${concern.slice(0, 1)}${row.key}`]
                             }
@@ -325,7 +308,21 @@ export default function Question4() {
                   {concerns.map((concern) => {
                     return (
                       <th key={concern}>
-                        <span>{concern.substring(2)}</span>
+                        <span>
+                          {concern === "A"
+                            ? "Macroeconomic volatility"
+                            : concern === "B"
+                            ? "Climate change"
+                            : concern === "C"
+                            ? "Social inequality"
+                            : concern === "D"
+                            ? "Geopolitical conflict"
+                            : concern === "E"
+                            ? "Cyber risks"
+                            : concern === "F"
+                            ? "Health risks"
+                            : ""}
+                        </span>
                       </th>
                     );
                   })}
@@ -343,24 +340,16 @@ export default function Question4() {
                                 name={concern.slice(0, 1)}
                                 value={row.key}
                                 onChange={handleChange}
-                                disabled={
-                                  input.filter(
-                                    (el) =>
-                                      el.slice(0, 1) === concern.slice(0, 1)
-                                  ).length === 3 &&
-                                  !input
-                                    .filter(
-                                      (el) =>
-                                        el.slice(0, 1) === concern.slice(0, 1)
-                                    )
-                                    .includes(
-                                      `${concern.slice(0, 1)}${row.key}`
-                                    )
-                                    ? true
-                                    : false
-                                }
                                 checked={
                                   checked[`${concern.slice(0, 1)}${row.key}`]
+                                }
+                                disabled={
+                                  Object.entries(checked).filter(
+                                    (el) =>
+                                      el[0].slice(0, 1) ===
+                                        concern.slice(0, 1) && el[1] === true
+                                  ).length === 3 &&
+                                  !checked[`${concern.slice(0, 1)}${row.key}`]
                                 }
                               ></input>
                             </label>

@@ -157,7 +157,7 @@ export default function Question23() {
           <div className="left-align-text">
             {rows.map((row) => {
               return (
-                <div className="m-div">
+                <div className="m-div" key={row.key}>
                   <label className="m-label">
                     <input
                       type="radio"
@@ -225,7 +225,7 @@ export default function Question23() {
                 <tr>
                   {rows.map((row) => {
                     return (
-                      <td className="input-cell">
+                      <td className="input-cell" key={row.key}>
                         <label className="label-cell">
                           <input
                             type="radio"

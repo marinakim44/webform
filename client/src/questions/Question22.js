@@ -10,145 +10,101 @@ export default function Question22() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q22-revenue")) {
-      setRevenue(localStorage.getItem("q22-revenue"));
-    }
-    if (localStorage.getItem("q22-profit")) {
-      setProfit(localStorage.getItem("q22-profit"));
-    }
-    if (localStorage.getItem("q22-return")) {
-      setReturnInput(localStorage.getItem("q22-return"));
+    if (localStorage.getItem("q22")) {
+      setInput(JSON.parse(localStorage.getItem("q22")));
     }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const [revenue, setRevenue] = useState("");
-  const [profit, setProfit] = useState("");
-  const [returnInput, setReturnInput] = useState("");
-  const [dontknowRevenue, setDontknowRevenue] = useState(false);
-  const [dontknowProfit, setDontknowProfit] = useState(false);
-  const [dontknowReturn, setDontknowReturn] = useState(false);
-  const [errorRevenue, setErrorRevenue] = useState(false);
-  const [errorProfit, setErrorProfit] = useState(false);
-  const [errorReturn, setErrorReturn] = useState(false);
+  const [input, setInput] = useState({
+    revenue: "",
+    profit: "",
+    return: "",
+  });
 
-  function handleDontknowRevenue(e) {
-    setDontknowRevenue(!dontknowRevenue);
-    if (!dontknowRevenue) {
-      setErrorRevenue(false);
-      setRevenue("");
-    }
-  }
+  const [dontknow, setDontknow] = useState({
+    revenue: false,
+    profit: false,
+    return: false,
+  });
 
-  function handleDontknowProfit(e) {
-    setDontknowProfit(!dontknowProfit);
-    if (!dontknowProfit) {
-      setErrorProfit(false);
-      setProfit("");
-    }
-  }
-
-  function handleDontknowReturn(e) {
-    setDontknowReturn(!dontknowReturn);
-
-    if (!dontknowReturn) {
-      setErrorReturn(false);
-      setReturnInput("");
-    }
-  }
+  const [error, setError] = useState({
+    revenue: false,
+    profit: false,
+    return: false,
+  });
 
   function validate(number) {
     const re = /[0-9]/;
     return re.test(number);
   }
 
-  function handleChangeRevenue(e) {
+  const handleChange = (e) => {
     const { name, value } = e.target;
+    setInput((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
 
-    setRevenue(value);
-  }
+  const handleDontknow = (e) => {
+    const { name } = e.target;
+    setDontknow((prev) => {
+      return {
+        ...prev,
+        [name]: !dontknow[name],
+      };
+    });
+  };
 
-  function handleChangeProfit(e) {
-    const { name, value } = e.target;
+  const handleBlur = (e) => {
+    const { name } = e.target;
 
-    setProfit(value);
-  }
-
-  function handleChangeReturn(e) {
-    const { name, value } = e.target;
-
-    setReturnInput(value);
-  }
-
-  function handleBlurRevenue() {
-    if (validate(revenue)) {
-      setErrorRevenue(false);
+    if (validate(input[name])) {
+      setError((prev) => {
+        return {
+          ...prev,
+          [name]: false,
+        };
+      });
     } else {
-      setErrorRevenue(true);
+      setError((prev) => {
+        return {
+          ...prev,
+          [name]: true,
+        };
+      });
     }
-  }
+  };
 
-  function handleFocusRevenue() {
-    if (errorRevenue) {
-      setErrorRevenue(false);
-    }
-  }
-
-  function handleBlurProfit() {
-    if (validate(profit)) {
-      if (profit) {
-        setErrorProfit(false);
-      }
-    } else {
-      setErrorProfit(true);
-    }
-  }
-
-  function handleFocusProfit() {
-    if (errorProfit) {
-      setErrorProfit(false);
-    }
-  }
-
-  function handleBlurReturn() {
-    if (validate(returnInput)) {
-      setErrorReturn(false);
-    } else {
-      setErrorReturn(true);
-    }
-  }
-
-  function handleFocusReturn() {
-    if (errorReturn) {
-      setErrorReturn(false);
-    }
-  }
+  const handleFocus = (e) => {
+    const { name } = e.target;
+    setError((prev) => {
+      return {
+        ...prev,
+        [name]: false,
+      };
+    });
+  };
 
   useEffect(() => {
-    localStorage.setItem("q22-revenue", revenue);
-    localStorage.setItem("q22-profit", profit);
-    localStorage.setItem("q22-return", returnInput);
-    // localStorage.setItem("q22-dontknowRevenue", dontknowRevenue);
-    // localStorage.setItem("q22-dontknowProfit", dontknowProfit);
-    // localStorage.setItem("q22-dontknowReturn", dontknowReturn);
-  }, [
-    revenue,
-    profit,
-    returnInput,
-    // dontknowRevenue,
-    // dontknowProfit,
-    // dontknowReturn,
-  ]);
+    localStorage.setItem("q22", JSON.stringify(input));
+    localStorage.setItem("q22-dontknow", JSON.stringify(dontknow));
+  }, [input, dontknow, error]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
+    console.log(JSON.parse(localStorage.getItem("q22")));
+
     if (
-      (!revenue && !dontknowRevenue) ||
-      (!profit && !dontknowProfit) ||
-      (!returnInput && !dontknowReturn)
+      (input.revenue === "" && dontknow.revenue === false) ||
+      (input.profit === "" && dontknow.profit === false) ||
+      (input.return === "" && dontknow.return === false)
     ) {
       handleShow();
     } else {
@@ -156,39 +112,34 @@ export default function Question22() {
 
       const data = {
         uuid: localStorage.getItem("uuid"),
-        name: localStorage.getItem("name"),
-        company: localStorage.getItem("company"),
-        title: localStorage.getItem("title"),
-        email: localStorage.getItem("email"),
-        phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
-        q3: JSON.parse(localStorage.getItem("q3")),
-        q5: JSON.parse(localStorage.getItem("q5")),
-        q6: localStorage.getItem("q6"),
-        q7: localStorage.getItem("q7"),
-        q8: localStorage.getItem("q8"),
-        q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
-        q11: JSON.parse(localStorage.getItem("q11")),
-        q12: JSON.parse(localStorage.getItem("q12")),
-        q13a: localStorage.getItem("q13a"),
-        q13b: localStorage.getItem("q13b"),
-        q14: JSON.parse(localStorage.getItem("q14")),
-        q15: JSON.parse(localStorage.getItem("q15")),
-        q16: localStorage.getItem("q16"),
-        q17: JSON.parse(localStorage.getItem("q17")),
-        q18: JSON.parse(localStorage.getItem("q18")),
-        q19: JSON.parse(localStorage.getItem("q19")),
-        q20: JSON.parse(localStorage.getItem("q20")),
-        q21: JSON.parse(localStorage.getItem("q21")),
-        q22revenue: localStorage.getItem("q22-revenue"),
-        q22profit: localStorage.getItem("q22-profit"),
-        q22return: localStorage.getItem("q22-return"),
-        q22dontknowRevenue: localStorage.getItem("q22-dontknowRevenue"),
-        q22dontknowProfit: localStorage.getItem("q22-dontknowProfit"),
-        q22dontknowReturn: localStorage.getItem("q22-dontknowReturn"),
+        // name: localStorage.getItem("name"),
+        // company: localStorage.getItem("company"),
+        // title: localStorage.getItem("title"),
+        // email: localStorage.getItem("email"),
+        // phone: localStorage.getItem("phone"),
+        // q1a: localStorage.getItem("q1a"),
+        // q1b: localStorage.getItem("q1b"),
+        // q2: JSON.parse(localStorage.getItem("countries")),
+        // q3: JSON.parse(localStorage.getItem("q3")),
+        // q5: JSON.parse(localStorage.getItem("q5")),
+        // q6: localStorage.getItem("q6"),
+        // q7: localStorage.getItem("q7"),
+        // q8: localStorage.getItem("q8"),
+        // q9: localStorage.getItem("q9"),
+        // q10: JSON.parse(localStorage.getItem("q10")),
+        // q11: JSON.parse(localStorage.getItem("q11")),
+        // q12: JSON.parse(localStorage.getItem("q12")),
+        // q13a: localStorage.getItem("q13a"),
+        // q13b: localStorage.getItem("q13b"),
+        // q14: JSON.parse(localStorage.getItem("q14")),
+        // q15: JSON.parse(localStorage.getItem("q15")),
+        // q16: localStorage.getItem("q16"),
+        // q17: JSON.parse(localStorage.getItem("q17")),
+        // q18: JSON.parse(localStorage.getItem("q18")),
+        // q19: JSON.parse(localStorage.getItem("q19")),
+        // q20: JSON.parse(localStorage.getItem("q20")),
+        // q21: JSON.parse(localStorage.getItem("q21")),
+        q22: JSON.parse(localStorage.getItem("q22")),
       };
 
       axios.post("/allinputs", data);
@@ -244,7 +195,7 @@ export default function Question22() {
                 </strong>
               </Col>
             </Row>
-            {errorRevenue && !dontknowRevenue ? (
+            {error.revenue === true && dontknow.revenue === false ? (
               <p
                 style={{
                   color: "#dc3545",
@@ -267,11 +218,11 @@ export default function Question22() {
                   type="text"
                   placeholder="Specify whole number"
                   name="revenue"
-                  value={revenue}
-                  onChange={handleChangeRevenue}
-                  disabled={dontknowRevenue ? true : false}
-                  onBlur={handleBlurRevenue}
-                  onFocus={handleFocusRevenue}
+                  value={input.revenue}
+                  onChange={handleChange}
+                  disabled={dontknow.revenue === true ? true : false}
+                  onBlur={handleBlur}
+                  onFocus={handleFocus}
                   className="m-input-22"
                 />
               </Col>
@@ -279,10 +230,10 @@ export default function Question22() {
                 <button
                   name="revenue"
                   value="Don't know"
-                  onClick={handleDontknowRevenue}
+                  onClick={handleDontknow}
                   style={{
-                    backgroundColor: dontknowRevenue ? "#db536a" : "",
-                    color: dontknowRevenue ? "white" : "",
+                    backgroundColor: dontknow.revenue === true ? "#db536a" : "",
+                    color: dontknow.revenue === true ? "white" : "",
                   }}
                   className="m-dontknow-22"
                 >
@@ -299,7 +250,7 @@ export default function Question22() {
                 </strong>
               </Col>
             </Row>
-            {errorProfit && !dontknowProfit ? (
+            {error.profit === true && dontknow.profit === false ? (
               <p
                 style={{
                   color: "#dc3545",
@@ -322,11 +273,11 @@ export default function Question22() {
                   type="text"
                   placeholder="Specify whole number"
                   name="profit"
-                  value={profit}
-                  onChange={handleChangeProfit}
-                  disabled={dontknowProfit ? true : false}
-                  onBlur={handleBlurProfit}
-                  onFocus={handleFocusProfit}
+                  value={input.profit}
+                  onChange={handleChange}
+                  disabled={dontknow.profit === true ? true : false}
+                  onBlur={handleBlur}
+                  onFocus={handleFocus}
                   className="m-input-22"
                 />
               </Col>
@@ -334,10 +285,11 @@ export default function Question22() {
                 <button
                   name="profit"
                   value="Don't know"
-                  onClick={handleDontknowProfit}
+                  onClick={handleDontknow}
                   style={{
-                    backgroundColor: dontknowProfit ? "#db536a" : "",
-                    color: dontknowProfit ? "white" : "",
+                    backgroundColor:
+                      dontknow.profit === true ? "#db536a" : "#dedede",
+                    color: dontknow.profit === true ? "white" : "",
                   }}
                   className="m-dontknow-22"
                 >
@@ -354,7 +306,7 @@ export default function Question22() {
                 </strong>
               </Col>
             </Row>
-            {errorReturn && !dontknowReturn ? (
+            {error.return === true && dontknow.return === false ? (
               <p
                 style={{
                   color: "#dc3545",
@@ -377,11 +329,11 @@ export default function Question22() {
                   type="text"
                   placeholder="Specify whole number"
                   name="return"
-                  value={returnInput}
-                  onChange={handleChangeReturn}
-                  disabled={dontknowReturn ? true : false}
-                  onBlur={handleBlurReturn}
-                  onFocus={handleFocusReturn}
+                  value={input.return}
+                  onChange={handleChange}
+                  disabled={dontknow.return === true ? true : false}
+                  onBlur={handleBlur}
+                  onFocus={handleFocus}
                   className="m-input-22"
                 />
               </Col>
@@ -389,10 +341,11 @@ export default function Question22() {
                 <button
                   name="return"
                   value="Don't know"
-                  onClick={handleDontknowReturn}
+                  onClick={handleDontknow}
                   style={{
-                    backgroundColor: dontknowReturn ? "#db536a" : "#dedede",
-                    color: dontknowReturn ? "white" : "black",
+                    backgroundColor:
+                      dontknow.return === true ? "#db536a" : "#dedede",
+                    color: dontknow.return === true ? "white" : "black",
                   }}
                   className="m-dontknow-22"
                 >
@@ -437,7 +390,8 @@ export default function Question22() {
                   <td style={{ textAlign: "left" }}>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                       <Col>
-                        {errorRevenue && !dontknowRevenue ? (
+                        {error.revenue === true &&
+                        dontknow.revenue === false ? (
                           <p
                             style={{
                               color: "#dc3545",
@@ -458,11 +412,11 @@ export default function Question22() {
                           type="text"
                           placeholder="Specify whole number"
                           name="revenue"
-                          value={revenue}
-                          onChange={handleChangeRevenue}
-                          disabled={dontknowRevenue ? true : false}
-                          onBlur={handleBlurRevenue}
-                          onFocus={handleFocusRevenue}
+                          value={input.revenue}
+                          onChange={handleChange}
+                          disabled={dontknow.revenue === true ? true : false}
+                          onBlur={handleBlur}
+                          onFocus={handleFocus}
                         />
                       </Col>
                       <Form.Label
@@ -476,14 +430,16 @@ export default function Question22() {
                   </td>
                   <td style={{ textAlign: "left" }}>
                     <Button
-                      variant="outline-dark"
+                      variant="light"
                       name="revenue"
                       value="Don't know"
-                      onClick={handleDontknowRevenue}
+                      onClick={handleDontknow}
                       style={{
-                        backgroundColor: dontknowRevenue ? "#dc3545" : "",
-                        color: dontknowRevenue ? "white" : "",
-                        borderColor: dontknowRevenue ? "#dc3545" : "",
+                        backgroundColor:
+                          dontknow.revenue === true ? "#db536a" : "#dedede",
+                        color: dontknow.revenue === true ? "white" : "black",
+                        borderColor:
+                          dontknow.revenue === true ? "#db536a" : "#dedede",
                       }}
                     >
                       Don't know
@@ -495,7 +451,7 @@ export default function Question22() {
                   <td>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                       <Col>
-                        {errorProfit && !dontknowProfit ? (
+                        {error.profit === true && dontknow.profit === false ? (
                           <p
                             style={{
                               color: "#dc3545",
@@ -516,11 +472,11 @@ export default function Question22() {
                           type="text"
                           placeholder="Specify whole number"
                           name="profit"
-                          value={profit}
-                          onChange={handleChangeProfit}
-                          disabled={dontknowProfit ? true : false}
-                          onBlur={handleBlurProfit}
-                          onFocus={handleFocusProfit}
+                          value={input.profit}
+                          onChange={handleChange}
+                          disabled={dontknow.profit === true ? true : false}
+                          onBlur={handleBlur}
+                          onFocus={handleFocus}
                         />
                       </Col>
                       <Form.Label
@@ -534,15 +490,16 @@ export default function Question22() {
                   </td>
                   <td style={{ textAlign: "left" }}>
                     <Button
-                      variant="outline-dark"
-                      // onClick={handleDontknow}
+                      variant="light"
                       name="profit"
                       value="Don't know"
-                      onClick={handleDontknowProfit}
+                      onClick={handleDontknow}
                       style={{
-                        backgroundColor: dontknowProfit ? "#dc3545" : "",
-                        color: dontknowProfit ? "white" : "",
-                        borderColor: dontknowProfit ? "#dc3545" : "",
+                        backgroundColor:
+                          dontknow.profit === true ? "#db536a" : "#dedede",
+                        color: dontknow.profit === true ? "white" : "black",
+                        borderColor:
+                          dontknow.profit === true ? "#db536a" : "#dedede",
                       }}
                     >
                       Don't know
@@ -554,7 +511,7 @@ export default function Question22() {
                   <td>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                       <Col>
-                        {errorReturn && !dontknowReturn ? (
+                        {error.return === true && dontknow.return === false ? (
                           <p
                             style={{
                               color: "#dc3545",
@@ -575,11 +532,11 @@ export default function Question22() {
                           type="text"
                           placeholder="Specify whole number"
                           name="return"
-                          value={returnInput}
-                          onChange={handleChangeReturn}
-                          disabled={dontknowReturn ? true : false}
-                          onBlur={handleBlurReturn}
-                          onFocus={handleFocusReturn}
+                          value={input.return}
+                          onChange={handleChange}
+                          disabled={dontknow.return === true ? true : false}
+                          onBlur={handleBlur}
+                          onFocus={handleFocus}
                         />
                       </Col>
                       <Form.Label
@@ -593,16 +550,17 @@ export default function Question22() {
                   </td>
                   <td style={{ textAlign: "left" }}>
                     <Button
-                      variant="outline-dark"
-                      onClick={handleDontknowReturn}
                       name="return"
                       value="Don't know"
+                      onClick={handleDontknow}
+                      variant="light"
                       style={{
-                        backgroundColor: dontknowReturn ? "#dc3545" : "",
-                        color: dontknowReturn ? "white" : "",
-                        borderColor: dontknowReturn ? "#dc3545" : "",
+                        backgroundColor:
+                          dontknow.return === true ? "#db536a" : "#dedede",
+                        color: dontknow.return === true ? "white" : "black",
+                        borderColor:
+                          dontknow.return === true ? "#db536a" : "#dedede",
                       }}
-                      className="test-button"
                     >
                       Don't know
                     </Button>

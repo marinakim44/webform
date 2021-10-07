@@ -9,16 +9,41 @@ export default function Question9() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q9")) {
+      setInput(localStorage.getItem("q9"));
+    }
+    if (localStorage.getItem("q9-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q9-checked")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    //SAVING PREVIOUS INPUT
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
+
+  useEffect(() => {
+    localStorage.setItem("q9-checked", JSON.stringify(checked));
+    localStorage.setItem("q9", input);
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,8 +51,6 @@ export default function Question9() {
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("q9", input);
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -86,8 +109,9 @@ export default function Question9() {
                 name="option"
                 style={{ marginRight: "8px" }}
                 onChange={handleClick}
-                value="yes"
+                value="option1"
                 className="m-input"
+                checked={checked.option1}
               />
               Yes, my company’s approach to reducing GHG emissions will be
               independently assessed and validated
@@ -100,8 +124,9 @@ export default function Question9() {
                 name="option"
                 style={{ marginRight: "8px" }}
                 onChange={handleClick}
-                value="no"
+                value="option2"
                 className="m-input"
+                checked={checked.option2}
               />
               No, my company’s approach to reducing GHG emissions will not be
               independently assessed and validated
@@ -114,8 +139,9 @@ export default function Question9() {
                 name="option"
                 style={{ marginRight: "8px" }}
                 onChange={handleClick}
-                value="dontknow"
+                value="option3"
                 className="m-input"
+                checked={checked.option3}
               />
               Don't know
             </label>

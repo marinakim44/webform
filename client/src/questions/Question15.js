@@ -132,10 +132,6 @@ export default function Question15() {
     }
   }
 
-  function goBack() {
-    history.push("/eng-q14");
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -291,7 +287,11 @@ export default function Question15() {
           )}
 
           <div className="back-next-btns">
-            <Button variant="secondary" className="back-btn" onClick={goBack}>
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
               <i
                 className="fas fa-chevron-left"
                 style={{ marginRight: "8px" }}

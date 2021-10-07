@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import "../App.css";
@@ -7,9 +7,6 @@ import ModalAlert from "../ModalAlert";
 
 export default function Question10B() {
   const width = window.screen.width;
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -47,27 +44,27 @@ export default function Question10B() {
 
   const columns = [
     {
-      key: 1,
+      key: "1",
       value: "Not influential",
     },
     {
-      key: 2,
+      key: "2",
       value: "Slightly influential",
     },
     {
-      key: 3,
+      key: "3",
       value: "Moderately influential",
     },
     {
-      key: 4,
+      key: "4",
       value: "Very influential",
     },
     {
-      key: 5,
+      key: "5",
       value: "Extremely influential",
     },
     {
-      key: 6,
+      key: "6",
       value: "Don't know",
     },
   ];
@@ -82,29 +79,104 @@ export default function Question10B() {
     G: "",
   });
 
-  const [checked, setChecked] = useState([]);
+  const [checked, setChecked] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
 
-  function handleClick(e) {
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+
+    C1: false,
+    C2: false,
+    C3: false,
+    C4: false,
+    C5: false,
+    C6: false,
+
+    D1: false,
+    D2: false,
+    D3: false,
+    D4: false,
+    D5: false,
+    D6: false,
+
+    E1: false,
+    E2: false,
+    E3: false,
+    E4: false,
+    E5: false,
+    E6: false,
+
+    F1: false,
+    F2: false,
+    F3: false,
+    F4: false,
+    F5: false,
+    F6: false,
+
+    G1: false,
+    G2: false,
+    G3: false,
+    G4: false,
+    G5: false,
+    G6: false,
+  });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (localStorage.getItem("q10b-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q10b-checked")));
+    }
+    if (localStorage.getItem("q10b")) {
+      setInput(JSON.parse(localStorage.getItem("q10b")));
+    }
+  }, []);
+
+  function handleChange(e) {
     const { name, value } = e.target;
-    setInput((prevInput) => {
+    const index = name + value;
+    setInput((prev) => {
       return {
-        ...prevInput,
+        ...prev,
         [name]: value,
       };
     });
-    if (!checked.includes(name)) {
-      checked.push(name);
-    }
+    Object.keys(checked)
+      .filter((el) => el.slice(0, 1) === name && el === index)
+      .map((y) => {
+        checked[y] = true;
+      });
+    Object.keys(checked)
+      .filter((z) => z.slice(0, 1) === name && z !== index)
+      .map((a) => {
+        checked[a] = false;
+      });
+
+    // console.log(index);
   }
+
+  useEffect(() => {
+    // console.log(checked);
+    // console.log(Object.entries(input));
+    localStorage.setItem("q10b", JSON.stringify(input));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 7) {
+    // localStorage.setItem("q10b-checked", JSON.stringify(checked));
+
+    if (Object.entries(input).filter((el) => el[1] === "").length > 0) {
       handleShow();
     } else {
-      localStorage.setItem("q10", JSON.stringify(input));
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -121,7 +193,8 @@ export default function Question10B() {
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: input,
       };
 
       axios.post("/allinputs", data);
@@ -175,9 +248,10 @@ export default function Question10B() {
                           <input
                             type="radio"
                             name={row.key}
-                            value={col.value}
-                            onClick={handleClick}
+                            value={col.key}
+                            onChange={handleChange}
                             className="m-input"
+                            checked={checked[`${row.key}${col.key}`]}
                           ></input>
                           {col.value}
                         </label>
@@ -214,8 +288,9 @@ export default function Question10B() {
                               <input
                                 type="radio"
                                 name={row.key}
-                                value={col.value}
-                                onClick={handleClick}
+                                value={col.key}
+                                onChange={handleChange}
+                                checked={checked[`${row.key}${col.key}`]}
                               ></input>
                             </label>
                           </td>

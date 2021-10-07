@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Link, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../App.css";
 import ModalAlert from "../ModalAlert";
@@ -142,96 +142,104 @@ export default function Question3() {
   function handleChange(e) {
     const { name, value } = e.target;
     const index = name + value;
-
     setInput((prev) => {
       return {
         ...prev,
         [name]: value,
       };
     });
-
-    setChecked((prev) => {
-      return {
-        ...prev,
-        [index]: true,
-      };
-    });
-
     Object.keys(checked)
-      .filter((el) => el === index)
-      .map((el) => {
-        checked[el] = true;
+      .filter((el) => el.slice(0, 1) === name && el === index)
+      .map((y) => {
+        checked[y] = true;
       });
     Object.keys(checked)
-      .filter((el) => el !== index && el.slice(0, 1) === name)
-      .map((el) => {
-        checked[el] = false;
+      .filter((z) => z.slice(0, 1) === name && z !== index)
+      .map((a) => {
+        checked[a] = false;
       });
   }
 
   useEffect(() => {
-    localStorage.setItem("q3", JSON.stringify(input));
-    localStorage.setItem("q3-checked", JSON.stringify(checked));
+    Object.entries(input)
+      .filter((x) => x[0] && x[1])
+      .map((e) => {
+        var index = e[0] + e[1];
+        // console.log(index);
 
-    if (input.A === "3" || input.A === "4" || input.A === "5") {
-      if (!concerns.includes("A Macroeconomic volatility")) {
-        concerns.push("A Macroeconomic volatility");
-      }
-    } else {
-      if (concerns.includes("A Macroeconomic volatility")) {
-        concerns.pop("A Macroeconomic volatility");
-      }
-    }
-    if (input.B === "3" || input.B === "4" || input.B === "5") {
-      if (!concerns.includes("B Climate change")) {
-        concerns.push("B Climate change");
-      }
-    } else {
-      if (concerns.includes("B Climate change")) {
-        concerns.pop("B Climate change");
-      }
-    }
-    if (input.C === "3" || input.C === "4" || input.C === "5") {
-      if (!concerns.includes("C Social inequality")) {
-        concerns.push("C Social inequality");
-      }
-    } else {
-      if (concerns.includes("C Social inequality")) {
-        concerns.pop("C Social inequality");
-      }
-    }
-    if (input.D === "3" || input.D === "4" || input.D === "5") {
-      if (!concerns.includes("D Geopolitical conflict")) {
-        concerns.push("D Geopolitical conflict");
-      }
-    } else {
-      if (concerns.includes("D Geopolitical conflict")) {
-        concerns.pop("D Geopolitical conflict");
-      }
-    }
-    if (input.E === "3" || input.E === "4" || input.E === "5") {
-      if (!concerns.includes("E Cyber risks")) {
-        concerns.push("E Cyber risks");
-      }
-    } else {
-      if (concerns.includes("E Cyber risks")) {
-        concerns.pop("E Cyber risks");
-      }
-    }
-    if (input.F === "3" || input.F === "4" || input.F === "5") {
-      if (!concerns.includes("F Health risks")) {
-        concerns.push("F Health risks");
-      }
-    } else {
-      if (concerns.includes("F Health risks")) {
-        concerns.pop("F Health risks");
-      }
-    }
-    localStorage.setItem("q3-concerns", JSON.stringify(concerns));
+        Object.keys(checked)
+          .filter((el) => el.slice(0, 1) === e[0] && el === index)
+          .map((y) => {
+            checked[y] = true;
+
+            // if (
+            //   y.slice(1, 2) === "3" ||
+            //   y.slice(1, 2) === "4" ||
+            //   y.slice(1, 2) === "5"
+            // ) {
+            //   if (!concerns.includes(y)) {
+            //     concerns.push(y);
+            //   }
+            // }
+            // if (
+            //   y.slice(1, 2) === "1" ||
+            //   y.slice(1, 2) === "2" ||
+            //   y.slice(1, 2) === "6"
+            // ) {
+            //   if (concerns.includes(y)) {
+            //     concerns.pop(y);
+            //   }
+            // }
+          });
+        Object.keys(checked)
+          .filter((z) => z.slice(0, 1) === e[0] && z !== index)
+          .map((a) => {
+            checked[a] = false;
+            // if (
+            //   a.slice(1, 2) === "3" ||
+            //   a.slice(1, 2) === "4" ||
+            //   a.slice(1, 2) === "5"
+            // ) {
+            //   if (!concerns.includes(a)) {
+            //     concerns.push(a);
+            //   }
+            // } else if (
+            //   a.slice(1, 2) === "1" ||
+            //   a.slice(1, 2) === "2" ||
+            //   a.slice(1, 2) === "6"
+            // ) {
+            //   if (concerns.includes(a)) {
+            //     concerns.pop(a);
+            //   }
+            // }
+          });
+      });
+
+    // console.log(input);
+    // console.log(concerns);
   }, [input, checked, concerns]);
+
+  useEffect(() => {
+    Object.entries(input).map((el) => {
+      if (el[1] === "3" || el[1] === "4" || el[1] === "5") {
+        if (!concerns.includes(el[0])) {
+          concerns.push(el[0]);
+        }
+      } else if (el[1] === "1" || el[1] === "2" || el[1] === "6") {
+        if (concerns.includes(el[0])) {
+          concerns.pop(el[0]);
+        }
+      }
+    });
+
+    // console.log(concerns);
+  }, [input]);
 
   function handleSubmit(e) {
     e.preventDefault();
+    localStorage.setItem("q3-checked", JSON.stringify(checked));
+    localStorage.setItem("q3-concerns", JSON.stringify(concerns));
+    localStorage.setItem("q3", JSON.stringify(input));
 
     if (input.A && input.B && input.C && input.D && input.E && input.F) {
       if (concerns.length > 0) {
@@ -305,6 +313,7 @@ export default function Question3() {
                               name={row.key}
                               className="m-input"
                               value={col.key}
+                              onChange={handleChange}
                               checked={checked[`${row.key}${col.key}`]}
                             ></input>
                             {col.value}
