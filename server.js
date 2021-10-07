@@ -25,14 +25,14 @@ mongoose.connect(process.env.MONGO_URI, options, function (err) {
   }
 });
 
-mongoose.set("bufferCommands", false);
-mongoose.connect(process.env.MONGO_URI, options, function (err) {
-  console.log(err);
-});
+// mongoose.set("bufferCommands", false);
+// mongoose.connect(process.env.MONGO_URI, options, function (err) {
+//   console.log(err);
+// });
 
-mongoose.connection.on("error", (err) => {
-  console.log(err);
-});
+// mongoose.connection.on("error", (err) => {
+//   console.log(err);
+// });
 
 var date = new Date();
 var currentDate = date.toString();
@@ -196,7 +196,6 @@ app.post("/allinputs", (req, res) => {
       questionJ: req.body.qj,
     },
     { upsert: true },
-    { new: true },
     function (err, doc) {
       if (err) {
         return res.status(500).send(err);
