@@ -112,7 +112,7 @@ export default function Question8() {
                   name="option"
                   value="option1"
                   onClick={handleClick}
-                  checked={checked.option1 ? true : false}
+                  checked={checked.option1}
                 />
                 Yes, my company’s approach to reducing GHG emissions has been
                 independently assessed and validated
@@ -127,7 +127,7 @@ export default function Question8() {
                   name="option"
                   value="option2"
                   onClick={handleClick}
-                  checked={checked.option2 ? true : false}
+                  checked={checked.option2}
                 />
                 No, but my company’s approach to reducing GHG emissions is
                 currently being independently assessed and validated
@@ -141,7 +141,7 @@ export default function Question8() {
                   name="option"
                   value="option3"
                   onClick={handleClick}
-                  checked={checked.option3 ? true : false}
+                  checked={checked.option3}
                 />
                 No, my company’s approach to reducing GHG emissions has not been
                 independently assessed and validated
@@ -156,7 +156,7 @@ export default function Question8() {
                   name="option"
                   value="option4"
                   onClick={handleClick}
-                  checked={checked.option4 ? true : false}
+                  checked={checked.option4}
                 />
                 Don't know
               </label>

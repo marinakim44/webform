@@ -242,7 +242,21 @@ export default function Question4() {
               return (
                 <div key={concern}>
                   <p className="question" style={{ color: "#db536a" }}>
-                    <strong>{concern}</strong>
+                    <strong>
+                      {concern === "A"
+                        ? "Macroeconomic volatility"
+                        : concern === "B"
+                        ? "Climate change"
+                        : concern === "C"
+                        ? "Social inequality"
+                        : concern === "D"
+                        ? "Geopolitical conflict"
+                        : concern === "E"
+                        ? "Cyber risks"
+                        : concern === "F"
+                        ? "Health risks"
+                        : ""}
+                    </strong>
                   </p>
                   {rows.map((row) => {
                     return (
@@ -255,6 +269,14 @@ export default function Question4() {
                             onChange={handleChange}
                             checked={
                               checked[`${concern.slice(0, 1)}${row.key}`]
+                            }
+                            disabled={
+                              Object.entries(checked).filter(
+                                (el) =>
+                                  el[0].slice(0, 1) === concern.slice(0, 1) &&
+                                  el[1] === true
+                              ).length === 3 &&
+                              !checked[`${concern.slice(0, 1)}${row.key}`]
                             }
                           ></input>
                           {row.value}

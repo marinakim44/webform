@@ -167,7 +167,7 @@ export default function Question23() {
                       className="m-input"
                       checked={checked[`${row.key}`]}
                     ></input>
-                    {row}
+                    {row.value}
                   </label>
                 </div>
               );

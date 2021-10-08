@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
@@ -165,7 +165,7 @@ export default function Question21() {
   }
 
   return (
-    <Route path="/eng-q21">
+    <Route exact path="/eng-q21">
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
@@ -219,7 +219,7 @@ export default function Question21() {
                                 : ""
                             }
                           ></input>
-                          {col}
+                          {col.value}
                         </label>
                       </div>
                     );

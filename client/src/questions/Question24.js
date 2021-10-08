@@ -10,6 +10,12 @@ export default function Question24() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q24")) {
+      setInput(JSON.parse(localStorage.getItem("q24")));
+    }
+    if (localStorage.getItem("q24-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q24-checked")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -18,34 +24,42 @@ export default function Question24() {
   const rows = [
     {
       key: "A",
+      index: "1",
       value: "Greenhouse gas (GHG) emission targets",
     },
     {
       key: "B",
+      index: "2",
       value: "Gender representation rates",
     },
     {
       key: "C",
+      index: "3",
       value: "Race and ethnicity representation rates",
     },
     {
       key: "D",
+      index: "4",
       value: "Customer satisfaction metrics",
     },
     {
       key: "E",
+      index: "5",
       value: "Automation and digitisation goals",
     },
     {
       key: "F",
+      index: "6",
       value: "Employee engagement metrics",
     },
     {
       key: "G",
+      index: "7",
       value: "None of the above",
     },
     {
       key: "H",
+      index: "8",
       value: "Prefer not to answer",
     },
   ];
@@ -66,6 +80,26 @@ export default function Question24() {
     B: [],
   });
 
+  const [checked, setChecked] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+    A7: false,
+    A8: false,
+
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+    B7: false,
+    B8: false,
+  });
+
   const [noneA, setNoneA] = useState(false);
   const [noneB, setNoneB] = useState(false);
   const [notA, setNotA] = useState(false);
@@ -73,6 +107,13 @@ export default function Question24() {
 
   function handleClick(e) {
     const { name, value } = e.target;
+    const index = name + value;
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: !checked[index],
+      };
+    });
     if (name === "A" && value === "None of the above") {
       setNoneA(!noneA);
       setInput((prev) => {
@@ -119,6 +160,7 @@ export default function Question24() {
 
   useEffect(() => {
     localStorage.setItem("q24", JSON.stringify(input));
+    localStorage.setItem("q24-checked", JSON.stringify(checked));
   });
 
   function handleSubmit(e) {
@@ -270,6 +312,7 @@ export default function Question24() {
                                 name={col.key}
                                 value={row.value}
                                 onChange={handleClick}
+                                // checked={checked[`${col.key}${row.index}`]}
                                 disabled={
                                   (noneA &&
                                     row.key !== "G" &&

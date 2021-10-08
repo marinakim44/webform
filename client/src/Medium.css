@@ -1,8 +1,9 @@
 /* responsive for tablets: width smaller than 768px */
 @media (max-width: 768px) {
   body {
-    background-image: url("./back3.gif");
-    background-attachment: fixed;
+    /* background-image: url("./back3.gif");
+    background-attachment: fixed; */
+    background-color: #dedede;
   }
   p {
     font-size: 16px;

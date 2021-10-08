@@ -165,58 +165,18 @@ export default function Question3() {
       .filter((x) => x[0] && x[1])
       .map((e) => {
         var index = e[0] + e[1];
-        // console.log(index);
 
         Object.keys(checked)
           .filter((el) => el.slice(0, 1) === e[0] && el === index)
           .map((y) => {
             checked[y] = true;
-
-            // if (
-            //   y.slice(1, 2) === "3" ||
-            //   y.slice(1, 2) === "4" ||
-            //   y.slice(1, 2) === "5"
-            // ) {
-            //   if (!concerns.includes(y)) {
-            //     concerns.push(y);
-            //   }
-            // }
-            // if (
-            //   y.slice(1, 2) === "1" ||
-            //   y.slice(1, 2) === "2" ||
-            //   y.slice(1, 2) === "6"
-            // ) {
-            //   if (concerns.includes(y)) {
-            //     concerns.pop(y);
-            //   }
-            // }
           });
         Object.keys(checked)
           .filter((z) => z.slice(0, 1) === e[0] && z !== index)
           .map((a) => {
             checked[a] = false;
-            // if (
-            //   a.slice(1, 2) === "3" ||
-            //   a.slice(1, 2) === "4" ||
-            //   a.slice(1, 2) === "5"
-            // ) {
-            //   if (!concerns.includes(a)) {
-            //     concerns.push(a);
-            //   }
-            // } else if (
-            //   a.slice(1, 2) === "1" ||
-            //   a.slice(1, 2) === "2" ||
-            //   a.slice(1, 2) === "6"
-            // ) {
-            //   if (concerns.includes(a)) {
-            //     concerns.pop(a);
-            //   }
-            // }
           });
       });
-
-    // console.log(input);
-    // console.log(concerns);
   }, [input, checked, concerns]);
 
   useEffect(() => {

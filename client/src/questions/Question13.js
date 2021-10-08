@@ -60,8 +60,8 @@ export default function Question13() {
     if ((!inputA && !isCheckedA) || (!inputB && !isCheckedB)) {
       handleShow();
     } else {
-      localStorage.setItem("q13a", inputA ? inputA : "Don't know");
-      localStorage.setItem("q13b", inputB ? inputB : "Don't know");
+      localStorage.setItem("q13a", inputA ? inputA : "");
+      localStorage.setItem("q13b", inputB ? inputB : "");
 
       const data = {
         uuid: localStorage.getItem("uuid"),

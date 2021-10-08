@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, Form, Row, Col, Table } from "react-bootstrap";
 import "../App.css";
@@ -61,6 +61,33 @@ export default function Question22() {
     });
   };
 
+  useEffect(() => {
+    if (dontknow.revenue === true) {
+      setInput((prev) => {
+        return {
+          ...prev,
+          revenue: "",
+        };
+      });
+    }
+    if (dontknow.profit === true) {
+      setInput((prev) => {
+        return {
+          ...prev,
+          profit: "",
+        };
+      });
+    }
+    if (dontknow.return === true) {
+      setInput((prev) => {
+        return {
+          ...prev,
+          return: "",
+        };
+      });
+    }
+  }, [dontknow]);
+
   const handleBlur = (e) => {
     const { name } = e.target;
 
@@ -112,33 +139,33 @@ export default function Question22() {
 
       const data = {
         uuid: localStorage.getItem("uuid"),
-        // name: localStorage.getItem("name"),
-        // company: localStorage.getItem("company"),
-        // title: localStorage.getItem("title"),
-        // email: localStorage.getItem("email"),
-        // phone: localStorage.getItem("phone"),
-        // q1a: localStorage.getItem("q1a"),
-        // q1b: localStorage.getItem("q1b"),
-        // q2: JSON.parse(localStorage.getItem("countries")),
-        // q3: JSON.parse(localStorage.getItem("q3")),
-        // q5: JSON.parse(localStorage.getItem("q5")),
-        // q6: localStorage.getItem("q6"),
-        // q7: localStorage.getItem("q7"),
-        // q8: localStorage.getItem("q8"),
-        // q9: localStorage.getItem("q9"),
-        // q10: JSON.parse(localStorage.getItem("q10")),
-        // q11: JSON.parse(localStorage.getItem("q11")),
-        // q12: JSON.parse(localStorage.getItem("q12")),
-        // q13a: localStorage.getItem("q13a"),
-        // q13b: localStorage.getItem("q13b"),
-        // q14: JSON.parse(localStorage.getItem("q14")),
-        // q15: JSON.parse(localStorage.getItem("q15")),
-        // q16: localStorage.getItem("q16"),
-        // q17: JSON.parse(localStorage.getItem("q17")),
-        // q18: JSON.parse(localStorage.getItem("q18")),
-        // q19: JSON.parse(localStorage.getItem("q19")),
-        // q20: JSON.parse(localStorage.getItem("q20")),
-        // q21: JSON.parse(localStorage.getItem("q21")),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1a: localStorage.getItem("q1a"),
+        q1b: localStorage.getItem("q1b"),
+        q2: JSON.parse(localStorage.getItem("countries")),
+        q3: JSON.parse(localStorage.getItem("q3")),
+        q5: JSON.parse(localStorage.getItem("q5")),
+        q6: localStorage.getItem("q6"),
+        q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
+        q9: localStorage.getItem("q9"),
+        q10: JSON.parse(localStorage.getItem("q10")),
+        q11: JSON.parse(localStorage.getItem("q11")),
+        q12: JSON.parse(localStorage.getItem("q12")),
+        q13a: localStorage.getItem("q13a"),
+        q13b: localStorage.getItem("q13b"),
+        q14: JSON.parse(localStorage.getItem("q14")),
+        q15: JSON.parse(localStorage.getItem("q15")),
+        q16: localStorage.getItem("q16"),
+        q17: JSON.parse(localStorage.getItem("q17")),
+        q18: JSON.parse(localStorage.getItem("q18")),
+        q19: JSON.parse(localStorage.getItem("q19")),
+        q20: JSON.parse(localStorage.getItem("q20")),
+        q21: JSON.parse(localStorage.getItem("q21")),
         q22: JSON.parse(localStorage.getItem("q22")),
       };
 
@@ -224,6 +251,7 @@ export default function Question22() {
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
+                  autoComplete="off"
                 />
               </Col>
               <Col>
@@ -279,6 +307,7 @@ export default function Question22() {
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
+                  autoComplete="off"
                 />
               </Col>
               <Col>
@@ -335,6 +364,7 @@ export default function Question22() {
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
+                  autoComplete="off"
                 />
               </Col>
               <Col>
@@ -412,7 +442,7 @@ export default function Question22() {
                           type="text"
                           placeholder="Specify whole number"
                           name="revenue"
-                          value={input.revenue}
+                          value={dontknow.revenue === true ? "" : input.revenue}
                           onChange={handleChange}
                           disabled={dontknow.revenue === true ? true : false}
                           onBlur={handleBlur}
@@ -472,7 +502,7 @@ export default function Question22() {
                           type="text"
                           placeholder="Specify whole number"
                           name="profit"
-                          value={input.profit}
+                          value={dontknow.profit === true ? "" : input.profit}
                           onChange={handleChange}
                           disabled={dontknow.profit === true ? true : false}
                           onBlur={handleBlur}
@@ -532,7 +562,7 @@ export default function Question22() {
                           type="text"
                           placeholder="Specify whole number"
                           name="return"
-                          value={input.return}
+                          value={dontknow.return === true ? "" : input.return}
                           onChange={handleChange}
                           disabled={dontknow.return === true ? true : false}
                           onBlur={handleBlur}

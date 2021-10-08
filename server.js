@@ -25,14 +25,14 @@ mongoose.connect(process.env.MONGO_URI, options, function (err) {
   }
 });
 
-// mongoose.set("bufferCommands", false);
-// mongoose.connect(process.env.MONGO_URI, options, function (err) {
-//   console.log(err);
-// });
+mongoose.set("bufferCommands", false);
+mongoose.connect(process.env.MONGO_URI, options, function (err) {
+  console.log(err);
+});
 
-// mongoose.connection.on("error", (err) => {
-//   console.log(err);
-// });
+mongoose.connection.on("error", (err) => {
+  console.log(err);
+});
 
 var date = new Date();
 var currentDate = date.toString();
@@ -93,6 +93,7 @@ const responseSchema = new mongoose.Schema(
     question25C: Array,
     question25Cnone: Boolean,
     question25Cdontknow: Boolean,
+    question25Cother: String,
     question26: String,
     question27: String,
     question28: String,
@@ -178,6 +179,7 @@ app.post("/allinputs", (req, res) => {
       question25C: req.body.q25c,
       question25Cnone: req.body.q25cNone,
       question25Cdontknow: req.body.q25cDontknow,
+      question25Cother: req.body.q25cOther,
       question26: req.body.q26,
       question27: req.body.q27,
       question28: req.body.q28,

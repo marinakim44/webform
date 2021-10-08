@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
@@ -91,7 +91,7 @@ export default function Question20() {
     {
       key: 4,
       title: "Sometimes",
-      value: "39-60% of the time",
+      value: "41-60% of the time",
     },
     {
       key: 5,

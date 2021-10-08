@@ -278,4 +278,12 @@ h1 {
   .finish-btn:hover {
     background-color: #a43e50;
   }
+  .rus-none-btn,
+  .rus-dontknow-btn {
+    height: 60px;
+    width: 200px;
+  }
+  .rus-none-btn {
+    margin-right: 1rem;
+  }
 }

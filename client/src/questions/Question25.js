@@ -167,31 +167,6 @@ export default function Question25() {
     setOther(e.target.value);
   };
 
-  // const handleNone = () => {
-  //   setNone(!none);
-  //   console.log(none);
-  //   if (!none) {
-  //     setNone(!none);
-  //     setDontknow(false);
-  //     setInput([]);
-  //     setChecked(false);
-  //     setDisabled(true);
-  //   } else {
-  //     setNone(!none);
-  //   }
-  // };
-
-  // const handleDontknow = () => {
-  //   setDontknow(!dontknow);
-
-  //   if (!dontknow) {
-  //     setNone(false);
-  //     setInput([]);
-  //     setChecked(false);
-  //     setDisabled(true);
-  //   }
-  // };
-
   const handleNone = () => {
     if (dontknow) {
       setDontknow(false);
@@ -346,19 +321,23 @@ export default function Question25() {
               <div className="m-none-dontknow-div">
                 <Button
                   type="button"
-                  variant={none ? "warning" : "light"}
+                  variant={none ? "warning" : "outline-dark"}
                   value="None of the above"
                   onClick={handleNone}
-                  className="m-none-btn none-btn"
+                  className="m-none-btn none-btn rus-none-btn"
                 >
                   NONE OF THE ABOVE
                 </Button>
                 <Button
                   type="button"
-                  variant={dontknow ? "warning" : "light"}
+                  variant={dontknow ? "warning" : "outline-dark"}
                   value="Don't know"
                   onClick={handleDontknow}
-                  className="m-dontknow-btn dontknow-btn"
+                  className={
+                    width <= 480
+                      ? "rus-dontknow-btn"
+                      : "m-dontknow-btn dontknow-btn"
+                  }
                 >
                   DON'T KNOW
                 </Button>

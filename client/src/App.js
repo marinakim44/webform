@@ -3,6 +3,7 @@ import Nav from "./Nav";
 import EngStart from "./EngStart";
 import EngFinish from "./EngFinish";
 import RusStart from "./RusStart";
+import RusFinish from "./RusFinish";
 import Question1 from "./questions/Question1";
 import Question2 from "./questions/Question2";
 import Question3 from "./questions/Question3";
@@ -45,6 +46,49 @@ import QuestionH from "./questions/QuestionH";
 import QuestionI from "./questions/QuestionI";
 import QuestionJ from "./questions/QuestionJ";
 
+//Russian versions
+import Question1r from "./questions/Question1r";
+import Question2r from "./questions/Question2r";
+import Question3r from "./questions/Question3r";
+import Question4r from "./questions/Question4r";
+import Question5r from "./questions/Question5r";
+import Question6r from "./questions/Question6r";
+import Question7r from "./questions/Question7r";
+import Question8r from "./questions/Question8r";
+import Question9r from "./questions/Question9r";
+import Question10Ar from "./questions/Question10Ar";
+import Question10Br from "./questions/Question10Br";
+import Question11r from "./questions/Question11r";
+import Question12r from "./questions/Question12r";
+import Question13r from "./questions/Question13r";
+import Question14r from "./questions/Question14r";
+import Question15r from "./questions/Question15r";
+import Question16r from "./questions/Question16r";
+import Question17r from "./questions/Question17r";
+import Question18r from "./questions/Question18r";
+import Question19r from "./questions/Question19r";
+import Question20r from "./questions/Question20r";
+import Question21r from "./questions/Question21r";
+import Question22r from "./questions/Question22r";
+import Question23r from "./questions/Question23r";
+import Question24r from "./questions/Question24r";
+import Question25r from "./questions/Question25r";
+import Question25Br from "./questions/Question25Br";
+import Question25Cr from "./questions/Question25Cr";
+import Question26r from "./questions/Question26r";
+import Question27r from "./questions/Question27r";
+import Question28r from "./questions/Question28r";
+import QuestionAr from "./questions/QuestionAr";
+import QuestionBr from "./questions/QuestionBr";
+import QuestionCr from "./questions/QuestionCr";
+import QuestionDr from "./questions/QuestionDr";
+import QuestionEr from "./questions/QuestionEr";
+import QuestionFr from "./questions/QuestionFr";
+import QuestionGr from "./questions/QuestionGr";
+import QuestionHr from "./questions/QuestionHr";
+import QuestionIr from "./questions/QuestionIr";
+import QuestionJr from "./questions/QuestionJr";
+
 import { Dropdown } from "react-bootstrap";
 import "./App.css";
 import "./Medium.css";
@@ -52,19 +96,30 @@ import "./Small.css";
 import { useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { useState } from "react";
 
 export default function App() {
   const width = window.screen.width;
+  const [language, setLanguage] = useState("English");
+  // const [uuid, setUuid] = useState("");
+
   useEffect(() => {
     const id = uuidv4();
+    // setUuid(id);
     localStorage.setItem("uuid", id);
     console.log(id);
     window.scrollTo(0, 0);
+    if (localStorage.getItem("language")) {
+      setLanguage(localStorage.getItem("language"));
+    }
   }, []);
+  // useEffect(() => {
+  //   window.localStorage.clear();
+  // }, [uuid]);
 
   function chooseEng(e) {
     e.preventDefault();
-    localStorage.setItem("language", "English");
+    setLanguage("English");
 
     const data = {
       uuid: localStorage.getItem("uuid"),
@@ -75,12 +130,15 @@ export default function App() {
 
   function chooseRus(e) {
     e.preventDefault();
-    localStorage.setItem("language", "Russian");
+    setLanguage("Русский");
   }
+  useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
 
   return (
     <BrowserRouter>
-      <Nav />
+      <Nav language={language} />
       <Route exact path="/">
         <div
           className="main"
@@ -142,7 +200,7 @@ export default function App() {
 
               <Dropdown.Item onClick={chooseRus}>
                 <Link to="/rus-start">
-                  <div className="lng-div">Russian</div>
+                  <div className="lng-div">Русский</div>
                 </Link>
               </Dropdown.Item>
             </Dropdown.Menu>
@@ -281,6 +339,135 @@ export default function App() {
         </Route>
         <Route exact path="/eng-finish">
           <EngFinish />
+        </Route>
+
+        {/* Russian */}
+
+        <Route exact path="/rus-q1">
+          <Question1r />
+        </Route>
+        <Route exact path="/rus-q2">
+          <Question2r />
+        </Route>
+        <Route exact path="/rus-q3">
+          <Question3r />
+        </Route>
+        <Route exact path="/rus-q4">
+          <Question4r />
+        </Route>
+        <Route exact path="/rus-q5">
+          <Question5r />
+        </Route>
+        <Route exact path="/rus-q6">
+          <Question6r />
+        </Route>
+        <Route exact path="/rus-q7">
+          <Question7r />
+        </Route>
+        <Route exact path="/rus-q8">
+          <Question8r />
+        </Route>
+        <Route exact path="/rus-q9">
+          <Question9r />
+        </Route>
+        <Route exact path="/rus-q10a">
+          <Question10Ar />
+        </Route>
+        <Route exact path="/rus-q10b">
+          <Question10Br />
+        </Route>
+        <Route exact path="/rus-q11">
+          <Question11r />
+        </Route>
+        <Route exact path="/rus-q12">
+          <Question12r />
+        </Route>
+        <Route exact path="/rus-q13">
+          <Question13r />
+        </Route>
+        <Route exact path="/rus-q14">
+          <Question14r />
+        </Route>
+        <Route exact path="/rus-q15">
+          <Question15r />
+        </Route>
+        <Route exact path="/rus-q16">
+          <Question16r />
+        </Route>
+        <Route exact path="/rus-q17">
+          <Question17r />
+        </Route>
+        <Route exact path="/rus-q18">
+          <Question18r />
+        </Route>
+        <Route exact path="/rus-q19">
+          <Question19r />
+        </Route>
+        <Route exact path="/rus-q20">
+          <Question20r />
+        </Route>
+        <Route exact path="/rus-q21">
+          <Question21r />
+        </Route>
+        <Route exact path="/rus-q22">
+          <Question22r />
+        </Route>
+        <Route exact path="/rus-q23">
+          <Question23r />
+        </Route>
+        <Route exact path="/rus-q24">
+          <Question24r />
+        </Route>
+        <Route exact path="/rus-q25">
+          <Question25r />
+        </Route>
+        <Route exact path="/rus-q25b">
+          <Question25Br />
+        </Route>
+        <Route exact path="/rus-q25c">
+          <Question25Cr />
+        </Route>
+        <Route exact path="/rus-q26">
+          <Question26r />
+        </Route>
+        <Route exact path="/rus-q27">
+          <Question27r />
+        </Route>
+        <Route exact path="/rus-q28">
+          <Question28r />
+        </Route>
+        <Route exact path="/rus-qa">
+          <QuestionAr />
+        </Route>
+        <Route exact path="/rus-qb">
+          <QuestionBr />
+        </Route>
+        <Route exact path="/rus-qc">
+          <QuestionCr />
+        </Route>
+        <Route exact path="/rus-qd">
+          <QuestionDr />
+        </Route>
+        <Route exact path="/rus-qe">
+          <QuestionEr />
+        </Route>
+        <Route exact path="/rus-qf">
+          <QuestionFr />
+        </Route>
+        <Route exact path="/rus-qg">
+          <QuestionGr />
+        </Route>
+        <Route exact path="/rus-qh">
+          <QuestionHr />
+        </Route>
+        <Route exact path="/rus-qi">
+          <QuestionIr />
+        </Route>
+        <Route exact path="/rus-qj">
+          <QuestionJr />
+        </Route>
+        <Route exact path="/rus-finish">
+          <RusFinish />
         </Route>
       </Switch>
     </BrowserRouter>

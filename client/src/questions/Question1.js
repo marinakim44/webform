@@ -196,7 +196,7 @@ export default function Question1() {
                 <div>
                   <strong>
                     <p style={{ color: "#db536a" }} className="question">
-                      {row.key}) ${row.value}
+                      {row.key}) {row.value}
                     </p>
                   </strong>
                   {columns.map((col) => {

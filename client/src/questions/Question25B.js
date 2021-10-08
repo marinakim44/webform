@@ -392,7 +392,7 @@ export default function Question25B() {
               <div className="dontknow-div">
                 <Button
                   type="button"
-                  variant={isNone ? "warning" : "light"}
+                  variant={isNone ? "warning" : "outline-dark"}
                   className="none-btn"
                   value="None of the above"
                   onClick={handleNone}

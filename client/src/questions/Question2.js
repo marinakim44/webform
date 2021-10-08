@@ -16,7 +16,7 @@ const Menu = (props) => {
       {optionSelectedLength < 3 ? (
         props.children
       ) : (
-        <div>Max 3 countries needed</div>
+        <div>Maximum 3 countries needed</div>
       )}
     </components.Menu>
   );
@@ -189,7 +189,7 @@ export default function Question2() {
 
           <Form.Control
             type="text"
-            placeholder="Other country 1 (please specify)"
+            placeholder="Other 1 (please specify)"
             name="other1"
             value={other.other1}
             onChange={handleOther}
@@ -201,7 +201,7 @@ export default function Question2() {
             name="other2"
             value={other.other2}
             onChange={handleOther}
-            placeholder="Other country 2 (please specify)"
+            placeholder="Other 2 (please specify)"
             disabled={isDontknow ? true : false}
             className="input-text"
           ></Form.Control>
@@ -210,7 +210,7 @@ export default function Question2() {
             name="other3"
             value={other.other3}
             onChange={handleOther}
-            placeholder="Other country 3 (please specify)"
+            placeholder="Other 3 (please specify)"
             className="input-text"
             disabled={isDontknow ? true : false}
           ></Form.Control>
