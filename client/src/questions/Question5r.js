@@ -6,7 +6,7 @@ import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question5() {
+export default function Question5r() {
   const width = window.screen.width;
 
   useEffect(() => {

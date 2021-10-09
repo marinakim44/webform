@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button, Table, Dropdown, Row, Col } from "react-bootstrap";
 import "../App.css";
@@ -11,12 +11,6 @@ export default function Question13() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q13-checkedA")) {
-      setIsCheckedA(localStorage.getItem("q13-checkedA"));
-    }
-    if (localStorage.getItem("q13-checkedB")) {
-      setIsCheckedB(localStorage.getItem("q13-checkedB"));
-    }
     if (localStorage.getItem("q13a")) {
       setInputA(localStorage.getItem("q13a"));
     }
@@ -30,39 +24,52 @@ export default function Question13() {
   const history = useHistory();
   const [inputA, setInputA] = useState("");
   const [inputB, setInputB] = useState("");
-  const [isCheckedA, setIsCheckedA] = useState(false);
-  const [isCheckedB, setIsCheckedB] = useState(false);
+  const [dontknow, setDontknow] = useState({
+    A: false,
+    B: false,
+  });
 
   function handleSelectA(e) {
     setInputA(e);
-    localStorage.setItem("q13-checkedA", inputA);
   }
+  useEffect(() => {
+    localStorage.setItem("q13a", inputA);
+  }, [inputA]);
 
   function handleSelectB(e) {
     setInputB(e);
-    localStorage.setItem("q13-checkedB", inputB);
   }
+  useEffect(() => {
+    localStorage.setItem("q13b", inputB);
+  }, [inputB]);
 
-  function handleClickOtherA(e) {
-    setIsCheckedA(!isCheckedA);
-    setInputA("");
-    localStorage.setItem("q13-checkedA", isCheckedA);
-  }
-  function handleClickOtherB(e) {
-    setIsCheckedB(!isCheckedB);
-    setInputB("");
-    localStorage.setItem("q13-checkedB", isCheckedB);
-  }
+  const handleDontknow = (e) => {
+    const { name } = e.target;
+
+    setDontknow((prev) => {
+      return {
+        ...prev,
+        [name]: !dontknow[name],
+      };
+    });
+  };
+
+  useEffect(() => {
+    if (dontknow.A === true) {
+      setInputA("");
+    }
+    if (dontknow.B === true) {
+      setInputB("");
+    }
+  }, [dontknow]);
 
   function handleSubmit(e) {
     e.preventDefault();
+    localStorage.setItem("q13-dontknow", JSON.stringify(dontknow));
 
-    if ((!inputA && !isCheckedA) || (!inputB && !isCheckedB)) {
+    if (!inputA && dontknow.a === false && !inputB && dontknow.b === false) {
       handleShow();
     } else {
-      localStorage.setItem("q13a", inputA ? inputA : "");
-      localStorage.setItem("q13b", inputB ? inputB : "");
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -90,10 +97,6 @@ export default function Question13() {
 
       history.push("/eng-q14");
     }
-  }
-
-  function goBack() {
-    history.goBack();
   }
 
   return (
@@ -144,11 +147,11 @@ export default function Question13() {
                 </p>
               </Col>
               <Col>
-                <Dropdown onSelect={handleSelectA} className="s-q13">
+                <Dropdown onSelect={handleSelectA} className="s-q13" name="a">
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
-                    disabled={isCheckedA ? true : false}
+                    disabled={dontknow.A === true ? true : false}
                     className="dropdown-toggle"
                   >
                     {inputA ? inputA : "Select"}
@@ -174,10 +177,12 @@ export default function Question13() {
               <Col>
                 <Button
                   type="button"
-                  variant={isCheckedA ? "warning" : "light"}
-                  value="Don't know"
-                  onClick={handleClickOtherA}
+                  variant={dontknow.A === true ? "warning" : "outline"}
+                  name="A"
+                  value="dontknow"
+                  onClick={handleDontknow}
                   className="dropdown-btn"
+                  checked={dontknow.a === true ? true : false}
                 >
                   Don't know
                 </Button>
@@ -202,12 +207,12 @@ export default function Question13() {
                 </p>
               </Col>
               <Col>
-                <Dropdown onSelect={handleSelectB} className="s-q13">
+                <Dropdown onSelect={handleSelectB} className="s-q13" name="b">
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
                     className="dropdown-toggle"
-                    disabled={isCheckedB ? true : false}
+                    disabled={dontknow.B === true ? true : false}
                   >
                     {inputB ? inputB : "Select"}
                   </Dropdown.Toggle>
@@ -231,9 +236,10 @@ export default function Question13() {
               <Col>
                 <Button
                   type="button"
-                  variant={isCheckedB ? "warning" : "light"}
-                  value="Don't know"
-                  onClick={handleClickOtherB}
+                  variant={dontknow.B === true ? "warning" : "light"}
+                  name="B"
+                  value="dontknow"
+                  onClick={handleDontknow}
                   className="dropdown-btn"
                 >
                   Don't know
@@ -241,7 +247,11 @@ export default function Question13() {
               </Col>
             </Row>
             <div className="back-next-btns">
-              <Button variant="secondary" className="back-btn" onClick={goBack}>
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
                 <i
                   className="fas fa-chevron-left"
                   style={{ marginRight: "8px" }}
@@ -278,7 +288,7 @@ export default function Question13() {
                         variant="light"
                         id="dropdown-basic"
                         className="select-btn"
-                        disabled={isCheckedA ? true : false}
+                        disabled={dontknow.A === true ? true : false}
                       >
                         {inputA ? inputA : "Select number"}
                       </Dropdown.Toggle>
@@ -301,21 +311,16 @@ export default function Question13() {
                     </Dropdown>
                   </td>
                   <td>
-                    <label className="label-cell">
-                      <input
-                        type="checkbox"
-                        style={{
-                          margin: 0,
-                          marginRight: "8px",
-                          verticalAlign: "middle",
-                        }}
-                        name="a"
-                        value="Don't know"
-                        checked={isCheckedA ? true : false}
-                        onClick={handleClickOtherA}
-                      ></input>
+                    <Button
+                      type="button"
+                      variant={dontknow.A === true ? "warning" : "light"}
+                      name="A"
+                      value="dontknow"
+                      onClick={handleDontknow}
+                      className="dropdown-btn q13-dropdown-btn"
+                    >
                       Don't know
-                    </label>
+                    </Button>
                   </td>
                 </tr>
                 <tr className="table-row">
@@ -350,7 +355,7 @@ export default function Question13() {
                         variant="light"
                         id="dropdown-basic"
                         className="select-btn"
-                        disabled={isCheckedB ? true : false}
+                        disabled={dontknow.B === true ? true : false}
                       >
                         {inputB ? inputB : "Select number"}
                       </Dropdown.Toggle>
@@ -372,29 +377,27 @@ export default function Question13() {
                     </Dropdown>
                   </td>
                   <td style={{ verticalAlign: "middle" }}>
-                    <label className="label-cell">
-                      <input
-                        type="checkbox"
-                        style={{
-                          verticalAlign: "middle",
-                          margin: 0,
-                          marginRight: "8px",
-                          padding: 0,
-                        }}
-                        name="b"
-                        value="Don't know"
-                        checked={isCheckedB ? true : false}
-                        onClick={handleClickOtherB}
-                      ></input>
+                    <Button
+                      type="button"
+                      name="B"
+                      value="dontknow"
+                      onClick={handleDontknow}
+                      className="dropdown-btn q13-dropdown-btn"
+                      variant={dontknow.B === true ? "warning" : "light"}
+                    >
                       Don't know
-                    </label>
+                    </Button>
                   </td>
                 </tr>
               </tbody>
             </Table>
 
             <div className="back-next-btns">
-              <Button variant="secondary" className="back-btn" onClick={goBack}>
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
                 <i
                   className="fas fa-chevron-left"
                   style={{ marginRight: "8px" }}

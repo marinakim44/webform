@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
@@ -10,11 +10,8 @@ export default function Question15() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q15-checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q15-checkedA")));
-    }
-    if (localStorage.getItem("q15-checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q15-checkedB")));
+    if (localStorage.getItem("q15-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q15-checked")));
     }
     if (localStorage.getItem("q15")) {
       setInput(JSON.parse(localStorage.getItem("q15")));
@@ -74,8 +71,7 @@ export default function Question15() {
     B: "",
   });
 
-  const [checked, setChecked] = useState([]);
-  const [checkedA, setCheckedA] = useState({
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
@@ -84,8 +80,7 @@ export default function Question15() {
     A6: false,
     A7: false,
     A8: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
@@ -105,40 +100,35 @@ export default function Question15() {
         [name]: value,
       };
     });
-    // if (!checked.includes(name)) {
-    //   checked.push(name);
-    // }
 
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
+    Object.entries(input).map((el) => {
+      Object.keys(checked)
+        .filter((y) => y.slice(0, 1) === name && y === index)
+        .map((z) => {
+          checked[z] = true;
+        });
+    });
 
-      localStorage.setItem("q15-checkedA", JSON.stringify(checkedA));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-
-      localStorage.setItem("q15-checkedB", JSON.stringify(checkedB));
-    }
+    Object.entries(input).map((el) => {
+      Object.keys(checked)
+        .filter((y) => y.slice(0, 1) === name && y !== index)
+        .map((z) => {
+          checked[z] = false;
+        });
+    });
   }
+
+  useEffect(() => {
+    localStorage.setItem("q15", JSON.stringify(input));
+    localStorage.setItem("q15-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!input.A && !input.B) {
+    if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
-      localStorage.setItem("q15", JSON.stringify(input));
       history.push("/eng-q16");
 
       const data = {
@@ -171,148 +161,129 @@ export default function Question15() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q15">
-        <div className="main" style={{ height: width > 768 ? "100vh" : "" }}>
-          <div className="sticky-sub-div">
-            <h2 className="percent">
-              {Math.round(((100 / 39) * 16).toString())}% completed
-            </h2>
-            <div className="progressBarEmpty">
-              <div
-                className="progressBarFilled"
-                style={{
-                  width: ((100 / 39) * 16).toString() + "%",
-                }}
-              ></div>
-            </div>
-            <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
-              Typically, how long does it take for your company to:
-              approve/green-light major initiatives once an idea has been
-              proposed? commit significant resources to new major initiatives?
-            </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-            </p>
+    <Route path="/eng-q15">
+      <div className="main" style={{ height: width > 768 ? "100vh" : "" }}>
+        <div className="sticky-sub-div">
+          <h2 className="percent">
+            {Math.round(((100 / 39) * 16).toString())}% completed
+          </h2>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 39) * 16).toString() + "%",
+              }}
+            ></div>
           </div>
-          {width <= 768 ? (
-            <div className="left-align-text">
-              {rows.map((row) => {
-                return (
-                  <div>
-                    <p>
-                      <strong style={{ color: "#db536a" }}>
-                        {row.key}) {row.value}
-                      </strong>
-                    </p>
-                    {columns.map((col) => {
-                      return (
-                        <div className="m-div">
-                          <label className="m-label">
-                            <input
-                              type="radio"
-                              name={row.key}
-                              value={col.key}
-                              onChange={handleClick}
-                              className="m-input"
-                              checked={
-                                row.key === "A"
-                                  ? checkedA[`${row.key}${col.key}`]
-                                  : row.key === "B"
-                                  ? checkedB[`${row.key}${col.key}`]
-                                  : ""
-                              }
-                              autoComplete="on"
-                            />
-                            {col.value}
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <form>
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <td colSpan="2"></td>
-                    {columns.map((col) => {
-                      return (
-                        <td>
-                          <strong>{col.value}</strong>
-                        </td>
-                      );
-                    })}
-                  </tr>
-                  {rows.map((row) => {
+          <ModalAlert show={show} close={handleClose} />
+          <p className="left-align-text">
+            Typically, how long does it take for your company to:
+            approve/green-light major initiatives once an idea has been
+            proposed? commit significant resources to new major initiatives?
+          </p>
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+          </p>
+        </div>
+        {width <= 768 ? (
+          <div className="left-align-text">
+            {rows.map((row) => {
+              return (
+                <div>
+                  <p>
+                    <strong style={{ color: "#db536a" }}>
+                      {row.key}) {row.value}
+                    </strong>
+                  </p>
+                  {columns.map((col) => {
                     return (
-                      <tr className="table-row">
-                        <td>{row.key}</td>
-                        <td className="left-align-text">{row.value}</td>
-                        {columns.map((col) => {
-                          return (
-                            <td className="input-cell">
-                              <label className="label-cell">
-                                <input
-                                  type="radio"
-                                  name={row.key}
-                                  value={col.key}
-                                  onChange={handleClick}
-                                  checked={
-                                    row.key === "A"
-                                      ? checkedA[`${row.key}${col.key}`]
-                                      : row.key === "B"
-                                      ? checkedB[`${row.key}${col.key}`]
-                                      : ""
-                                  }
-                                  autoComplete="on"
-                                ></input>
-                              </label>
-                            </td>
-                          );
-                        })}
-                      </tr>
+                      <div className="m-div">
+                        <label className="m-label">
+                          <input
+                            type="radio"
+                            name={row.key}
+                            value={col.key}
+                            onChange={handleClick}
+                            className="m-input"
+                            checked={checked[`${row.key}${col.key}`]}
+                            autoComplete="on"
+                          />
+                          {col.value}
+                        </label>
+                      </div>
                     );
                   })}
-                </tbody>
-              </table>
-            </form>
-          )}
-
-          <div className="back-next-btns">
-            <Button
-              variant="secondary"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              <i
-                className="fas fa-chevron-left"
-                style={{ marginRight: "8px" }}
-              ></i>
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-              <i
-                className="fas fa-chevron-right"
-                style={{ marginLeft: "8px" }}
-              ></i>
-            </Button>
+                </div>
+              );
+            })}
           </div>
+        ) : (
+          <form>
+            <table className="table">
+              <tbody>
+                <tr>
+                  <td colSpan="2"></td>
+                  {columns.map((col) => {
+                    return (
+                      <td>
+                        <strong>{col.value}</strong>
+                      </td>
+                    );
+                  })}
+                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr className="table-row">
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
+                      {columns.map((col) => {
+                        return (
+                          <td className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={col.key}
+                                onChange={handleClick}
+                                checked={checked[`${row.key}${col.key}`]}
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </form>
+        )}
+
+        <div className="back-next-btns">
+          <Button
+            variant="secondary"
+            className="back-btn"
+            onClick={() => history.goBack()}
+          >
+            <i
+              className="fas fa-chevron-left"
+              style={{ marginRight: "8px" }}
+            ></i>
+            Back
+          </Button>
+
+          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
+            Next
+            <i
+              className="fas fa-chevron-right"
+              style={{ marginLeft: "8px" }}
+            ></i>
+          </Button>
         </div>
-      </Route>
-    </BrowserRouter>
+      </div>
+    </Route>
   );
 }

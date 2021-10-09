@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question16() {
+export default function Question16r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -5,7 +5,7 @@ import ModalAlert from "../ModalAlert";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function Question3() {
+export default function Question3r() {
   const width = window.screen.width;
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

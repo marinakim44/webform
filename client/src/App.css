@@ -286,4 +286,7 @@ h1 {
   .rus-none-btn {
     margin-right: 1rem;
   }
+  .q13-dropdown-btn {
+    height: 40px;
+  }
 }

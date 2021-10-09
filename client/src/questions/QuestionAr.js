@@ -6,7 +6,7 @@ import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function QuestionA() {
+export default function QuestionAr() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);

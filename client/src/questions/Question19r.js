@@ -6,7 +6,7 @@ import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 
-export default function Question19() {
+export default function Question19r() {
   const rows = [
     {
       key: "key1",

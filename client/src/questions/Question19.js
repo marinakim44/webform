@@ -254,9 +254,9 @@ export default function Question19() {
                 style={{ marginTop: "2rem" }}
               ></Form.Control>
             </div>
-            <div className="back-next-btns">
+            <div className="back-next-btns m-none-dontknow-div">
               <Button
-                variant={none ? "warning" : "light"}
+                variant={none ? "warning" : "outline-dark"}
                 type="button"
                 onClick={handleNone}
                 className="none-btn"
@@ -264,7 +264,7 @@ export default function Question19() {
                 NONE OF THE ABOVE
               </Button>
               <Button
-                variant={dontknow ? "warning" : "light"}
+                variant={dontknow ? "warning" : "outline-dark"}
                 type="button"
                 onClick={handleDontknow}
                 className="dontknow-btn"

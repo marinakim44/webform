@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import "../App.css";
 import { useState, useEffect } from "react";
@@ -10,20 +10,11 @@ export default function Question14() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q14-checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q14-checkedA")));
-    }
-    if (localStorage.getItem("q14-checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q14-checkedB")));
-    }
-    if (localStorage.getItem("q14-checkedC")) {
-      setCheckedC(JSON.parse(localStorage.getItem("q14-checkedC")));
+    if (localStorage.getItem("q14-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q14-checked")));
     }
     if (localStorage.getItem("q14")) {
       setInput(JSON.parse(localStorage.getItem("q14")));
-    }
-    if (localStorage.getItem("q14-checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q14-checked")));
     }
   }, []);
   const rows = [
@@ -93,8 +84,7 @@ export default function Question14() {
     C: "",
   });
 
-  const [checked, setChecked] = useState([]);
-  const [checkedA, setCheckedA] = useState({
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
@@ -103,8 +93,7 @@ export default function Question14() {
     A6: false,
     A7: false,
     A8: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
@@ -113,8 +102,7 @@ export default function Question14() {
     B6: false,
     B7: false,
     B8: false,
-  });
-  const [checkedC, setCheckedC] = useState({
+
     C1: false,
     C2: false,
     C3: false,
@@ -135,49 +123,35 @@ export default function Question14() {
       };
     });
 
-    if (!checked.includes(name)) {
-      checked.push(name);
-    }
+    Object.entries(input).map((el) => {
+      Object.keys(checked)
+        .filter((y) => y.slice(0, 1) === name && y === index)
+        .map((z) => {
+          checked[z] = true;
+        });
+    });
 
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-    }
-    if (name === "C") {
-      Object.keys(checkedC)
-        .filter((v) => v === index)
-        .map((v) => (checkedC[v] = true));
-      Object.keys(checkedC)
-        .filter((v) => v !== index)
-        .map((v) => (checkedC[v] = false));
-    }
+    Object.entries(input).map((el) => {
+      Object.keys(checked)
+        .filter((y) => y.slice(0, 1) === name && y !== index)
+        .map((z) => {
+          checked[z] = false;
+        });
+    });
   }
 
   useEffect(() => {
-    localStorage.setItem("q14-checkedA", JSON.stringify(checkedA));
-    localStorage.setItem("q14-checkedB", JSON.stringify(checkedB));
-    localStorage.setItem("q14-checkedC", JSON.stringify(checkedC));
+    console.log(input);
+    console.log(checked);
+
     localStorage.setItem("q14-checked", JSON.stringify(checked));
     localStorage.setItem("q14", JSON.stringify(input));
-  }, [input, checkedA, checkedB, checkedC, checked]);
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 3) {
+    if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
       history.push("/eng-q15");
@@ -211,185 +185,169 @@ export default function Question14() {
   }
 
   return (
-    <BrowserRouter>
-      <Route path="/eng-q14">
-        <div className="main">
-          <div className="sticky-sub-div">
-            <h2 className="percent">
-              {Math.round(((100 / 39) * 15).toString())}% completed
-            </h2>
-            <div className="progressBarEmpty">
-              <div
-                className="progressBarFilled"
-                style={{
-                  width: ((100 / 39) * 15).toString() + "%",
-                }}
-              ></div>
-            </div>
-            <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
-              Typically, how frequently does your company formally: assess its
-              major initiatives? change its major initiatives? update its
-              workforce about its major initiatives?
-            </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-            </p>
+    <Route path="/eng-q14">
+      <div className="main">
+        <div className="sticky-sub-div">
+          <h2 className="percent">
+            {Math.round(((100 / 39) * 15).toString())}% completed
+          </h2>
+          <div className="progressBarEmpty">
+            <div
+              className="progressBarFilled"
+              style={{
+                width: ((100 / 39) * 15).toString() + "%",
+              }}
+            ></div>
           </div>
-          {width <= 768 ? (
-            <div className="left-align-text">
-              {rows.map((row) => {
-                return (
-                  <div>
-                    <p className="question" style={{ color: "#db536a" }}>
-                      <strong>
-                        {row.key}) {row.value}
-                      </strong>
-                    </p>
-                    {columns.map((col) => {
-                      return (
-                        <div className="m-div">
-                          <label className="m-label">
-                            <input
-                              type="radio"
-                              name={row.key}
-                              value={col.key}
-                              onClick={handleClick}
-                              className="m-input"
-                              checked={
-                                row.key === "A"
-                                  ? checkedA[`${row.key}${col.key}`]
-                                  : row.key === "B"
-                                  ? checkedB[`${row.key}${col.key}`]
-                                  : row.key === "C"
-                                  ? checkedC[`${row.key}${col.key}`]
-                                  : ""
-                              }
-                              autoComplete="on"
-                            />
-
-                            {col.value}
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </div>
-                );
-              })}
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i
-                    className="fas fa-chevron-left"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                  Back
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i
-                    className="fas fa-chevron-right"
-                    style={{ marginLeft: "8px" }}
-                  ></i>
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <form>
-              <Table bordered className="table">
-                <tbody>
-                  <tr style={{ fontWeight: "bold", color: "#dc3545" }}>
-                    <td colSpan="2" rowSpan="2"></td>
-                    <td colSpan="3">Less often</td>
-                    <td rowSpan="2">Every year</td>
-                    <td colSpan="3">More often</td>
-                    <td rowSpan="2">Don't know</td>
-                  </tr>
-                  <tr>
-                    {columns
-                      .filter(
-                        (col) =>
-                          col.value !== "Every year" &&
-                          col.value !== "Don't know"
-                      )
-                      .map((col) => {
-                        return <td>{col.value}</td>;
-                      })}
-                  </tr>
-                  {rows.map((row) => {
+          <ModalAlert show={show} close={handleClose} />
+          <p className="left-align-text">
+            Typically, how frequently does your company formally: assess its
+            major initiatives? change its major initiatives? update its
+            workforce about its major initiatives?
+          </p>
+          <p
+            className="question"
+            style={{ margin: width <= 480 ? "1rem 0" : "" }}
+          >
+            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+          </p>
+        </div>
+        {width <= 768 ? (
+          <div className="left-align-text">
+            {rows.map((row) => {
+              return (
+                <div>
+                  <p className="question" style={{ color: "#db536a" }}>
+                    <strong>
+                      {row.key}) {row.value}
+                    </strong>
+                  </p>
+                  {columns.map((col) => {
                     return (
-                      <tr className="table-row">
-                        <td>{row.key}</td>
-                        <td className="left-align-text">{row.value}</td>
-                        {columns.map((col) => {
-                          return (
-                            <td className="input-cell">
-                              <label className="label-cell">
-                                <input
-                                  type="radio"
-                                  name={row.key}
-                                  value={col.key}
-                                  onClick={handleClick}
-                                  checked={
-                                    row.key === "A"
-                                      ? checkedA[`${row.key}${col.key}`]
-                                      : row.key === "B"
-                                      ? checkedB[`${row.key}${col.key}`]
-                                      : row.key === "C"
-                                      ? checkedC[`${row.key}${col.key}`]
-                                      : ""
-                                  }
-                                  autoComplete="on"
-                                ></input>
-                              </label>
-                            </td>
-                          );
-                        })}
-                      </tr>
+                      <div className="m-div">
+                        <label className="m-label">
+                          <input
+                            type="radio"
+                            name={row.key}
+                            value={col.key}
+                            onChange={handleClick}
+                            className="m-input"
+                            checked={checked[`${row.key}${col.key}`]}
+                            autoComplete="on"
+                          />
+
+                          {col.value}
+                        </label>
+                      </div>
                     );
                   })}
-                </tbody>
-              </Table>
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i
-                    className="fas fa-chevron-left"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                  Back
-                </Button>
+                </div>
+              );
+            })}
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
 
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i
-                    className="fas fa-chevron-right"
-                    style={{ marginLeft: "8px" }}
-                  ></i>
-                </Button>
-              </div>
-            </form>
-          )}
-        </div>
-      </Route>
-    </BrowserRouter>
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <form>
+            <Table bordered className="table">
+              <tbody>
+                <tr style={{ fontWeight: "bold", color: "#dc3545" }}>
+                  <td colSpan="2" rowSpan="2"></td>
+                  <td colSpan="3">Less often</td>
+                  <td rowSpan="2">Every year</td>
+                  <td colSpan="3">More often</td>
+                  <td rowSpan="2">Don't know</td>
+                </tr>
+                <tr>
+                  {columns
+                    .filter(
+                      (col) =>
+                        col.value !== "Every year" && col.value !== "Don't know"
+                    )
+                    .map((col) => {
+                      return <td>{col.value}</td>;
+                    })}
+                </tr>
+                {rows.map((row) => {
+                  return (
+                    <tr className="table-row">
+                      <td>{row.key}</td>
+                      <td className="left-align-text">{row.value}</td>
+                      {columns.map((col) => {
+                        return (
+                          <td className="input-cell">
+                            <label className="label-cell">
+                              <input
+                                type="radio"
+                                name={row.key}
+                                value={col.key}
+                                onChange={handleClick}
+                                checked={
+                                  checked[`${row.key}${col.key}`] === true
+                                    ? true
+                                    : false
+                                }
+                              ></input>
+                            </label>
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Back
+              </Button>
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Next
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
+          </form>
+        )}
+      </div>
+    </Route>
   );
 }

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question14() {
+export default function Question14r() {
   const history = useHistory();
   const width = window.screen.width;
   useEffect(() => {

@@ -6,7 +6,7 @@ import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question4() {
+export default function Question4r() {
   const rows = [
     {
       key: "1",

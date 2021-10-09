@@ -109,7 +109,6 @@ export default function Question27() {
                 placeholder="Specify here"
                 value={input}
                 onChange={handleChange}
-                autoComplete="on"
                 className="input-text"
               ></Form.Control>
             </Form.Group>

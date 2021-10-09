@@ -9,7 +9,7 @@ import ModalAlert from "../ModalAlert";
 import Question10A from "./Question10A";
 import Switch from "react-bootstrap/esm/Switch";
 
-export default function Question11() {
+export default function Question11r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);

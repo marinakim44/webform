@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question27() {
+export default function Question27r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -109,7 +109,6 @@ export default function Question27() {
                 placeholder="Пожалуйста, укажите"
                 value={input}
                 onChange={handleChange}
-                autoComplete="on"
                 className="input-text"
               ></Form.Control>
             </Form.Group>

@@ -9,45 +9,44 @@ export default function Question16() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q16checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q16checked")));
+    if (localStorage.getItem("q16-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q16-checked")));
     }
     if (localStorage.getItem("q16")) {
       setInput(localStorage.getItem("q16"));
     }
-    console.log(checked, input);
   }, []);
   const rows = [
     {
-      key: "1",
+      key: "option1",
       value: "0",
     },
     {
-      key: "2",
+      key: "option2",
       value: "1",
     },
     {
-      key: "3",
+      key: "option3",
       value: "2-5",
     },
     {
-      key: "4",
+      key: "option4",
       value: "6-10",
     },
     {
-      key: "5",
+      key: "option5",
       value: "11-20",
     },
     {
-      key: "6",
+      key: "option6",
       value: "21-30",
     },
     {
-      key: "7",
+      key: "option7",
       value: "More than 30",
     },
     {
-      key: "8",
+      key: "option8",
       value: "Don't know",
     },
   ];
@@ -68,21 +67,27 @@ export default function Question16() {
   });
 
   function handleClick(e) {
-    console.log(checked, input);
     const { value } = e.target;
     setInput(value);
-
-    //SAVING PREVIOUS INPUT
     Object.keys(checked)
       .filter((v) => v === value)
       .map((v) => (checked[v] = true));
     Object.keys(checked)
       .filter((v) => v !== value)
       .map((v) => (checked[v] = false));
-
-    localStorage.setItem("q16checked", JSON.stringify(checked));
-    console.log(checked, input);
   }
+
+  useEffect(() => {
+    Object.keys(checked)
+      .filter((v) => v === input)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== input)
+      .map((v) => (checked[v] = false));
+
+    localStorage.setItem("q16", input);
+    localStorage.setItem("q16-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -90,7 +95,6 @@ export default function Question16() {
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("q16", input);
       history.push("/eng-q17");
 
       const data = {
@@ -159,10 +163,10 @@ export default function Question16() {
                     <input
                       type="radio"
                       name="option"
-                      value={`option${row.key}`}
+                      value={row.key}
                       onChange={handleClick}
                       className="m-input"
-                      checked={checked[`option${row.key}`] ? true : false}
+                      checked={checked[row.key] === true ? true : false}
                     />
                     {row.value}
                   </label>
@@ -180,10 +184,10 @@ export default function Question16() {
                       <input
                         type="radio"
                         name="option"
-                        value={`option${row.key}`}
+                        value={row.key}
                         onChange={handleClick}
                         className="m-input radio-input"
-                        checked={checked[`option${row.key}`] ? true : false}
+                        checked={checked[row.key] === true ? true : false}
                       ></input>
                       {row.value}
                     </label>

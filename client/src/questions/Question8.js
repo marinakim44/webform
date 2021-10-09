@@ -34,7 +34,6 @@ export default function Question8() {
     const { value } = e.target;
     setInput(value);
 
-    //SAVING PREVIOUS INPUT
     Object.keys(checked)
       .filter((v) => v === value)
       .map((v) => (checked[v] = true));
@@ -44,9 +43,18 @@ export default function Question8() {
   }
 
   useEffect(() => {
+    Object.entries(checked)
+      .filter((el) => el[1] === true)
+      .map((x) => {
+        setInput(x[0]);
+      });
+
     localStorage.setItem("q8-checked", JSON.stringify(checked));
+  }, [checked]);
+
+  useEffect(() => {
     localStorage.setItem("q8", input);
-  }, [input, checked]);
+  }, [input]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -112,7 +120,7 @@ export default function Question8() {
                   name="option"
                   value="option1"
                   onClick={handleClick}
-                  checked={checked.option1}
+                  checked={checked.option1 === true ? true : false}
                 />
                 Yes, my company’s approach to reducing GHG emissions has been
                 independently assessed and validated
@@ -127,7 +135,7 @@ export default function Question8() {
                   name="option"
                   value="option2"
                   onClick={handleClick}
-                  checked={checked.option2}
+                  checked={checked.option2 === true ? true : false}
                 />
                 No, but my company’s approach to reducing GHG emissions is
                 currently being independently assessed and validated
@@ -141,7 +149,7 @@ export default function Question8() {
                   name="option"
                   value="option3"
                   onClick={handleClick}
-                  checked={checked.option3}
+                  checked={checked.option3 === true ? true : false}
                 />
                 No, my company’s approach to reducing GHG emissions has not been
                 independently assessed and validated
@@ -156,7 +164,7 @@ export default function Question8() {
                   name="option"
                   value="option4"
                   onClick={handleClick}
-                  checked={checked.option4}
+                  checked={checked.option4 === true ? true : false}
                 />
                 Don't know
               </label>

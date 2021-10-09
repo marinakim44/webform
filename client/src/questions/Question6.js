@@ -10,8 +10,8 @@ export default function Question6() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q6checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q6checked")));
+    if (localStorage.getItem("q6-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q6-checked")));
     }
     if (localStorage.getItem("q6")) {
       setInput(localStorage.getItem("q6"));
@@ -33,16 +33,27 @@ export default function Question6() {
     const { value } = e.target;
     setInput(value);
 
-    //SAVING PREVIOUS INPUT
     Object.keys(checked)
       .filter((v) => v === value)
       .map((v) => (checked[v] = true));
     Object.keys(checked)
       .filter((v) => v !== value)
       .map((v) => (checked[v] = false));
-
-    localStorage.setItem("q6checked", JSON.stringify(checked));
   }
+
+  useEffect(() => {
+    Object.entries(checked)
+      .filter((el) => el[1] === true)
+      .map((x) => {
+        setInput(x[0]);
+      });
+
+    localStorage.setItem("q6-checked", JSON.stringify(checked));
+  }, [checked]);
+
+  useEffect(() => {
+    localStorage.setItem("q6", input);
+  }, [input]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -50,8 +61,6 @@ export default function Question6() {
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("q6", input);
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -115,7 +124,7 @@ export default function Question6() {
                     value="option1"
                     onClick={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option1 ? true : false}
+                    checked={checked.option1 === true ? true : false}
                   />
                   Limiting global warming to 1.5° Celsius
                 </label>
@@ -128,8 +137,7 @@ export default function Question6() {
                     value="option2"
                     onClick={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option2 ? true : false}
-                    autoComplete="on"
+                    checked={checked.option2 === true ? true : false}
                   />
                   Limiting global warming to well below 2.0° Celsius
                 </label>
@@ -142,8 +150,7 @@ export default function Question6() {
                     value="option3"
                     onClick={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option3 ? true : false}
-                    autoComplete="on"
+                    checked={checked.option3 === true ? true : false}
                   />
                   My company’s net-zero commitment is not aligned to a
                   science-based target
@@ -157,8 +164,7 @@ export default function Question6() {
                     value="option4"
                     onClick={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option4 ? true : false}
-                    autoComplete="on"
+                    checked={checked.option4 === true ? true : false}
                   />
                   Don't know
                 </label>

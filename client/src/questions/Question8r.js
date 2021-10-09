@@ -6,7 +6,7 @@ import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question8() {
+export default function Question8r() {
   const width = window.screen.width;
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

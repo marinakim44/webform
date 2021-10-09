@@ -217,7 +217,7 @@ export default function Question2() {
           <div className="dontknow-div">
             <Button
               type="button"
-              variant={isDontknow ? "warning" : "light"}
+              variant={isDontknow ? "warning" : "outline-dark"}
               className="back-btn"
               style={{ margin: 0 }}
               value="Don't know"

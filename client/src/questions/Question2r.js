@@ -22,7 +22,7 @@ const Menu = (props) => {
   );
 };
 
-export default function Question2() {
+export default function Question2r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
