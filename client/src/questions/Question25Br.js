@@ -348,7 +348,7 @@ export default function Question25Br() {
   return (
     <BrowserRouter>
       <Route path="/rus-q25b">
-        <div className="main" style={{ height: "100%" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 27).toString())}% завершено
@@ -394,7 +394,7 @@ export default function Question25Br() {
                               type="radio"
                               name={row.key}
                               value={col.key}
-                              onClick={handleClick}
+                              onChange={handleClick}
                               disabled={none || dontknow ? true : false}
                               checked={checked[`${row.key}${col.key}`]}
                               className="m-input"
@@ -492,7 +492,7 @@ export default function Question25Br() {
                                     type="radio"
                                     name={row.key}
                                     value={col.key}
-                                    onClick={handleClick}
+                                    onChange={handleClick}
                                     disabled={none || dontknow ? true : false}
                                     checked={
                                       none === true

@@ -82,7 +82,7 @@ export default function Question7() {
 
   return (
     <Route path="/eng-q7">
-      <div className="main" style={{ height: width <= 480 ? "100vh" : "" }}>
+      <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 8).toString())}% completed

@@ -150,6 +150,7 @@ export default function QuestionFr() {
               .map((row) => {
                 return (
                   <div
+                    key={row.key}
                     className={
                       width <= 768
                         ? "left-align-text m-div"

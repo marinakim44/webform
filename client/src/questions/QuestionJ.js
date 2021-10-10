@@ -197,6 +197,7 @@ export default function QuestionJ() {
               {rows.map((row) => {
                 return (
                   <div
+                    key={row.key}
                     className={
                       width <= 768 ? "m-div" : "left-align-text-no-margin"
                     }

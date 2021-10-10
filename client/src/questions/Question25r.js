@@ -288,7 +288,7 @@ export default function Question25() {
   return (
     <BrowserRouter>
       <Route path="/rus-q25">
-        <div className="main" style={{ height: "100%" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 26).toString())}% завершено

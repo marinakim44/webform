@@ -121,7 +121,7 @@ export default function QuestionA() {
   return (
     <BrowserRouter>
       <Route path="/eng-qa">
-        <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 32).toString())}% completed
@@ -152,7 +152,7 @@ export default function QuestionA() {
                   <input
                     type="radio"
                     value="option1"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     name="option"
                     className="m-input radio-input"
                     checked={checked.option1}
@@ -165,7 +165,7 @@ export default function QuestionA() {
                   <input
                     type="radio"
                     value="option2"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     name="option"
                     className="m-input radio-input"
                     checked={checked.option2}
@@ -179,7 +179,7 @@ export default function QuestionA() {
                     type="radio"
                     id="not"
                     value="option3"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     name="option"
                     className="m-input radio-input"
                     checked={checked.option3}

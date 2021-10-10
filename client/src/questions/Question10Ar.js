@@ -205,7 +205,7 @@ export default function Question10Ar() {
   return (
     <BrowserRouter>
       <Route path="/rus-q10a">
-        <div className="main" style={{ height: "100%" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 11).toString())}% завершено

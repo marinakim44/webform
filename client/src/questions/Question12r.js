@@ -190,7 +190,7 @@ export default function Question12r() {
   return (
     <BrowserRouter>
       <Route path="/rus-q12">
-        <div className="main" style={{ height: "100%" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 13).toString())}% завершено

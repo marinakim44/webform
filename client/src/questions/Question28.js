@@ -87,7 +87,7 @@ export default function Question28() {
   return (
     <BrowserRouter>
       <Route path="/eng-q28">
-        <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 31).toString())}% completed

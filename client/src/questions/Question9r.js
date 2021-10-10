@@ -76,7 +76,7 @@ export default function Question9r() {
 
   return (
     <Route path="/rus-q9">
-      <div className="main" style={{ height: width <= 480 ? "100vh" : "" }}>
+      <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 10).toString())}% завершено

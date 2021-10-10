@@ -166,8 +166,8 @@ export default function Question24() {
     Object.entries(checked)
       .filter((x) => x[1] === true)
       .map((x) => {
-        if (!input.includes(x[0])) {
-          return input.push(x[0]);
+        if (input.filter((el) => el === x[0]).length === 0) {
+          input.push(x[0]);
         }
         return;
       });

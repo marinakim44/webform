@@ -223,7 +223,7 @@ export default function Question11() {
   return (
     <BrowserRouter>
       <Route path="/eng-q11">
-        <div className="main" style={{ height: "100%" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 12).toString())}% completed

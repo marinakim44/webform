@@ -112,7 +112,7 @@ export default function Question26() {
   return (
     <BrowserRouter>
       <Route path="/eng-q26">
-        <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 29).toString())}% completed
@@ -139,7 +139,7 @@ export default function Question26() {
                   className="radio-input m-input"
                   name="option"
                   value="option1"
-                  onClick={handleClick}
+                  onChange={handleClick}
                   checked={checked.option1}
                 ></input>
                 Improved
@@ -152,7 +152,7 @@ export default function Question26() {
                   className="radio-input m-input"
                   name="option"
                   value="option2"
-                  onClick={handleClick}
+                  onChange={handleClick}
                   checked={checked.option2}
                 ></input>
                 Stayed the same
@@ -165,7 +165,7 @@ export default function Question26() {
                   className="radio-input m-input"
                   name="option"
                   value="option3"
-                  onClick={handleClick}
+                  onChange={handleClick}
                   checked={checked.option3}
                 ></input>
                 Declined

@@ -6,7 +6,6 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 
 function RusStart() {
-  const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
     if (localStorage.getItem("name")) {
@@ -67,6 +66,13 @@ function RusStart() {
   const [errorTitle, setErrorTitle] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [validationErrorEmail, setValidationErrorEmail] = useState(false);
+  const [active, setActive] = useState({
+    name: false,
+    company: false,
+    title: false,
+    email: false,
+    phone: false,
+  });
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -82,36 +88,106 @@ function RusStart() {
     if (!input.name) {
       setErrorName(true);
     }
+    setActive((prev) => {
+      return {
+        ...prev,
+        name: false,
+      };
+    });
   }
 
   function handleFocusName() {
     if (errorName) {
       setErrorName(false);
     }
+
+    Object.keys(active)
+      .filter((el) => el === "name")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "name")
+      .forEach((el) => {
+        active[el] = false;
+      });
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        name: true,
+      };
+    });
   }
 
   function handleBlurCompany() {
     if (!input.company) {
       setErrorCompany(true);
     }
+    setActive((prev) => {
+      return {
+        ...prev,
+        company: false,
+      };
+    });
   }
 
   function handleFocusCompany() {
     if (errorCompany) {
       setErrorCompany(false);
     }
+    Object.keys(active)
+      .filter((el) => el === "company")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "company")
+      .forEach((el) => {
+        active[el] = false;
+      });
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        company: true,
+      };
+    });
   }
 
   function handleBlurTitle() {
     if (!input.title) {
       setErrorTitle(true);
     }
+    setActive((prev) => {
+      return {
+        ...prev,
+        title: false,
+      };
+    });
   }
 
   function handleFocusTitle() {
     if (errorTitle) {
       setErrorTitle(false);
     }
+    Object.keys(active)
+      .filter((el) => el === "title")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "title")
+      .forEach((el) => {
+        active[el] = false;
+      });
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        title: true,
+      };
+    });
   }
 
   function validateEmail(email) {
@@ -130,13 +206,59 @@ function RusStart() {
         setValidationErrorEmail(true);
       }
     }
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        email: false,
+      };
+    });
   }
 
   function handleFocusEmail() {
     if (errorEmail) {
       setErrorEmail(false);
     }
+    Object.keys(active)
+      .filter((el) => el === "email")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "email")
+      .forEach((el) => {
+        active[el] = false;
+      });
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        email: true,
+      };
+    });
   }
+
+  function handleBlurPhone() {
+    setActive((prev) => {
+      return {
+        ...prev,
+        phone: false,
+      };
+    });
+  }
+
+  function handleFocusPhone() {
+    setActive((prev) => {
+      return {
+        ...prev,
+        phone: true,
+      };
+    });
+  }
+
+  useEffect(() => {
+    console.log(active.phone);
+  }, [active]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -172,8 +294,14 @@ function RusStart() {
 
   return (
     <Route path="/rus-start">
-      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
-        <div className="sticky-sub-div">
+      <div className="main">
+        <div
+          className={
+            Object.entries(active).filter((el) => el[1] === true).length > 0
+              ? ""
+              : "sticky-sub-div"
+          }
+        >
           <h2 className="percent">0% завершено</h2>
           <div className="progressBarEmpty">
             <div className="progressBarFilled" style={{ width: "0%" }}></div>
@@ -185,7 +313,7 @@ function RusStart() {
             {errorName ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -199,7 +327,6 @@ function RusStart() {
               ""
             )}
             <Form.Control
-              autoFocus="true"
               autoComplete="off"
               type="text"
               placeholder="Полное имя*"
@@ -215,7 +342,7 @@ function RusStart() {
             {errorCompany ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -245,7 +372,7 @@ function RusStart() {
             {errorTitle ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -275,7 +402,7 @@ function RusStart() {
             {errorEmail ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -292,7 +419,7 @@ function RusStart() {
             {validationErrorEmail ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -324,6 +451,8 @@ function RusStart() {
               name="phone"
               value={input.phone}
               onChange={handleChange}
+              onBlur={handleBlurPhone}
+              onFocus={handleFocusPhone}
               autoComplete="off"
               className="credentials-input m-credentials-input"
             ></Form.Control>

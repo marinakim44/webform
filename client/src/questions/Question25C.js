@@ -294,7 +294,7 @@ export default function Question25C() {
   return (
     <BrowserRouter>
       <Route path="/eng-q25c">
-        <div className="main" style={{ height: "100%" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 28).toString())}% completed
@@ -323,7 +323,7 @@ export default function Question25C() {
             <div className="left-align-text">
               {rows.map((row) => {
                 return (
-                  <div className="m-div">
+                  <div className="m-div" key={row.key}>
                     <label className="m-label">
                       <input
                         className="m-input"
@@ -388,7 +388,7 @@ export default function Question25C() {
                         .filter((row) => row.index < 8)
                         .map((row) => {
                           return (
-                            <tr>
+                            <tr key={row.key}>
                               <td>{row.key}</td>
                               <td className="left-align-text">{row.value}</td>
                               <td>
@@ -425,7 +425,7 @@ export default function Question25C() {
                         .filter((row) => row.index >= 8)
                         .map((row) => {
                           return (
-                            <tr>
+                            <tr key={row.key}>
                               <td>{row.key}</td>
                               <td
                                 className="left-align-text"

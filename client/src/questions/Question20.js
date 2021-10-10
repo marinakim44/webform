@@ -318,7 +318,7 @@ export default function Question20() {
 
   return (
     <Route path="/eng-q20">
-      <div className="main" style={{ height: "100%" }}>
+      <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 21).toString())}% completed

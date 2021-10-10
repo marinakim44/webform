@@ -5,8 +5,7 @@ import "./App.css";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 
-function EngStart({ lng }) {
-  const width = window.screen.width;
+function EngStart() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -69,6 +68,13 @@ function EngStart({ lng }) {
   const [errorTitle, setErrorTitle] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [validationErrorEmail, setValidationErrorEmail] = useState(false);
+  const [active, setActive] = useState({
+    name: false,
+    company: false,
+    title: false,
+    email: false,
+    phone: false,
+  });
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -84,36 +90,106 @@ function EngStart({ lng }) {
     if (!input.name) {
       setErrorName(true);
     }
+    setActive((prev) => {
+      return {
+        ...prev,
+        name: false,
+      };
+    });
   }
 
   function handleFocusName() {
     if (errorName) {
       setErrorName(false);
     }
+
+    Object.keys(active)
+      .filter((el) => el === "name")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "name")
+      .forEach((el) => {
+        active[el] = false;
+      });
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        name: true,
+      };
+    });
   }
 
   function handleBlurCompany() {
     if (!input.company) {
       setErrorCompany(true);
     }
+    setActive((prev) => {
+      return {
+        ...prev,
+        company: false,
+      };
+    });
   }
 
   function handleFocusCompany() {
     if (errorCompany) {
       setErrorCompany(false);
     }
+    Object.keys(active)
+      .filter((el) => el === "company")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "company")
+      .forEach((el) => {
+        active[el] = false;
+      });
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        company: true,
+      };
+    });
   }
 
   function handleBlurTitle() {
     if (!input.title) {
       setErrorTitle(true);
     }
+    setActive((prev) => {
+      return {
+        ...prev,
+        title: false,
+      };
+    });
   }
 
   function handleFocusTitle() {
     if (errorTitle) {
       setErrorTitle(false);
     }
+    Object.keys(active)
+      .filter((el) => el === "title")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "title")
+      .forEach((el) => {
+        active[el] = false;
+      });
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        title: true,
+      };
+    });
   }
 
   function validateEmail(email) {
@@ -132,13 +208,59 @@ function EngStart({ lng }) {
         setValidationErrorEmail(true);
       }
     }
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        email: false,
+      };
+    });
   }
 
   function handleFocusEmail() {
     if (errorEmail) {
       setErrorEmail(false);
     }
+    Object.keys(active)
+      .filter((el) => el === "email")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "email")
+      .forEach((el) => {
+        active[el] = false;
+      });
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        email: true,
+      };
+    });
   }
+
+  function handleBlurPhone() {
+    setActive((prev) => {
+      return {
+        ...prev,
+        phone: false,
+      };
+    });
+  }
+
+  function handleFocusPhone() {
+    setActive((prev) => {
+      return {
+        ...prev,
+        phone: true,
+      };
+    });
+  }
+
+  useEffect(() => {
+    console.log(active.phone);
+  }, [active]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -174,8 +296,14 @@ function EngStart({ lng }) {
 
   return (
     <Route path="/eng-start">
-      <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
-        <div className="sticky-sub-div">
+      <div className="main">
+        <div
+          className={
+            Object.entries(active).filter((el) => el[1] === true).length > 0
+              ? ""
+              : "sticky-sub-div"
+          }
+        >
           <h2 className="percent">0% completed</h2>
           <div className="progressBarEmpty">
             <div className="progressBarFilled" style={{ width: "0%" }}></div>
@@ -187,7 +315,7 @@ function EngStart({ lng }) {
             {errorName ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -216,7 +344,7 @@ function EngStart({ lng }) {
             {errorCompany ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -246,7 +374,7 @@ function EngStart({ lng }) {
             {errorTitle ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -276,7 +404,7 @@ function EngStart({ lng }) {
             {errorEmail ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -293,7 +421,7 @@ function EngStart({ lng }) {
             {validationErrorEmail ? (
               <p
                 style={{
-                  color: "#dc3545",
+                  color: "#db536a",
                   fontStyle: "italic",
                   fontSize: "12px",
                   textAlign: "left",
@@ -325,6 +453,8 @@ function EngStart({ lng }) {
               name="phone"
               value={input.phone}
               onChange={handleChange}
+              onBlur={handleBlurPhone}
+              onFocus={handleFocusPhone}
               autoComplete="off"
               className="credentials-input m-credentials-input"
             ></Form.Control>

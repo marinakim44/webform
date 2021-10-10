@@ -89,7 +89,7 @@ export default function QuestionB() {
   return (
     <BrowserRouter>
       <Route path="/eng-qb">
-        <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 39) * 33).toString())}% completed
@@ -125,6 +125,7 @@ export default function QuestionB() {
                   value={input}
                   onChange={handleChange}
                   className="input-text"
+                  autoComplete="off"
                 />
               </Col>
             </Form.Group>

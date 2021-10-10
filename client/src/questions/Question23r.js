@@ -131,10 +131,7 @@ export default function Question23r() {
 
   return (
     <Route path="/rus-q23">
-      <div
-        className="main"
-        style={{ height: width <= 768 && width > 480 ? "100vh" : "" }}
-      >
+      <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
             {Math.round(((100 / 39) * 24).toString())}% завершено
