@@ -85,6 +85,7 @@ export default function Question1r() {
     A6: false,
     A7: false,
     A8: false,
+
     B1: false,
     B2: false,
     B3: false,
@@ -116,12 +117,12 @@ export default function Question1r() {
     Object.keys(checked)
       .filter((el) => el === index)
       .map((el) => {
-        checked[el] = true;
+        return (checked[el] = true);
       });
     Object.keys(checked)
       .filter((el) => el !== index && el.slice(0, 1) === name)
       .map((el) => {
-        checked[el] = false;
+        return (checked[el] = false);
       });
   }
 

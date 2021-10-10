@@ -6,10 +6,19 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question25r() {
+export default function Question25() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q25-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q25-checked")));
+    }
+    if (localStorage.getItem("q25")) {
+      setInput(JSON.parse(localStorage.getItem("q25")));
+    }
+    if (localStorage.getItem("q25-other")) {
+      setOther(localStorage.getItem("q25-other"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -109,6 +118,7 @@ export default function Question25r() {
     M: false,
     N: false,
   });
+
   const [disabled, setDisabled] = useState({
     A: false,
     B: false,
@@ -127,40 +137,13 @@ export default function Question25r() {
   });
 
   const handleClick = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
     setChecked((prev) => {
       return {
         ...prev,
         [name]: !checked[name],
       };
     });
-
-    if (checked[name]) {
-      if (input.includes(`${name}: ${value}`)) {
-        input.pop(`${name}: ${value}`);
-      }
-    } else {
-      if (input.length < 3) {
-        if (!input.includes(`${name}: ${value}`)) {
-          input.push(`${name}: ${value}`);
-        }
-      } else {
-        setChecked((prev) => {
-          return {
-            ...prev,
-            [name]: !checked[name],
-          };
-        });
-        setDisabled((prev) => {
-          return {
-            ...prev,
-            [name]: !disabled[name],
-          };
-        });
-      }
-    }
-
-    console.log(checked, input);
   };
 
   const handleChange = (e) => {
@@ -168,55 +151,94 @@ export default function Question25r() {
   };
 
   const handleNone = () => {
-    if (dontknow) {
-      setDontknow(false);
-    }
-    if (input) {
-      setInput([]);
-    }
     setNone(!none);
 
-    if (none) {
-      if (dontknow) {
-        setDontknow(false);
-      }
+    if (none === false) {
+      setDontknow(false);
+      Object.keys(disabled).map((el) => {
+        return (disabled[el] = true);
+      });
+      setOther("");
     }
-    if (none || dontknow) {
-      setInput([]);
+    if (none === true) {
+      Object.keys(disabled).map((el) => {
+        return (disabled[el] = false);
+      });
     }
-    setDisabled(!disabled);
-    setChecked(!checked);
   };
 
   const handleDontknow = () => {
-    if (none) {
-      setNone(false);
-    }
-    if (input) {
-      setInput([]);
-    }
     setDontknow(!dontknow);
 
-    if (dontknow) {
-      if (none) {
-        setNone(false);
-      }
+    if (dontknow === false) {
+      setNone(false);
+      Object.keys(disabled).map((el) => {
+        return (disabled[el] = true);
+      });
+      setOther("");
     }
-    if (none || dontknow) {
-      setInput([]);
+    if (dontknow === true) {
+      Object.keys(disabled).map((el) => {
+        return (disabled[el] = false);
+      });
     }
-    setDisabled(!disabled);
-    setChecked(!checked);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (dontknow === true || none === true) {
+      Object.keys(checked).map((el) => {
+        return (checked[el] = false);
+      });
+    }
+
+    Object.entries(checked)
+      .filter((x) => x[1] === true)
+      .map((x) => {
+        if (!input.includes(x[0])) {
+          return input.push(x[0]);
+        }
+        return;
+      });
+
+    Object.entries(checked)
+      .filter((x) => x[1] === false)
+      .map((x) => {
+        if (input.includes(x[0])) {
+          return setInput(input.filter((el) => el !== x[0]));
+        }
+        return;
+      });
+
+    Object.entries(checked)
+      .filter((x) => x[1] === true)
+      .map((x) => {
+        Object.keys(checked)
+          .filter((a) => a === x[0])
+          .map((a) => {
+            return (checked[a] = true);
+          });
+      });
+    Object.entries(checked)
+      .filter((x) => x[1] === false)
+      .map((x) => {
+        Object.keys(checked)
+          .filter((a) => a === x[0])
+          .map((a) => {
+            return (checked[a] = false);
+          });
+      });
+
     localStorage.setItem("q25-none", none);
     localStorage.setItem("q25-dontknow", dontknow);
     localStorage.setItem("q25", JSON.stringify(input));
     localStorage.setItem("q25-other", other);
+    localStorage.setItem("q25-checked", JSON.stringify(checked));
+  }, [none, dontknow, input, checked, other, disabled]);
 
-    if (input.length === 0 && !none && !other && !dontknow) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (input.length === 0 && none === false && !other && dontknow === false) {
       handleShow();
     } else {
       const data = {
@@ -280,7 +302,7 @@ export default function Question25r() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="question">
+            <p className="left-align-text">
               На ваш взгляд, какие три из следующих целей развития должны быть
               приоритетами государственного управления в Казахстане?
             </p>
@@ -288,7 +310,7 @@ export default function Question25r() {
               className="question"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
-              <i>(ВЫБЕРИТЕ НЕ БОЛЕЕ ТРЕХ ОТВЕТОВ)</i>
+              <i>(выберите НЕ БОЛЕЕ ТРЕХ ответов)</i>
             </p>
           </div>
           {width <= 768 ? (
@@ -302,12 +324,13 @@ export default function Question25r() {
                         name={row.key}
                         value={row.value}
                         onChange={handleClick}
-                        checked={checked[row.key] ? true : false}
+                        checked={checked[row.key]}
                         disabled={
-                          (input.length === 3 &&
-                            !input.includes(`${row.key}: ${row.value}`)) ||
-                          none ||
-                          dontknow
+                          (Object.entries(checked).filter((c) => c[1] === true)
+                            .length === 3 &&
+                            !checked[row.key]) ||
+                          none === true ||
+                          dontknow === true
                             ? true
                             : false
                         }
@@ -324,9 +347,9 @@ export default function Question25r() {
                   variant={none ? "warning" : "outline-dark"}
                   value="None of the above"
                   onClick={handleNone}
-                  className="rus-none-btn"
+                  className="m-none-btn none-btn rus-none-btn"
                 >
-                  Ничего из вышеперечисленного
+                  NONE OF THE ABOVE
                 </Button>
                 <Button
                   type="button"
@@ -372,13 +395,13 @@ export default function Question25r() {
             <Form>
               <Row>
                 <Col>
-                  <Table style={{ marginTop: "8px" }}>
+                  <Table>
                     <tbody>
                       {rows
                         .filter((row) => row.index < 8)
                         .map((row) => {
                           return (
-                            <tr style={{ height: "50px" }}>
+                            <tr>
                               <td>{row.key}</td>
                               <td className="left-align-text">{row.value}</td>
                               <td>
@@ -393,14 +416,14 @@ export default function Question25r() {
                                     name={row.key}
                                     value={row.value}
                                     onChange={handleClick}
-                                    checked={checked[row.key] ? true : false}
+                                    checked={checked[row.key]}
                                     disabled={
-                                      (input.length === 3 &&
-                                        !input.includes(
-                                          `${row.key}: ${row.value}`
-                                        )) ||
-                                      none ||
-                                      dontknow
+                                      (Object.entries(checked).filter(
+                                        (c) => c[1] === true
+                                      ).length === 3 &&
+                                        !checked[row.key]) ||
+                                      none === true ||
+                                      dontknow === true
                                         ? true
                                         : false
                                     }
@@ -421,7 +444,7 @@ export default function Question25r() {
                         .filter((row) => row.index >= 8)
                         .map((row) => {
                           return (
-                            <tr style={{ height: "50px" }}>
+                            <tr>
                               <td>{row.key}</td>
                               <td
                                 className="left-align-text"
@@ -441,7 +464,17 @@ export default function Question25r() {
                                     name={row.key}
                                     value={row.value}
                                     onChange={handleClick}
-                                    disabled={none || dontknow ? true : false}
+                                    checked={checked[row.key]}
+                                    disabled={
+                                      (Object.entries(checked).filter(
+                                        (c) => c[1] === true
+                                      ).length === 3 &&
+                                        !checked[row.key]) ||
+                                      none === true ||
+                                      dontknow === true
+                                        ? true
+                                        : false
+                                    }
                                   ></input>
                                 </label>
                               </td>
@@ -454,7 +487,7 @@ export default function Question25r() {
               </Row>
               <Form.Control
                 type="text"
-                placeholder="Прочее (пожалуйста, уточните)"
+                placeholder="Прочее (пожалуйста уточните)"
                 style={{ width: "415px", marginTop: "1rem" }}
                 onChange={handleChange}
                 value={other}
@@ -466,7 +499,7 @@ export default function Question25r() {
                   variant={none ? "warning" : "light"}
                   value="None of the above"
                   onClick={handleNone}
-                  className="rus-none-btn"
+                  className="none-btn"
                 >
                   Ничего из вышеперечисленного
                 </Button>
@@ -475,7 +508,7 @@ export default function Question25r() {
                   variant={dontknow ? "warning" : "light"}
                   value="Don't know"
                   onClick={handleDontknow}
-                  className="rus-dontknow-btn"
+                  className="dontknow-btn"
                 >
                   Затрудняюсь ответить
                 </Button>

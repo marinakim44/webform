@@ -10,16 +10,46 @@ export default function QuestionEr() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("qe-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("qe-checked")));
+    }
+    if (localStorage.getItem("qe")) {
+      setInput(localStorage.getItem("qe"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
+
+  useEffect(() => {
+    localStorage.setItem("qe", input);
+    localStorage.setItem("qe-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,8 +57,6 @@ export default function QuestionEr() {
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("qe", input);
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -133,9 +161,10 @@ export default function QuestionEr() {
                 <input
                   type="radio"
                   name="option"
-                  value="Частная"
+                  value="option1"
                   className="radio-input m-input"
-                  onClick={handleClick}
+                  onChange={handleClick}
+                  checked={checked.option1}
                 ></input>
                 Частная
               </label>
@@ -151,9 +180,10 @@ export default function QuestionEr() {
                 <input
                   type="radio"
                   name="option"
-                  value="Зарегистрирована на фондовой бирже"
+                  value="option2"
                   className="radio-input m-input"
-                  onClick={handleClick}
+                  onChange={handleClick}
+                  checked={checked.option2}
                 ></input>
                 Зарегистрирована на фондовой бирже
               </label>

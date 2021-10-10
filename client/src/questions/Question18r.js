@@ -197,7 +197,7 @@ export default function Question18r() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!input.A && !input.B && !input.C && !input.D) {
+    if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
       localStorage.setItem("q18", JSON.stringify(input));

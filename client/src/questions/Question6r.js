@@ -10,8 +10,8 @@ export default function Question6r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q6checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q6checked")));
+    if (localStorage.getItem("q6-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q6-checked")));
     }
     if (localStorage.getItem("q6")) {
       setInput(localStorage.getItem("q6"));
@@ -33,16 +33,25 @@ export default function Question6r() {
     const { value } = e.target;
     setInput(value);
 
-    //SAVING PREVIOUS INPUT
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
     Object.keys(checked)
       .filter((v) => v === value)
       .map((v) => (checked[v] = true));
     Object.keys(checked)
       .filter((v) => v !== value)
       .map((v) => (checked[v] = false));
-
-    localStorage.setItem("q6checked", JSON.stringify(checked));
   }
+
+  useEffect(() => {
+    localStorage.setItem("q6", input);
+    localStorage.setItem("q6-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -50,8 +59,6 @@ export default function Question6r() {
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("q6", input);
-
       const data = {
         uuid: localStorage.getItem("uuid"),
         name: localStorage.getItem("name"),
@@ -113,9 +120,9 @@ export default function Question6r() {
                     type="radio"
                     name="option"
                     value="option1"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option1 ? true : false}
+                    checked={checked.option1}
                   />
                   Ограничение глобального потепления до 1.5° по Цельсию
                 </label>
@@ -126,10 +133,9 @@ export default function Question6r() {
                     type="radio"
                     name="option"
                     value="option2"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option2 ? true : false}
-                    autoComplete="on"
+                    checked={checked.option2}
                   />
                   Ограничение глобального потепления до уровня значительно ниже
                   2.0° по Цельсию
@@ -141,10 +147,9 @@ export default function Question6r() {
                     type="radio"
                     name="option"
                     value="option3"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option3 ? true : false}
-                    autoComplete="on"
+                    checked={checked.option3}
                   />
                   Обязательство моей компании по нулевым выбросам не
                   соответствует научно обоснованной цели
@@ -156,10 +161,9 @@ export default function Question6r() {
                     type="radio"
                     name="option"
                     value="option4"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option4 ? true : false}
-                    autoComplete="on"
+                    checked={checked.option4}
                   />
                   Затрудняюсь ответить
                 </label>

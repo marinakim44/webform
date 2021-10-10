@@ -244,7 +244,7 @@ export default function Question10A() {
                               type="radio"
                               name={row.key}
                               value={col.key}
-                              onClick={handleClick}
+                              onChange={handleClick}
                               className="m-input"
                               checked={checked[`${row.key}${col.key}`]}
                             />
@@ -300,7 +300,7 @@ export default function Question10A() {
                                   type="radio"
                                   name={row.key}
                                   value={col.key}
-                                  onClick={handleClick}
+                                  onChange={handleClick}
                                   checked={checked[`${row.key}${col.key}`]}
                                 ></input>
                               </label>

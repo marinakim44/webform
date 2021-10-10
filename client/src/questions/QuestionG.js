@@ -10,20 +10,50 @@ export default function QuestionG() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("qg-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("qg-checked")));
+    }
+    if (localStorage.getItem("qg")) {
+      setInput(localStorage.getItem("qg"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
+
+  useEffect(() => {
+    localStorage.setItem("qg", input);
+    localStorage.setItem("qg-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("qg", input);
 
     if (!input) {
       handleShow();
@@ -125,33 +155,36 @@ export default function QuestionG() {
                 <input
                   type="radio"
                   name="option"
-                  value="Yes"
+                  value="option1"
                   className="radio-input m-input"
                   onClick={handleClick}
+                  checked={checked.option1}
                 ></input>
                 Yes
               </label>
             </div>
             <div className="left-align-text m-div">
-              <label className="label-cell">
+              <label className="label-cell m-label">
                 <input
                   type="radio"
                   name="option"
-                  value="No"
+                  value="option2"
                   className="radio-input m-input"
                   onClick={handleClick}
+                  checked={checked.option2}
                 ></input>
                 No
               </label>
             </div>
             <div className="left-align-text m-div">
-              <label className="label-cell">
+              <label className="label-cell m-label">
                 <input
                   type="radio"
                   name="option"
-                  value="Don't know"
+                  value="option3"
                   className="radio-input m-input"
                   onClick={handleClick}
+                  checked={checked.option3}
                 ></input>
                 Don't know
               </label>

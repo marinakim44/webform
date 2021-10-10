@@ -8,6 +8,15 @@ import ModalAlert from "../ModalAlert";
 
 export default function Question8r() {
   const width = window.screen.width;
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (localStorage.getItem("q8-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q8-checked")));
+    }
+    if (localStorage.getItem("q8")) {
+      setInput(localStorage.getItem("q8"));
+    }
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -20,21 +29,17 @@ export default function Question8r() {
     option4: false,
   });
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (localStorage.getItem("q8")) {
-      setInput(localStorage.getItem("q8"));
-    }
-    if (localStorage.getItem("q8-checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q8-checked")));
-    }
-  }, []);
-
   function handleClick(e) {
     const { value } = e.target;
     setInput(value);
 
-    //SAVING PREVIOUS INPUT
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
     Object.keys(checked)
       .filter((v) => v === value)
       .map((v) => (checked[v] = true));
@@ -44,8 +49,8 @@ export default function Question8r() {
   }
 
   useEffect(() => {
-    localStorage.setItem("q8-checked", JSON.stringify(checked));
     localStorage.setItem("q8", input);
+    localStorage.setItem("q8-checked", JSON.stringify(checked));
   }, [input, checked]);
 
   function handleSubmit(e) {
@@ -70,7 +75,6 @@ export default function Question8r() {
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
       };
-
       axios.post("/allinputs", data);
 
       history.push("/rus-q10a");

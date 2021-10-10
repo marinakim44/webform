@@ -10,6 +10,12 @@ export default function Question25Br() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q25b")) {
+      setInput(JSON.parse(localStorage.getItem("q25b")));
+    }
+    if (localStorage.getItem("q25b-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q25b-checked")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -75,13 +81,34 @@ export default function Question25Br() {
   ];
 
   const columns = [
-    "Очень неэффективно",
-    "Неэффективно",
-    "Не могу сказать определенно",
-    "Эффективно",
-    "Очень эффективно",
-    "Затрудняюсь ответить",
-    "Отказ от ответа",
+    {
+      key: "1",
+      value: "Очень неэффективно",
+    },
+    {
+      key: "2",
+      value: "Неэффективно",
+    },
+    {
+      key: "3",
+      value: "Не могу сказать определенно",
+    },
+    {
+      key: "4",
+      value: "Эффективно",
+    },
+    {
+      key: "5",
+      value: "Очень эффективно",
+    },
+    {
+      key: "6",
+      value: "Затрудняюсь ответить",
+    },
+    {
+      key: "7",
+      value: "Отказ от ответа",
+    },
   ];
 
   const [input, setInput] = useState({
@@ -101,185 +128,175 @@ export default function Question25Br() {
     N: "",
   });
 
-  const [checkedList, setCheckedList] = useState([]);
+  const [none, setNone] = useState(false);
+  const [dontknow, setDontknow] = useState(false);
+  const [checked, setChecked] = useState({
+    A1: false,
+    A2: false,
+    A3: false,
+    A4: false,
+    A5: false,
+    A6: false,
+    A7: false,
 
-  function handleClick(e) {
+    B1: false,
+    B2: false,
+    B3: false,
+    B4: false,
+    B5: false,
+    B6: false,
+    B7: false,
+
+    C1: false,
+    C2: false,
+    C3: false,
+    C4: false,
+    C5: false,
+    C6: false,
+    C7: false,
+
+    D1: false,
+    D2: false,
+    D3: false,
+    D4: false,
+    D5: false,
+    D6: false,
+    D7: false,
+
+    E1: false,
+    E2: false,
+    E3: false,
+    E4: false,
+    E5: false,
+    E6: false,
+    E7: false,
+
+    F1: false,
+    F2: false,
+    F3: false,
+    F4: false,
+    F5: false,
+    F6: false,
+    F7: false,
+
+    G1: false,
+    G2: false,
+    G3: false,
+    G4: false,
+    G5: false,
+    G6: false,
+    G7: false,
+
+    H1: false,
+    H2: false,
+    H3: false,
+    H4: false,
+    H5: false,
+    H6: false,
+    H7: false,
+
+    I1: false,
+    I2: false,
+    I3: false,
+    I4: false,
+    I5: false,
+    I6: false,
+    I7: false,
+
+    J1: false,
+    J2: false,
+    J3: false,
+    J4: false,
+    J5: false,
+    J6: false,
+    J7: false,
+
+    K1: false,
+    K2: false,
+    K3: false,
+    K4: false,
+    K5: false,
+    K6: false,
+    K7: false,
+
+    L1: false,
+    L2: false,
+    L3: false,
+    L4: false,
+    L5: false,
+    L6: false,
+    L7: false,
+
+    M1: false,
+    M2: false,
+    M3: false,
+    M4: false,
+    M5: false,
+    M6: false,
+    M7: false,
+
+    N1: false,
+    N2: false,
+    N3: false,
+    N4: false,
+    N5: false,
+    N6: false,
+    N7: false,
+  });
+
+  const handleClick = (e) => {
     const { name, value } = e.target;
+    const index = name + value;
     setInput((prev) => {
       return {
         ...prev,
         [name]: value,
       };
     });
-    if (!checkedList.includes(name)) {
-      checkedList.push(name);
-    }
-    console.log(input, checkedList);
-  }
 
-  const [isNone, setIsNone] = useState(false);
-  const [isDontknow, setIsDontknow] = useState(false);
-  const [disabled, setDisabled] = useState(false);
-  const [checked, setChecked] = useState(false);
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
 
-  function handleNone(e) {
-    e.preventDefault();
-    if (isDontknow) {
-      setIsDontknow(false);
-    }
-    if (input) {
-      setInput([]);
-    }
-    setIsNone(!isNone);
-    if (isNone) {
-      if (isDontknow) {
-        setIsDontknow(false);
-      }
-    }
-    if (isNone || isDontknow) {
-      setInput([]);
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] === index)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] !== index)
+      .map((v) => (checked[v] = false));
+  };
+
+  const handleNone = () => {
+    setNone(!none);
+  };
+
+  useEffect(() => {
+    if (none === true) {
+      Object.keys(checked).map((el) => {
+        checked[el] = false;
+      });
+      Object.keys(input).map((el) => {
+        input[el] = "";
+      });
     }
 
-    setDisabled(!disabled);
-    setChecked(!checked);
-  }
-
-  function handleDontknow(e) {
-    e.preventDefault();
-    if (isNone) {
-      setIsNone(false);
-    }
-    if (input) {
-      setInput([]);
-    }
-    setIsDontknow(!isDontknow);
-
-    if (isDontknow) {
-      if (isNone) {
-        setIsNone(false);
-      }
-    }
-    if (isNone || isDontknow) {
-      setInput([]);
-    }
-    setDisabled(!disabled);
-    setChecked(!checked);
-  }
+    localStorage.setItem("q25b-none", none);
+    localStorage.setItem("q25b", JSON.stringify(input));
+    localStorage.setItem("q25b-checked", JSON.stringify(checked));
+  }, [input, checked, none]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checkedList.length < 14) {
-      if (!isNone) {
-        if (!isDontknow) {
-          handleShow();
-        } else {
-          localStorage.setItem("q25b-none", isNone);
-          localStorage.setItem("q25b-dontknow", isDontknow);
-          localStorage.setItem("q25b", JSON.stringify(input));
-
-          history.push("/rus-q25c");
-
-          const data = {
-            uuid: localStorage.getItem("uuid"),
-            name: localStorage.getItem("name"),
-            company: localStorage.getItem("company"),
-            title: localStorage.getItem("title"),
-            email: localStorage.getItem("email"),
-            phone: localStorage.getItem("phone"),
-            q1a: localStorage.getItem("q1a"),
-            q1b: localStorage.getItem("q1b"),
-            q2: JSON.parse(localStorage.getItem("countries")),
-            q3: JSON.parse(localStorage.getItem("q3")),
-            q5a: localStorage.getItem("q5-carbonNeutral"),
-            q5b: localStorage.getItem("q5-netZero"),
-            q6: localStorage.getItem("q6"),
-            q7: localStorage.getItem("q7"),
-            q8: localStorage.getItem("q8"),
-            q9: localStorage.getItem("q9"),
-            q10: JSON.parse(localStorage.getItem("q10")),
-            q11: JSON.parse(localStorage.getItem("q11")),
-            q12: JSON.parse(localStorage.getItem("q12")),
-            q13a: localStorage.getItem("q13a"),
-            q13b: localStorage.getItem("q13b"),
-            q14: JSON.parse(localStorage.getItem("q14")),
-            q15: JSON.parse(localStorage.getItem("q15")),
-            q16: localStorage.getItem("q16"),
-            q17: JSON.parse(localStorage.getItem("q17")),
-            q18: JSON.parse(localStorage.getItem("q18")),
-            q19: JSON.parse(localStorage.getItem("q19")),
-            q20: JSON.parse(localStorage.getItem("q20")),
-            q21: JSON.parse(localStorage.getItem("q21")),
-            q22: JSON.parse(localStorage.getItem("q22")),
-            q23: localStorage.getItem("q23"),
-            q24: JSON.parse(localStorage.getItem("q24")),
-            q25none: localStorage.getItem("q25none"),
-            q25dontknow: localStorage.getItem("q25dontknow"),
-            q25other: localStorage.getItem("q25-other"),
-            q25: JSON.parse(localStorage.getItem("q25")),
-            q25b: JSON.parse(localStorage.getItem("q25b")),
-            q25bNone: localStorage.getItem("q25b-none"),
-            q25bDontknow: localStorage.getItem("q25b-dontknow"),
-          };
-
-          axios.post("/allinputs", data);
-        }
-      } else {
-        localStorage.setItem("q25b-none", isNone);
-        localStorage.setItem("q25b-dontknow", isDontknow);
-        localStorage.setItem("q25b", JSON.stringify(input));
-
-        history.push("/rus-q25c");
-
-        const data = {
-          uuid: localStorage.getItem("uuid"),
-          name: localStorage.getItem("name"),
-          company: localStorage.getItem("company"),
-          title: localStorage.getItem("title"),
-          email: localStorage.getItem("email"),
-          phone: localStorage.getItem("phone"),
-          q1a: localStorage.getItem("q1a"),
-          q1b: localStorage.getItem("q1b"),
-          q2: JSON.parse(localStorage.getItem("countries")),
-          q3: JSON.parse(localStorage.getItem("q3")),
-          q5a: localStorage.getItem("q5-carbonNeutral"),
-          q5b: localStorage.getItem("q5-netZero"),
-          q6: localStorage.getItem("q6"),
-          q7: localStorage.getItem("q7"),
-          q8: localStorage.getItem("q8"),
-          q9: localStorage.getItem("q9"),
-          q10: JSON.parse(localStorage.getItem("q10")),
-          q11: JSON.parse(localStorage.getItem("q11")),
-          q12: JSON.parse(localStorage.getItem("q12")),
-          q13a: localStorage.getItem("q13a"),
-          q13b: localStorage.getItem("q13b"),
-          q14: JSON.parse(localStorage.getItem("q14")),
-          q15: JSON.parse(localStorage.getItem("q15")),
-          q16: localStorage.getItem("q16"),
-          q17: JSON.parse(localStorage.getItem("q17")),
-          q18: JSON.parse(localStorage.getItem("q18")),
-          q19: JSON.parse(localStorage.getItem("q19")),
-          q20: JSON.parse(localStorage.getItem("q20")),
-          q21: JSON.parse(localStorage.getItem("q21")),
-          q22: JSON.parse(localStorage.getItem("q22")),
-          q23: localStorage.getItem("q23"),
-          q24: JSON.parse(localStorage.getItem("q24")),
-          q25none: localStorage.getItem("q25none"),
-          q25dontknow: localStorage.getItem("q25dontknow"),
-          q25other: localStorage.getItem("q25-other"),
-          q25: JSON.parse(localStorage.getItem("q25")),
-          q25b: JSON.parse(localStorage.getItem("q25b")),
-          q25bNone: localStorage.getItem("q25b-none"),
-          q25bDontknow: localStorage.getItem("q25b-dontknow"),
-        };
-
-        axios.post("/allinputs", data);
-      }
+    if (
+      Object.entries(input).filter((x) => x[1] === "").length > 0 &&
+      none === false
+    ) {
+      handleShow();
     } else {
-      localStorage.setItem("q25b-none", isNone);
-      localStorage.setItem("q25b-dontknow", isDontknow);
-      localStorage.setItem("q25b", JSON.stringify(input));
-
       history.push("/rus-q25c");
 
       const data = {
@@ -352,10 +369,10 @@ export default function Question25Br() {
               целей в Казахстане?
             </p>
             <p
-              className="question"
+              className="left-align-text"
               style={{ margin: width <= 480 ? "1rem 0" : "" }}
             >
-              <i>(ВЫБЕРИТЕ ОДИН ВАРИАНТ ОТВЕТА ДЛЯ КАЖДОЙ СТРОКИ)</i>
+              <i>(Выберите один вариант ответа для каждой строки)</i>
             </p>
           </div>
 
@@ -376,12 +393,13 @@ export default function Question25Br() {
                             <input
                               type="radio"
                               name={row.key}
-                              value={col}
+                              value={col.key}
                               onClick={handleClick}
-                              disabled={isNone || isDontknow ? true : false}
+                              disabled={none || dontknow ? true : false}
+                              checked={checked[`${row.key}${col.key}`]}
                               className="m-input"
                             ></input>
-                            {col}
+                            {col.value}
                           </label>
                         </div>
                       );
@@ -392,8 +410,8 @@ export default function Question25Br() {
               <div className="dontknow-div">
                 <Button
                   type="button"
-                  variant={isNone ? "warning" : "outline-dark"}
-                  className="none-btn rus-none-btn"
+                  variant={none ? "warning" : "outline-dark"}
+                  className="none-btn"
                   value="None of the above"
                   onClick={handleNone}
                 >
@@ -428,7 +446,7 @@ export default function Question25Br() {
             </div>
           ) : (
             <Form>
-              <div style={{ overflow: "auto", height: "420px" }}>
+              <div style={{ overflow: "auto", height: "320px" }}>
                 <table className="table">
                   <thead
                     style={{
@@ -454,7 +472,7 @@ export default function Question25Br() {
                               verticalAlign: "middle",
                             }}
                           >
-                            {col}
+                            {col.value}
                           </th>
                         );
                       })}
@@ -473,10 +491,13 @@ export default function Question25Br() {
                                   <input
                                     type="radio"
                                     name={row.key}
-                                    value={col}
+                                    value={col.key}
                                     onClick={handleClick}
-                                    disabled={
-                                      isNone || isDontknow ? true : false
+                                    disabled={none || dontknow ? true : false}
+                                    checked={
+                                      none === true
+                                        ? false
+                                        : checked[`${row.key}${col.key}`]
                                     }
                                   ></input>
                                 </label>
@@ -488,50 +509,49 @@ export default function Question25Br() {
                     })}
                   </tbody>
                 </table>
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "left",
-                    width: "35%",
-                    marginTop: "2rem",
-                  }}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "left",
+                  width: "35%",
+                  marginTop: "2rem",
+                }}
+              >
+                <Button
+                  type="button"
+                  variant={none ? "warning" : "light"}
+                  className="none-btn"
+                  value="None of the above"
+                  onClick={handleNone}
                 >
-                  <Button
-                    type="button"
-                    variant={isNone ? "warning" : "light"}
-                    className="rus-none-btn"
-                    value="None of the above"
-                    onClick={handleNone}
-                  >
-                    Ничего из вышеперечисленного
-                  </Button>
-                </div>
-                <div className="back-next-btns">
-                  <Button
-                    variant="secondary"
-                    className="back-btn"
-                    onClick={() => history.goBack()}
-                  >
-                    <i
-                      className="fas fa-chevron-left"
-                      style={{ marginRight: "8px" }}
-                    ></i>
-                    Назад
-                  </Button>
+                  Ничего из вышеперечисленного
+                </Button>
+              </div>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Назад
+                </Button>
 
-                  <Button
-                    variant="danger"
-                    className="next-btn"
-                    onClick={handleSubmit}
-                  >
-                    Далее
-                    <i
-                      className="fas fa-chevron-right"
-                      style={{ marginLeft: "8px" }}
-                    ></i>
-                  </Button>
-                </div>
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Далее
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ marginLeft: "8px" }}
+                  ></i>
+                </Button>
               </div>
             </Form>
           )}

@@ -169,31 +169,32 @@ export default function Question3() {
         Object.keys(checked)
           .filter((el) => el.slice(0, 1) === e[0] && el === index)
           .map((y) => {
-            checked[y] = true;
+            return (checked[y] = true);
           });
         Object.keys(checked)
           .filter((z) => z.slice(0, 1) === e[0] && z !== index)
           .map((a) => {
-            checked[a] = false;
+            return (checked[a] = false);
           });
       });
+
+    Object.entries(input)
+      .filter((x) => x[1] === "3" || x[1] === "4" || x[1] === "5")
+      .map((x) => {
+        if (!concerns.includes(x[0])) {
+          concerns.push(x[0]);
+        }
+      });
+    Object.entries(input)
+      .filter((x) => x[1] === "1" || x[1] === "2" || x[1] === "6")
+      .map((x) => {
+        if (concerns.includes(x[0])) {
+          setConcerns(concerns.filter((y) => y !== x[0]));
+        }
+      });
+
+    console.log(concerns);
   }, [input, checked, concerns]);
-
-  useEffect(() => {
-    Object.entries(input).map((el) => {
-      if (el[1] === "3" || el[1] === "4" || el[1] === "5") {
-        if (!concerns.includes(el[0])) {
-          concerns.push(el[0]);
-        }
-      } else if (el[1] === "1" || el[1] === "2" || el[1] === "6") {
-        if (concerns.includes(el[0])) {
-          concerns.pop(el[0]);
-        }
-      }
-    });
-
-    // console.log(concerns);
-  }, [input]);
 
   function handleSubmit(e) {
     e.preventDefault();

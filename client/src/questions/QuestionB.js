@@ -10,6 +10,9 @@ export default function QuestionB() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("qb-string")) {
+      setInput(localStorage.getItem("qb-string"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

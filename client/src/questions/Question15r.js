@@ -10,11 +10,8 @@ export default function Question15r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q15-checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q15-checkedA")));
-    }
-    if (localStorage.getItem("q15-checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q15-checkedB")));
+    if (localStorage.getItem("q15-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q15-checked")));
     }
     if (localStorage.getItem("q15")) {
       setInput(JSON.parse(localStorage.getItem("q15")));
@@ -74,8 +71,7 @@ export default function Question15r() {
     B: "",
   });
 
-  const [checked, setChecked] = useState([]);
-  const [checkedA, setCheckedA] = useState({
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
@@ -84,8 +80,7 @@ export default function Question15r() {
     A6: false,
     A7: false,
     A8: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
@@ -105,40 +100,35 @@ export default function Question15r() {
         [name]: value,
       };
     });
-    // if (!checked.includes(name)) {
-    //   checked.push(name);
-    // }
 
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
+    Object.entries(input).map((el) => {
+      Object.keys(checked)
+        .filter((y) => y.slice(0, 1) === name && y === index)
+        .map((z) => {
+          return (checked[z] = true);
+        });
+    });
 
-      localStorage.setItem("q15-checkedA", JSON.stringify(checkedA));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-
-      localStorage.setItem("q15-checkedB", JSON.stringify(checkedB));
-    }
+    Object.entries(input).map((el) => {
+      Object.keys(checked)
+        .filter((y) => y.slice(0, 1) === name && y !== index)
+        .map((z) => {
+          return (checked[z] = false);
+        });
+    });
   }
+
+  useEffect(() => {
+    localStorage.setItem("q15", JSON.stringify(input));
+    localStorage.setItem("q15-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!input.A && !input.B) {
+    if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
-      localStorage.setItem("q15", JSON.stringify(input));
       history.push("/rus-q16");
 
       const data = {
@@ -219,14 +209,7 @@ export default function Question15r() {
                             value={col.key}
                             onChange={handleClick}
                             className="m-input"
-                            checked={
-                              row.key === "A"
-                                ? checkedA[`${row.key}${col.key}`]
-                                : row.key === "B"
-                                ? checkedB[`${row.key}${col.key}`]
-                                : ""
-                            }
-                            autoComplete="on"
+                            checked={checked[`${row.key}${col.key}`]}
                           />
                           {col.value}
                         </label>
@@ -265,14 +248,7 @@ export default function Question15r() {
                                 name={row.key}
                                 value={col.key}
                                 onChange={handleClick}
-                                checked={
-                                  row.key === "A"
-                                    ? checkedA[`${row.key}${col.key}`]
-                                    : row.key === "B"
-                                    ? checkedB[`${row.key}${col.key}`]
-                                    : ""
-                                }
-                                autoComplete="on"
+                                checked={checked[`${row.key}${col.key}`]}
                               ></input>
                             </label>
                           </td>

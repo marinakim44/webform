@@ -10,30 +10,85 @@ export default function QuestionI() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("qi-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("qi-checked")));
+    }
+    if (localStorage.getItem("qi")) {
+      setInput(localStorage.getItem("qi"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const rows = [
-    "Less than US$100 million",
-    "$101 million–$999 million",
-    "$1 billion–$9.9 billion",
-    "$10 billion–$24.9 billion",
-    "$25 billion or more",
-    "Prefer not to say",
-    "Don't know",
+    {
+      key: "A",
+      value: "Less than US$100 million",
+    },
+    {
+      key: "B",
+      value: "$101 million–$999 million",
+    },
+    {
+      key: "C",
+      value: "$1 billion–$9.9 billion",
+    },
+    {
+      key: "D",
+      value: "$10 billion–$24.9 billion",
+    },
+    {
+      key: "E",
+      value: "$25 billion or more",
+    },
+    {
+      key: "F",
+      value: "Prefer not to say",
+    },
+    {
+      key: "G",
+      value: "Don't know",
+    },
   ];
 
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    A: false,
+    B: false,
+    C: false,
+    D: false,
+    E: false,
+    F: false,
+    G: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
+
+  useEffect(() => {
+    localStorage.setItem("qi", input);
+    localStorage.setItem("qi-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("qi", input);
 
     if (!input) {
       handleShow();
@@ -142,12 +197,13 @@ export default function QuestionI() {
                     <label className="m-label label-cell">
                       <input
                         type="radio"
-                        value={row}
-                        onClick={handleClick}
+                        value={row.key}
+                        onChange={handleClick}
                         name="option"
                         className="m-input radio-input"
+                        checked={checked[row.key]}
                       ></input>
-                      {row}
+                      {row.value}
                     </label>
                   </div>
                 );

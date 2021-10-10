@@ -67,7 +67,6 @@ function RusStart() {
   const [errorTitle, setErrorTitle] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [validationErrorEmail, setValidationErrorEmail] = useState(false);
-  const [anyError, setAnyError] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -116,7 +115,7 @@ function RusStart() {
   }
 
   function validateEmail(email) {
-    const re = /.+@[a-z]+.[a-z]+/;
+    const re = /.+@.+\.+.+/;
     return re.test(email);
   }
 
@@ -150,7 +149,6 @@ function RusStart() {
       validationErrorEmail ||
       !input
     ) {
-      setAnyError(true);
       handleShow();
     } else {
       localStorage.setItem("name", input.name);
@@ -208,7 +206,6 @@ function RusStart() {
               name="name"
               value={input.name}
               onChange={handleChange}
-              autoComplete="on"
               onBlur={handleBlurName}
               onFocus={handleFocusName}
               className="credentials-input m-credentials-input"
@@ -239,7 +236,6 @@ function RusStart() {
               name="company"
               value={input.company}
               onChange={handleChange}
-              autoComplete="on"
               onBlur={handleBlurCompany}
               onFocus={handleFocusCompany}
               className="credentials-input m-credentials-input"

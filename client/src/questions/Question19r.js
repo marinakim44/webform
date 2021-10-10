@@ -7,6 +7,20 @@ import "../Medium.css";
 import axios from "axios";
 
 export default function Question19r() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (localStorage.getItem("q19")) {
+      setInput(JSON.parse(localStorage.getItem("q19")));
+    }
+
+    if (localStorage.getItem("q19-other")) {
+      setOther(localStorage.getItem("q19-other"));
+    }
+
+    if (localStorage.getItem("q19-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q19-checked")));
+    }
+  }, []);
   const rows = [
     {
       key: "key1",
@@ -56,28 +70,8 @@ export default function Question19r() {
     key5: false,
     key6: false,
   });
-  const [disabled, setDisabled] = useState({
-    key1: false,
-    key2: false,
-    key3: false,
-    key4: false,
-    key5: false,
-    key6: false,
-  });
-  const [other, setOther] = useState("");
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (localStorage.getItem("q19")) {
-      setInput(JSON.parse(localStorage.getItem("q19")));
-    }
-    if (localStorage.getItem("q19-other")) {
-      setOther(localStorage.getItem("q19-other"));
-    }
-    if (localStorage.getItem("q19-checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q19-checked")));
-    }
-  }, []);
+  const [other, setOther] = useState("");
 
   function handleChange(e) {
     const { name } = e.target;
@@ -92,18 +86,18 @@ export default function Question19r() {
 
   useEffect(() => {
     Object.entries(checked)
-      .filter((el) => el[1] === true)
+      .filter((x) => x[1] === true)
       .map((x) => {
         if (!input.includes(x[0])) {
-          input.push(x[0]);
+          return input.push(x[0]);
         }
       });
 
     Object.entries(checked)
-      .filter((el) => el[1] === false)
+      .filter((x) => x[1] === false)
       .map((x) => {
         if (input.includes(x[0])) {
-          input.pop(x[0]);
+          return setInput(input.filter((a) => a !== x[0]));
         }
       });
 
@@ -128,7 +122,6 @@ export default function Question19r() {
       setDontknow(false);
       setInput([]);
       setChecked(false);
-      setDisabled(true);
     }
   }, [none]);
 
@@ -137,7 +130,6 @@ export default function Question19r() {
       setNone(false);
       setInput([]);
       setChecked(false);
-      setDisabled(true);
     }
   }, [dontknow]);
 
@@ -233,7 +225,7 @@ export default function Question19r() {
                       name={row.key}
                       value={row.key}
                       onChange={handleChange}
-                      disabled={none || dontknow ? true : false}
+                      disabled={none || dontknow === true ? true : false}
                       checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
@@ -245,7 +237,8 @@ export default function Question19r() {
               <Form.Control
                 type="text"
                 placeholder="Прочие действия (просьба указать)"
-                disabled={dontknow || none ? true : false}
+                value={none || dontknow ? "" : other}
+                disabled={dontknow || none === true ? true : false}
                 onChange={handleChangeOther}
                 className="input-text"
                 style={{ marginTop: "2rem" }}
@@ -315,7 +308,6 @@ export default function Question19r() {
               type="text"
               placeholder="Прочие действия (просьба указать)"
               value={none || dontknow ? "" : other}
-              style={{ width: "45%" }}
               disabled={dontknow || none ? true : false}
               onChange={handleChangeOther}
               style={{ margin: "1rem 0", width: "45%" }}

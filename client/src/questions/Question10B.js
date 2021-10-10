@@ -7,6 +7,16 @@ import ModalAlert from "../ModalAlert";
 
 export default function Question10B() {
   const width = window.screen.width;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (localStorage.getItem("q10b-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q10b-checked")));
+    }
+    if (localStorage.getItem("q10b")) {
+      setInput(JSON.parse(localStorage.getItem("q10b")));
+    }
+  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -130,42 +140,34 @@ export default function Question10B() {
     G6: false,
   });
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (localStorage.getItem("q10b-checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q10b-checked")));
-    }
-    if (localStorage.getItem("q10b")) {
-      setInput(JSON.parse(localStorage.getItem("q10b")));
-    }
-  }, []);
-
-  function handleChange(e) {
+  function handleClick(e) {
     const { name, value } = e.target;
     const index = name + value;
+
     setInput((prev) => {
       return {
         ...prev,
         [name]: value,
       };
     });
-    Object.keys(checked)
-      .filter((el) => el.slice(0, 1) === name && el === index)
-      .map((y) => {
-        checked[y] = true;
-      });
-    Object.keys(checked)
-      .filter((z) => z.slice(0, 1) === name && z !== index)
-      .map((a) => {
-        checked[a] = false;
-      });
 
-    // console.log(index);
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] === index)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] !== index)
+      .map((v) => (checked[v] = false));
   }
 
   useEffect(() => {
-    // console.log(checked);
-    // console.log(Object.entries(input));
+    localStorage.setItem("q10b-checked", JSON.stringify(checked));
     localStorage.setItem("q10b", JSON.stringify(input));
   }, [input, checked]);
 
@@ -194,7 +196,7 @@ export default function Question10B() {
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
         q10a: JSON.parse(localStorage.getItem("q10a")),
-        q10b: input,
+        q10b: JSON.parse(localStorage.getItem("q10b")),
       };
 
       axios.post("/allinputs", data);
@@ -249,7 +251,7 @@ export default function Question10B() {
                             type="radio"
                             name={row.key}
                             value={col.key}
-                            onChange={handleChange}
+                            onChange={handleClick}
                             className="m-input"
                             checked={checked[`${row.key}${col.key}`]}
                           ></input>
@@ -289,7 +291,7 @@ export default function Question10B() {
                                 type="radio"
                                 name={row.key}
                                 value={col.key}
-                                onChange={handleChange}
+                                onChange={handleClick}
                                 checked={checked[`${row.key}${col.key}`]}
                               ></input>
                             </label>

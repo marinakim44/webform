@@ -10,6 +10,15 @@ export default function QuestionC() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("qc-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("qc-checked")));
+    }
+    if (localStorage.getItem("qc")) {
+      setInput(localStorage.getItem("qc"));
+    }
+    if (localStorage.getItem("qc-other")) {
+      setOther(localStorage.getItem("qc-other"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -17,28 +26,50 @@ export default function QuestionC() {
   const history = useHistory();
   const [input, setInput] = useState("");
   const [other, setOther] = useState("");
-  const [isOther, setIsOther] = useState(false);
+  const [isOther, setIsOther] = useState(other !== "" ? true : false);
+
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+    option4: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
-    if (isOther) {
-      setIsOther(false);
-    }
-  }
+    const { value } = e.target;
+    setInput(value);
 
-  function handleClickOther(e) {
-    setIsOther(!isOther);
-    setInput(e.target.value);
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
 
   function handleChange(e) {
     setOther(e.target.value);
   }
 
+  useEffect(() => {
+    if (input === "option4") {
+      setIsOther(true);
+    }
+
+    localStorage.setItem("qc", input);
+    localStorage.setItem("qc-checked", JSON.stringify(checked));
+    localStorage.setItem("qc-other", other);
+  }, [input, checked, other]);
+
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("qc", input);
-    localStorage.setItem("qcOther", other);
 
     if (!input && !other) {
       handleShow();
@@ -98,7 +129,7 @@ export default function QuestionC() {
 
       axios.post("/allinputs", data);
 
-      if (input === "CEO of an entity within a multi-entity parent company") {
+      if (input === "option2") {
         history.push("/eng-qd");
       } else {
         history.push("/eng-qe");
@@ -145,10 +176,11 @@ export default function QuestionC() {
                 <label className="label-cell m-label">
                   <input
                     type="radio"
-                    value="CEO of a single or multi-entity parent company"
+                    value="option1"
                     onChange={handleClick}
                     name="option"
                     className="radio-input m-input"
+                    checked={checked.option1}
                   ></input>
                   CEO of a single or multi-entity parent company
                 </label>
@@ -163,9 +195,10 @@ export default function QuestionC() {
                 <label className="label-cell m-label">
                   <input
                     type="radio"
-                    value="CEO of an entity within a multi-entity parent company"
+                    value="option2"
                     onChange={handleClick}
                     name="option"
+                    checked={checked.option2}
                     className="radio-input m-input"
                   ></input>
                   CEO of an entity within a multi-entity parent company
@@ -181,10 +214,11 @@ export default function QuestionC() {
                 <label className="label-cell m-label">
                   <input
                     type="radio"
-                    value="Prefer not to say"
+                    value="option3"
                     onChange={handleClick}
                     name="option"
                     className="radio-input m-input"
+                    checked={checked.option3}
                   ></input>
                   Prefer not to say
                 </label>
@@ -194,15 +228,16 @@ export default function QuestionC() {
                   <input
                     type="radio"
                     name="option"
-                    value="Other"
-                    onChange={handleClickOther}
+                    value="option4"
+                    onChange={handleClick}
                     className="radio-input m-input"
+                    checked={checked.option4}
                   ></input>
                   Other
                 </label>
               </div>
             </Form.Group>
-            {isOther ? (
+            {isOther === true ? (
               <Form.Group>
                 <Form.Control
                   type="text"

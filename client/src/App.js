@@ -101,11 +101,9 @@ import { useState } from "react";
 export default function App() {
   const width = window.screen.width;
   const [language, setLanguage] = useState("English");
-  // const [uuid, setUuid] = useState("");
 
   useEffect(() => {
     const id = uuidv4();
-    // setUuid(id);
     localStorage.setItem("uuid", id);
     console.log(id);
     window.scrollTo(0, 0);
@@ -113,9 +111,6 @@ export default function App() {
       setLanguage(localStorage.getItem("language"));
     }
   }, []);
-  // useEffect(() => {
-  //   window.localStorage.clear();
-  // }, [uuid]);
 
   function chooseEng(e) {
     e.preventDefault();
@@ -140,10 +135,7 @@ export default function App() {
     <BrowserRouter>
       <Nav language={language} />
       <Route exact path="/">
-        <div
-          className="main"
-          style={{ height: width <= 768 && width >= 480 ? "100vh" : "" }}
-        >
+        <div className="main">
           <div className="start-text">
             <h1 className="intro-heading">
               25th Annual Global CEO Survey Questionnaire
@@ -209,139 +201,137 @@ export default function App() {
       </Route>
       <Switch>
         <Route exact path="/eng-start">
-          <EngStart />
+          <EngStart lng={language} />
         </Route>
         <Route exact path="/rus-start">
           <RusStart />
         </Route>
         <Route exact path="/eng-q1">
-          <Question1 />
+          <Question1 lng={language} />
         </Route>
         <Route exact path="/eng-q2">
-          <Question2 />
+          <Question2 lng={language} />
         </Route>
         <Route exact path="/eng-q3">
-          <Question3 />
+          <Question3 lng={language} />
         </Route>
         <Route exact path="/eng-q4">
-          <Question4 />
+          <Question4 lng={language} />
         </Route>
         <Route exact path="/eng-q5">
-          <Question5 />
+          <Question5 lng={language} />
         </Route>
         <Route exact path="/eng-q6">
-          <Question6 />
+          <Question6 lng={language} />
         </Route>
         <Route exact path="/eng-q7">
-          <Question7 />
+          <Question7 lng={language} />
         </Route>
         <Route exact path="/eng-q8">
-          <Question8 />
+          <Question8 lng={language} />
         </Route>
         <Route exact path="/eng-q9">
-          <Question9 />
+          <Question9 lng={language} />
         </Route>
         <Route exact path="/eng-q10a">
-          <Question10A />
+          <Question10A lng={language} />
         </Route>
         <Route exact path="/eng-q10b">
-          <Question10B />
+          <Question10B lng={language} />
         </Route>
         <Route exact path="/eng-q11">
-          <Question11 />
+          <Question11 lng={language} />
         </Route>
         <Route exact path="/eng-q12">
-          <Question12 />
+          <Question12 lng={language} />
         </Route>
         <Route exact path="/eng-q13">
-          <Question13 />
+          <Question13 lng={language} />
         </Route>
         <Route exact path="/eng-q14">
-          <Question14 />
+          <Question14 lng={language} />
         </Route>
         <Route exact path="/eng-q15">
-          <Question15 />
+          <Question15 lng={language} />
         </Route>
         <Route exact path="/eng-q16">
-          <Question16 />
+          <Question16 lng={language} />
         </Route>
         <Route exact path="/eng-q17">
-          <Question17 />
+          <Question17 lng={language} />
         </Route>
         <Route exact path="/eng-q18">
-          <Question18 />
+          <Question18 lng={language} />
         </Route>
         <Route exact path="/eng-q19">
-          <Question19 />
+          <Question19 lng={language} />
         </Route>
         <Route exact path="/eng-q20">
-          <Question20 />
+          <Question20 lng={language} />
         </Route>
         <Route exact path="/eng-q21">
-          <Question21 />
+          <Question21 lng={language} />
         </Route>
         <Route exact path="/eng-q22">
-          <Question22 />
+          <Question22 lng={language} />
         </Route>
         <Route exact path="/eng-q23">
-          <Question23 />
+          <Question23 lng={language} />
         </Route>
         <Route exact path="/eng-q24">
-          <Question24 />
+          <Question24 lng={language} />
         </Route>
         <Route exact path="/eng-q25">
-          <Question25 />
+          <Question25 lng={language} />
         </Route>
         <Route exact path="/eng-q25b">
-          <Question25B />
+          <Question25B lng={language} />
         </Route>
         <Route exact path="/eng-q25c">
-          <Question25C />
+          <Question25C lng={language} />
         </Route>
         <Route exact path="/eng-q26">
-          <Question26 />
+          <Question26 lng={language} />
         </Route>
         <Route exact path="/eng-q27">
-          <Question27 />
+          <Question27 lng={language} />
         </Route>
         <Route exact path="/eng-q28">
-          <Question28 />
+          <Question28 lng={language} />
         </Route>
         <Route exact path="/eng-qa">
-          <QuestionA />
+          <QuestionA lng={language} />
         </Route>
         <Route exact path="/eng-qb">
-          <QuestionB />
+          <QuestionB lng={language} />
         </Route>
         <Route exact path="/eng-qc">
-          <QuestionC />
+          <QuestionC lng={language} />
         </Route>
         <Route exact path="/eng-qd">
-          <QuestionD />
+          <QuestionD lng={language} />
         </Route>
         <Route exact path="/eng-qe">
-          <QuestionE />
+          <QuestionE lng={language} />
         </Route>
         <Route exact path="/eng-qf">
-          <QuestionF />
+          <QuestionF lng={language} />
         </Route>
         <Route exact path="/eng-qg">
-          <QuestionG />
+          <QuestionG lng={language} />
         </Route>
         <Route exact path="/eng-qh">
-          <QuestionH />
+          <QuestionH lng={language} />
         </Route>
         <Route exact path="/eng-qi">
-          <QuestionI />
+          <QuestionI lng={language} />
         </Route>
         <Route exact path="/eng-qj">
-          <QuestionJ />
+          <QuestionJ lng={language} />
         </Route>
         <Route exact path="/eng-finish">
-          <EngFinish />
+          <EngFinish lng={language} />
         </Route>
-
-        {/* Russian */}
 
         <Route exact path="/rus-q1">
           <Question1r />

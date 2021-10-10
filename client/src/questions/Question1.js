@@ -7,7 +7,7 @@ import "../Small.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question1() {
+export default function Question1({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -85,6 +85,7 @@ export default function Question1() {
     A6: false,
     A7: false,
     A8: false,
+
     B1: false,
     B2: false,
     B3: false,
@@ -116,12 +117,12 @@ export default function Question1() {
     Object.keys(checked)
       .filter((el) => el === index)
       .map((el) => {
-        checked[el] = true;
+        return (checked[el] = true);
       });
     Object.keys(checked)
       .filter((el) => el !== index && el.slice(0, 1) === name)
       .map((el) => {
-        checked[el] = false;
+        return (checked[el] = false);
       });
   }
 
@@ -157,7 +158,8 @@ export default function Question1() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 2).toString())}% completed
+            {Math.round(((100 / 39) * 2).toString())}
+            {lng === "English" ? "% completed" : "% завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -169,25 +171,54 @@ export default function Question1() {
           </div>
 
           <ModalAlert show={show} close={handleClose} />
-          <div className="left-align-text">
-            <p className="question">
-              How do you believe economic growth (i.e., gross domestic product)
-              will change, if at all, over the next 12 months in: <br />
-              <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
-                A) the global economy?
-              </span>
-              <br />
-              <span style={{ marginLeft: "2rem" }}>B) Kazakhstan economy?</span>
-            </p>
-            <i>
-              <p
-                className="question"
-                style={{ margin: width <= 480 ? "1rem 0" : "" }}
-              >
-                PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
+
+          {lng === "English" ? (
+            <div className="left-align-text">
+              <p className="question">
+                How do you believe economic growth (i.e., gross domestic
+                product) will change, if at all, over the next 12 months in:{" "}
+                <br />
+                <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                  A) the global economy?
+                </span>
+                <br />
+                <span style={{ marginLeft: "2rem" }}>
+                  B) Kazakhstan economy?
+                </span>
               </p>
-            </i>
-          </div>
+              <i>
+                <p
+                  className="question"
+                  style={{ margin: width <= 480 ? "1rem 0" : "" }}
+                >
+                  PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
+                </p>
+              </i>
+            </div>
+          ) : (
+            <div className="left-align-text">
+              <p className="question">
+                Как, по вашему мнению, изменится экономический рост (т.е.
+                валовой внутренний продукт) в следующие 12 месяцев, если вообще
+                изменится: <br />
+                <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                  A) глобальная экономика?
+                </span>
+                <br />
+                <span style={{ marginLeft: "2rem" }}>
+                  B) экономика Казахстана?{" "}
+                </span>
+              </p>
+              <i>
+                <p
+                  className="question"
+                  style={{ margin: width <= 480 ? "1rem 0" : "" }}
+                >
+                  (ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)
+                </p>
+              </i>
+            </div>
+          )}
         </div>
         {width <= 768 ? (
           <div className="left-align-text">

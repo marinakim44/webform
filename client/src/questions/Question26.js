@@ -10,16 +10,47 @@ export default function Question26() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q26-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q26-checked")));
+    }
+    if (localStorage.getItem("q26")) {
+      setInput(localStorage.getItem("q26"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    option1: false,
+    option2: false,
+    option3: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
+
+  useEffect(() => {
+    localStorage.setItem("q26", input);
+    localStorage.setItem("q26-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +58,6 @@ export default function Question26() {
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("q26", input);
       history.push("/eng-q27");
 
       const data = {
@@ -108,8 +138,9 @@ export default function Question26() {
                   type="radio"
                   className="radio-input m-input"
                   name="option"
-                  value="Improved"
+                  value="option1"
                   onClick={handleClick}
+                  checked={checked.option1}
                 ></input>
                 Improved
               </label>
@@ -120,8 +151,9 @@ export default function Question26() {
                   type="radio"
                   className="radio-input m-input"
                   name="option"
-                  value="Stayed the same"
+                  value="option2"
                   onClick={handleClick}
+                  checked={checked.option2}
                 ></input>
                 Stayed the same
               </label>
@@ -132,8 +164,9 @@ export default function Question26() {
                   type="radio"
                   className="radio-input m-input"
                   name="option"
-                  value="Declined"
+                  value="option3"
                   onClick={handleClick}
+                  checked={checked.option3}
                 ></input>
                 Declined
               </label>

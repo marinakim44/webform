@@ -10,26 +10,8 @@ export default function Question17() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q17-checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q17-checkedA")));
-    }
-    if (localStorage.getItem("q17-checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q17-checkedB")));
-    }
-    if (localStorage.getItem("q17-checkedC")) {
-      setCheckedC(JSON.parse(localStorage.getItem("q17-checkedC")));
-    }
-    if (localStorage.getItem("q17-checkedD")) {
-      setCheckedD(JSON.parse(localStorage.getItem("q17-checkedD")));
-    }
-    if (localStorage.getItem("q17-checkedE")) {
-      setCheckedE(JSON.parse(localStorage.getItem("q17-checkedE")));
-    }
-    if (localStorage.getItem("q17-checkedF")) {
-      setCheckedF(JSON.parse(localStorage.getItem("q17-checkedF")));
-    }
-    if (localStorage.getItem("q17-checkedG")) {
-      setCheckedG(JSON.parse(localStorage.getItem("q17-checkedG")));
+    if (localStorage.getItem("q17-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q17-checked")));
     }
     if (localStorage.getItem("q17")) {
       setInput(JSON.parse(localStorage.getItem("q17")));
@@ -72,35 +54,43 @@ export default function Question17() {
 
   const columns = [
     {
-      key: 1,
+      key: "1",
+      title: "Less often",
       value: "Every four years or less frequently",
     },
     {
-      key: 2,
+      key: "2",
+      title: "Less often",
       value: "Every three years",
     },
     {
-      key: 3,
+      key: "3",
+      title: "Less often",
       value: "Every two years",
     },
     {
-      key: 4,
+      key: "4",
+      title: "Every year",
       value: "Every year",
     },
     {
-      key: 5,
+      key: "5",
+      title: "More often",
       value: "Twice a year",
     },
     {
-      key: 6,
+      key: "6",
+      title: "More often",
       value: "Three times a year",
     },
     {
-      key: 7,
+      key: "7",
+      title: "More often",
       value: "Four times a year or more frequently",
     },
     {
-      key: 8,
+      key: "8",
+      title: "Not applicable / Don't know",
       value: "Not applicable / Don't know",
     },
   ];
@@ -115,8 +105,7 @@ export default function Question17() {
     G: "",
   });
 
-  const [checked, setChecked] = useState([]);
-  const [checkedA, setCheckedA] = useState({
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
@@ -125,8 +114,7 @@ export default function Question17() {
     A6: false,
     A7: false,
     A8: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
@@ -135,8 +123,7 @@ export default function Question17() {
     B6: false,
     B7: false,
     B8: false,
-  });
-  const [checkedC, setCheckedC] = useState({
+
     C1: false,
     C2: false,
     C3: false,
@@ -145,8 +132,7 @@ export default function Question17() {
     C6: false,
     C7: false,
     C8: false,
-  });
-  const [checkedD, setCheckedD] = useState({
+
     D1: false,
     D2: false,
     D3: false,
@@ -155,8 +141,7 @@ export default function Question17() {
     D6: false,
     D7: false,
     D8: false,
-  });
-  const [checkedE, setCheckedE] = useState({
+
     E1: false,
     E2: false,
     E3: false,
@@ -165,8 +150,7 @@ export default function Question17() {
     E6: false,
     E7: false,
     E8: false,
-  });
-  const [checkedF, setCheckedF] = useState({
+
     F1: false,
     F2: false,
     F3: false,
@@ -175,8 +159,7 @@ export default function Question17() {
     F6: false,
     F7: false,
     F8: false,
-  });
-  const [checkedG, setCheckedG] = useState({
+
     G1: false,
     G2: false,
     G3: false,
@@ -196,101 +179,36 @@ export default function Question17() {
         [name]: value,
       };
     });
-    if (!checked.includes(name)) {
-      checked.push(name);
-    }
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-    }
-    if (name === "C") {
-      Object.keys(checkedC)
-        .filter((v) => v === index)
-        .map((v) => (checkedC[v] = true));
-      Object.keys(checkedC)
-        .filter((v) => v !== index)
-        .map((v) => (checkedC[v] = false));
-    }
-    if (name === "D") {
-      Object.keys(checkedD)
-        .filter((v) => v === index)
-        .map((v) => (checkedD[v] = true));
-      Object.keys(checkedD)
-        .filter((v) => v !== index)
-        .map((v) => (checkedD[v] = false));
-    }
-    if (name === "E") {
-      Object.keys(checkedE)
-        .filter((v) => v === index)
-        .map((v) => (checkedE[v] = true));
-      Object.keys(checkedE)
-        .filter((v) => v !== index)
-        .map((v) => (checkedE[v] = false));
-    }
-    if (name === "F") {
-      Object.keys(checkedF)
-        .filter((v) => v === index)
-        .map((v) => (checkedF[v] = true));
-      Object.keys(checkedF)
-        .filter((v) => v !== index)
-        .map((v) => (checkedF[v] = false));
-    }
-    if (name === "G") {
-      Object.keys(checkedG)
-        .filter((v) => v === index)
-        .map((v) => (checkedG[v] = true));
-      Object.keys(checkedG)
-        .filter((v) => v !== index)
-        .map((v) => (checkedG[v] = false));
-    }
+
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((y) => y.slice(0, 1) === name && y[0] === index)
+      .map((z) => {
+        return (checked[z] = true);
+      });
+
+    Object.keys(checked)
+      .filter((y) => y.slice(0, 1) === name && y[0] !== index)
+      .map((z) => {
+        return (checked[z] = false);
+      });
   }
 
   useEffect(() => {
-    localStorage.setItem("q17-checkedA", JSON.stringify(checkedA));
-    localStorage.setItem("q17-checkedB", JSON.stringify(checkedB));
-    localStorage.setItem("q17-checkedC", JSON.stringify(checkedC));
-    localStorage.setItem("q17-checkedD", JSON.stringify(checkedD));
-    localStorage.setItem("q17-checkedE", JSON.stringify(checkedE));
-    localStorage.setItem("q17-checkedF", JSON.stringify(checkedF));
-    localStorage.setItem("q17-checkedG", JSON.stringify(checkedG));
+    localStorage.setItem("q17-checked", JSON.stringify(checked));
     localStorage.setItem("q17", JSON.stringify(input));
-  }, [
-    input,
-    checkedA,
-    checkedB,
-    checkedC,
-    checkedD,
-    checkedE,
-    checkedF,
-    checkedG,
-    checked,
-  ]);
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (
-      !input.A &&
-      !input.B &&
-      !input.C &&
-      !input.D &&
-      !input.E &&
-      !input.F &&
-      !input.G
-    ) {
+    if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
       history.push("/eng-q18");
@@ -375,21 +293,9 @@ export default function Question17() {
                               className="m-input"
                               onChange={handleClick}
                               checked={
-                                row.key === "A"
-                                  ? checkedA[`${row.key}${col.key}`]
-                                  : row.key === "B"
-                                  ? checkedB[`${row.key}${col.key}`]
-                                  : row.key === "C"
-                                  ? checkedC[`${row.key}${col.key}`]
-                                  : row.key === "D"
-                                  ? checkedD[`${row.key}${col.key}`]
-                                  : row.key === "E"
-                                  ? checkedE[`${row.key}${col.key}`]
-                                  : row.key === "F"
-                                  ? checkedF[`${row.key}${col.key}`]
-                                  : row.key === "G"
-                                  ? checkedG[`${row.key}${col.key}`]
-                                  : ""
+                                checked[`${row.key}${col.key}`] === true
+                                  ? true
+                                  : false
                               }
                             ></input>
                             {col.value}
@@ -474,23 +380,11 @@ export default function Question17() {
                                     type="radio"
                                     name={row.key}
                                     value={col.key}
-                                    onClick={handleClick}
+                                    onChange={handleClick}
                                     checked={
-                                      row.key === "A"
-                                        ? checkedA[`${row.key}${col.key}`]
-                                        : row.key === "B"
-                                        ? checkedB[`${row.key}${col.key}`]
-                                        : row.key === "C"
-                                        ? checkedC[`${row.key}${col.key}`]
-                                        : row.key === "D"
-                                        ? checkedD[`${row.key}${col.key}`]
-                                        : row.key === "E"
-                                        ? checkedE[`${row.key}${col.key}`]
-                                        : row.key === "F"
-                                        ? checkedF[`${row.key}${col.key}`]
-                                        : row.key === "G"
-                                        ? checkedG[`${row.key}${col.key}`]
-                                        : ""
+                                      checked[`${row.key}${col.key}`] === true
+                                        ? true
+                                        : false
                                     }
                                   ></input>
                                 </label>

@@ -44,27 +44,27 @@ export default function Question10Br() {
 
   const columns = [
     {
-      key: 1,
+      key: "1",
       value: "Не важны",
     },
     {
-      key: 2,
+      key: "2",
       value: "Важны в незначительной степени",
     },
     {
-      key: 3,
+      key: "3",
       value: "Относительно важны",
     },
     {
-      key: 4,
+      key: "4",
       value: "Очень важны",
     },
     {
-      key: 5,
+      key: "5",
       value: "Чрезвычайно важны",
     },
     {
-      key: 6,
+      key: "6",
       value: "Затрудняюсь ответить",
     },
   ];
@@ -139,32 +139,34 @@ export default function Question10Br() {
     }
   }, []);
 
-  function handleChange(e) {
+  function handleClick(e) {
     const { name, value } = e.target;
     const index = name + value;
+
     setInput((prev) => {
       return {
         ...prev,
         [name]: value,
       };
     });
-    Object.keys(checked)
-      .filter((el) => el.slice(0, 1) === name && el === index)
-      .map((y) => {
-        checked[y] = true;
-      });
-    Object.keys(checked)
-      .filter((z) => z.slice(0, 1) === name && z !== index)
-      .map((a) => {
-        checked[a] = false;
-      });
 
-    // console.log(index);
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] === index)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] !== index)
+      .map((v) => (checked[v] = false));
   }
 
   useEffect(() => {
-    // console.log(checked);
-    // console.log(Object.entries(input));
+    localStorage.setItem("q10b-checked", JSON.stringify(checked));
     localStorage.setItem("q10b", JSON.stringify(input));
   }, [input, checked]);
 
@@ -193,7 +195,7 @@ export default function Question10Br() {
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
         q10a: JSON.parse(localStorage.getItem("q10a")),
-        q10b: input,
+        q10b: JSON.parse(localStorage.getItem("q10b")),
       };
 
       axios.post("/allinputs", data);
@@ -248,7 +250,7 @@ export default function Question10Br() {
                             type="radio"
                             name={row.key}
                             value={col.key}
-                            onChange={handleChange}
+                            onChange={handleClick}
                             className="m-input"
                             checked={checked[`${row.key}${col.key}`]}
                           ></input>
@@ -288,7 +290,8 @@ export default function Question10Br() {
                                 type="radio"
                                 name={row.key}
                                 value={col.key}
-                                onChange={handleChange}
+                                onChange={handleClick}
+                                className="m-input"
                                 checked={checked[`${row.key}${col.key}`]}
                               ></input>
                             </label>

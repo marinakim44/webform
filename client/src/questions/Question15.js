@@ -105,7 +105,7 @@ export default function Question15() {
       Object.keys(checked)
         .filter((y) => y.slice(0, 1) === name && y === index)
         .map((z) => {
-          checked[z] = true;
+          return (checked[z] = true);
         });
     });
 
@@ -113,7 +113,7 @@ export default function Question15() {
       Object.keys(checked)
         .filter((y) => y.slice(0, 1) === name && y !== index)
         .map((z) => {
-          checked[z] = false;
+          return (checked[z] = false);
         });
     });
   }
@@ -209,7 +209,6 @@ export default function Question15() {
                             onChange={handleClick}
                             className="m-input"
                             checked={checked[`${row.key}${col.key}`]}
-                            autoComplete="on"
                           />
                           {col.value}
                         </label>

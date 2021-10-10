@@ -10,6 +10,15 @@ export default function Question25() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q25-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q25-checked")));
+    }
+    if (localStorage.getItem("q25")) {
+      setInput(JSON.parse(localStorage.getItem("q25")));
+    }
+    if (localStorage.getItem("q25-other")) {
+      setOther(localStorage.getItem("q25-other"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -18,72 +27,72 @@ export default function Question25() {
 
   const rows = [
     {
-      index: 1,
+      index: "1",
       key: "A",
       value: "A skilled, educated and adaptable workforce",
     },
     {
-      index: 2,
+      index: "2",
       key: "B",
       value: "Adequate physical and digital infrastructure",
     },
     {
-      index: 3,
+      index: "3",
       key: "C",
       value: "Reducing climate change and environmental damage",
     },
     {
-      index: 4,
+      index: "4",
       key: "D",
       value: "High levels of employment",
     },
     {
-      index: 5,
+      index: "5",
       key: "E",
       value: "An effective tax system",
     },
     {
-      index: 6,
+      index: "6",
       key: "F",
       value: "Greater income equality",
     },
     {
-      index: 7,
+      index: "7",
       key: "G",
       value: "The good health and well-being of the workforce",
     },
     {
-      index: 8,
+      index: "8",
       key: "H",
       value: "A diverse and inclusive workforce",
     },
     {
-      index: 9,
+      index: "9",
       key: "I",
       value: "Safeguards around usage of personal data",
     },
     {
-      index: 10,
+      index: "10",
       key: "J",
       value: "Predictable macroeconomic environment",
     },
     {
-      index: 11,
+      index: "11",
       key: "K",
       value: "Investment attractiveness of the country",
     },
     {
-      index: 12,
+      index: "12",
       key: "L",
       value: "Fighting against corruption and bribery",
     },
     {
-      index: 13,
+      index: "13",
       key: "M",
       value: "The supremacy of law in all spheres of state activity",
     },
     {
-      index: 14,
+      index: "14",
       key: "N",
       value: "Access to affordable capital",
     },
@@ -109,6 +118,7 @@ export default function Question25() {
     M: false,
     N: false,
   });
+
   const [disabled, setDisabled] = useState({
     A: false,
     B: false,
@@ -127,40 +137,13 @@ export default function Question25() {
   });
 
   const handleClick = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
     setChecked((prev) => {
       return {
         ...prev,
         [name]: !checked[name],
       };
     });
-
-    if (checked[name]) {
-      if (input.includes(`${name}: ${value}`)) {
-        input.pop(`${name}: ${value}`);
-      }
-    } else {
-      if (input.length < 3) {
-        if (!input.includes(`${name}: ${value}`)) {
-          input.push(`${name}: ${value}`);
-        }
-      } else {
-        setChecked((prev) => {
-          return {
-            ...prev,
-            [name]: !checked[name],
-          };
-        });
-        setDisabled((prev) => {
-          return {
-            ...prev,
-            [name]: !disabled[name],
-          };
-        });
-      }
-    }
-
-    console.log(checked, input);
   };
 
   const handleChange = (e) => {
@@ -168,55 +151,94 @@ export default function Question25() {
   };
 
   const handleNone = () => {
-    if (dontknow) {
-      setDontknow(false);
-    }
-    if (input) {
-      setInput([]);
-    }
     setNone(!none);
 
-    if (none) {
-      if (dontknow) {
-        setDontknow(false);
-      }
+    if (none === false) {
+      setDontknow(false);
+      Object.keys(disabled).map((el) => {
+        return (disabled[el] = true);
+      });
+      setOther("");
     }
-    if (none || dontknow) {
-      setInput([]);
+    if (none === true) {
+      Object.keys(disabled).map((el) => {
+        return (disabled[el] = false);
+      });
     }
-    setDisabled(!disabled);
-    setChecked(!checked);
   };
 
   const handleDontknow = () => {
-    if (none) {
-      setNone(false);
-    }
-    if (input) {
-      setInput([]);
-    }
     setDontknow(!dontknow);
 
-    if (dontknow) {
-      if (none) {
-        setNone(false);
-      }
+    if (dontknow === false) {
+      setNone(false);
+      Object.keys(disabled).map((el) => {
+        return (disabled[el] = true);
+      });
+      setOther("");
     }
-    if (none || dontknow) {
-      setInput([]);
+    if (dontknow === true) {
+      Object.keys(disabled).map((el) => {
+        return (disabled[el] = false);
+      });
     }
-    setDisabled(!disabled);
-    setChecked(!checked);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (dontknow === true || none === true) {
+      Object.keys(checked).map((el) => {
+        return (checked[el] = false);
+      });
+    }
+
+    Object.entries(checked)
+      .filter((x) => x[1] === true)
+      .map((x) => {
+        if (!input.includes(x[0])) {
+          return input.push(x[0]);
+        }
+        return;
+      });
+
+    Object.entries(checked)
+      .filter((x) => x[1] === false)
+      .map((x) => {
+        if (input.includes(x[0])) {
+          return setInput(input.filter((el) => el !== x[0]));
+        }
+        return;
+      });
+
+    Object.entries(checked)
+      .filter((x) => x[1] === true)
+      .map((x) => {
+        Object.keys(checked)
+          .filter((a) => a === x[0])
+          .map((a) => {
+            return (checked[a] = true);
+          });
+      });
+    Object.entries(checked)
+      .filter((x) => x[1] === false)
+      .map((x) => {
+        Object.keys(checked)
+          .filter((a) => a === x[0])
+          .map((a) => {
+            return (checked[a] = false);
+          });
+      });
+
     localStorage.setItem("q25-none", none);
     localStorage.setItem("q25-dontknow", dontknow);
     localStorage.setItem("q25", JSON.stringify(input));
     localStorage.setItem("q25-other", other);
+    localStorage.setItem("q25-checked", JSON.stringify(checked));
+  }, [none, dontknow, input, checked, other, disabled]);
 
-    if (input.length === 0 && !none && !other && !dontknow) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (input.length === 0 && none === false && !other && dontknow === false) {
       handleShow();
     } else {
       const data = {
@@ -302,12 +324,13 @@ export default function Question25() {
                         name={row.key}
                         value={row.value}
                         onChange={handleClick}
-                        checked={checked[row.key] ? true : false}
+                        checked={checked[row.key]}
                         disabled={
-                          (input.length === 3 &&
-                            !input.includes(`${row.key}: ${row.value}`)) ||
-                          none ||
-                          dontknow
+                          (Object.entries(checked).filter((c) => c[1] === true)
+                            .length === 3 &&
+                            !checked[row.key]) ||
+                          none === true ||
+                          dontknow === true
                             ? true
                             : false
                         }
@@ -393,14 +416,14 @@ export default function Question25() {
                                     name={row.key}
                                     value={row.value}
                                     onChange={handleClick}
-                                    checked={checked[row.key] ? true : false}
+                                    checked={checked[row.key]}
                                     disabled={
-                                      (input.length === 3 &&
-                                        !input.includes(
-                                          `${row.key}: ${row.value}`
-                                        )) ||
-                                      none ||
-                                      dontknow
+                                      (Object.entries(checked).filter(
+                                        (c) => c[1] === true
+                                      ).length === 3 &&
+                                        !checked[row.key]) ||
+                                      none === true ||
+                                      dontknow === true
                                         ? true
                                         : false
                                     }
@@ -441,7 +464,17 @@ export default function Question25() {
                                     name={row.key}
                                     value={row.value}
                                     onChange={handleClick}
-                                    disabled={none || dontknow ? true : false}
+                                    checked={checked[row.key]}
+                                    disabled={
+                                      (Object.entries(checked).filter(
+                                        (c) => c[1] === true
+                                      ).length === 3 &&
+                                        !checked[row.key]) ||
+                                      none === true ||
+                                      dontknow === true
+                                        ? true
+                                        : false
+                                    }
                                   ></input>
                                 </label>
                               </td>

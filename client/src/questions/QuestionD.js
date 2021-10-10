@@ -10,16 +10,47 @@ export default function QuestionD() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("qd-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("qd-checked")));
+    }
+    if (localStorage.getItem("qd")) {
+      setInput(localStorage.getItem("qd"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    option1: "",
+    option2: "",
+    option3: "",
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
+
+  useEffect(() => {
+    localStorage.setItem("qd", input);
+    localStorage.setItem("qd-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,7 +58,6 @@ export default function QuestionD() {
     if (!input) {
       handleShow();
     } else {
-      localStorage.setItem("qd", input);
       history.push("/eng-qe");
 
       const data = {
@@ -126,10 +156,11 @@ export default function QuestionD() {
                 <label className="label-cell m-label">
                   <input
                     type="radio"
-                    value="yes"
-                    onClick={handleClick}
+                    value="option1"
+                    onChange={handleClick}
                     name="option"
                     className="radio-input m-input"
+                    checked={checked.option1}
                   ></input>
                   Yes
                 </label>
@@ -144,11 +175,12 @@ export default function QuestionD() {
                 <label className="label-cell m-label">
                   <input
                     type="radio"
-                    value="no"
-                    onClick={handleClick}
+                    value="option2"
+                    onChange={handleClick}
                     name="option"
                     style={{ marginRight: "8px" }}
                     class="radio-input m-input"
+                    checked={checked.option2}
                   ></input>
                   No
                 </label>
@@ -163,11 +195,12 @@ export default function QuestionD() {
                 <label className="label-cell m-label">
                   <input
                     type="radio"
-                    value="dontknow"
-                    onClick={handleClick}
+                    value="option3"
+                    onChange={handleClick}
                     name="option"
                     style={{ marginRight: "8px" }}
                     class="radio-input m-input"
+                    checked={checked.option3}
                   ></input>
                   Don't know
                 </label>

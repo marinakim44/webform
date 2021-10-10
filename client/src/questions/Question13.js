@@ -17,6 +17,9 @@ export default function Question13() {
     if (localStorage.getItem("q13b")) {
       setInputB(localStorage.getItem("q13b"));
     }
+    if (localStorage.getItem("q13-dontknow")) {
+      setDontknow(JSON.parse(localStorage.getItem("q13-dontknow")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -177,7 +180,7 @@ export default function Question13() {
               <Col>
                 <Button
                   type="button"
-                  variant={dontknow.A === true ? "warning" : "outline"}
+                  variant={dontknow.A === true ? "warning" : "light"}
                   name="A"
                   value="dontknow"
                   onClick={handleDontknow}

@@ -24,47 +24,27 @@ const Menu = (props) => {
 
 export default function Question2r() {
   const width = window.screen.width;
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (localStorage.getItem("q2other1")) {
-      setOther((prev) => {
-        return {
-          ...prev,
-          other1: localStorage.getItem("q2other1"),
-        };
-      });
-    }
-    if (localStorage.getItem("q2other2")) {
-      setOther((prev) => {
-        return {
-          ...prev,
-          other2: localStorage.getItem("q2other2"),
-        };
-      });
-    }
-    if (localStorage.getItem("q2other3")) {
-      setOther((prev) => {
-        return {
-          ...prev,
-          other3: localStorage.getItem("q2other3"),
-        };
-      });
-    }
-  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const isValidNewOption = (inputValue, selectedValue) =>
-    inputValue.length > 0 && selectedValue.length < 4;
-
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [dontknow, setDontknow] = useState(false);
   const [other, setOther] = useState({
     other1: "",
     other2: "",
     other3: "",
   });
-  const [isDontknow, setIsDontknow] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (localStorage.getItem("q2-other")) {
+      setOther(JSON.parse(localStorage.getItem("q2-other")));
+    }
+  }, []);
+
+  const isValidNewOption = (inputValue, selectedValue) =>
+    inputValue.length > 0 && selectedValue.length < 4;
 
   function handleChange(selectedOption) {
     selectedOption.forEach((option) => {
@@ -72,74 +52,58 @@ export default function Question2r() {
         selectedOptions.push(option.label);
       }
     });
+
     console.log(selectedOptions);
   }
 
-  function handleOther(e) {
+  const handleOther = (e) => {
     const { name, value } = e.target;
-    setOther((prevInput) => {
+    setOther((prev) => {
       return {
-        ...prevInput,
+        ...prev,
         [name]: value,
       };
     });
-  }
+  };
 
-  function handleDontknow() {
-    if (selectedOptions) {
+  const handleDontknow = () => {
+    setDontknow(!dontknow);
+    if (dontknow === false) {
       setSelectedOptions([]);
-    }
-    if (other) {
       setOther({
         other1: "",
         other2: "",
         other3: "",
       });
     }
-    setIsDontknow(!isDontknow);
-    if (isDontknow) {
-      setSelectedOptions([]);
-    }
-  }
+  };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    Object.entries(other)
+      .filter((x) => x[1] !== "")
+      .map((x) => {
+        if (!selectedOptions.includes(x[1])) {
+          selectedOptions.push(x[1]);
+        }
+      });
+    localStorage.setItem("q2", JSON.stringify(selectedOptions));
+    localStorage.setItem("q2-dontknow", dontknow);
+    localStorage.setItem("q2-other", JSON.stringify(other));
+
+    console.log(selectedOptions);
+
     if (
       selectedOptions.length === 0 &&
-      !isDontknow &&
-      !other.other1 &&
-      !other.other2 &&
-      !other.other3
+      dontknow === false &&
+      Object.entries(other).filter((x) => x[1] === "").length === 3
     ) {
       handleShow();
     } else {
-      if (other.other1) {
-        selectedOptions.push(other.other1);
-        localStorage.setItem("q2other1", other.other1);
-      }
-      if (other.other2) {
-        selectedOptions.push(other.other2);
-        localStorage.setItem("q2other2", other.other2);
-      }
-      if (other.other3) {
-        selectedOptions.push(other.other3);
-        localStorage.setItem("q2other3", other.other3);
-      }
-
-      localStorage.setItem("q2", JSON.stringify(selectedOptions));
-
-      localStorage.setItem("q2-dontknow", isDontknow);
       const data = {
         uuid: localStorage.getItem("uuid"),
-        name: localStorage.getItem("name"),
-        company: localStorage.getItem("company"),
-        title: localStorage.getItem("title"),
-        email: localStorage.getItem("email"),
-        phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("q2")),
-
         q2dontknow: localStorage.getItem("q2-dontknow"),
       };
 
@@ -147,7 +111,7 @@ export default function Question2r() {
 
       history.push("/rus-q3");
     }
-  }
+  };
 
   return (
     <Route path="/rus-q2">
@@ -176,7 +140,7 @@ export default function Question2r() {
 
         <Form style={{ width: "100%" }}>
           <Creatable
-            isDisabled={isDontknow ? true : false}
+            isDisabled={dontknow ? true : false}
             components={{ Menu }}
             isMulti
             isValidNewOption={isValidNewOption}
@@ -193,7 +157,7 @@ export default function Question2r() {
             name="other1"
             value={other.other1}
             onChange={handleOther}
-            disabled={isDontknow ? true : false}
+            disabled={dontknow ? true : false}
             className="input-text"
           ></Form.Control>
           <Form.Control
@@ -202,7 +166,7 @@ export default function Question2r() {
             value={other.other2}
             onChange={handleOther}
             placeholder="Другое 2 (пожалуйста, укажите)"
-            disabled={isDontknow ? true : false}
+            disabled={dontknow ? true : false}
             className="input-text"
           ></Form.Control>
           <Form.Control
@@ -212,12 +176,12 @@ export default function Question2r() {
             onChange={handleOther}
             placeholder="Другое 3 (пожалуйста, укажите)"
             className="input-text"
-            disabled={isDontknow ? true : false}
+            disabled={dontknow ? true : false}
           ></Form.Control>
           <div className="dontknow-div">
             <Button
               type="button"
-              variant={isDontknow ? "warning" : "outline-dark"}
+              variant={dontknow ? "warning" : "outline-dark"}
               className={width <= 480 ? "dontknow-btn" : "back-btn"}
               style={{ margin: 0 }}
               value="Don't know"

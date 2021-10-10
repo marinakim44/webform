@@ -5,10 +5,11 @@ import "./App.css";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 
-function EngStart() {
+function EngStart({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+
     if (localStorage.getItem("name")) {
       setInput((prev) => {
         return {
@@ -50,6 +51,7 @@ function EngStart() {
       });
     }
   }, []);
+  // const [lng, setLng] = useState("English");
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -67,7 +69,6 @@ function EngStart() {
   const [errorTitle, setErrorTitle] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [validationErrorEmail, setValidationErrorEmail] = useState(false);
-  const [anyError, setAnyError] = useState(false);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -116,7 +117,7 @@ function EngStart() {
   }
 
   function validateEmail(email) {
-    const re = /.+@[a-z]+.[a-z]+/;
+    const re = /.+@.+\.+.+/;
     return re.test(email);
   }
 
@@ -150,7 +151,6 @@ function EngStart() {
       validationErrorEmail ||
       !input
     ) {
-      setAnyError(true);
       handleShow();
     } else {
       localStorage.setItem("name", input.name);
@@ -201,14 +201,12 @@ function EngStart() {
               ""
             )}
             <Form.Control
-              autoFocus="true"
               autoComplete="off"
               type="text"
               placeholder="Full name*"
               name="name"
               value={input.name}
               onChange={handleChange}
-              autoComplete="on"
               onBlur={handleBlurName}
               onFocus={handleFocusName}
               className="credentials-input m-credentials-input"
@@ -234,12 +232,11 @@ function EngStart() {
 
             <Form.Control
               type="text"
-              placeholder="Company name*"
+              placeholder={"Company name*"}
               autoComplete="off"
               name="company"
               value={input.company}
               onChange={handleChange}
-              autoComplete="on"
               onBlur={handleBlurCompany}
               onFocus={handleFocusCompany}
               className="credentials-input m-credentials-input"
@@ -338,13 +335,9 @@ function EngStart() {
             <Button
               variant="secondary"
               className="back-btn"
-              type="button"
               onClick={() => history.goBack()}
             >
-              <i
-                className="fas fa-chevron-left"
-                style={{ color: "#fff", marginRight: "10px" }}
-              ></i>
+              <i className="fas fa-chevron-left back-arrow"></i>
               Back
             </Button>
 
@@ -353,11 +346,8 @@ function EngStart() {
               className="next-btn"
               onClick={handleSubmit}
             >
-              Start
-              <i
-                className="fas fa-chevron-right"
-                style={{ color: "#fff", marginLeft: "10px" }}
-              ></i>
+              Next
+              <i className="fas fa-chevron-right next-arrow"></i>
             </Button>
           </div>
         </Form>

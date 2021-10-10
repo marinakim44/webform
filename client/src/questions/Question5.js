@@ -70,13 +70,15 @@ export default function Question5() {
 
   function handleChange(e) {
     const { name, value } = e.target;
+    const index = name + value;
+
     setInput((prev) => {
       return {
         ...prev,
         [name]: value,
       };
     });
-    const index = name + value;
+
     setChecked((prev) => {
       return {
         ...prev,
@@ -85,16 +87,20 @@ export default function Question5() {
     });
 
     Object.keys(checked)
-      .filter((v) => v[0].slice(0, 1) === name && v[0] === index)
-      .map((v) => (checked[v[0]] = true));
+      .filter((el) => el === index)
+      .map((el) => {
+        checked[el] = true;
+      });
     Object.keys(checked)
-      .filter((v) => v[0].slice(0, 1) === name && v[0] !== index)
-      .map((v) => (checked[v[0]] = false));
+      .filter((el) => el !== index && el.slice(0, 1) === name)
+      .map((el) => {
+        checked[el] = false;
+      });
   }
 
   useEffect(() => {
-    localStorage.setItem("q5-checked", JSON.stringify(checked));
     localStorage.setItem("q5", JSON.stringify(input));
+    localStorage.setItem("q5-checked", JSON.stringify(checked));
   }, [input, checked]);
 
   function handleSubmit(e) {
@@ -204,7 +210,6 @@ export default function Question5() {
                               type="radio"
                               onChange={handleChange}
                               checked={checked[`${row.key}${col.key}`]}
-                              autoComplete="on"
                             ></input>
                             {col.value}
                           </label>
@@ -272,7 +277,6 @@ export default function Question5() {
                                   type="radio"
                                   onChange={handleChange}
                                   checked={checked[`${row.key}${col.key}`]}
-                                  autoComplete="on"
                                 ></input>
                               </label>
                             </td>

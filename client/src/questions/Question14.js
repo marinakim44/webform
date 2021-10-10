@@ -123,27 +123,27 @@ export default function Question14() {
       };
     });
 
-    Object.entries(input).map((el) => {
-      Object.keys(checked)
-        .filter((y) => y.slice(0, 1) === name && y === index)
-        .map((z) => {
-          checked[z] = true;
-        });
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
     });
 
-    Object.entries(input).map((el) => {
-      Object.keys(checked)
-        .filter((y) => y.slice(0, 1) === name && y !== index)
-        .map((z) => {
-          checked[z] = false;
-        });
-    });
+    Object.keys(checked)
+      .filter((y) => y.slice(0, 1) === name && y[0] === index)
+      .map((z) => {
+        return (checked[z] = true);
+      });
+
+    Object.keys(checked)
+      .filter((y) => y.slice(0, 1) === name && y[0] !== index)
+      .map((z) => {
+        return (checked[z] = false);
+      });
   }
 
   useEffect(() => {
-    console.log(input);
-    console.log(checked);
-
     localStorage.setItem("q14-checked", JSON.stringify(checked));
     localStorage.setItem("q14", JSON.stringify(input));
   }, [input, checked]);
@@ -233,7 +233,6 @@ export default function Question14() {
                             onChange={handleClick}
                             className="m-input"
                             checked={checked[`${row.key}${col.key}`]}
-                            autoComplete="on"
                           />
 
                           {col.value}

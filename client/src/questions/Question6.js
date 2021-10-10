@@ -33,6 +33,13 @@ export default function Question6() {
     const { value } = e.target;
     setInput(value);
 
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
     Object.keys(checked)
       .filter((v) => v === value)
       .map((v) => (checked[v] = true));
@@ -42,18 +49,9 @@ export default function Question6() {
   }
 
   useEffect(() => {
-    Object.entries(checked)
-      .filter((el) => el[1] === true)
-      .map((x) => {
-        setInput(x[0]);
-      });
-
-    localStorage.setItem("q6-checked", JSON.stringify(checked));
-  }, [checked]);
-
-  useEffect(() => {
     localStorage.setItem("q6", input);
-  }, [input]);
+    localStorage.setItem("q6-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -122,9 +120,9 @@ export default function Question6() {
                     type="radio"
                     name="option"
                     value="option1"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option1 === true ? true : false}
+                    checked={checked.option1}
                   />
                   Limiting global warming to 1.5° Celsius
                 </label>
@@ -135,9 +133,9 @@ export default function Question6() {
                     type="radio"
                     name="option"
                     value="option2"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option2 === true ? true : false}
+                    checked={checked.option2}
                   />
                   Limiting global warming to well below 2.0° Celsius
                 </label>
@@ -148,9 +146,9 @@ export default function Question6() {
                     type="radio"
                     name="option"
                     value="option3"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option3 === true ? true : false}
+                    checked={checked.option3}
                   />
                   My company’s net-zero commitment is not aligned to a
                   science-based target
@@ -162,9 +160,9 @@ export default function Question6() {
                     type="radio"
                     name="option"
                     value="option4"
-                    onClick={handleClick}
+                    onChange={handleClick}
                     className="m-input radio-input"
-                    checked={checked.option4 === true ? true : false}
+                    checked={checked.option4}
                   />
                   Don't know
                 </label>

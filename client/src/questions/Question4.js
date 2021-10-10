@@ -155,11 +155,14 @@ export default function Question4() {
             }
           } else {
             if (list.includes(v[0])) {
-              list.pop(v[0]);
+              // list.pop(v[0]);
+              setList(list.filter((x) => x !== v[0]));
             }
           }
         });
     });
+
+    console.log(list);
 
     localStorage.setItem("q4-checked", JSON.stringify(checked));
     localStorage.setItem("q4-disabled", JSON.stringify(disabled));

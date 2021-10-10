@@ -52,16 +52,6 @@ export default function Question24() {
       index: "6",
       value: "Employee engagement metrics",
     },
-    {
-      key: "G",
-      index: "7",
-      value: "None of the above",
-    },
-    {
-      key: "H",
-      index: "8",
-      value: "Prefer not to answer",
-    },
   ];
 
   const columns = [
@@ -75,10 +65,7 @@ export default function Question24() {
     },
   ];
 
-  const [input, setInput] = useState({
-    A: [],
-    B: [],
-  });
+  const [input, setInput] = useState([]);
 
   const [checked, setChecked] = useState({
     A1: false,
@@ -87,8 +74,6 @@ export default function Question24() {
     A4: false,
     A5: false,
     A6: false,
-    A7: false,
-    A8: false,
 
     B1: false,
     B2: false,
@@ -96,28 +81,15 @@ export default function Question24() {
     B4: false,
     B5: false,
     B6: false,
-    B7: false,
-    B8: false,
   });
 
-  const [disabled, setDisabled] = useState({
-    A1: false,
-    A2: false,
-    A3: false,
-    A4: false,
-    A5: false,
-    A6: false,
-    A7: false,
-    A8: false,
-
-    B1: false,
-    B2: false,
-    B3: false,
-    B4: false,
-    B5: false,
-    B6: false,
-    B7: false,
-    B8: false,
+  const [none, setNone] = useState({
+    A: false,
+    B: false,
+  });
+  const [not, setNot] = useState({
+    A: false,
+    B: false,
   });
 
   function handleClick(e) {
@@ -132,63 +104,103 @@ export default function Question24() {
     });
   }
 
+  const handleNone = (e) => {
+    const { name, value } = e.target;
+    const index = name + value;
+
+    setNone((prev) => {
+      return {
+        ...prev,
+        [name]: !none[name],
+      };
+    });
+
+    if (none[name] === false) {
+      Object.entries(checked)
+        .filter((x) => x[0].slice(0, 1) === name && x[0] !== index)
+        .map((x) => {
+          return (
+            (checked[x[0]] = false),
+            setNot((prev) => {
+              return {
+                ...prev,
+                [name]: false,
+              };
+            }),
+            setInput(input.filter((el) => el[0].slice(0, 1) !== name))
+          );
+        });
+    }
+  };
+
+  const handleNot = (e) => {
+    const { name, value } = e.target;
+    const index = name + value;
+
+    setNot((prev) => {
+      return {
+        ...prev,
+        [name]: !not[name],
+      };
+    });
+
+    if (not[name] === false) {
+      Object.entries(checked)
+        .filter((x) => x[0].slice(0, 1) === name && x[0] !== index)
+        .map((x) => {
+          return (
+            (checked[x[0]] = false),
+            setNone((prev) => {
+              return {
+                ...prev,
+                [name]: false,
+              };
+            }),
+            setInput(input.filter((el) => el[0].slice(0, 1) !== name))
+          );
+        });
+    }
+  };
+
   useEffect(() => {
     Object.entries(checked)
-      .filter((x) => x[1] === true && x[0].slice(0, 1) === "A")
-      .map((y) => {
-        if (!input.A.includes(y[0])) {
-          input.A.push(y[0]);
-        }
-      });
-    Object.entries(checked)
-      .filter((x) => x[1] === false && x[0].slice(0, 1) === "A")
-      .map((y) => {
-        if (input.A.includes(y[0])) {
-          input.A = input.A.filter((i) => i !== y[0]);
-        }
-      });
-    Object.entries(checked)
-      .filter((x) => x[1] === true && x[0].slice(0, 1) === "B")
-      .map((y) => {
-        if (!input.B.includes(y[0])) {
-          input.B.push(y[0]);
-        }
-      });
-    Object.entries(checked)
-      .filter((x) => x[1] === false && x[0].slice(0, 1) === "B")
-      .map((y) => {
-        if (input.B.includes(y[0])) {
-          input.B = input.B.filter((i) => i !== y[0]);
-        }
-      });
-
-    // console.log(input.A);
-  }, [checked]);
-
-  useEffect(() => {
-    Object.entries(checked)
-      .filter((x) => x[0] === "A7" && x[1] === true)
+      .filter((x) => x[1] === true)
       .map((x) => {
-        Object.keys(checked)
-          .filter((y) => y.slice(0, 1) === x[0].slice(0, 1) && y !== x[0])
-          .map((y) => {
-            disabled[y] = true;
-          });
+        if (!input.includes(x[0])) {
+          return input.push(x[0]);
+        }
+        return;
       });
-    console.log(input.A);
-  }, [input.A]);
+
+    Object.entries(checked)
+      .filter((x) => x[1] === false)
+      .map((x) => {
+        if (input.includes(x[0])) {
+          return setInput(input.filter((e) => e !== x[0]));
+        }
+        return;
+      });
+
+    localStorage.setItem("q24-checked", JSON.stringify(checked));
+    localStorage.setItem("q24", JSON.stringify(input));
+    localStorage.setItem("q24-none", JSON.stringify(none));
+    localStorage.setItem("q24-not", JSON.stringify(not));
+  }, [checked, input, none, not]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    localStorage.setItem("q24-checked", JSON.stringify(checked));
-    localStorage.setItem("q24", JSON.stringify(input));
-
-    if (input.A.length === 0) {
-      if (input.B.length === 0) {
-        handleShow();
-      }
-    } else if (input.B.length === 0) {
+    if (
+      input.filter((x) => x.slice(0, 1) === "A").length === 0 &&
+      none.A === false &&
+      not.A === false
+    ) {
+      handleShow();
+    } else if (
+      input.filter((x) => x.slice(0, 1) === "B").length === 0 &&
+      none.B === false &&
+      not.B === false
+    ) {
       handleShow();
     } else {
       history.push("/eng-q25");
@@ -226,6 +238,8 @@ export default function Question24() {
         q22: JSON.parse(localStorage.getItem("q22")),
         q23: localStorage.getItem("q23"),
         q24: JSON.parse(localStorage.getItem("q24")),
+        q24none: JSON.parse(localStorage.getItem("q24-none")),
+        q24not: JSON.parse(localStorage.getItem("q24-not")),
       };
 
       axios.post("/allinputs", data);
@@ -279,18 +293,47 @@ export default function Question24() {
                           <label className="m-label">
                             <input
                               type="checkbox"
-                              className="m-input"
                               name={col.key}
                               value={row.index}
                               onChange={handleClick}
                               checked={checked[`${col.key}${row.index}`]}
-                              disabled={disabled[`${col.key}${row.index}`]}
+                              disabled={
+                                none[col.key] === true || not[col.key] === true
+                                  ? true
+                                  : false
+                              }
                             ></input>
                             {row.value}
                           </label>
                         </div>
                       );
                     })}
+                    <div className="m-div">
+                      <label className="m-label">
+                        <input
+                          type="checkbox"
+                          name={col.key}
+                          value="7"
+                          onChange={handleNone}
+                          checked={none[col.key] === true ? true : false}
+                          disabled={not[col.key] === true ? true : false}
+                        ></input>
+                        None of the above
+                      </label>
+                    </div>
+                    <div className="m-div">
+                      <label className="m-label">
+                        <input
+                          type="checkbox"
+                          name={col.key}
+                          value="8"
+                          onChange={handleNot}
+                          checked={not[col.key] === true ? true : false}
+                          disabled={none[col.key] === true ? true : false}
+                        ></input>
+                        Prefer not to answer
+                      </label>
+                    </div>
                   </div>
                 );
               })}
@@ -324,7 +367,12 @@ export default function Question24() {
                                 value={row.index}
                                 onChange={handleClick}
                                 checked={checked[`${col.key}${row.index}`]}
-                                disabled={disabled[`${col.key}${row.index}`]}
+                                disabled={
+                                  none[col.key] === true ||
+                                  not[col.key] === true
+                                    ? true
+                                    : false
+                                }
                               ></input>
                             </label>
                           </td>
@@ -333,6 +381,62 @@ export default function Question24() {
                     </tr>
                   );
                 })}
+                <tr>
+                  <td>G</td>
+                  <td className="left-align-text">None of the above</td>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        name="A"
+                        value="7"
+                        onChange={handleNone}
+                        checked={none.A === true ? true : false}
+                        disabled={not.A === true ? true : false}
+                      ></input>
+                    </label>
+                  </td>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        name="B"
+                        value="7"
+                        onChange={handleNone}
+                        checked={none.B === true ? true : false}
+                        disabled={not.B === true ? true : false}
+                      ></input>
+                    </label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>H</td>
+                  <td className="left-align-text">Prefer not to answer</td>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        name="A"
+                        value="8"
+                        onChange={handleNot}
+                        checked={not.A === true ? true : false}
+                        disabled={none.A === true ? true : false}
+                      ></input>
+                    </label>
+                  </td>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        name="B"
+                        value="8"
+                        onChange={handleNot}
+                        checked={not.B === true ? true : false}
+                        disabled={none.B === true ? true : false}
+                      ></input>
+                    </label>
+                  </td>
+                </tr>
               </tbody>
             </Table>
           )}

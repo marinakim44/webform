@@ -10,17 +10,8 @@ export default function Question12r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q12checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q12checkedA")));
-    }
-    if (localStorage.getItem("q12checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q12checkedB")));
-    }
-    if (localStorage.getItem("q12checkedC")) {
-      setCheckedC(JSON.parse(localStorage.getItem("q12checkedC")));
-    }
-    if (localStorage.getItem("q12checkedD")) {
-      setCheckedD(JSON.parse(localStorage.getItem("q12checkedD")));
+    if (localStorage.getItem("q12-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q12-checked")));
     }
     if (localStorage.getItem("q12")) {
       setInput(JSON.parse(localStorage.getItem("q12")));
@@ -53,35 +44,35 @@ export default function Question12r() {
 
   const columns = [
     {
-      key: 1,
+      key: "1",
       value: "Очень неблагоприятны",
     },
     {
-      key: 2,
+      key: "2",
       value: "Умеренно неблагоприятны",
     },
     {
-      key: 3,
+      key: "3",
       value: "Незначительно неблагоприятны",
     },
     {
-      key: 4,
+      key: "4",
       value: "Не могу сказать определенно",
     },
     {
-      key: 5,
+      key: "5",
       value: "Незначительно благоприятны",
     },
     {
-      key: 6,
+      key: "6",
       value: "Умеренно благоприятны",
     },
     {
-      key: 7,
+      key: "7",
       value: "Очень благоприятны",
     },
     {
-      key: 8,
+      key: "8",
       value: "Затрудняюсь ответить",
     },
   ];
@@ -93,8 +84,7 @@ export default function Question12r() {
     D: "",
   });
 
-  const [checked, setChecked] = useState([]);
-  const [checkedA, setCheckedA] = useState({
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
@@ -103,8 +93,7 @@ export default function Question12r() {
     A6: false,
     A7: false,
     A8: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
@@ -113,8 +102,7 @@ export default function Question12r() {
     B6: false,
     B7: false,
     B8: false,
-  });
-  const [checkedC, setCheckedC] = useState({
+
     C1: false,
     C2: false,
     C3: false,
@@ -123,8 +111,7 @@ export default function Question12r() {
     C6: false,
     C7: false,
     C8: false,
-  });
-  const [checkedD, setCheckedD] = useState({
+
     D1: false,
     D2: false,
     D3: false,
@@ -138,66 +125,40 @@ export default function Question12r() {
   function handleClick(e) {
     const { name, value } = e.target;
     const index = name + value;
-    setInput((prevInput) => {
+
+    setInput((prev) => {
       return {
-        ...prevInput,
+        ...prev,
         [name]: value,
       };
     });
-    // if (!checked.includes(name)) {
-    //   checked.push(name);
-    // }
 
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
 
-      localStorage.setItem("q12checkedA", JSON.stringify(checkedA));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-
-      localStorage.setItem("q12checkedB", JSON.stringify(checkedB));
-    }
-    if (name === "C") {
-      Object.keys(checkedC)
-        .filter((v) => v === index)
-        .map((v) => (checkedC[v] = true));
-      Object.keys(checkedC)
-        .filter((v) => v !== index)
-        .map((v) => (checkedC[v] = false));
-
-      localStorage.setItem("q12checkedC", JSON.stringify(checkedC));
-    }
-    if (name === "D") {
-      Object.keys(checkedD)
-        .filter((v) => v === index)
-        .map((v) => (checkedD[v] = true));
-      Object.keys(checkedD)
-        .filter((v) => v !== index)
-        .map((v) => (checkedD[v] = false));
-
-      localStorage.setItem("q12checkedD", JSON.stringify(checkedD));
-    }
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] === index)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] !== index)
+      .map((v) => (checked[v] = false));
   }
+
+  useEffect(() => {
+    localStorage.setItem("q12", JSON.stringify(input));
+    localStorage.setItem("q12-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!input.A && !input.B && !input.C && !input.D) {
+    if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
-      localStorage.setItem("q12", JSON.stringify(input));
       history.push("/rus-q13");
 
       const data = {
@@ -278,17 +239,7 @@ export default function Question12r() {
                               value={col.key}
                               onChange={handleClick}
                               className="m-input"
-                              checked={
-                                row.key === "A"
-                                  ? checkedA[`${row.key}${col.key}`]
-                                  : row.key === "B"
-                                  ? checkedB[`${row.key}${col.key}`]
-                                  : row.key === "C"
-                                  ? checkedC[`${row.key}${col.key}`]
-                                  : row.key === "D"
-                                  ? checkedD[`${row.key}${col.key}`]
-                                  : ""
-                              }
+                              checked={checked[`${row.key}${col.key}`]}
                             />
                             {col.value}
                           </label>
@@ -345,18 +296,7 @@ export default function Question12r() {
                                   name={row.key}
                                   value={col.key}
                                   onChange={handleClick}
-                                  checked={
-                                    row.key === "A"
-                                      ? checkedA[`${row.key}${col.key}`]
-                                      : row.key === "B"
-                                      ? checkedB[`${row.key}${col.key}`]
-                                      : row.key === "C"
-                                      ? checkedC[`${row.key}${col.key}`]
-                                      : row.key === "D"
-                                      ? checkedD[`${row.key}${col.key}`]
-                                      : ""
-                                  }
-                                  autoComplete="on"
+                                  checked={checked[`${row.key}${col.key}`]}
                                 ></input>
                               </label>
                             </td>

@@ -10,6 +10,9 @@ export default function Question28() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q28")) {
+      setInput(localStorage.getItem("q28"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

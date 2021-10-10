@@ -10,26 +10,8 @@ export default function Question10Ar() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q10a-checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q10a-checkedA")));
-    }
-    if (localStorage.getItem("q10a-checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q10a-checkedB")));
-    }
-    if (localStorage.getItem("q10a-checkedC")) {
-      setCheckedC(JSON.parse(localStorage.getItem("q10a-checkedC")));
-    }
-    if (localStorage.getItem("q10a-checkedD")) {
-      setCheckedD(JSON.parse(localStorage.getItem("q10a-checkedD")));
-    }
-    if (localStorage.getItem("q10a-checkedE")) {
-      setCheckedE(JSON.parse(localStorage.getItem("q10a-checkedE")));
-    }
-    if (localStorage.getItem("q10a-checkedF")) {
-      setCheckedF(JSON.parse(localStorage.getItem("q10a-checkedF")));
-    }
-    if (localStorage.getItem("q10a-checkedG")) {
-      setCheckedG(JSON.parse(localStorage.getItem("q10a-checkedG")));
+    if (localStorage.getItem("q10a-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q10a-checked")));
     }
     if (localStorage.getItem("q10a")) {
       setInput(JSON.parse(localStorage.getItem("q10a")));
@@ -72,27 +54,27 @@ export default function Question10Ar() {
 
   const columns = [
     {
-      key: 1,
+      key: "1",
       value: "Не важны",
     },
     {
-      key: 2,
+      key: "2",
       value: "Важны в незначительной степени",
     },
     {
-      key: 3,
+      key: "3",
       value: "Относительно важны",
     },
     {
-      key: 4,
+      key: "4",
       value: "Очень важны",
     },
     {
-      key: 5,
+      key: "5",
       value: "Чрезвычайно важны",
     },
     {
-      key: 6,
+      key: "6",
       value: "Затрудняюсь ответить",
     },
   ];
@@ -106,56 +88,50 @@ export default function Question10Ar() {
     F: "",
     G: "",
   });
-  const [checked, setChecked] = useState([]);
-  const [checkedA, setCheckedA] = useState({
+
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
     A4: false,
     A5: false,
     A6: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
     B4: false,
     B5: false,
     B6: false,
-  });
-  const [checkedC, setCheckedC] = useState({
+
     C1: false,
     C2: false,
     C3: false,
     C4: false,
     C5: false,
     C6: false,
-  });
-  const [checkedD, setCheckedD] = useState({
+
     D1: false,
     D2: false,
     D3: false,
     D4: false,
     D5: false,
     D6: false,
-  });
-  const [checkedE, setCheckedE] = useState({
+
     E1: false,
     E2: false,
     E3: false,
     E4: false,
     E5: false,
     E6: false,
-  });
-  const [checkedF, setCheckedF] = useState({
+
     F1: false,
     F2: false,
     F3: false,
     F4: false,
     F5: false,
     F6: false,
-  });
-  const [checkedG, setCheckedG] = useState({
+
     G1: false,
     G2: false,
     G3: false,
@@ -167,107 +143,38 @@ export default function Question10Ar() {
   function handleClick(e) {
     const { name, value } = e.target;
     const index = name + value;
-    setInput((prevInput) => {
+
+    setInput((prev) => {
       return {
-        ...prevInput,
+        ...prev,
         [name]: value,
       };
     });
-    if (!checked.includes(name)) {
-      checked.push(name);
-    }
 
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-    }
-    if (name === "C") {
-      Object.keys(checkedC)
-        .filter((v) => v === index)
-        .map((v) => (checkedC[v] = true));
-      Object.keys(checkedC)
-        .filter((v) => v !== index)
-        .map((v) => (checkedC[v] = false));
-    }
-    if (name === "D") {
-      Object.keys(checkedD)
-        .filter((v) => v === index)
-        .map((v) => (checkedD[v] = true));
-      Object.keys(checkedD)
-        .filter((v) => v !== index)
-        .map((v) => (checkedD[v] = false));
-    }
-    if (name === "E") {
-      Object.keys(checkedE)
-        .filter((v) => v === index)
-        .map((v) => (checkedE[v] = true));
-      Object.keys(checkedE)
-        .filter((v) => v !== index)
-        .map((v) => (checkedE[v] = false));
-    }
-    if (name === "F") {
-      Object.keys(checkedF)
-        .filter((v) => v === index)
-        .map((v) => (checkedF[v] = true));
-      Object.keys(checkedF)
-        .filter((v) => v !== index)
-        .map((v) => (checkedF[v] = false));
-    }
-    if (name === "G") {
-      Object.keys(checkedG)
-        .filter((v) => v === index)
-        .map((v) => (checkedG[v] = true));
-      Object.keys(checkedG)
-        .filter((v) => v !== index)
-        .map((v) => (checkedG[v] = false));
-    }
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] === index)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v[0].slice(0, 1) === name && v[0] !== index)
+      .map((v) => (checked[v] = false));
   }
 
   useEffect(() => {
-    localStorage.setItem("q10a-checkedA", JSON.stringify(checkedA));
-    localStorage.setItem("q10a-checkedB", JSON.stringify(checkedB));
-    localStorage.setItem("q10a-checkedC", JSON.stringify(checkedC));
-    localStorage.setItem("q10a-checkedD", JSON.stringify(checkedD));
-    localStorage.setItem("q10a-checkedE", JSON.stringify(checkedE));
-    localStorage.setItem("q10a-checkedF", JSON.stringify(checkedF));
-    localStorage.setItem("q10a-checkedG", JSON.stringify(checkedG));
+    localStorage.setItem("q10a-checked", JSON.stringify(checked));
     localStorage.setItem("q10a", JSON.stringify(input));
-  }, [
-    input,
-    checkedA,
-    checkedB,
-    checkedC,
-    checkedD,
-    checkedE,
-    checkedF,
-    checked,
-  ]);
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (
-      !input.A &&
-      !input.B &&
-      !input.C &&
-      !input.D &&
-      !input.E &&
-      !input.F &&
-      !input.G
-    ) {
+    if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
       const data = {
@@ -338,25 +245,9 @@ export default function Question10Ar() {
                               type="radio"
                               name={row.key}
                               value={col.key}
-                              onClick={handleClick}
+                              onChange={handleClick}
                               className="m-input"
-                              checked={
-                                row.key === "A"
-                                  ? checkedA[`${row.key}${col.key}`]
-                                  : row.key === "B"
-                                  ? checkedB[`${row.key}${col.key}`]
-                                  : row.key === "C"
-                                  ? checkedC[`${row.key}${col.key}`]
-                                  : row.key === "D"
-                                  ? checkedD[`${row.key}${col.key}`]
-                                  : row.key === "E"
-                                  ? checkedE[`${row.key}${col.key}`]
-                                  : row.key === "F"
-                                  ? checkedF[`${row.key}${col.key}`]
-                                  : row.key === "G"
-                                  ? checkedG[`${row.key}${col.key}`]
-                                  : ""
-                              }
+                              checked={checked[`${row.key}${col.key}`]}
                             />
                             {col.value}
                           </label>
@@ -410,25 +301,8 @@ export default function Question10Ar() {
                                   type="radio"
                                   name={row.key}
                                   value={col.key}
-                                  onClick={handleClick}
-                                  checked={
-                                    row.key === "A"
-                                      ? checkedA[`${row.key}${col.key}`]
-                                      : row.key === "B"
-                                      ? checkedB[`${row.key}${col.key}`]
-                                      : row.key === "C"
-                                      ? checkedC[`${row.key}${col.key}`]
-                                      : row.key === "D"
-                                      ? checkedD[`${row.key}${col.key}`]
-                                      : row.key === "E"
-                                      ? checkedE[`${row.key}${col.key}`]
-                                      : row.key === "F"
-                                      ? checkedF[`${row.key}${col.key}`]
-                                      : row.key === "G"
-                                      ? checkedG[`${row.key}${col.key}`]
-                                      : ""
-                                  }
-                                  autoComplete="on"
+                                  onChange={handleClick}
+                                  checked={checked[`${row.key}${col.key}`]}
                                 ></input>
                               </label>
                             </td>

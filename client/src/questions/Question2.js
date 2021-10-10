@@ -7,6 +7,7 @@ import "../App.css";
 import { countries } from "../countries.js";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "react-dropdown/style.css";
 
 const Menu = (props) => {
   const optionSelectedLength = props.getValue().length || 0;
@@ -24,47 +25,27 @@ const Menu = (props) => {
 
 export default function Question2() {
   const width = window.screen.width;
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    if (localStorage.getItem("q2other1")) {
-      setOther((prev) => {
-        return {
-          ...prev,
-          other1: localStorage.getItem("q2other1"),
-        };
-      });
-    }
-    if (localStorage.getItem("q2other2")) {
-      setOther((prev) => {
-        return {
-          ...prev,
-          other2: localStorage.getItem("q2other2"),
-        };
-      });
-    }
-    if (localStorage.getItem("q2other3")) {
-      setOther((prev) => {
-        return {
-          ...prev,
-          other3: localStorage.getItem("q2other3"),
-        };
-      });
-    }
-  }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const isValidNewOption = (inputValue, selectedValue) =>
-    inputValue.length > 0 && selectedValue.length < 4;
-
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [dontknow, setDontknow] = useState(false);
   const [other, setOther] = useState({
     other1: "",
     other2: "",
     other3: "",
   });
-  const [isDontknow, setIsDontknow] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (localStorage.getItem("q2-other")) {
+      setOther(JSON.parse(localStorage.getItem("q2-other")));
+    }
+  }, []);
+
+  const isValidNewOption = (inputValue, selectedValue) =>
+    inputValue.length > 0 && selectedValue.length < 4;
 
   function handleChange(selectedOption) {
     selectedOption.forEach((option) => {
@@ -72,74 +53,58 @@ export default function Question2() {
         selectedOptions.push(option.label);
       }
     });
+
     console.log(selectedOptions);
   }
 
-  function handleOther(e) {
+  const handleOther = (e) => {
     const { name, value } = e.target;
-    setOther((prevInput) => {
+    setOther((prev) => {
       return {
-        ...prevInput,
+        ...prev,
         [name]: value,
       };
     });
-  }
+  };
 
-  function handleDontknow() {
-    if (selectedOptions) {
+  const handleDontknow = () => {
+    setDontknow(!dontknow);
+    if (dontknow === false) {
       setSelectedOptions([]);
-    }
-    if (other) {
       setOther({
         other1: "",
         other2: "",
         other3: "",
       });
     }
-    setIsDontknow(!isDontknow);
-    if (isDontknow) {
-      setSelectedOptions([]);
-    }
-  }
+  };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
+
+    Object.entries(other)
+      .filter((x) => x[1] !== "")
+      .map((x) => {
+        if (!selectedOptions.includes(x[1])) {
+          selectedOptions.push(x[1]);
+        }
+      });
+    localStorage.setItem("q2", JSON.stringify(selectedOptions));
+    localStorage.setItem("q2-dontknow", dontknow);
+    localStorage.setItem("q2-other", JSON.stringify(other));
+
+    console.log(selectedOptions);
+
     if (
       selectedOptions.length === 0 &&
-      !isDontknow &&
-      !other.other1 &&
-      !other.other2 &&
-      !other.other3
+      dontknow === false &&
+      Object.entries(other).filter((x) => x[1] === "").length === 3
     ) {
       handleShow();
     } else {
-      if (other.other1) {
-        selectedOptions.push(other.other1);
-        localStorage.setItem("q2other1", other.other1);
-      }
-      if (other.other2) {
-        selectedOptions.push(other.other2);
-        localStorage.setItem("q2other2", other.other2);
-      }
-      if (other.other3) {
-        selectedOptions.push(other.other3);
-        localStorage.setItem("q2other3", other.other3);
-      }
-
-      localStorage.setItem("q2", JSON.stringify(selectedOptions));
-
-      localStorage.setItem("q2-dontknow", isDontknow);
       const data = {
         uuid: localStorage.getItem("uuid"),
-        name: localStorage.getItem("name"),
-        company: localStorage.getItem("company"),
-        title: localStorage.getItem("title"),
-        email: localStorage.getItem("email"),
-        phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
         q2: JSON.parse(localStorage.getItem("q2")),
-
         q2dontknow: localStorage.getItem("q2-dontknow"),
       };
 
@@ -147,7 +112,7 @@ export default function Question2() {
 
       history.push("/eng-q3");
     }
-  }
+  };
 
   return (
     <Route path="/eng-q2">
@@ -173,28 +138,26 @@ export default function Question2() {
             </p>
           </div>
         </div>
-
+        <Creatable
+          isDisabled={dontknow ? true : false}
+          components={{ Menu }}
+          isMulti
+          isValidNewOption={isValidNewOption}
+          options={countries}
+          closeMenuOnSelect={false}
+          placeholder="Please select 3 countries"
+          onChange={handleChange}
+          className="select-countries"
+        />
         <Form style={{ width: "100%" }}>
-          <Creatable
-            isDisabled={isDontknow ? true : false}
-            components={{ Menu }}
-            isMulti
-            isValidNewOption={isValidNewOption}
-            options={countries}
-            closeMenuOnSelect={false}
-            placeholder="Please select 3 countries"
-            onChange={handleChange}
-            className="select-countries"
-          />
-
           <Form.Control
             type="text"
             placeholder="Other 1 (please specify)"
             name="other1"
             value={other.other1}
             onChange={handleOther}
-            disabled={isDontknow ? true : false}
             className="input-text"
+            disabled={dontknow ? true : false}
           ></Form.Control>
           <Form.Control
             type="text"
@@ -202,8 +165,8 @@ export default function Question2() {
             value={other.other2}
             onChange={handleOther}
             placeholder="Other 2 (please specify)"
-            disabled={isDontknow ? true : false}
             className="input-text"
+            disabled={dontknow ? true : false}
           ></Form.Control>
           <Form.Control
             type="text"
@@ -212,14 +175,13 @@ export default function Question2() {
             onChange={handleOther}
             placeholder="Other 3 (please specify)"
             className="input-text"
-            disabled={isDontknow ? true : false}
+            disabled={dontknow ? true : false}
           ></Form.Control>
           <div className="dontknow-div">
             <Button
+              variant={dontknow === true ? "warning" : "outline-dark"}
               type="button"
-              variant={isDontknow ? "warning" : "outline-dark"}
               className="back-btn"
-              style={{ margin: 0 }}
               value="Don't know"
               onClick={handleDontknow}
               className="dontknow-btn"

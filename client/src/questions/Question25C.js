@@ -10,6 +10,15 @@ export default function Question25C() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("q25c-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q25c-checked")));
+    }
+    if (localStorage.getItem("q25c")) {
+      setInput(JSON.parse(localStorage.getItem("q25c")));
+    }
+    if (localStorage.getItem("q25c-other")) {
+      setOther(localStorage.getItem("q25c-other"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -127,28 +136,13 @@ export default function Question25C() {
   });
 
   const handleClick = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
     setChecked((prev) => {
       return {
         ...prev,
         [name]: !checked[name],
       };
     });
-
-    if (checked[name]) {
-      if (input.includes(`${name}: ${value}`)) {
-        input.pop(`${name}: ${value}`);
-      }
-    } else {
-      if (!input.includes(`${name}: ${value}`)) {
-        input.push(`${name}: ${value}`);
-      } else {
-        setChecked(false);
-        setDisabled(true);
-      }
-    }
-
-    console.log(checked, input);
   };
 
   const handleChange = (e) => {
@@ -156,55 +150,97 @@ export default function Question25C() {
   };
 
   const handleNone = () => {
-    if (dontknow) {
-      setDontknow(false);
-    }
-    if (input) {
-      setInput([]);
-    }
     setNone(!none);
 
-    if (none) {
-      if (dontknow) {
-        setDontknow(false);
-      }
+    if (none === false) {
+      setDontknow(false);
+      Object.keys(disabled).map((el) => {
+        disabled[el] = true;
+      });
+      setOther("");
     }
-    if (none || dontknow) {
-      setInput([]);
+    if (none === true) {
+      Object.keys(disabled).map((el) => {
+        disabled[el] = false;
+      });
     }
-    setDisabled(!disabled);
-    setChecked(!checked);
   };
 
   const handleDontknow = () => {
-    if (none) {
-      setNone(false);
-    }
-    if (input) {
-      setInput([]);
-    }
     setDontknow(!dontknow);
 
-    if (dontknow) {
-      if (none) {
-        setNone(false);
-      }
+    if (dontknow === false) {
+      setNone(false);
+      Object.keys(disabled).map((el) => {
+        disabled[el] = true;
+      });
+      setOther("");
     }
-    if (none || dontknow) {
-      setInput([]);
+    if (dontknow === true) {
+      Object.keys(disabled).map((el) => {
+        disabled[el] = false;
+      });
     }
-    setDisabled(!disabled);
-    setChecked(!checked);
   };
+
+  useEffect(() => {
+    if (dontknow === true || none === true) {
+      Object.keys(checked).map((el) => {
+        checked[el] = false;
+      });
+    }
+
+    Object.entries(checked)
+      .filter((x) => x[1] === true)
+      .map((x) => {
+        if (!input.includes(x[0])) {
+          input.push(x[0]);
+        }
+      });
+
+    Object.entries(checked)
+      .filter((x) => x[1] === false)
+      .map((x) => {
+        if (input.includes(x[0])) {
+          setInput(input.filter((el) => el !== x[0]));
+        }
+      });
+
+    Object.entries(checked)
+      .filter((x) => x[1] === true)
+      .map((x) => {
+        Object.keys(checked)
+          .filter((a) => a === x[0])
+          .map((a) => {
+            checked[a] = true;
+          });
+      });
+    Object.entries(checked)
+      .filter((x) => x[1] === false)
+      .map((x) => {
+        Object.keys(checked)
+          .filter((a) => a === x[0])
+          .map((a) => {
+            checked[a] = false;
+          });
+      });
+
+    localStorage.setItem("q25c-none", none);
+    localStorage.setItem("q25c", JSON.stringify(input));
+    localStorage.setItem("q25c-other", other);
+    localStorage.setItem("q25c-checked", JSON.stringify(checked));
+
+    Object.entries(checked)
+      .filter((k) => k[1] === true)
+      .map((k) => {
+        console.log(k[0]);
+      });
+  }, [none, dontknow, input, checked, other, disabled]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("q25c-none", none);
-    localStorage.setItem("q25c-dontknow", dontknow);
-    localStorage.setItem("q25c", JSON.stringify(input));
-    localStorage.setItem("q25c-other", other);
 
-    if (input.length === 0 && !none && !other && !dontknow) {
+    if (input.length === 0 && none === false && !other) {
       handleShow();
     } else {
       const data = {
@@ -295,7 +331,10 @@ export default function Question25C() {
                         name={row.key}
                         value={row.value}
                         onChange={handleClick}
-                        disabled={none || dontknow ? true : false}
+                        checked={checked[row.key]}
+                        disabled={
+                          none === true || dontknow === true ? true : false
+                        }
                       ></input>
                       {row.value}
                     </label>
@@ -364,7 +403,12 @@ export default function Question25C() {
                                     name={row.key}
                                     value={row.value}
                                     onChange={handleClick}
-                                    disabled={none || dontknow ? true : false}
+                                    checked={checked[row.key]}
+                                    disabled={
+                                      none === true || dontknow === true
+                                        ? true
+                                        : false
+                                    }
                                   ></input>
                                 </label>
                               </td>
@@ -401,7 +445,12 @@ export default function Question25C() {
                                     name={row.key}
                                     value={row.value}
                                     onChange={handleClick}
-                                    disabled={none || dontknow ? true : false}
+                                    checked={checked[row.key]}
+                                    disabled={
+                                      none === true || dontknow === true
+                                        ? true
+                                        : false
+                                    }
                                   ></input>
                                 </label>
                               </td>

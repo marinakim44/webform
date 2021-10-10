@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question24r() {
+export default function Question24() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,8 +36,6 @@ export default function Question24r() {
     { index: "4", key: "D", value: "Показатели удовлетворенности клиентов" },
     { index: "5", key: "E", value: "Цели автоматизации и цифровых технологий" },
     { index: "6", key: "F", value: "Показатели вовлеченности сотрудников " },
-    { index: "7", key: "G", value: "Ничего из вышеперечисленного" },
-    { index: "8", key: "H", value: "Предпочел бы не отвечать" },
   ];
 
   const columns = [
@@ -51,10 +49,7 @@ export default function Question24r() {
     },
   ];
 
-  const [input, setInput] = useState({
-    A: [],
-    B: [],
-  });
+  const [input, setInput] = useState([]);
 
   const [checked, setChecked] = useState({
     A1: false,
@@ -63,8 +58,6 @@ export default function Question24r() {
     A4: false,
     A5: false,
     A6: false,
-    A7: false,
-    A8: false,
 
     B1: false,
     B2: false,
@@ -72,82 +65,126 @@ export default function Question24r() {
     B4: false,
     B5: false,
     B6: false,
-    B7: false,
-    B8: false,
   });
 
-  const [noneA, setNoneA] = useState(false);
-  const [noneB, setNoneB] = useState(false);
-  const [notA, setNotA] = useState(false);
-  const [notB, setNotB] = useState(false);
+  const [none, setNone] = useState({
+    A: false,
+    B: false,
+  });
+  const [not, setNot] = useState({
+    A: false,
+    B: false,
+  });
 
   function handleClick(e) {
     const { name, value } = e.target;
     const index = name + value;
+
     setChecked((prev) => {
       return {
         ...prev,
         [index]: !checked[index],
       };
     });
-    if (name === "A" && value === "Ничего из вышеперечисленного") {
-      setNoneA(!noneA);
-      setInput((prev) => {
-        return {
-          ...prev,
-          [name]: ["Ничего из вышеперечисленного"],
-        };
-      });
-    }
-    if (name === "B" && value === "Ничего из вышеперечисленного") {
-      setNoneB(!noneB);
-      setInput((prev) => {
-        return {
-          ...prev,
-          [name]: ["Ничего из вышеперечисленного"],
-        };
-      });
-    }
-    if (name === "A" && value === "Предпочел бы не отвечать") {
-      setNotA(!notA);
-      setInput((prev) => {
-        return {
-          ...prev,
-          [name]: ["Предпочел бы не отвечать"],
-        };
-      });
-    }
-    if (name === "B" && value === "Предпочел бы не отвечать") {
-      setNotB(!notB);
-      setInput((prev) => {
-        return {
-          ...prev,
-          [name]: ["Предпочел бы не отвечать"],
-        };
-      });
-    }
-    if (name === "A" && !input.A.includes(value)) {
-      input.A.push(value);
-    }
-    if (name === "B" && !input.B.includes(value)) {
-      input.B.push(value);
-    }
   }
 
+  const handleNone = (e) => {
+    const { name, value } = e.target;
+    const index = name + value;
+
+    setNone((prev) => {
+      return {
+        ...prev,
+        [name]: !none[name],
+      };
+    });
+
+    if (none[name] === false) {
+      Object.entries(checked)
+        .filter((x) => x[0].slice(0, 1) === name && x[0] !== index)
+        .map((x) => {
+          return (
+            (checked[x[0]] = false),
+            setNot((prev) => {
+              return {
+                ...prev,
+                [name]: false,
+              };
+            }),
+            setInput(input.filter((el) => el[0].slice(0, 1) !== name))
+          );
+        });
+    }
+  };
+
+  const handleNot = (e) => {
+    const { name, value } = e.target;
+    const index = name + value;
+
+    setNot((prev) => {
+      return {
+        ...prev,
+        [name]: !not[name],
+      };
+    });
+
+    if (not[name] === false) {
+      Object.entries(checked)
+        .filter((x) => x[0].slice(0, 1) === name && x[0] !== index)
+        .map((x) => {
+          return (
+            (checked[x[0]] = false),
+            setNone((prev) => {
+              return {
+                ...prev,
+                [name]: false,
+              };
+            }),
+            setInput(input.filter((el) => el[0].slice(0, 1) !== name))
+          );
+        });
+    }
+  };
+
   useEffect(() => {
-    localStorage.setItem("q24", JSON.stringify(input));
+    Object.entries(checked)
+      .filter((x) => x[1] === true)
+      .map((x) => {
+        if (!input.includes(x[0])) {
+          return input.push(x[0]);
+        }
+        return;
+      });
+
+    Object.entries(checked)
+      .filter((x) => x[1] === false)
+      .map((x) => {
+        if (input.includes(x[0])) {
+          return setInput(input.filter((e) => e !== x[0]));
+        }
+        return;
+      });
+
     localStorage.setItem("q24-checked", JSON.stringify(checked));
-  });
+    localStorage.setItem("q24", JSON.stringify(input));
+    localStorage.setItem("q24-none", JSON.stringify(none));
+    localStorage.setItem("q24-not", JSON.stringify(not));
+  }, [checked, input, none, not]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(input);
 
-    if (input.A.length === 0) {
-      if (input.B.length === 0) {
-        handleShow();
-      }
-    } else if (input.B.length === 0) {
+    if (
+      input.filter((x) => x.slice(0, 1) === "A").length === 0 &&
+      none.A === false &&
+      not.A === false
+    ) {
+      handleShow();
+    } else if (
+      input.filter((x) => x.slice(0, 1) === "B").length === 0 &&
+      none.B === false &&
+      not.B === false
+    ) {
       handleShow();
     } else {
       history.push("/rus-q25");
@@ -185,6 +222,8 @@ export default function Question24r() {
         q22: JSON.parse(localStorage.getItem("q22")),
         q23: localStorage.getItem("q23"),
         q24: JSON.parse(localStorage.getItem("q24")),
+        q24none: JSON.parse(localStorage.getItem("q24-none")),
+        q24not: JSON.parse(localStorage.getItem("q24-not")),
       };
 
       axios.post("/allinputs", data);
@@ -217,9 +256,7 @@ export default function Question24r() {
                 B) в ваш личный годовой бонус или в долгосрочную систему
                 вознаграждений?{" "}
               </p>
-            </p>
-            <p className="question">
-              <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ВСЕ, ЧТО ПРИМЕНИМО)</i>
+              <br /> <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ВСЕ, ЧТО ПРИМЕНИМО)</i>
             </p>
           </div>
 
@@ -239,15 +276,12 @@ export default function Question24r() {
                           <label className="m-label">
                             <input
                               type="checkbox"
-                              className="m-input"
                               name={col.key}
-                              value={row.value}
+                              value={row.index}
                               onChange={handleClick}
+                              checked={checked[`${col.key}${row.index}`]}
                               disabled={
-                                (noneA && row.key !== "G" && col.key === "A") ||
-                                (noneB && row.key !== "G" && col.key === "B") ||
-                                (notA && row.key !== "H" && col.key === "A") ||
-                                (notB && row.key !== "H" && col.key === "B")
+                                none[col.key] === true || not[col.key] === true
                                   ? true
                                   : false
                               }
@@ -257,6 +291,32 @@ export default function Question24r() {
                         </div>
                       );
                     })}
+                    <div className="m-div">
+                      <label className="m-label">
+                        <input
+                          type="checkbox"
+                          name={col.key}
+                          value="7"
+                          onChange={handleNone}
+                          checked={none[col.key] === true ? true : false}
+                          disabled={not[col.key] === true ? true : false}
+                        ></input>
+                        Ничего из вышеперечисленного
+                      </label>
+                    </div>
+                    <div className="m-div">
+                      <label className="m-label">
+                        <input
+                          type="checkbox"
+                          name={col.key}
+                          value="8"
+                          onChange={handleNot}
+                          checked={not[col.key] === true ? true : false}
+                          disabled={none[col.key] === true ? true : false}
+                        ></input>
+                        Предпочел бы не отвечать
+                      </label>
+                    </div>
                   </div>
                 );
               })}
@@ -287,20 +347,12 @@ export default function Question24r() {
                               <input
                                 type="checkbox"
                                 name={col.key}
-                                value={row.value}
+                                value={row.index}
                                 onChange={handleClick}
-                                // checked={checked[`${col.key}${row.index}`]}
+                                checked={checked[`${col.key}${row.index}`]}
                                 disabled={
-                                  (noneA &&
-                                    row.key !== "G" &&
-                                    col.key === "A") ||
-                                  (noneB &&
-                                    row.key !== "G" &&
-                                    col.key === "B") ||
-                                  (notA &&
-                                    row.key !== "H" &&
-                                    col.key === "A") ||
-                                  (notB && row.key !== "H" && col.key === "B")
+                                  none[col.key] === true ||
+                                  not[col.key] === true
                                     ? true
                                     : false
                                 }
@@ -312,6 +364,64 @@ export default function Question24r() {
                     </tr>
                   );
                 })}
+                <tr>
+                  <td>G</td>
+                  <td className="left-align-text">
+                    Ничего из вышеперечисленного
+                  </td>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        name="A"
+                        value="7"
+                        onChange={handleNone}
+                        checked={none.A === true ? true : false}
+                        disabled={not.A === true ? true : false}
+                      ></input>
+                    </label>
+                  </td>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        name="B"
+                        value="7"
+                        onChange={handleNone}
+                        checked={none.B === true ? true : false}
+                        disabled={not.B === true ? true : false}
+                      ></input>
+                    </label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>H</td>
+                  <td className="left-align-text">Предпочел бы не отвечать</td>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        name="A"
+                        value="8"
+                        onChange={handleNot}
+                        checked={not.A === true ? true : false}
+                        disabled={none.A === true ? true : false}
+                      ></input>
+                    </label>
+                  </td>
+                  <td className="input-cell">
+                    <label className="label-cell">
+                      <input
+                        type="checkbox"
+                        name="B"
+                        value="8"
+                        onChange={handleNot}
+                        checked={not.B === true ? true : false}
+                        disabled={none.B === true ? true : false}
+                      ></input>
+                    </label>
+                  </td>
+                </tr>
               </tbody>
             </Table>
           )}

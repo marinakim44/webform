@@ -11,11 +11,8 @@ export default function Question5r() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q5checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q5checkedA")));
-    }
-    if (localStorage.getItem("q5checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q5checkedB")));
+    if (localStorage.getItem("q5-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q5-checked")));
     }
     if (localStorage.getItem("q5")) {
       setInput(JSON.parse(localStorage.getItem("q5")));
@@ -59,13 +56,12 @@ export default function Question5r() {
     A: "",
     B: "",
   });
-  const [checkedA, setCheckedA] = useState({
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
     A4: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
@@ -75,41 +71,42 @@ export default function Question5r() {
   function handleChange(e) {
     const { name, value } = e.target;
     const index = name + value;
-    setInput((prevInput) => {
+
+    setInput((prev) => {
       return {
-        ...prevInput,
+        ...prev,
         [name]: value,
       };
     });
 
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
 
-      localStorage.setItem("q5checkedA", JSON.stringify(checkedA));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-
-      localStorage.setItem("q5checkedB", JSON.stringify(checkedB));
-    }
+    Object.keys(checked)
+      .filter((el) => el === index)
+      .map((el) => {
+        checked[el] = true;
+      });
+    Object.keys(checked)
+      .filter((el) => el !== index && el.slice(0, 1) === name)
+      .map((el) => {
+        checked[el] = false;
+      });
   }
+
+  useEffect(() => {
+    localStorage.setItem("q5", JSON.stringify(input));
+    localStorage.setItem("q5-checked", JSON.stringify(checked));
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     if (input.A && input.B) {
-      localStorage.setItem("q5", JSON.stringify(input));
       localStorage.setItem("q5-carbonNeutral", input.A);
       localStorage.setItem("q5-netZero", input.B);
 
@@ -222,12 +219,7 @@ export default function Question5r() {
                               value={col.key}
                               type="radio"
                               onChange={handleChange}
-                              checked={
-                                row.key === "A"
-                                  ? checkedA[`${row.key}${col.key}`]
-                                  : checkedB[`${row.key}${col.key}`]
-                              }
-                              autoComplete="on"
+                              checked={checked[`${row.key}${col.key}`]}
                             ></input>
                             {col.value}
                           </label>
@@ -294,12 +286,7 @@ export default function Question5r() {
                                   value={col.key}
                                   type="radio"
                                   onChange={handleChange}
-                                  checked={
-                                    row.key === "A"
-                                      ? checkedA[`${row.key}${col.key}`]
-                                      : checkedB[`${row.key}${col.key}`]
-                                  }
-                                  autoComplete="on"
+                                  checked={checked[`${row.key}${col.key}`]}
                                 ></input>
                               </label>
                             </td>

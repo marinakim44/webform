@@ -115,7 +115,7 @@ export default function Question7() {
                 className="m-input radio-input"
                 name="option"
                 value="option1"
-                onClick={handleClick}
+                onChange={handleClick}
                 checked={checked.option1}
               ></input>
               Limiting global warming to 1.5° Celsius
@@ -128,7 +128,7 @@ export default function Question7() {
                 className="m-input radio-input"
                 name="option"
                 value="option2"
-                onClick={handleClick}
+                onChange={handleClick}
                 checked={checked.option2}
               ></input>
               Limiting global warming to well below 2.0° Celsius
@@ -141,7 +141,7 @@ export default function Question7() {
                 className="m-input radio-input"
                 name="option"
                 value="option3"
-                onClick={handleClick}
+                onChange={handleClick}
                 checked={checked.option3}
               ></input>
               My company’s net-zero commitment will not be aligned to a
@@ -155,7 +155,7 @@ export default function Question7() {
                 className="m-input radio-input"
                 name="option"
                 value="option4"
-                onClick={handleClick}
+                onChange={handleClick}
                 checked={checked.option4}
               ></input>
               Don't know

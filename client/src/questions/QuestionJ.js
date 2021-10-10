@@ -1,12 +1,4 @@
-import {
-  BrowserRouter,
-  Route,
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
-import QuestionI from "./QuestionI";
-import EngFinish from "../EngFinish";
+import { Route, Link, useHistory } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
@@ -18,30 +10,90 @@ export default function QuestionJ() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (localStorage.getItem("qj-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("qj-checked")));
+    }
+    if (localStorage.getItem("qj")) {
+      setInput(localStorage.getItem("qj"));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
   const rows = [
-    "Fewer than 500",
-    "500-999",
-    "1,000-4,999",
-    "5,000–9,999",
-    "10,000–24,999",
-    "25,000–49,999",
-    "50,000 or more",
-    "Don't know",
+    {
+      key: "A",
+      value: "Fewer than 500",
+    },
+    {
+      key: "B",
+      value: "500-999",
+    },
+    {
+      key: "C",
+      value: "1,000-4,999",
+    },
+    {
+      key: "D",
+      value: "5000–9,999",
+    },
+    {
+      key: "E",
+      value: "10,000–24,999",
+    },
+    {
+      key: "F",
+      value: "25,000–49,999",
+    },
+    {
+      key: "G",
+      value: "50,000 or more",
+    },
+    {
+      key: "H",
+      value: "Don't know",
+    },
   ];
 
   const [input, setInput] = useState("");
+  const [checked, setChecked] = useState({
+    A: false,
+    B: false,
+    C: false,
+    D: false,
+    E: false,
+    F: false,
+    G: false,
+    H: false,
+  });
 
   function handleClick(e) {
-    setInput(e.target.value);
+    const { value } = e.target;
+    setInput(value);
+
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [value]: true,
+      };
+    });
+
+    Object.keys(checked)
+      .filter((v) => v === value)
+      .map((v) => (checked[v] = true));
+    Object.keys(checked)
+      .filter((v) => v !== value)
+      .map((v) => (checked[v] = false));
   }
+
+  useEffect(() => {
+    localStorage.setItem("qj", input);
+    localStorage.setItem("qj-checked", JSON.stringify(checked));
+  }, [input, checked]);
+
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("qj", input);
 
     if (!input) {
       handleShow();
@@ -152,12 +204,13 @@ export default function QuestionJ() {
                     <label className="label-cell m-label">
                       <input
                         type="radio"
-                        value={row}
-                        onClick={handleClick}
+                        value={row.key}
+                        onChange={handleClick}
                         name="option"
                         className="radio-input m-input"
+                        checked={checked[row.key]}
                       ></input>
-                      {row}
+                      {row.value}
                     </label>
                   </div>
                 );

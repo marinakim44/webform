@@ -10,20 +10,11 @@ export default function Question14r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (localStorage.getItem("q14-checkedA")) {
-      setCheckedA(JSON.parse(localStorage.getItem("q14-checkedA")));
-    }
-    if (localStorage.getItem("q14-checkedB")) {
-      setCheckedB(JSON.parse(localStorage.getItem("q14-checkedB")));
-    }
-    if (localStorage.getItem("q14-checkedC")) {
-      setCheckedC(JSON.parse(localStorage.getItem("q14-checkedC")));
+    if (localStorage.getItem("q14-checked")) {
+      setChecked(JSON.parse(localStorage.getItem("q14-checked")));
     }
     if (localStorage.getItem("q14")) {
       setInput(JSON.parse(localStorage.getItem("q14")));
-    }
-    if (localStorage.getItem("q14-checked")) {
-      setChecked(JSON.parse(localStorage.getItem("q14-checked")));
     }
   }, []);
   const rows = [
@@ -93,8 +84,7 @@ export default function Question14r() {
     C: "",
   });
 
-  const [checked, setChecked] = useState([]);
-  const [checkedA, setCheckedA] = useState({
+  const [checked, setChecked] = useState({
     A1: false,
     A2: false,
     A3: false,
@@ -103,8 +93,7 @@ export default function Question14r() {
     A6: false,
     A7: false,
     A8: false,
-  });
-  const [checkedB, setCheckedB] = useState({
+
     B1: false,
     B2: false,
     B3: false,
@@ -113,8 +102,7 @@ export default function Question14r() {
     B6: false,
     B7: false,
     B8: false,
-  });
-  const [checkedC, setCheckedC] = useState({
+
     C1: false,
     C2: false,
     C3: false,
@@ -135,49 +123,35 @@ export default function Question14r() {
       };
     });
 
-    if (!checked.includes(name)) {
-      checked.push(name);
-    }
+    setChecked((prev) => {
+      return {
+        ...prev,
+        [index]: true,
+      };
+    });
 
-    //SAVING PREVIOUS INPUT
-    if (name === "A") {
-      Object.keys(checkedA)
-        .filter((v) => v === index)
-        .map((v) => (checkedA[v] = true));
-      Object.keys(checkedA)
-        .filter((v) => v !== index)
-        .map((v) => (checkedA[v] = false));
-    }
-    if (name === "B") {
-      Object.keys(checkedB)
-        .filter((v) => v === index)
-        .map((v) => (checkedB[v] = true));
-      Object.keys(checkedB)
-        .filter((v) => v !== index)
-        .map((v) => (checkedB[v] = false));
-    }
-    if (name === "C") {
-      Object.keys(checkedC)
-        .filter((v) => v === index)
-        .map((v) => (checkedC[v] = true));
-      Object.keys(checkedC)
-        .filter((v) => v !== index)
-        .map((v) => (checkedC[v] = false));
-    }
+    Object.keys(checked)
+      .filter((y) => y.slice(0, 1) === name && y[0] === index)
+      .map((z) => {
+        return (checked[z] = true);
+      });
+
+    Object.keys(checked)
+      .filter((y) => y.slice(0, 1) === name && y[0] !== index)
+      .map((z) => {
+        return (checked[z] = false);
+      });
   }
 
   useEffect(() => {
-    localStorage.setItem("q14-checkedA", JSON.stringify(checkedA));
-    localStorage.setItem("q14-checkedB", JSON.stringify(checkedB));
-    localStorage.setItem("q14-checkedC", JSON.stringify(checkedC));
     localStorage.setItem("q14-checked", JSON.stringify(checked));
     localStorage.setItem("q14", JSON.stringify(input));
-  }, [input, checkedA, checkedB, checkedC, checked]);
+  }, [input, checked]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (checked.length < 3) {
+    if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
       history.push("/rus-q15");
@@ -257,18 +231,9 @@ export default function Question14r() {
                               type="radio"
                               name={row.key}
                               value={col.key}
-                              onClick={handleClick}
+                              onChange={handleClick}
                               className="m-input"
-                              checked={
-                                row.key === "A"
-                                  ? checkedA[`${row.key}${col.key}`]
-                                  : row.key === "B"
-                                  ? checkedB[`${row.key}${col.key}`]
-                                  : row.key === "C"
-                                  ? checkedC[`${row.key}${col.key}`]
-                                  : ""
-                              }
-                              autoComplete="on"
+                              checked={checked[`${row.key}${col.key}`]}
                             />
 
                             {col.value}
@@ -340,17 +305,12 @@ export default function Question14r() {
                                   type="radio"
                                   name={row.key}
                                   value={col.key}
-                                  onClick={handleClick}
+                                  onChange={handleClick}
                                   checked={
-                                    row.key === "A"
-                                      ? checkedA[`${row.key}${col.key}`]
-                                      : row.key === "B"
-                                      ? checkedB[`${row.key}${col.key}`]
-                                      : row.key === "C"
-                                      ? checkedC[`${row.key}${col.key}`]
-                                      : ""
+                                    checked[`${row.key}${col.key}`] === true
+                                      ? true
+                                      : false
                                   }
-                                  autoComplete="on"
                                 ></input>
                               </label>
                             </td>
