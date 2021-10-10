@@ -6,6 +6,7 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 
 function RusStart() {
+  const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
     if (localStorage.getItem("name")) {
@@ -297,7 +298,8 @@ function RusStart() {
       <div className="main">
         <div
           className={
-            Object.entries(active).filter((el) => el[1] === true).length > 0
+            Object.entries(active).filter((el) => el[1] === true).length > 0 &&
+            width <= 480
               ? ""
               : "sticky-sub-div"
           }

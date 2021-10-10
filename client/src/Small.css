@@ -11,6 +11,9 @@
     padding-right: 1rem;
     font-size: 12px;
   }
+  .nav-bar-text {
+    width: 200px;
+  }
   .logo {
     width: 70px;
   }
