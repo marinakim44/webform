@@ -41,7 +41,6 @@ export default function Question4r() {
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [concerns, setConcerns] = useState([]);
-  const [input, setInput] = useState([]);
   const [checked, setChecked] = useState({
     A1: false,
     A2: false,
@@ -155,11 +154,14 @@ export default function Question4r() {
             }
           } else {
             if (list.includes(v[0])) {
-              list.pop(v[0]);
+              // list.pop(v[0]);
+              setList(list.filter((x) => x !== v[0]));
             }
           }
         });
     });
+
+    console.log(list);
 
     localStorage.setItem("q4-checked", JSON.stringify(checked));
     localStorage.setItem("q4-disabled", JSON.stringify(disabled));
@@ -220,20 +222,15 @@ export default function Question4r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <div className="left-align-text">
+          <div className="left-align-text question">
             <span>
               Как вы ожидаете, что на Вашу компанию повлияют следующие угрозы в
               течение следующих 12 месяцев?
               <i>
-                <p
-                  className="question"
-                  style={{ margin: width <= 480 ? "1rem 0" : "" }}
-                >
-                  ВЫБЕРИТЕ НЕ БОЛЕЕ ТРЕХ ВАРИАНТОВ
-                </p>
+                <p className="question-i">ВЫБЕРИТЕ НЕ БОЛЕЕ ТРЕХ ВАРИАНТОВ</p>
               </i>
               {width <= 768 ? (
-                <p className="left-align-text">
+                <p className="question">
                   <i>Это может помешать нашей компании...</i>
                 </p>
               ) : (
@@ -306,13 +303,13 @@ export default function Question4r() {
               <Button
                 variant="secondary"
                 className="back-btn"
-                onClick={() => history.push("/eng-q3")}
+                onClick={() => history.goBack()}
               >
                 <i
                   className="fas fa-chevron-left"
                   style={{ color: "#fff", marginRight: "8px" }}
                 ></i>
-                Back
+                Назад
               </Button>
 
               <Button
@@ -320,7 +317,7 @@ export default function Question4r() {
                 className="next-btn"
                 onClick={handleSubmit}
               >
-                Next
+                Далее
                 <i
                   className="fas fa-chevron-right"
                   style={{ color: "#fff", marginLeft: "8px" }}

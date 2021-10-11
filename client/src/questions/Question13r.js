@@ -122,20 +122,17 @@ export default function Question13r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Обычно сколько:
-            <p style={{ margin: "0 auto 0 20px" }}>
+          <p className="left-align-text question">
+            <strong>Обычно сколько:</strong>
+            <p className="question-option">
               A) общих стратегических целей есть у вашей компании?
             </p>
-            <p style={{ margin: "0 auto 0 20px" }}>
+            <p className="question-option">
               B) основных инициатив осуществляет ваша компания в поддержку этих
               стратегических целей? (в целом)
             </p>
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
           </p>
         </div>
@@ -143,10 +140,10 @@ export default function Question13r() {
           <div style={{ textAlign: "left" }}>
             <Row style={{ verticalAlign: "middle" }}>
               <Col sm={6}>
-                <p>
+                <p className="question">
                   <strong>A) Общие стратегические цели</strong>
                 </p>
-                <p>
+                <p className="question">
                   <i>Увеличение доли рынка</i>
                 </p>
               </Col>
@@ -172,7 +169,7 @@ export default function Question13r() {
                     <Dropdown.Item eventKey="8">8</Dropdown.Item>
                     <Dropdown.Item eventKey="9">9</Dropdown.Item>
                     <Dropdown.Item eventKey="10">10</Dropdown.Item>
-                    <Dropdown.Item eventKey="11 or more">
+                    <Dropdown.Item eventKey="11 или более">
                       11 или более
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -181,7 +178,7 @@ export default function Question13r() {
               <Col>
                 <Button
                   type="button"
-                  variant={dontknow.A === true ? "warning" : "light"}
+                  variant={dontknow.A === true ? "warning" : "outline-dark"}
                   name="A"
                   value="dontknow"
                   onClick={handleDontknow}
@@ -194,13 +191,13 @@ export default function Question13r() {
             </Row>
             <Row>
               <Col sm={6}>
-                <p>
+                <p className="question">
                   <strong>
                     B) Основные инициативы, осуществляемые в поддержку этих
                     стратегических целей (в целом)
                   </strong>
                 </p>
-                <p>
+                <p className="question">
                   <i>
                     <ul>
                       <li>Запуск новой рекламной кампании</li>
@@ -231,7 +228,7 @@ export default function Question13r() {
                     <Dropdown.Item eventKey="36-40">36-40</Dropdown.Item>
                     <Dropdown.Item eventKey="39-45">39-45</Dropdown.Item>
                     <Dropdown.Item eventKey="46-50">46-50</Dropdown.Item>
-                    <Dropdown.Item eventKey="51 or more">
+                    <Dropdown.Item eventKey="51 или более">
                       51 или более
                     </Dropdown.Item>
                   </Dropdown.Menu>
@@ -240,7 +237,7 @@ export default function Question13r() {
               <Col>
                 <Button
                   type="button"
-                  variant={dontknow.B === true ? "warning" : "light"}
+                  variant={dontknow.B === true ? "warning" : "outline-dark"}
                   name="B"
                   value="dontknow"
                   onClick={handleDontknow}

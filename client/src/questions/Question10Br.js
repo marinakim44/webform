@@ -220,14 +220,11 @@ export default function Question10Br() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="left-align-text question">
             Насколько важны следующие факторы, лежащие в основе обязательств
             вашей компании по углеродной нейтральности и/или нулевым выбросам?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
           </p>
         </div>

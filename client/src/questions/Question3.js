@@ -249,8 +249,8 @@ export default function Question3() {
               negatively impacting your company over the next 12 months?
             </p>
             <i>
-              <p className="question">
-                PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT
+              <p className="question-i">
+                PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
               </p>
             </i>
           </div>
@@ -264,7 +264,7 @@ export default function Question3() {
                     <p className="question" style={{ color: "#db536a" }}>
                       <strong>{row.value}</strong>
                     </p>
-                    <p>{row.text}</p>
+                    <p className="question-sub">{row.text}</p>
                     {columns.map((col) => {
                       return (
                         <div className="m-div">

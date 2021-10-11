@@ -184,11 +184,8 @@ export default function Question1r() {
               </span>
             </p>
             <i>
-              <p
-                className="question"
-                style={{ margin: width <= 480 ? "1rem 0" : "" }}
-              >
-                (ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)
+              <p className="question-i">
+                ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА
               </p>
             </i>
           </div>
@@ -200,7 +197,7 @@ export default function Question1r() {
                 <div>
                   <strong>
                     <p style={{ color: "#db536a" }} className="question">
-                      {row.key}) ${row.value}
+                      {row.key}) {row.value}
                     </p>
                   </strong>
                   {columns.map((col) => {

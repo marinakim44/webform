@@ -2,6 +2,7 @@
 @media (max-width: 480px) {
   body {
     background: #db536a;
+    line-height: 22px;
   }
   .nav-bar {
     width: 100%;
@@ -13,6 +14,7 @@
   }
   .nav-bar-text {
     width: 200px;
+    line-height: 14px;
   }
   .logo {
     width: 70px;
@@ -27,6 +29,9 @@
   .main h1 {
     text-align: center;
     margin: 0;
+  }
+  .sticky-sub-div {
+    padding: 4px;
   }
 
   .lng-btn {
@@ -79,7 +84,29 @@
   .question {
     font-size: 14px;
     text-align: left;
-    margin: 0.8rem 0 1rem;
+    margin: 0.2rem 0 0.2rem;
+    line-height: 18px;
+  }
+  .question-i {
+    font-size: 14px;
+    text-align: left;
+    margin: 8px 0;
+    color: grey;
+    line-height: 18px;
+  }
+  .question-sub {
+    font-size: 14px;
+    font-style: italic;
+  }
+  .question-option {
+    font-size: 14px;
+    margin: 0;
+  }
+  .left-align-text {
+    margin: 0;
+  }
+  .progressBarEmpty {
+    margin-bottom: 1rem;
   }
   .input-text {
     height: 40px;
@@ -116,9 +143,14 @@
   .percent {
     font-size: 22px;
   }
+  .m-div {
+    padding: 10px;
+    margin: 6px 0;
+  }
   .m-label {
     font-size: 14px;
   }
+
   .m-none-dontknow-div {
     display: flex;
     flex-direction: column;
@@ -145,5 +177,12 @@
     font-size: 14px;
     width: 100%;
     height: 60px;
+  }
+  .modal-window {
+    top: 35%;
+  }
+  .modal-btn {
+    width: 100%;
+    height: 50px;
   }
 }

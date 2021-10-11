@@ -173,7 +173,7 @@ export default function Question5r() {
             <ModalAlert show={show} close={handleClose} />
             <p className="question">Приняла ли ваша компания:</p>
             {width <= 768 ? (
-              <p className="left-align-text">
+              <p className="left-align-text question">
                 <span>A) обязательство по углеродной нейтральности?</span>
                 <br />
                 <span>B) обязательство по нулевым выбросам?</span>
@@ -190,12 +190,7 @@ export default function Question5r() {
                 </span>
               </p>
             )}
-            <p
-              style={{
-                margin: width <= 480 ? "1rem 0" : "",
-                textAlign: "left",
-              }}
-            >
+            <p className="question-i">
               <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
             </p>
           </div>
@@ -236,7 +231,7 @@ export default function Question5r() {
                   onClick={() => history.goBack()}
                 >
                   <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
+                  Назад
                 </Button>
 
                 <Button
@@ -244,7 +239,7 @@ export default function Question5r() {
                   className="next-btn"
                   onClick={handleSubmit}
                 >
-                  Next
+                  Далее
                   <i class="fas fa-chevron-right next-arrow"></i>
                 </Button>
               </div>

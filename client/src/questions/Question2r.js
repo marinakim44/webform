@@ -35,6 +35,12 @@ export default function Question2r() {
     other2: "",
     other3: "",
   });
+  const [active, setActive] = useState({
+    dropdown: false,
+    other1: false,
+    other2: false,
+    other3: false,
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -77,6 +83,45 @@ export default function Question2r() {
       });
     }
   };
+  const handleBlurOther = (e) => {
+    const { name } = e.target;
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        [name]: false,
+      };
+    });
+  };
+
+  const handleBlur = (e) => {
+    setActive((prev) => {
+      return {
+        ...prev,
+        dropdown: false,
+      };
+    });
+  };
+
+  const handleFocusOther = (e) => {
+    const { name } = e.target;
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        [name]: true,
+      };
+    });
+  };
+
+  const handleFocus = (e) => {
+    setActive((prev) => {
+      return {
+        ...prev,
+        dropdown: true,
+      };
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -116,7 +161,14 @@ export default function Question2r() {
   return (
     <Route path="/rus-q2">
       <div className="main">
-        <div className="sticky-sub-div">
+        <div
+          className={
+            Object.entries(active).filter((el) => el[1] === true).length > 0 &&
+            width <= 480
+              ? ""
+              : "sticky-sub-div"
+          }
+        >
           <h2 className="percent">
             {Math.round(((100 / 39) * 3).toString())}% завершено
           </h2>
@@ -142,6 +194,7 @@ export default function Question2r() {
           <Creatable
             isDisabled={dontknow ? true : false}
             components={{ Menu }}
+            name="dropdown"
             isMulti
             isValidNewOption={isValidNewOption}
             options={countriesRus}
@@ -149,6 +202,8 @@ export default function Question2r() {
             placeholder="Пожалуйста, выберите 3 страны"
             onChange={handleChange}
             className="select-countries"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
 
           <Form.Control
@@ -159,6 +214,9 @@ export default function Question2r() {
             onChange={handleOther}
             disabled={dontknow ? true : false}
             className="input-text"
+            onBlur={handleBlurOther}
+            onFocus={handleFocusOther}
+            autoComplete="off"
           ></Form.Control>
           <Form.Control
             type="text"
@@ -168,6 +226,9 @@ export default function Question2r() {
             placeholder="Другое 2 (пожалуйста, укажите)"
             disabled={dontknow ? true : false}
             className="input-text"
+            onBlur={handleBlurOther}
+            onFocus={handleFocusOther}
+            autoComplete="off"
           ></Form.Control>
           <Form.Control
             type="text"
@@ -177,6 +238,9 @@ export default function Question2r() {
             placeholder="Другое 3 (пожалуйста, укажите)"
             className="input-text"
             disabled={dontknow ? true : false}
+            onBlur={handleBlurOther}
+            onFocus={handleFocusOther}
+            autoComplete="off"
           ></Form.Control>
           <div className="dontknow-div">
             <Button

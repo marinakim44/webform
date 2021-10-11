@@ -252,14 +252,11 @@ export default function Question18r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="left-align-text question">
             Если рассмотреть налоги, которые платит ваша компания, то в какой
             степени вы согласны / не согласны со следующими утверждениями?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
           </p>
         </div>

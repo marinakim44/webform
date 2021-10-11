@@ -201,15 +201,13 @@ export default function Question14r() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
-              Обычно как часто ваша компания формально: оценивает свои основные
-              инициативы? меняет свои основные инициативы? информирует персонал
-              о своих основных инициативах?
+            <p className="left-align-text question">
+              <strong>Обычно как часто ваша компания формально:</strong>
+              <br />- оценивает свои основные инициативы?
+              <br />- меняет свои основные инициативы?
+              <br />- информирует персонал о своих основных инициативах?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
             </p>
           </div>
@@ -254,7 +252,7 @@ export default function Question14r() {
                     className="fas fa-chevron-left"
                     style={{ marginRight: "8px" }}
                   ></i>
-                  Back
+                  Назад
                 </Button>
 
                 <Button
@@ -262,7 +260,7 @@ export default function Question14r() {
                   className="next-btn"
                   onClick={handleSubmit}
                 >
-                  Next
+                  Далее
                   <i
                     className="fas fa-chevron-right"
                     style={{ marginLeft: "8px" }}

@@ -169,29 +169,32 @@ export default function Question3r() {
         Object.keys(checked)
           .filter((el) => el.slice(0, 1) === e[0] && el === index)
           .map((y) => {
-            checked[y] = true;
+            return (checked[y] = true);
           });
         Object.keys(checked)
           .filter((z) => z.slice(0, 1) === e[0] && z !== index)
           .map((a) => {
-            checked[a] = false;
+            return (checked[a] = false);
           });
       });
-  }, [input, checked, concerns]);
 
-  useEffect(() => {
-    Object.entries(input).map((el) => {
-      if (el[1] === "3" || el[1] === "4" || el[1] === "5") {
-        if (!concerns.includes(el[0])) {
-          concerns.push(el[0]);
+    Object.entries(input)
+      .filter((x) => x[1] === "3" || x[1] === "4" || x[1] === "5")
+      .map((x) => {
+        if (!concerns.includes(x[0])) {
+          concerns.push(x[0]);
         }
-      } else if (el[1] === "1" || el[1] === "2" || el[1] === "6") {
-        if (concerns.includes(el[0])) {
-          concerns.pop(el[0]);
+      });
+    Object.entries(input)
+      .filter((x) => x[1] === "1" || x[1] === "2" || x[1] === "6")
+      .map((x) => {
+        if (concerns.includes(x[0])) {
+          setConcerns(concerns.filter((y) => y !== x[0]));
         }
-      }
-    });
-  }, [input]);
+      });
+
+    console.log(concerns);
+  }, [input, checked, concerns]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -239,15 +242,15 @@ export default function Question3r() {
               }}
             ></div>
           </div>
-          <ModalAlert show={show} close={handleClose} />
+          <ModalAlert show={show} close={handleClose} className="modal-div" />
           <div className="left-align-text">
             <p>
               Насколько вы обеспокоены, что следующие глобальные угрозы
               негативно повлияют на вашу компанию в следующие 12 месяцев?
             </p>
             <i>
-              <p className="question">
-                (ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)
+              <p className="question-i">
+                ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА
               </p>
             </i>
           </div>
@@ -261,7 +264,7 @@ export default function Question3r() {
                     <p className="question" style={{ color: "#db536a" }}>
                       <strong>{row.value}</strong>
                     </p>
-                    <p>{row.text}</p>
+                    <p className="question-sub">{row.text}</p>
                     {columns.map((col) => {
                       return (
                         <div className="m-div">

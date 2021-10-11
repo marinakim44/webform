@@ -144,14 +144,11 @@ export default function Question16r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="left-align-text question">
             В течение обычного цикла проверок сколько различных отчетов о
             прибылях и убытках (P&L) вы лично проверяете?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
           </p>
         </div>

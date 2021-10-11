@@ -237,15 +237,12 @@ export default function Question11r() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="left-align-text question">
               Насколько точны следующие утверждения относительно того, почему
               ваша компания не взяла на себя обязательство по углеродной
               нейтральности или нулевым выбросам?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
             </p>
           </div>

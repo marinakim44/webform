@@ -98,11 +98,11 @@ export default function Question8r() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="left-align-text question">
               Был ли подход вашей компании к сокращению выбросов парниковых
               газов (ПГ) независимо оценен и верифицирован (напр., SBTi)?
             </p>
-            <p className="question">
+            <p className="question-i">
               <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
             </p>
           </div>

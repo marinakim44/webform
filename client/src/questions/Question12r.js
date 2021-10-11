@@ -204,14 +204,15 @@ export default function Question12r() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
-              Насколько благоприятны следующие факторы в отношении способности
-              вашей компании создавать финансовую ценность? <br />
-            </p>
             <p
               className="left-align-text question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
+              style={{ marginBottom: width <= 480 ? "0.5rem" : "" }}
             >
+              Насколько благоприятны следующие факторы в отношении способности
+              вашей компании создавать финансовую ценность?
+            </p>
+
+            <p className="left-align-text question-i">
               <i>
                 (благоприятные факторы - это те, которые могут помочь вашей
                 компании, неблагоприятные - те, которые могут помешать вашей
@@ -256,14 +257,14 @@ export default function Question12r() {
                   onClick={() => history.goBack()}
                 >
                   <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
+                  Назад
                 </Button>
                 <Button
                   variant="danger"
                   className="next-btn"
                   onClick={handleSubmit}
                 >
-                  Next
+                  Далее
                   <i className="fas fa-chevron-right next-arrow"></i>
                 </Button>
               </div>

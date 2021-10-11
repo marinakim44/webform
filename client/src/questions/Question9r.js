@@ -90,15 +90,12 @@ export default function Question9r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="left-align-text question">
             Будет ли подход вашей компании к сокращению выбросов парниковых
             газов (ПГ) подвергаться независимой оценке и верификации (напр.,
             SBTi)?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
           </p>
         </div>

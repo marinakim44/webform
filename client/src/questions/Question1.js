@@ -187,10 +187,7 @@ export default function Question1({ lng }) {
                 </span>
               </p>
               <i>
-                <p
-                  className="question"
-                  style={{ margin: width <= 480 ? "1rem 0" : "" }}
-                >
+                <p className="question-i">
                   PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
                 </p>
               </i>

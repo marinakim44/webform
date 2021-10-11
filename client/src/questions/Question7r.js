@@ -96,14 +96,11 @@ export default function Question7r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="left-align-text question">
             С какой научно обоснованной целью, если таковая имеется, будет
             согласовано обязательство вашей компании по нулевым выбросам?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
           </p>
         </div>

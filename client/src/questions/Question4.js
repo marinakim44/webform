@@ -41,7 +41,6 @@ export default function Question4() {
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [concerns, setConcerns] = useState([]);
-  const [input, setInput] = useState([]);
   const [checked, setChecked] = useState({
     A1: false,
     A2: false,
@@ -229,7 +228,7 @@ export default function Question4() {
               following threat(s) over the next 12 months?
               <i>
                 <p
-                  className="question"
+                  className="question-i"
                   style={{ margin: width <= 480 ? "1rem 0" : "" }}
                 >
                   PLEASE SELECT UP TO THREE RESPONSES PER EACH STATEMENT

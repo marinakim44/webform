@@ -176,16 +176,13 @@ export default function Question15r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="left-align-text question">
             Обычно сколько времени требуется вашей компании, чтобы:
             одобрить/дать зеленый свет крупным инициативам после того, как идея
             была предложена? выделить значительные ресурсы на новые крупные
             инициативы?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
           </p>
         </div>
@@ -195,7 +192,7 @@ export default function Question15r() {
               return (
                 <div>
                   <p>
-                    <strong style={{ color: "#db536a" }}>
+                    <strong style={{ color: "#db536a" }} className="question">
                       {row.key}) {row.value}
                     </strong>
                   </p>

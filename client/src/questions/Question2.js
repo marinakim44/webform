@@ -36,6 +36,12 @@ export default function Question2() {
     other2: "",
     other3: "",
   });
+  const [active, setActive] = useState({
+    dropdown: false,
+    other1: false,
+    other2: false,
+    other3: false,
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -53,8 +59,7 @@ export default function Question2() {
         selectedOptions.push(option.label);
       }
     });
-
-    console.log(selectedOptions);
+    console.log(selectedOption);
   }
 
   const handleOther = (e) => {
@@ -77,6 +82,46 @@ export default function Question2() {
         other3: "",
       });
     }
+  };
+
+  const handleBlurOther = (e) => {
+    const { name } = e.target;
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        [name]: false,
+      };
+    });
+  };
+
+  const handleBlur = (e) => {
+    setActive((prev) => {
+      return {
+        ...prev,
+        dropdown: false,
+      };
+    });
+  };
+
+  const handleFocusOther = (e) => {
+    const { name } = e.target;
+
+    setActive((prev) => {
+      return {
+        ...prev,
+        [name]: true,
+      };
+    });
+  };
+
+  const handleFocus = (e) => {
+    setActive((prev) => {
+      return {
+        ...prev,
+        dropdown: true,
+      };
+    });
   };
 
   const handleSubmit = (e) => {
@@ -117,7 +162,14 @@ export default function Question2() {
   return (
     <Route path="/eng-q2">
       <div className="main">
-        <div className="sticky-sub-div">
+        <div
+          className={
+            Object.entries(active).filter((el) => el[1] === true).length > 0 &&
+            width <= 480
+              ? ""
+              : "sticky-sub-div"
+          }
+        >
           <h2 className="percent">
             {Math.round(((100 / 39) * 3).toString())}% completed
           </h2>
@@ -132,15 +184,17 @@ export default function Question2() {
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
             <p className="question">
-              Which three countries/territories, excluding the country/territory
-              in which you are based, do you consider most important for your
-              company’s prospects for revenue growth over the next 12 months?
+              Which <strong>three countries/territories</strong>, excluding the
+              country/territory in which you are based, do you consider most
+              important for your company’s prospects for revenue growth over the
+              next 12 months?
             </p>
           </div>
         </div>
         <Creatable
           isDisabled={dontknow ? true : false}
           components={{ Menu }}
+          name="dropdown"
           isMulti
           isValidNewOption={isValidNewOption}
           options={countries}
@@ -148,6 +202,8 @@ export default function Question2() {
           placeholder="Please select 3 countries"
           onChange={handleChange}
           className="select-countries"
+          onBlur={handleBlur}
+          onFocus={handleFocus}
         />
         <Form style={{ width: "100%" }}>
           <Form.Control
@@ -158,6 +214,9 @@ export default function Question2() {
             onChange={handleOther}
             className="input-text"
             disabled={dontknow ? true : false}
+            onBlur={handleBlurOther}
+            onFocus={handleFocusOther}
+            autoComplete="off"
           ></Form.Control>
           <Form.Control
             type="text"
@@ -167,6 +226,9 @@ export default function Question2() {
             placeholder="Other 2 (please specify)"
             className="input-text"
             disabled={dontknow ? true : false}
+            onBlur={handleBlurOther}
+            onFocus={handleFocusOther}
+            autoComplete="off"
           ></Form.Control>
           <Form.Control
             type="text"
@@ -176,6 +238,9 @@ export default function Question2() {
             placeholder="Other 3 (please specify)"
             className="input-text"
             disabled={dontknow ? true : false}
+            onBlur={handleBlurOther}
+            onFocus={handleFocusOther}
+            autoComplete="off"
           ></Form.Control>
           <div className="dontknow-div">
             <Button
