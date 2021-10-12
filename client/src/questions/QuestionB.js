@@ -82,7 +82,16 @@ export default function QuestionB() {
         qbString: localStorage.getItem("qb-string"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -103,14 +112,10 @@ export default function QuestionB() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               How long have you been CEO of this company?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 768 ? "" : 0 }}
-              style={{ margin: width <= 480 ? "1rem 0 0" : "" }}
-            >
+            <p className="question-i">
               <i>
                 PLEASE PROVIDE YOUR ANSWER TO THE NEAREST FULL YEAR IN THE BOX
                 BELOW

@@ -79,7 +79,16 @@ export default function Question27() {
         q27: localStorage.getItem("q27"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 

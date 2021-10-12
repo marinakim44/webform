@@ -200,7 +200,16 @@ export default function Question4() {
         q4other: localStorage.getItem("q4-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
       console.log(JSON.parse(localStorage.getItem("q4-list")));
       history.push("/eng-q5");
     }

@@ -178,7 +178,16 @@ export default function Question19r() {
         q19other: localStorage.getItem("q19-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-q20");
     }
@@ -206,11 +215,8 @@ export default function Question19r() {
             политики, в результате которой все страны должны будут принять
             эффективную ставку корпоративного налога на уровне не менее 15%?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
-            <i>(ПРОСЬБА УКАЗАТЬ ВСЕ, ЧТО ПРИМЕНИМО)</i>
+          <p className="question-i">
+            <i>ПРОСЬБА УКАЗАТЬ ВСЕ, ЧТО ПРИМЕНИМО</i>
           </p>
         </div>
         {width <= 768 ? (
@@ -314,20 +320,20 @@ export default function Question19r() {
             ></Form.Control>
 
             <Button
-              variant={none ? "warning" : "light"}
+              variant={none ? "warning" : "outline-dark"}
               type="button"
               onClick={handleNone}
               className="rus-none-btn"
-              style={{ height: "100px" }}
+              style={{ height: "84px" }}
             >
               Наша компания не предпринимала каких-либо действий
             </Button>
             <Button
-              variant={dontknow ? "warning" : "light"}
+              variant={dontknow ? "warning" : "outline-dark"}
               type="button"
               onClick={handleDontknow}
               className="rus-dontknow-btn"
-              style={{ height: "100px" }}
+              style={{ height: "84px" }}
             >
               Затрудняюсь ответить
             </Button>

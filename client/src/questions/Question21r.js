@@ -160,7 +160,16 @@ export default function Question21r() {
         q21: JSON.parse(localStorage.getItem("q21")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -180,15 +189,12 @@ export default function Question21r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="question">
             Насколько вы уверены в перспективах роста выручки вашей компании в
             течение: cледующих 12 месяцев? следующих трех лет?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
-            <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+          <p className="question-i">
+            <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
           </p>
         </div>
         {width <= 768 ? (
@@ -229,7 +235,7 @@ export default function Question21r() {
             })}
           </div>
         ) : (
-          <table className="table" style={{ fontSize: "12px" }}>
+          <table className="table">
             <tbody>
               <tr>
                 <td colSpan="2"></td>

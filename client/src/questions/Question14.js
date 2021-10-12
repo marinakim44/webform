@@ -180,7 +180,16 @@ export default function Question14() {
         q14: JSON.parse(localStorage.getItem("q14")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -200,15 +209,12 @@ export default function Question14() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="question">
             Typically, how frequently does your company formally: assess its
             major initiatives? change its major initiatives? update its
             workforce about its major initiatives?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
           </p>
         </div>

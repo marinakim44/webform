@@ -240,7 +240,16 @@ export default function Question17() {
         q17: JSON.parse(localStorage.getItem("q17")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -261,14 +270,11 @@ export default function Question17() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               How frequently does your company typically engage in the following
               processes?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
             </p>
           </div>
@@ -328,7 +334,7 @@ export default function Question17() {
             </div>
           ) : (
             <form>
-              <div style={{ overflow: "auto", height: "420px" }}>
+              <div style={{ overflow: "auto", height: "60vh" }}>
                 <Table bordered className="table">
                   <thead
                     style={{
@@ -375,7 +381,7 @@ export default function Question17() {
                           {columns.map((col) => {
                             return (
                               <td className="input-cell">
-                                <label className="label-cell">
+                                <label className="alt-label-cell">
                                   <input
                                     type="radio"
                                     name={row.key}

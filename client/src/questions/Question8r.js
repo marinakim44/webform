@@ -75,7 +75,16 @@ export default function Question8r() {
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
       };
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-q10a");
     }
@@ -103,7 +112,7 @@ export default function Question8r() {
               газов (ПГ) независимо оценен и верифицирован (напр., SBTi)?
             </p>
             <p className="question-i">
-              <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
+              <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ</i>
             </p>
           </div>
           <form className="left-align-text">

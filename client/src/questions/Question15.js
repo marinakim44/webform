@@ -156,7 +156,16 @@ export default function Question15() {
         q15: JSON.parse(localStorage.getItem("q15")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -176,15 +185,12 @@ export default function Question15() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="question">
             Typically, how long does it take for your company to:
             approve/green-light major initiatives once an idea has been
             proposed? commit significant resources to new major initiatives?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
           </p>
         </div>

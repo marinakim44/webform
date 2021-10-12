@@ -152,7 +152,16 @@ export default function Question2r() {
         q2dontknow: localStorage.getItem("q2-dontknow"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-q3");
     }
@@ -271,7 +280,7 @@ export default function Question2r() {
               onClick={handleSubmit}
             >
               Далее
-              <i class="fas fa-chevron-right next-arrow"></i>
+              <i className="fas fa-chevron-right next-arrow"></i>
             </Button>
           </div>
         </Form>

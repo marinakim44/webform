@@ -198,7 +198,16 @@ export default function Question10Br() {
         q10b: JSON.parse(localStorage.getItem("q10b")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-q12");
     }
@@ -220,12 +229,12 @@ export default function Question10Br() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text question">
+          <p className="question">
             Насколько важны следующие факторы, лежащие в основе обязательств
             вашей компании по углеродной нейтральности и/или нулевым выбросам?
           </p>
           <p className="question-i">
-            <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+            <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
           </p>
         </div>
 
@@ -282,7 +291,7 @@ export default function Question10Br() {
                       {columns.map((col) => {
                         return (
                           <td key={col.key} className="input-cell">
-                            <label className="label-cell">
+                            <label className="alt-label-cell">
                               <input
                                 type="radio"
                                 name={row.key}

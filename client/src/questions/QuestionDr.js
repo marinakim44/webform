@@ -83,7 +83,16 @@ export default function QuestionDr() {
         qd: localStorage.getItem("qd"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
   return (
@@ -103,15 +112,12 @@ export default function QuestionDr() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               Находятся ли ваша компания и ее материнская компания, состоящая из
               нескольких компаний, в одной стране?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ) </i>
+            <p className="question-i">
+              <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ</i>
             </p>
           </div>
           <Form>

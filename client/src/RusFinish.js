@@ -6,6 +6,7 @@ export default function EngFinish() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
+    window.localStorage.clear();
   }, []);
   return (
     <Route path="/rus-finish">

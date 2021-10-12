@@ -240,7 +240,16 @@ export default function Question17r() {
         q17: JSON.parse(localStorage.getItem("q17")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -265,7 +274,7 @@ export default function Question17r() {
               Как часто ваша компания обычно участвует в следующих процессах?
             </p>
             <p className="question-i">
-              <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+              <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
             </p>
           </div>
           {width <= 768 ? (
@@ -324,7 +333,7 @@ export default function Question17r() {
             </div>
           ) : (
             <form>
-              <div style={{ overflow: "auto", height: "420px" }}>
+              <div style={{ overflow: "auto", height: "60vh" }}>
                 <Table bordered className="table">
                   <thead
                     style={{
@@ -351,7 +360,7 @@ export default function Question17r() {
                         Не применимо / Затрудняюсь ответить
                       </td>
                     </tr>
-                    <tr style={{ fontSize: "12px" }}>
+                    <tr>
                       {columns
                         .filter((col) => col.key !== "4" && col.key !== "8")
                         .map((column) => {
@@ -362,7 +371,7 @@ export default function Question17r() {
                   <tbody>
                     {rows.map((row) => {
                       return (
-                        <tr className="table-row" style={{ fontSize: "12px" }}>
+                        <tr className="table-row">
                           <td>{row.key}</td>
                           <td
                             className="left-align-text"

@@ -226,7 +226,16 @@ export default function Question24() {
         q24not: JSON.parse(localStorage.getItem("q24-not")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -247,16 +256,20 @@ export default function Question24() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
-              Включены ли следующие результаты, не связанные с финансами:
-              <p style={{ margin: "4px auto 0 20px" }}>
-                A) в долгосрочную корпоративную стратегию вашей компании?{" "}
-              </p>
-              <p style={{ margin: "0 auto 0 20px" }}>
+            <p className="question">
+              <strong>
+                Включены ли следующие результаты, не связанные с финансами:
+              </strong>
+              <li style={{ listStyle: "none" }}>
+                A) в долгосрочную корпоративную стратегию вашей компании?
+              </li>
+              <li style={{ listStyle: "none" }}>
                 B) в ваш личный годовой бонус или в долгосрочную систему
-                вознаграждений?{" "}
-              </p>
-              <br /> <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ВСЕ, ЧТО ПРИМЕНИМО)</i>
+                вознаграждений?
+              </li>
+              <i className="question-i">
+                ПОЖАЛУЙСТА, ВЫБЕРИТЕ ВСЕ, ЧТО ПРИМЕНИМО
+              </i>
             </p>
           </div>
 
@@ -285,6 +298,7 @@ export default function Question24() {
                                   ? true
                                   : false
                               }
+                              className="radio-input"
                             ></input>
                             {row.value}
                           </label>
@@ -298,6 +312,7 @@ export default function Question24() {
                           name={col.key}
                           value="7"
                           onChange={handleNone}
+                          className="radio-input"
                           checked={none[col.key] === true ? true : false}
                           disabled={not[col.key] === true ? true : false}
                         ></input>
@@ -309,6 +324,7 @@ export default function Question24() {
                         <input
                           type="checkbox"
                           name={col.key}
+                          className="radio-input"
                           value="8"
                           onChange={handleNot}
                           checked={not[col.key] === true ? true : false}
@@ -330,7 +346,9 @@ export default function Question24() {
                   {columns.map((col) => {
                     return (
                       <td>
-                        {col.key}) {col.value}
+                        <strong>
+                          {col.key}) {col.value}
+                        </strong>
                       </td>
                     );
                   })}
@@ -343,10 +361,11 @@ export default function Question24() {
                       {columns.map((col) => {
                         return (
                           <td className="input-cell">
-                            <label className="label-cell">
+                            <label className="alt-label-cell">
                               <input
                                 type="checkbox"
                                 name={col.key}
+                                className="radio-input"
                                 value={row.index}
                                 onChange={handleClick}
                                 checked={checked[`${col.key}${row.index}`]}
@@ -370,11 +389,12 @@ export default function Question24() {
                     Ничего из вышеперечисленного
                   </td>
                   <td className="input-cell">
-                    <label className="label-cell">
+                    <label className="alt-label-cell">
                       <input
                         type="checkbox"
                         name="A"
                         value="7"
+                        className="radio-input"
                         onChange={handleNone}
                         checked={none.A === true ? true : false}
                         disabled={not.A === true ? true : false}
@@ -382,11 +402,12 @@ export default function Question24() {
                     </label>
                   </td>
                   <td className="input-cell">
-                    <label className="label-cell">
+                    <label className="alt-label-cell">
                       <input
                         type="checkbox"
                         name="B"
                         value="7"
+                        className="radio-input"
                         onChange={handleNone}
                         checked={none.B === true ? true : false}
                         disabled={not.B === true ? true : false}
@@ -398,11 +419,12 @@ export default function Question24() {
                   <td>H</td>
                   <td className="left-align-text">Предпочел бы не отвечать</td>
                   <td className="input-cell">
-                    <label className="label-cell">
+                    <label className="alt-label-cell">
                       <input
                         type="checkbox"
                         name="A"
                         value="8"
+                        className="radio-input"
                         onChange={handleNot}
                         checked={not.A === true ? true : false}
                         disabled={none.A === true ? true : false}
@@ -410,11 +432,12 @@ export default function Question24() {
                     </label>
                   </td>
                   <td className="input-cell">
-                    <label className="label-cell">
+                    <label className="alt-label-cell">
                       <input
                         type="checkbox"
                         name="B"
                         value="8"
+                        className="radio-input"
                         onChange={handleNot}
                         checked={not.B === true ? true : false}
                         disabled={none.B === true ? true : false}

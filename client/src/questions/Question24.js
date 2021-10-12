@@ -242,7 +242,16 @@ export default function Question24() {
         q24not: JSON.parse(localStorage.getItem("q24-not")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -263,16 +272,22 @@ export default function Question24() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
-              Are the following non-financial related outcomes included in your:
-              <p style={{ margin: "4px auto 0 20px" }}>
-                A) company’s long-term corporate strategy?{" "}
-              </p>
-              <p style={{ margin: "0 auto 0 20px" }}>
-                B) personal annual bonus or long-term incentive plan?{" "}
-              </p>
-            </p>
             <p className="question">
+              <strong>
+                Are the following non-financial related outcomes included in
+                your:
+              </strong>
+
+              <li style={{ listStyle: "none" }}>
+                {" "}
+                A) company’s long-term corporate strategy?
+              </li>
+
+              <li style={{ listStyle: "none" }}>
+                B) personal annual bonus or long-term incentive plan?
+              </li>
+            </p>
+            <p className="question-i">
               <i>PLEASE SELECT ALL THAT APPLY</i>
             </p>
           </div>
@@ -294,6 +309,7 @@ export default function Question24() {
                             <input
                               type="checkbox"
                               name={col.key}
+                              className="radio-input"
                               value={row.index}
                               onChange={handleClick}
                               checked={checked[`${col.key}${row.index}`]}
@@ -312,6 +328,7 @@ export default function Question24() {
                       <label className="m-label">
                         <input
                           type="checkbox"
+                          className="radio-input"
                           name={col.key}
                           value="7"
                           onChange={handleNone}
@@ -325,6 +342,7 @@ export default function Question24() {
                       <label className="m-label">
                         <input
                           type="checkbox"
+                          className="radio-input"
                           name={col.key}
                           value="8"
                           onChange={handleNot}
@@ -347,7 +365,9 @@ export default function Question24() {
                   {columns.map((col) => {
                     return (
                       <td>
-                        {col.key}) {col.value}
+                        <strong>
+                          {col.key}) {col.value}
+                        </strong>
                       </td>
                     );
                   })}
@@ -360,7 +380,7 @@ export default function Question24() {
                       {columns.map((col) => {
                         return (
                           <td className="input-cell">
-                            <label className="label-cell">
+                            <label className="alt-label-cell">
                               <input
                                 type="checkbox"
                                 name={col.key}
@@ -385,7 +405,7 @@ export default function Question24() {
                   <td>G</td>
                   <td className="left-align-text">None of the above</td>
                   <td className="input-cell">
-                    <label className="label-cell">
+                    <label className="alt-label-cell">
                       <input
                         type="checkbox"
                         name="A"
@@ -397,7 +417,7 @@ export default function Question24() {
                     </label>
                   </td>
                   <td className="input-cell">
-                    <label className="label-cell">
+                    <label className="alt-label-cell">
                       <input
                         type="checkbox"
                         name="B"
@@ -413,7 +433,7 @@ export default function Question24() {
                   <td>H</td>
                   <td className="left-align-text">Prefer not to answer</td>
                   <td className="input-cell">
-                    <label className="label-cell">
+                    <label className="alt-label-cell">
                       <input
                         type="checkbox"
                         name="A"
@@ -425,7 +445,7 @@ export default function Question24() {
                     </label>
                   </td>
                   <td className="input-cell">
-                    <label className="label-cell">
+                    <label className="alt-label-cell">
                       <input
                         type="checkbox"
                         name="B"

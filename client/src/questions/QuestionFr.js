@@ -112,7 +112,16 @@ export default function QuestionFr() {
           qfOther: localStorage.getItem("qf-other"),
         };
 
-        axios.post("/allinputs", data);
+        axios
+          .post("allinputs", data)
+          .then((response) => {
+            if (response.status == 200) {
+              console.log("Data posted");
+            } else {
+              console.log("Response status " + response.status);
+            }
+          })
+          .catch((err) => console.log(err));
         history.push("/rus-qh");
       }
     }
@@ -135,13 +144,13 @@ export default function QuestionFr() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               Ваша компания находится в семейном управлении, поддерживается
               частным капиталом, является партнерством или управляется
               владельцем?
             </p>
-            <p className="question">
-              <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ)</i>
+            <p className="question-i">
+              <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ</i>
             </p>
           </div>
           <Form>

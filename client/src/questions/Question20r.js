@@ -314,7 +314,16 @@ export default function Question20r() {
         q20: JSON.parse(localStorage.getItem("q20")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -334,19 +343,13 @@ export default function Question20r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p
-            className="left-align-text"
-            style={{ marginBottom: width <= 768 ? "" : "1rem" }}
-          >
+          <p className="question">
             Если подумать о клиентах, которые регулярно покупают ваши
             товары/услуги, как часто вы бы сказали, что они совершают следующие
             действия:
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
-            <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+          <p className="question-i">
+            <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
           </p>
         </div>
 
@@ -355,12 +358,14 @@ export default function Question20r() {
             {rows.map((row) => {
               return (
                 <div>
-                  <p className="question" style={{ color: "#db536a" }}>
+                  <p style={{ color: "#db536a", margin: "8px 0 4px" }}>
                     <strong>
                       {row.key}) {row.title}
                     </strong>
                   </p>
-                  <p>{row.value}</p>
+                  <p className="question-i" style={{ marginTop: 0 }}>
+                    <i>{row.value}</i>
+                  </p>
                   {columns
                     .filter((col) => col.key !== 8)
                     .map((col) => {
@@ -430,11 +435,36 @@ export default function Question20r() {
                 </div>
               );
             })}
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i
+                  className="fas fa-chevron-left"
+                  style={{ marginRight: "8px" }}
+                ></i>
+                Назад
+              </Button>
+
+              <Button
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Далее
+                <i
+                  className="fas fa-chevron-right"
+                  style={{ marginLeft: "8px" }}
+                ></i>
+              </Button>
+            </div>
           </div>
         ) : (
           <form>
-            <div style={{ overflow: "auto", height: "420px" }}>
-              <table className="table" style={{ fontSize: "12px" }}>
+            <div style={{ overflow: "auto", height: "60vh" }}>
+              <table className="table">
                 <thead
                   style={{
                     position: "sticky",
@@ -448,11 +478,10 @@ export default function Question20r() {
 
                     {columns.map((col) => {
                       return (
-                        <td style={{ verticalAlign: "top", width: "120px" }}>
-                          <p>
-                            <strong>{col.title}</strong>
-                          </p>
-                          <p>{col.value}</p>
+                        <td style={{ verticalAlign: "top" }}>
+                          <strong>{col.title}</strong>
+                          <br />
+                          {col.value}
                         </td>
                       );
                     })}
@@ -463,14 +492,10 @@ export default function Question20r() {
                     return (
                       <tr className="table-row">
                         <td>{row.key}</td>
-                        <td
-                          className="left-align-text"
-                          style={{ width: "400px" }}
-                        >
-                          <p>
-                            <strong>{row.title}</strong>
-                          </p>
-                          <p>{row.value}</p>
+                        <td className="left-align-text">
+                          <strong>{row.title}</strong>
+                          <br />
+                          {row.value}
                         </td>
                         {columns.map((col) => {
                           return (
@@ -509,30 +534,34 @@ export default function Question20r() {
                   })}
                 </tbody>
               </table>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i
+                    className="fas fa-chevron-left"
+                    style={{ marginRight: "8px" }}
+                  ></i>
+                  Назад
+                </Button>
+
+                <Button
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Далее
+                  <i
+                    className="fas fa-chevron-right"
+                    style={{ marginLeft: "8px" }}
+                  ></i>
+                </Button>
+              </div>
             </div>
           </form>
         )}
-        <div className="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i
-              className="fas fa-chevron-left"
-              style={{ marginRight: "8px" }}
-            ></i>
-            Назад
-          </Button>
-
-          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
-            Далее
-            <i
-              className="fas fa-chevron-right"
-              style={{ marginLeft: "8px" }}
-            ></i>
-          </Button>
-        </div>
       </div>
     </Route>
   );

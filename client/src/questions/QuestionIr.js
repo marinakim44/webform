@@ -154,7 +154,16 @@ export default function QuestionIr() {
         qi: localStorage.getItem("qi"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -174,14 +183,11 @@ export default function QuestionIr() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="question">
             Какова была выручка Вашей компании за последний финансовый год?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
-            <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ) </i>
+          <p className="question-i">
+            <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ</i>
           </p>
         </div>
         <Form>

@@ -70,7 +70,16 @@ export default function Question7r() {
         q7: localStorage.getItem("q7"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       if (input === "option1" || input === "option2") {
         history.push("/rus-q9");
@@ -96,12 +105,12 @@ export default function Question7r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text question">
+          <p className="question">
             С какой научно обоснованной целью, если таковая имеется, будет
             согласовано обязательство вашей компании по нулевым выбросам?
           </p>
           <p className="question-i">
-            <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
+            <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ</i>
           </p>
         </div>
         <Form className="left-align-text">

@@ -26,7 +26,7 @@ export default function QuestionC() {
   const history = useHistory();
   const [input, setInput] = useState("");
   const [other, setOther] = useState("");
-  const [isOther, setIsOther] = useState(other !== "" ? true : false);
+  const [isOther, setIsOther] = useState(false);
 
   const [checked, setChecked] = useState({
     option1: false,
@@ -52,6 +52,11 @@ export default function QuestionC() {
     Object.keys(checked)
       .filter((v) => v !== value)
       .map((v) => (checked[v] = false));
+
+    if (value !== "Other") {
+      setOther("");
+      setIsOther(false);
+    }
   }
 
   function handleChange(e) {
@@ -127,7 +132,16 @@ export default function QuestionC() {
         qcOther: localStorage.getItem("qc-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       if (input === "option2") {
         history.push("/eng-qd");
@@ -154,13 +168,10 @@ export default function QuestionC() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               Which of these most accurately describes your role?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE</i>
             </p>
           </div>

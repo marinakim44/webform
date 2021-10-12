@@ -160,7 +160,16 @@ export default function Question21() {
         q21: JSON.parse(localStorage.getItem("q21")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -180,14 +189,11 @@ export default function Question21() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="question">
             How confident are you about your company’s prospects for revenue
             growth over: the next 12 months? the next three years?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
           </p>
         </div>

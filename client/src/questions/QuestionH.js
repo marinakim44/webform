@@ -118,7 +118,16 @@ export default function QuestionH() {
         qh: localStorage.getItem("qh"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -138,13 +147,10 @@ export default function QuestionH() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="question">
             Does your company have any form of government ownership or backing?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE</i>
           </p>
         </div>

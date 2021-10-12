@@ -182,7 +182,16 @@ export default function Question12() {
         q12: JSON.parse(localStorage.getItem("q12")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -207,10 +216,7 @@ export default function Question12() {
               How favourable are the following factors with regard to your
               company’s ability to reduce greenhouse gas (GHG) emissions? <br />
             </p>
-            <p
-              className="left-align-text question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>
                 (favourable factors are those that may help your company,
                 unfavourable factors are those that may hinder your company)

@@ -200,7 +200,16 @@ export default function Question4r() {
         q4other: localStorage.getItem("q4-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
       console.log(JSON.parse(localStorage.getItem("q4-list")));
       history.push("/rus-q5");
     }
@@ -224,8 +233,8 @@ export default function Question4r() {
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text question">
             <span>
-              Как вы ожидаете, что на Вашу компанию повлияют следующие угрозы в
-              течение следующих 12 месяцев?
+              Как повлияют на вашу компанию указанные угрозы в течение следующих
+              12 месяцев?
               <i>
                 <p className="question-i">ВЫБЕРИТЕ НЕ БОЛЕЕ ТРЕХ ВАРИАНТОВ</p>
               </i>

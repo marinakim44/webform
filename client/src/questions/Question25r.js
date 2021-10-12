@@ -280,7 +280,16 @@ export default function Question25() {
         q25: JSON.parse(localStorage.getItem("q25")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
       history.push("/rus-q25b");
     }
   };
@@ -302,15 +311,12 @@ export default function Question25() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               На ваш взгляд, какие три из следующих целей развития должны быть
               приоритетами государственного управления в Казахстане?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>(выберите НЕ БОЛЕЕ ТРЕХ ответов)</i>
+            <p className="question-i">
+              <i className="question-i">ВЫБЕРИТЕ НЕ БОЛЕЕ ТРЕХ ОТВЕТОВ</i>
             </p>
           </div>
           {width <= 768 ? (
@@ -349,7 +355,7 @@ export default function Question25() {
                   onClick={handleNone}
                   className="m-none-btn none-btn rus-none-btn"
                 >
-                  NONE OF THE ABOVE
+                  Ничего из вышеперечисленного
                 </Button>
                 <Button
                   type="button"
@@ -402,15 +408,8 @@ export default function Question25() {
                         .map((row) => {
                           return (
                             <tr>
-                              <td>{row.key}</td>
-                              <td className="left-align-text">{row.value}</td>
-                              <td>
-                                <label
-                                  className="label-cell"
-                                  style={{
-                                    width: "150px",
-                                  }}
-                                >
+                              <td className="left-align-text">
+                                <label className="alt-label-cell">
                                   <input
                                     type="checkbox"
                                     name={row.key}
@@ -427,8 +426,9 @@ export default function Question25() {
                                         ? true
                                         : false
                                     }
-                                    className="m-input"
+                                    className="m-input radio-input"
                                   ></input>
+                                  {row.value}
                                 </label>
                               </td>
                             </tr>
@@ -444,21 +444,9 @@ export default function Question25() {
                         .filter((row) => row.index >= 8)
                         .map((row) => {
                           return (
-                            <tr>
-                              <td>{row.key}</td>
-                              <td
-                                className="left-align-text"
-                                onClick={handleClick}
-                              >
-                                {row.value}
-                              </td>
-                              <td>
-                                <label
-                                  className="label-cell"
-                                  style={{
-                                    width: "150px",
-                                  }}
-                                >
+                            <tr style={{ marginTop: "8px" }}>
+                              <td className="left-align-text">
+                                <label className="alt-label-cell">
                                   <input
                                     type="checkbox"
                                     name={row.key}
@@ -475,7 +463,9 @@ export default function Question25() {
                                         ? true
                                         : false
                                     }
+                                    className="radio-input"
                                   ></input>
+                                  {row.value}
                                 </label>
                               </td>
                             </tr>
@@ -496,7 +486,7 @@ export default function Question25() {
               <div style={{ textAlign: "left", padding: "1rem 0" }}>
                 <Button
                   type="button"
-                  variant={none ? "warning" : "light"}
+                  variant={none ? "warning" : "outline-dark"}
                   value="None of the above"
                   onClick={handleNone}
                   className="none-btn"
@@ -505,10 +495,10 @@ export default function Question25() {
                 </Button>
                 <Button
                   type="button"
-                  variant={dontknow ? "warning" : "light"}
+                  variant={dontknow ? "warning" : "outline-dark"}
                   value="Don't know"
                   onClick={handleDontknow}
-                  className="dontknow-btn"
+                  className="dontknow-btn rus-dontknow-btn"
                 >
                   Затрудняюсь ответить
                 </Button>

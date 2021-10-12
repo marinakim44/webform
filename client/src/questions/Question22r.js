@@ -169,7 +169,16 @@ export default function Question22r() {
         q22: JSON.parse(localStorage.getItem("q22")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -189,19 +198,14 @@ export default function Question22r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Каков был рост выручки, маржа прибыли и доход на активы (ROA) вашей
+          <p className="question">
+            Каков был рост выручки, прибыли и дохода на активы (ROA) вашей
             компании за последний финансовый год?
           </p>
-          <p
-            className="question"
-            style={{
-              margin: width <= 480 ? "1rem 0" : "",
-            }}
-          >
+          <p className="question-i">
             <i>
-              (ПОЖАЛУЙСТА, ДАЙТЕ ОТВЕТ ДО БЛИЖАЙШЕГО ПРОЦЕНТНОГО ПУНКТА В ГРАФЕ
-              НИЖЕ)
+              ПОЖАЛУЙСТА, ДАЙТЕ ОТВЕТ ДО БЛИЖАЙШЕГО ПРОЦЕНТНОГО ПУНКТА В ГРАФЕ
+              НИЖЕ
             </i>
           </p>
         </div>
@@ -252,25 +256,24 @@ export default function Question22r() {
                 />
               </Col>
               <Col>
-                <button
+                <Button
                   name="revenue"
                   value="Don't know"
                   onClick={handleDontknow}
-                  style={{
-                    backgroundColor: dontknow.revenue === true ? "#db536a" : "",
-                    color: dontknow.revenue === true ? "white" : "",
-                  }}
-                  className="m-dontknow-22"
+                  className="dontknow-22"
+                  variant={
+                    dontknow.revenue === true ? "warning" : "outline-dark"
+                  }
                 >
                   Затрудняюсь ответить
-                </button>
+                </Button>
               </Col>
             </Row>
             <Row>
               <Col sm={6}>
                 <strong>
                   <p className="left-align-text">
-                    Рост выручки - последний финансовый год
+                    Маржа прибыли - последний финансовый год
                   </p>
                 </strong>
               </Col>
@@ -308,26 +311,24 @@ export default function Question22r() {
                 />
               </Col>
               <Col>
-                <button
+                <Button
                   name="profit"
                   value="Don't know"
                   onClick={handleDontknow}
-                  style={{
-                    backgroundColor:
-                      dontknow.profit === true ? "#db536a" : "#dedede",
-                    color: dontknow.profit === true ? "white" : "",
-                  }}
-                  className="m-dontknow-22"
+                  variant={
+                    dontknow.profit === true ? "warning" : "outline-dark"
+                  }
+                  className="dontknow-22"
                 >
                   Затрудняюсь ответить
-                </button>
+                </Button>
               </Col>
             </Row>
             <Row>
               <Col sm={6}>
                 <strong>
                   <p className="left-align-text">
-                    Рост выручки - последний финансовый год
+                    Доход на активы (ROA) - последний финансовый год
                   </p>
                 </strong>
               </Col>
@@ -365,19 +366,17 @@ export default function Question22r() {
                 />
               </Col>
               <Col>
-                <button
+                <Button
                   name="return"
                   value="Don't know"
                   onClick={handleDontknow}
-                  style={{
-                    backgroundColor:
-                      dontknow.return === true ? "#db536a" : "#dedede",
-                    color: dontknow.return === true ? "white" : "black",
-                  }}
-                  className="m-dontknow-22"
+                  variant={
+                    dontknow.return === true ? "warning" : "outline-dark"
+                  }
+                  className="dontknow-22"
                 >
                   Затрудняюсь ответить
-                </button>
+                </Button>
               </Col>
             </Row>
             <div className="back-next-btns">
@@ -411,7 +410,7 @@ export default function Question22r() {
             <Table style={{ width: "70%" }} borderless>
               <tbody>
                 <tr>
-                  <td className="left-align-text">
+                  <td style={{ textAlign: "right" }}>
                     Рост выручки - последний финансовый год
                   </td>
                   <td style={{ textAlign: "left" }}>
@@ -458,25 +457,20 @@ export default function Question22r() {
                   </td>
                   <td style={{ textAlign: "left" }}>
                     <Button
-                      variant="light"
+                      variant={
+                        dontknow.revenue === true ? "warning" : "outline-dark"
+                      }
                       name="revenue"
                       value="Don't know"
                       onClick={handleDontknow}
-                      style={{
-                        backgroundColor:
-                          dontknow.revenue === true ? "#db536a" : "#dedede",
-                        color: dontknow.revenue === true ? "white" : "black",
-                        borderColor:
-                          dontknow.revenue === true ? "#db536a" : "#dedede",
-                      }}
                     >
                       Затрудняюсь ответить
                     </Button>
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ textAlign: "left" }}>
-                    Рост выручки - последний финансовый год
+                  <td style={{ textAlign: "right" }}>
+                    Маржа прибыли - последний финансовый год
                   </td>
                   <td>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
@@ -521,25 +515,20 @@ export default function Question22r() {
                   </td>
                   <td style={{ textAlign: "left" }}>
                     <Button
-                      variant="light"
+                      variant={
+                        dontknow.profit === true ? "warning" : "outline-dark"
+                      }
                       name="profit"
                       value="Don't know"
                       onClick={handleDontknow}
-                      style={{
-                        backgroundColor:
-                          dontknow.profit === true ? "#db536a" : "#dedede",
-                        color: dontknow.profit === true ? "white" : "black",
-                        borderColor:
-                          dontknow.profit === true ? "#db536a" : "#dedede",
-                      }}
                     >
                       Затрудняюсь ответить
                     </Button>
                   </td>
                 </tr>
                 <tr>
-                  <td style={{ textAlign: "left" }}>
-                    Рост выручки - последний финансовый год
+                  <td style={{ textAlign: "right" }}>
+                    Доход на активы (ROA) - последний финансовый год
                   </td>
                   <td>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
@@ -587,14 +576,9 @@ export default function Question22r() {
                       name="return"
                       value="Don't know"
                       onClick={handleDontknow}
-                      variant="light"
-                      style={{
-                        backgroundColor:
-                          dontknow.return === true ? "#db536a" : "#dedede",
-                        color: dontknow.return === true ? "white" : "black",
-                        borderColor:
-                          dontknow.return === true ? "#db536a" : "#dedede",
-                      }}
+                      variant={
+                        dontknow.return === true ? "warning" : "outline-dark"
+                      }
                     >
                       Затрудняюсь ответить
                     </Button>

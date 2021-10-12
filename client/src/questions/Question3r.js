@@ -224,7 +224,16 @@ export default function Question3r() {
       q3: JSON.parse(localStorage.getItem("q3")),
     };
 
-    axios.post("/allinputs", data);
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -286,11 +295,31 @@ export default function Question3r() {
                 </>
               );
             })}
+            <div className="back-next-btns">
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
+                <i className="fas fa-chevron-left back-arrow"></i>
+                Назад
+              </Button>
+
+              <Button
+                type="button"
+                variant="danger"
+                className="next-btn"
+                onClick={handleSubmit}
+              >
+                Далее
+                <i class="fas fa-chevron-right next-arrow"></i>
+              </Button>
+            </div>
           </div>
         ) : (
           <form>
-            <div style={{ overflow: "auto", height: "400px" }}>
-              <table className="table" style={{ fontSize: "12px" }}>
+            <div style={{ overflow: "auto", height: "90vh" }}>
+              <table className="table">
                 <thead
                   style={{
                     position: "sticky",
@@ -303,7 +332,7 @@ export default function Question3r() {
                     <td colSpan="2"></td>
                     {columns.map((col) => {
                       return (
-                        <td key={col.key}>
+                        <td key={col.key} style={{ width: "4%" }}>
                           <strong>{col.value}</strong>
                         </td>
                       );
@@ -347,29 +376,29 @@ export default function Question3r() {
                   })}
                 </tbody>
               </table>
+              <div className="back-next-btns">
+                <Button
+                  variant="secondary"
+                  className="back-btn"
+                  onClick={() => history.goBack()}
+                >
+                  <i className="fas fa-chevron-left back-arrow"></i>
+                  Назад
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="danger"
+                  className="next-btn"
+                  onClick={handleSubmit}
+                >
+                  Далее
+                  <i class="fas fa-chevron-right next-arrow"></i>
+                </Button>
+              </div>
             </div>
           </form>
         )}
-        <div className="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i className="fas fa-chevron-left back-arrow"></i>
-            Назад
-          </Button>
-
-          <Button
-            type="button"
-            variant="danger"
-            className="next-btn"
-            onClick={handleSubmit}
-          >
-            Далее
-            <i class="fas fa-chevron-right next-arrow"></i>
-          </Button>
-        </div>
       </div>
     </Route>
   );

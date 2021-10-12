@@ -214,7 +214,16 @@ export default function Question11() {
         q11: JSON.parse(localStorage.getItem("q11")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/eng-q12");
     }
@@ -237,14 +246,11 @@ export default function Question11() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               How accurate are the following statements regarding why your
               company has not made a carbon-neutral or net-zero commitment?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
             </p>
           </div>

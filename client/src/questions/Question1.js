@@ -150,7 +150,16 @@ export default function Question1({ lng }) {
       q1: JSON.parse(localStorage.getItem("q1")),
     };
 
-    axios.post("/allinputs", data);
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -172,50 +181,22 @@ export default function Question1({ lng }) {
 
           <ModalAlert show={show} close={handleClose} />
 
-          {lng === "English" ? (
-            <div className="left-align-text">
-              <p className="question">
-                How do you believe economic growth (i.e., gross domestic
-                product) will change, if at all, over the next 12 months in:{" "}
-                <br />
-                <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
-                  A) the global economy?
-                </span>
-                <br />
-                <span style={{ marginLeft: "2rem" }}>
-                  B) Kazakhstan economy?
-                </span>
+          <div className="left-align-text">
+            <p className="question">
+              How do you believe economic growth (i.e., gross domestic product)
+              will change, if at all, over the next 12 months in: <br />
+              <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                A) the global economy?
+              </span>
+              <br />
+              <span style={{ marginLeft: "2rem" }}>B) Kazakhstan economy?</span>
+            </p>
+            <i>
+              <p className="question-i">
+                PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
               </p>
-              <i>
-                <p className="question-i">
-                  PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
-                </p>
-              </i>
-            </div>
-          ) : (
-            <div className="left-align-text">
-              <p className="question">
-                Как, по вашему мнению, изменится экономический рост (т.е.
-                валовой внутренний продукт) в следующие 12 месяцев, если вообще
-                изменится: <br />
-                <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
-                  A) глобальная экономика?
-                </span>
-                <br />
-                <span style={{ marginLeft: "2rem" }}>
-                  B) экономика Казахстана?{" "}
-                </span>
-              </p>
-              <i>
-                <p
-                  className="question"
-                  style={{ margin: width <= 480 ? "1rem 0" : "" }}
-                >
-                  (ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)
-                </p>
-              </i>
-            </div>
-          )}
+            </i>
+          </div>
         </div>
         {width <= 768 ? (
           <div className="left-align-text">
@@ -227,6 +208,7 @@ export default function Question1({ lng }) {
                       {row.key}) {row.value}
                     </p>
                   </strong>
+
                   {columns.map((col) => {
                     return (
                       <div className="m-div">
@@ -278,6 +260,7 @@ export default function Question1({ lng }) {
                                 type="radio"
                                 onChange={handleChange}
                                 checked={checked[`${row.key}${col.key}`]}
+                                className="radio-input"
                               ></input>
                             </label>
                           </td>

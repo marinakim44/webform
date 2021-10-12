@@ -52,6 +52,11 @@ export default function QuestionCr() {
     Object.keys(checked)
       .filter((v) => v !== value)
       .map((v) => (checked[v] = false));
+
+    if (value !== "Other") {
+      setOther("");
+      setIsOther(false);
+    }
   }
 
   function handleChange(e) {
@@ -127,7 +132,16 @@ export default function QuestionCr() {
         qcOther: localStorage.getItem("qc-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       if (input === "option2") {
         history.push("/rus-qd");
@@ -154,14 +168,11 @@ export default function QuestionCr() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               Что из нижеперечисленного наиболее точно описывает вашу роль?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ) </i>
+            <p className="question-i">
+              <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ</i>
             </p>
           </div>
           <Form>

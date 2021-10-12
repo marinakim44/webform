@@ -180,7 +180,16 @@ export default function Question14r() {
         q14: JSON.parse(localStorage.getItem("q14")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -208,7 +217,7 @@ export default function Question14r() {
               <br />- информирует персонал о своих основных инициативах?
             </p>
             <p className="question-i">
-              <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+              <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
             </p>
           </div>
           {width <= 768 ? (

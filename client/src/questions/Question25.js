@@ -280,7 +280,16 @@ export default function Question25() {
         q25: JSON.parse(localStorage.getItem("q25")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
       history.push("/eng-q25b");
     }
   };
@@ -302,15 +311,14 @@ export default function Question25() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               Which three of these outcomes do you think should be government
               priorities in Kazakhstan?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>PLEASE SELECT UP TO THREE RESPONSES ONLY</i>
+            <p className="question-i">
+              <i className="question-i">
+                PLEASE SELECT UP TO THREE RESPONSES ONLY
+              </i>
             </p>
           </div>
           {width <= 768 ? (
@@ -406,7 +414,7 @@ export default function Question25() {
                               <td className="left-align-text">{row.value}</td>
                               <td>
                                 <label
-                                  className="label-cell"
+                                  className="alt-label-cell"
                                   style={{
                                     width: "150px",
                                   }}
@@ -454,7 +462,7 @@ export default function Question25() {
                               </td>
                               <td>
                                 <label
-                                  className="label-cell"
+                                  className="alt-label-cell"
                                   style={{
                                     width: "150px",
                                   }}
@@ -496,7 +504,7 @@ export default function Question25() {
               <div style={{ textAlign: "left", padding: "1rem 0" }}>
                 <Button
                   type="button"
-                  variant={none ? "warning" : "light"}
+                  variant={none ? "warning" : "outline-dark"}
                   value="None of the above"
                   onClick={handleNone}
                   className="none-btn"
@@ -505,7 +513,7 @@ export default function Question25() {
                 </Button>
                 <Button
                   type="button"
-                  variant={dontknow ? "warning" : "light"}
+                  variant={dontknow ? "warning" : "outline-dark"}
                   value="Don't know"
                   onClick={handleDontknow}
                   className="dontknow-btn"

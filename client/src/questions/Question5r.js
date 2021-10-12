@@ -124,7 +124,16 @@ export default function Question5r() {
         q5: JSON.parse(localStorage.getItem("q5")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       if (input.B === "1") {
         history.push("/rus-q6");
@@ -171,27 +180,20 @@ export default function Question5r() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="question">Приняла ли ваша компания:</p>
-            {width <= 768 ? (
-              <p className="left-align-text question">
-                <span>A) обязательство по углеродной нейтральности?</span>
-                <br />
-                <span>B) обязательство по нулевым выбросам?</span>
-              </p>
-            ) : (
-              <p className="question">
-                <br />
-                <span style={{ marginLeft: "20px" }}>
-                  A) обязательство по углеродной нейтральности?
-                </span>
-                <br />
-                <span style={{ marginLeft: "20px" }}>
-                  B) обязательство по нулевым выбросам?
-                </span>
-              </p>
-            )}
+            <strong>
+              <p className="question">Приняла ли ваша компания:</p>
+            </strong>
+            <p className="question">
+              <li style={{ listStyle: "none" }}>
+                A) обязательство по углеродной нейтральности?
+              </li>
+
+              <li style={{ listStyle: "none" }}>
+                B) обязательство по нулевым выбросам?
+              </li>
+            </p>
             <p className="question-i">
-              <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+              <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
             </p>
           </div>
           {width <= 768 ? (

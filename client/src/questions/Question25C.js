@@ -286,7 +286,16 @@ export default function Question25C() {
         q25cOther: localStorage.getItem("q25c-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
       history.push("/eng-q26");
     }
   };
@@ -308,14 +317,11 @@ export default function Question25C() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               Which three of these outcomes do you think should be government
               priorities in Kazakhstan?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>SELECT ALL THAT APPLY</i>
             </p>
           </div>
@@ -393,7 +399,7 @@ export default function Question25C() {
                               <td className="left-align-text">{row.value}</td>
                               <td>
                                 <label
-                                  className="label-cell"
+                                  className="alt-label-cell"
                                   style={{
                                     width: "150px",
                                   }}
@@ -435,7 +441,7 @@ export default function Question25C() {
                               </td>
                               <td>
                                 <label
-                                  className="label-cell"
+                                  className="alt-label-cell"
                                   style={{
                                     width: "150px",
                                   }}
@@ -474,12 +480,12 @@ export default function Question25C() {
                   display: "flex",
                   justifyContent: "left",
                   width: "33.5%",
-                  marginTop: "2rem",
+                  marginTop: "1rem",
                 }}
               >
                 <Button
                   type="button"
-                  variant={none ? "warning" : "light"}
+                  variant={none ? "warning" : "outline-dark"}
                   className="none-btn"
                   value="None of the above"
                   onClick={handleNone}

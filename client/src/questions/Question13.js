@@ -66,6 +66,14 @@ export default function Question13() {
     }
   }, [dontknow]);
 
+  const [active, setActive] = useState(false);
+  const handleFocus = () => {
+    setActive(true);
+  };
+  const handleBlur = () => {
+    setActive(false);
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q13-dontknow", JSON.stringify(dontknow));
@@ -96,7 +104,16 @@ export default function Question13() {
         q13b: localStorage.getItem("q13b"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/eng-q14");
     }
@@ -105,7 +122,7 @@ export default function Question13() {
   return (
     <Route path="/eng-q13">
       <div className="main">
-        <div className="sticky-sub-div">
+        <div className={active === true ? "" : "sticky-sub-div"}>
           <h2 className="percent">
             {Math.round(((100 / 39) * 14).toString())}% completed
           </h2>
@@ -118,20 +135,19 @@ export default function Question13() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Typically, how many:
-            <p style={{ margin: "0 auto 0 20px" }}>
+          <p className="question">
+            <strong>Typically, how many:</strong>
+
+            <li style={{ listStyle: "none" }}>
               A) overarching strategic objectives does your company have?
-            </p>
-            <p style={{ margin: "0 auto 0 20px" }}>
+            </li>
+
+            <li style={{ listStyle: "none" }}>
               B) major initiatives does your company have underway in support of
               those strategic objectives? (in total)
-            </p>
+            </li>
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
           </p>
         </div>
@@ -147,7 +163,13 @@ export default function Question13() {
                 </p>
               </Col>
               <Col>
-                <Dropdown onSelect={handleSelectA} className="s-q13" name="a">
+                <Dropdown
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onSelect={handleSelectA}
+                  className="s-q13"
+                  name="a"
+                >
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
@@ -177,7 +199,7 @@ export default function Question13() {
               <Col>
                 <Button
                   type="button"
-                  variant={dontknow.A === true ? "warning" : "light"}
+                  variant={dontknow.A === true ? "warning" : "outline-dark"}
                   name="A"
                   value="dontknow"
                   onClick={handleDontknow}
@@ -207,7 +229,13 @@ export default function Question13() {
                 </p>
               </Col>
               <Col>
-                <Dropdown onSelect={handleSelectB} className="s-q13" name="b">
+                <Dropdown
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onSelect={handleSelectB}
+                  className="s-q13"
+                  name="b"
+                >
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
@@ -236,7 +264,7 @@ export default function Question13() {
               <Col>
                 <Button
                   type="button"
-                  variant={dontknow.B === true ? "warning" : "light"}
+                  variant={dontknow.B === true ? "warning" : "outline-dark"}
                   name="B"
                   value="dontknow"
                   onClick={handleDontknow}
@@ -283,7 +311,11 @@ export default function Question13() {
                     <p>Increasing market share</p>
                   </td>
                   <td>
-                    <Dropdown onSelect={handleSelectA}>
+                    <Dropdown
+                      onSelect={handleSelectA}
+                      onFocus={handleFocus}
+                      onBlur={handleBlur}
+                    >
                       <Dropdown.Toggle
                         variant="light"
                         id="dropdown-basic"
@@ -313,7 +345,7 @@ export default function Question13() {
                   <td>
                     <Button
                       type="button"
-                      variant={dontknow.A === true ? "warning" : "light"}
+                      variant={dontknow.A === true ? "warning" : "outline-dark"}
                       name="A"
                       value="dontknow"
                       onClick={handleDontknow}
@@ -383,7 +415,7 @@ export default function Question13() {
                       value="dontknow"
                       onClick={handleDontknow}
                       className="dropdown-btn q13-dropdown-btn"
-                      variant={dontknow.B === true ? "warning" : "light"}
+                      variant={dontknow.B === true ? "warning" : "outline-dark"}
                     >
                       Don't know
                     </Button>

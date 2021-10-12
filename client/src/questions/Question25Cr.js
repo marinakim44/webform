@@ -286,7 +286,16 @@ export default function Question25C() {
         q25cOther: localStorage.getItem("q25c-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
       history.push("/rus-q26");
     }
   };
@@ -308,16 +317,13 @@ export default function Question25C() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               В достижении каких из указанных целей (при наличии таковых) ваша
               компания заинтересована в сотрудничестве с государственными
               органами в ближайшие три года?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>(Отметьте все подходящие ответы)</i>
+            <p className="question-i">
+              <i>ОТМЕТЬТЕ ВСЕ ПОДХОДЯЩИЕ ОТВЕТЫ</i>
             </p>
           </div>
           {width <= 768 ? (
@@ -390,16 +396,10 @@ export default function Question25C() {
                         .map((row) => {
                           return (
                             <tr>
-                              <td>{row.key}</td>
-                              <td className="left-align-text">{row.value}</td>
-                              <td>
-                                <label
-                                  className="label-cell"
-                                  style={{
-                                    width: "150px",
-                                  }}
-                                >
+                              <td className="left-align-text">
+                                <label className="alt-label-cell">
                                   <input
+                                    className="radio-input"
                                     type="checkbox"
                                     name={row.key}
                                     value={row.value}
@@ -411,6 +411,8 @@ export default function Question25C() {
                                         : false
                                     }
                                   ></input>
+
+                                  {row.value}
                                 </label>
                               </td>
                             </tr>
@@ -427,22 +429,11 @@ export default function Question25C() {
                         .map((row) => {
                           return (
                             <tr>
-                              <td>{row.key}</td>
-                              <td
-                                className="left-align-text"
-                                onClick={handleClick}
-                              >
-                                {row.value}
-                              </td>
-                              <td>
-                                <label
-                                  className="label-cell"
-                                  style={{
-                                    width: "150px",
-                                  }}
-                                >
+                              <td className="left-align-text">
+                                <label className="alt-label-cell">
                                   <input
                                     type="checkbox"
+                                    className="radio-input"
                                     name={row.key}
                                     value={row.value}
                                     onChange={handleClick}
@@ -453,6 +444,8 @@ export default function Question25C() {
                                         : false
                                     }
                                   ></input>
+
+                                  {row.value}
                                 </label>
                               </td>
                             </tr>
@@ -464,7 +457,7 @@ export default function Question25C() {
               </Row>
               <Form.Control
                 type="text"
-                placeholder="Процее (пожалуйста уточните)"
+                placeholder="Прочее (пожалуйста уточните)"
                 style={{ width: "33.5%", marginTop: "1rem" }}
                 onChange={handleChange}
                 value={other}
@@ -480,7 +473,7 @@ export default function Question25C() {
               >
                 <Button
                   type="button"
-                  variant={none ? "warning" : "light"}
+                  variant={none ? "warning" : "outline-dark"}
                   className="none-btn"
                   value="None of the above"
                   onClick={handleNone}

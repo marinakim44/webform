@@ -341,7 +341,16 @@ export default function Question25Br() {
         q25bDontknow: localStorage.getItem("q25b-dontknow"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -364,15 +373,12 @@ export default function Question25Br() {
 
             <ModalAlert show={show} close={handleClose} />
 
-            <p className="left-align-text">
+            <p className="question">
               Насколько эффективно добивается правительство достижения этих
               целей в Казахстане?
             </p>
-            <p
-              className="left-align-text"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>(Выберите один вариант ответа для каждой строки)</i>
+            <p className="question-i">
+              <i>ВЫБЕРИТЕ ОДИН ВАРИАНТ ОТВЕТА ДЛЯ КАЖДОЙ СТРОКИ</i>
             </p>
           </div>
 
@@ -446,7 +452,7 @@ export default function Question25Br() {
             </div>
           ) : (
             <Form>
-              <div style={{ overflow: "auto", height: "320px" }}>
+              <div style={{ overflow: "auto", height: "60vh" }}>
                 <table className="table">
                   <thead
                     style={{
@@ -469,7 +475,7 @@ export default function Question25Br() {
                               top: 0,
                               zIndex: 1,
                               width: "120px",
-                              verticalAlign: "middle",
+                              verticalAlign: "top",
                             }}
                           >
                             {col.value}
@@ -520,7 +526,7 @@ export default function Question25Br() {
               >
                 <Button
                   type="button"
-                  variant={none ? "warning" : "light"}
+                  variant={none ? "warning" : "outline-dark"}
                   className="none-btn"
                   value="None of the above"
                   onClick={handleNone}

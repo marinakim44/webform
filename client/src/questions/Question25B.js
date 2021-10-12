@@ -341,7 +341,16 @@ export default function Question25B() {
         q25bDontknow: localStorage.getItem("q25b-dontknow"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -364,14 +373,11 @@ export default function Question25B() {
 
             <ModalAlert show={show} close={handleClose} />
 
-            <p className="left-align-text">
+            <p className="question">
               How effective do you think the government has been in achieving
               these outcomes in Kazakhstan?
             </p>
-            <p
-              className="left-align-text"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE ONLY PER ROW</i>
             </p>
           </div>
@@ -446,7 +452,7 @@ export default function Question25B() {
             </div>
           ) : (
             <Form>
-              <div style={{ overflow: "auto", height: "320px" }}>
+              <div style={{ overflow: "auto", height: "90vh" }}>
                 <table className="table">
                   <thead
                     style={{
@@ -487,7 +493,7 @@ export default function Question25B() {
                           {columns.map((col) => {
                             return (
                               <td className="input-cell">
-                                <label className="label-cell">
+                                <label className="alt-abel-cell">
                                   <input
                                     type="radio"
                                     name={row.key}
@@ -509,49 +515,50 @@ export default function Question25B() {
                     })}
                   </tbody>
                 </table>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "left",
-                  width: "35%",
-                  marginTop: "2rem",
-                }}
-              >
-                <Button
-                  type="button"
-                  variant={none ? "warning" : "light"}
-                  className="none-btn"
-                  value="None of the above"
-                  onClick={handleNone}
-                >
-                  NONE OF THE ABOVE
-                </Button>
-              </div>
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i
-                    className="fas fa-chevron-left"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                  Back
-                </Button>
 
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "left",
+                    width: "35%",
+                    marginTop: "2rem",
+                  }}
                 >
-                  Next
-                  <i
-                    className="fas fa-chevron-right"
-                    style={{ marginLeft: "8px" }}
-                  ></i>
-                </Button>
+                  <Button
+                    type="button"
+                    variant={none ? "warning" : "outline-dark"}
+                    className="none-btn"
+                    value="None of the above"
+                    onClick={handleNone}
+                  >
+                    NONE OF THE ABOVE
+                  </Button>
+                </div>
+                <div className="back-next-btns">
+                  <Button
+                    variant="secondary"
+                    className="back-btn"
+                    onClick={() => history.goBack()}
+                  >
+                    <i
+                      className="fas fa-chevron-left"
+                      style={{ marginRight: "8px" }}
+                    ></i>
+                    Back
+                  </Button>
+
+                  <Button
+                    variant="danger"
+                    className="next-btn"
+                    onClick={handleSubmit}
+                  >
+                    Next
+                    <i
+                      className="fas fa-chevron-right"
+                      style={{ marginLeft: "8px" }}
+                    ></i>
+                  </Button>
+                </div>
               </div>
             </Form>
           )}

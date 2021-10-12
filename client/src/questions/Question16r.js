@@ -124,7 +124,16 @@ export default function Question16r() {
         q16: localStorage.getItem("q16"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -146,10 +155,10 @@ export default function Question16r() {
           <ModalAlert show={show} close={handleClose} />
           <p className="left-align-text question">
             В течение обычного цикла проверок сколько различных отчетов о
-            прибылях и убытках (P&L) вы лично проверяете?
+            прибыли и убытках (P&L) вы лично проверяете?
           </p>
           <p className="question-i">
-            <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
+            <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ</i>
           </p>
         </div>
         {width <= 768 ? (

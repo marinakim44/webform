@@ -117,7 +117,16 @@ export default function QuestionGr() {
         qg: localStorage.getItem("qg"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -138,14 +147,11 @@ export default function QuestionGr() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               Принадлежит ли семье более 32% прав голоса в вашей компании?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ)</i>
+            <p className="question-i">
+              <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ</i>
             </p>
           </div>
           <Form>
@@ -163,7 +169,7 @@ export default function QuestionGr() {
               </label>
             </div>
             <div className="left-align-text m-div">
-              <label className="label-cell">
+              <label className="label-cell m-label">
                 <input
                   type="radio"
                   name="option"
@@ -176,7 +182,7 @@ export default function QuestionGr() {
               </label>
             </div>
             <div className="left-align-text m-div">
-              <label className="label-cell">
+              <label className="label-cell m-label">
                 <input
                   type="radio"
                   name="option"

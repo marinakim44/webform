@@ -312,7 +312,16 @@ export default function Question20() {
         q20: JSON.parse(localStorage.getItem("q20")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -332,18 +341,12 @@ export default function Question20() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p
-            className="left-align-text"
-            style={{ marginBottom: width <= 768 ? "" : "1rem" }}
-          >
+          <p className="question">
             Thinking about the customers who have regularly purchased your
             products/services, how often would you say they take the following
             actions:
           </p>
-          <p
-            className={width <= 768 ? "question" : "left-align-text"}
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
           </p>
         </div>
@@ -431,7 +434,7 @@ export default function Question20() {
           </div>
         ) : (
           <form>
-            <div style={{ overflow: "auto", height: "420px" }}>
+            <div style={{ overflow: "auto", height: "60vh" }}>
               <table className="table">
                 <thead
                   style={{
@@ -446,11 +449,12 @@ export default function Question20() {
 
                     {columns.map((col) => {
                       return (
-                        <td style={{ verticalAlign: "top", width: "120px" }}>
+                        <td style={{ verticalAlign: "top" }}>
                           <p>
                             <strong>{col.title}</strong>
+                            <br />
+                            {col.value}
                           </p>
-                          <p>{col.value}</p>
                         </td>
                       );
                     })}
@@ -462,10 +466,9 @@ export default function Question20() {
                       <tr className="table-row">
                         <td>{row.key}</td>
                         <td className="left-align-text">
-                          <p>
-                            <strong>{row.title}</strong>
-                          </p>
-                          <p>{row.value}</p>
+                          <strong>{row.title}</strong>
+                          <br />
+                          {row.value}
                         </td>
                         {columns.map((col) => {
                           return (

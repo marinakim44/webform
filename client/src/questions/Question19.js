@@ -175,7 +175,16 @@ export default function Question19() {
         q19other: localStorage.getItem("q19-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/eng-q20");
     }
@@ -197,15 +206,12 @@ export default function Question19() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
+          <p className="question">
             What actions has your company taken, if any, to prepare for
             potential global tax policy change that would make all countries
             commit to an effective corporate tax rate of at least 15%?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>PLEASE SELECT ALL THAT APPLY</i>
           </p>
         </div>
@@ -306,11 +312,11 @@ export default function Question19() {
               value={none || dontknow ? "" : other}
               disabled={dontknow || none ? true : false}
               onChange={handleChangeOther}
-              style={{ margin: "1rem 0", width: "45%" }}
+              className="text-input"
             ></Form.Control>
 
             <Button
-              variant={none ? "warning" : "light"}
+              variant={none ? "warning" : "outline-dark"}
               type="button"
               onClick={handleNone}
               className="none-btn"
@@ -318,7 +324,7 @@ export default function Question19() {
               NONE
             </Button>
             <Button
-              variant={dontknow ? "warning" : "light"}
+              variant={dontknow ? "warning" : "outline-dark"}
               type="button"
               onClick={handleDontknow}
               className="dontknow-btn"

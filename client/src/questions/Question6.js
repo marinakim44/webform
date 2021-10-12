@@ -74,7 +74,16 @@ export default function Question6() {
         q6: localStorage.getItem("q6"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       if (
         localStorage.getItem("q6") === "option1" ||
@@ -108,7 +117,7 @@ export default function Question6() {
               Which science-based target, if any, is your company’s net-zero
               commitment aligned to?
             </p>
-            <p className="question">
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE</i>
             </p>
           </div>

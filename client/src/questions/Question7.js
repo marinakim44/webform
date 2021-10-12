@@ -70,7 +70,16 @@ export default function Question7() {
         q7: localStorage.getItem("q7"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       if (input === "option1" || input === "option2") {
         history.push("/eng-q9");
@@ -100,10 +109,7 @@ export default function Question7() {
             Which science-based target, if any, will your company’s net-zero
             commitment be aligned to?
           </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
+          <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE</i>
           </p>
         </div>

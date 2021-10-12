@@ -124,7 +124,16 @@ export default function Question5() {
         q5: JSON.parse(localStorage.getItem("q5")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       if (input.B === "1") {
         history.push("/eng-q6");
@@ -172,20 +181,13 @@ export default function Question5() {
             </div>
             <ModalAlert show={show} close={handleClose} />
             <p className="question">
-              Has your company made a:
+              <strong>Has your company made a:</strong>
               <br />
-              <span style={{ marginLeft: "20px" }}>
-                carbon-neutral commitment?
-              </span>
+              <span>A) carbon-neutral commitment?</span>
               <br />
-              <span style={{ marginLeft: "20px" }}> net-zero commitment?</span>
+              <span>B) net-zero commitment?</span>
             </p>
-            <p
-              style={{
-                margin: width <= 480 ? "1rem 0" : "",
-                textAlign: "left",
-              }}
-            >
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
             </p>
           </div>

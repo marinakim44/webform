@@ -66,6 +66,14 @@ export default function Question13r() {
     }
   }, [dontknow]);
 
+  const [active, setActive] = useState(false);
+  const handleFocus = () => {
+    setActive(true);
+  };
+  const handleBlur = () => {
+    setActive(false);
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q13-dontknow", JSON.stringify(dontknow));
@@ -96,20 +104,25 @@ export default function Question13r() {
         q13b: localStorage.getItem("q13b"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-q14");
     }
   }
 
-  function goBack() {
-    history.goBack();
-  }
-
   return (
     <Route path="/rus-q13">
       <div className="main">
-        <div className="sticky-sub-div">
+        <div className={active === true ? "" : "sticky-sub-div"}>
           <h2 className="percent">
             {Math.round(((100 / 39) * 14).toString())}% завершено
           </h2>
@@ -122,18 +135,20 @@ export default function Question13r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text question">
+          <p className="question">
             <strong>Обычно сколько:</strong>
-            <p className="question-option">
-              A) общих стратегических целей есть у вашей компании?
-            </p>
-            <p className="question-option">
-              B) основных инициатив осуществляет ваша компания в поддержку этих
-              стратегических целей? (в целом)
+            <p className="question">
+              <li style={{ listStyle: "none" }}>
+                A) общих стратегических целей есть у вашей компании?
+              </li>
+              <li style={{ listStyle: "none" }}>
+                B) основных инициатив осуществляет ваша компания в поддержку
+                этих стратегических целей? (в целом)
+              </li>
             </p>
           </p>
           <p className="question-i">
-            <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+            <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
           </p>
         </div>
         {width <= 768 ? (
@@ -148,7 +163,12 @@ export default function Question13r() {
                 </p>
               </Col>
               <Col>
-                <Dropdown onSelect={handleSelectA} className="s-q13">
+                <Dropdown
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onSelect={handleSelectA}
+                  className="s-q13"
+                >
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
@@ -208,7 +228,12 @@ export default function Question13r() {
                 </p>
               </Col>
               <Col>
-                <Dropdown onSelect={handleSelectB} className="s-q13">
+                <Dropdown
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onSelect={handleSelectB}
+                  className="s-q13"
+                >
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
@@ -248,7 +273,11 @@ export default function Question13r() {
               </Col>
             </Row>
             <div className="back-next-btns">
-              <Button variant="secondary" className="back-btn" onClick={goBack}>
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
                 <i
                   className="fas fa-chevron-left"
                   style={{ marginRight: "8px" }}
@@ -310,7 +339,7 @@ export default function Question13r() {
                   <td>
                     <Button
                       type="button"
-                      variant={dontknow.A === true ? "warning" : "light"}
+                      variant={dontknow.A === true ? "warning" : "outline-dark"}
                       name="A"
                       value="dontknow"
                       onClick={handleDontknow}
@@ -380,9 +409,9 @@ export default function Question13r() {
                       value="dontknow"
                       onClick={handleDontknow}
                       className="dropdown-btn q13-dropdown-btn"
-                      variant={dontknow.B === true ? "warning" : "light"}
+                      variant={dontknow.B === true ? "warning" : "outline-dark"}
                     >
-                      Don't know
+                      Затрудняюсь ответить
                     </Button>
                   </td>
                 </tr>
@@ -390,7 +419,11 @@ export default function Question13r() {
             </Table>
 
             <div className="back-next-btns">
-              <Button variant="secondary" className="back-btn" onClick={goBack}>
+              <Button
+                variant="secondary"
+                className="back-btn"
+                onClick={() => history.goBack()}
+              >
                 <i
                   className="fas fa-chevron-left"
                   style={{ marginRight: "8px" }}

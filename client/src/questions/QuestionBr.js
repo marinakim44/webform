@@ -82,7 +82,16 @@ export default function QuestionBr() {
         qbString: localStorage.getItem("qb-string"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -107,14 +116,10 @@ export default function QuestionBr() {
               Как долго Вы занимаете должность генерального директора в Вашей
               организации?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 768 ? "" : 0 }}
-              style={{ margin: width <= 480 ? "1rem 0 0" : "" }}
-            >
-              <i>
-                (ПОЖАЛУЙСТА УКАЖИТЕ ВАШ ОТВЕТ ДО БЛИЖАЙШЕГО ЦЕЛОГО ГОДА В ПОЛЕ
-                НИЖЕ)
+            <p className="question">
+              <i className="question-i">
+                ПОЖАЛУЙСТА УКАЖИТЕ ВАШ ОТВЕТ ДО БЛИЖАЙШЕГО ЦЕЛОГО ГОДА В ПОЛЕ
+                НИЖЕ
               </i>
             </p>
           </div>

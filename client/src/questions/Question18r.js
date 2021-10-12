@@ -230,7 +230,16 @@ export default function Question18r() {
         q18: JSON.parse(localStorage.getItem("q18")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-q19");
     }
@@ -252,12 +261,12 @@ export default function Question18r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text question">
+          <p className="question">
             Если рассмотреть налоги, которые платит ваша компания, то в какой
             степени вы согласны / не согласны со следующими утверждениями?
           </p>
           <p className="question-i">
-            <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+            <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
           </p>
         </div>
 
@@ -323,7 +332,7 @@ export default function Question18r() {
           </div>
         ) : (
           <form>
-            <div style={{ overflow: "auto", height: "420px" }}>
+            <div style={{ overflow: "auto", height: "60vh" }}>
               <table className="table">
                 <thead
                   style={{

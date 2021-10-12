@@ -120,12 +120,36 @@ export default function App() {
       uuid: localStorage.getItem("uuid"),
     };
 
-    axios.post("/allinputs", data);
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   function chooseRus(e) {
     e.preventDefault();
     setLanguage("Русский");
+
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+    };
+
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err));
   }
   useEffect(() => {
     localStorage.setItem("language", language);

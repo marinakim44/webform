@@ -74,7 +74,16 @@ export default function Question6r() {
         q6: localStorage.getItem("q6"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       if (
         localStorage.getItem("q6") === "option1" ||
@@ -109,7 +118,7 @@ export default function Question6r() {
               согласуется обязательство вашей компании по нулевым выбросам?
             </p>
             <p className="question-i">
-              <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
+              <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ</i>
             </p>
           </div>
           <Form>

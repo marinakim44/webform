@@ -156,7 +156,16 @@ export default function Question15r() {
         q15: JSON.parse(localStorage.getItem("q15")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -176,14 +185,14 @@ export default function Question15r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text question">
+          <p className="question">
             Обычно сколько времени требуется вашей компании, чтобы:
             одобрить/дать зеленый свет крупным инициативам после того, как идея
             была предложена? выделить значительные ресурсы на новые крупные
             инициативы?
           </p>
           <p className="question-i">
-            <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+            <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
           </p>
         </div>
         {width <= 768 ? (

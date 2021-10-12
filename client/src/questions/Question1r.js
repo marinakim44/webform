@@ -150,7 +150,16 @@ export default function Question1r() {
       q1: JSON.parse(localStorage.getItem("q1")),
     };
 
-    axios.post("/allinputs", data);
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   return (

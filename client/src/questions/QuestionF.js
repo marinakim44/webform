@@ -74,6 +74,11 @@ export default function QuestionF() {
     Object.keys(checked)
       .filter((v) => v !== value)
       .map((v) => (checked[v] = false));
+
+    if (value !== "Other") {
+      setOther("");
+      setIsOther(false);
+    }
   }
 
   function handleChange(e) {
@@ -155,7 +160,16 @@ export default function QuestionF() {
         qfOther: localStorage.getItem("qf-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
       history.push("/eng-qh");
     }
   }
@@ -177,11 +191,11 @@ export default function QuestionF() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               Is your company family-run, backed by private equity, a
               partnership or owner-managed?
             </p>
-            <p className="question">
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE</i>
             </p>
           </div>

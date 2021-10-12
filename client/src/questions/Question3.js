@@ -224,7 +224,16 @@ export default function Question3() {
       q3: JSON.parse(localStorage.getItem("q3")),
     };
 
-    axios.post("/allinputs", data);
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -289,7 +298,7 @@ export default function Question3() {
           </div>
         ) : (
           <form>
-            <div style={{ overflow: "auto", height: "400px" }}>
+            <div style={{ overflow: "auto", height: "60vh" }}>
               <table className="table">
                 <thead
                   style={{

@@ -159,7 +159,16 @@ export default function QuestionJr() {
         qj: localStorage.getItem("qj"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -182,14 +191,9 @@ export default function QuestionJr() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text">
-            Сколько сотрудников в Вашей компании?
-          </p>
-          <p
-            className="question"
-            style={{ margin: width <= 480 ? "1rem 0" : "" }}
-          >
-            <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ)</i>
+          <p className="question">Сколько сотрудников в Вашей компании?</p>
+          <p className="question-i">
+            <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ</i>
           </p>
         </div>
         <Form>

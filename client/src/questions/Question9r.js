@@ -68,7 +68,16 @@ export default function Question9r() {
         q9: localStorage.getItem("q9"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-q10b");
     }
@@ -90,13 +99,13 @@ export default function Question9r() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text question">
+          <p className="question">
             Будет ли подход вашей компании к сокращению выбросов парниковых
             газов (ПГ) подвергаться независимой оценке и верификации (напр.,
             SBTi)?
           </p>
           <p className="question-i">
-            <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ)</i>
+            <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ</i>
           </p>
         </div>
         <Form className="left-align-text">

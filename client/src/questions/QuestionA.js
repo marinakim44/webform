@@ -112,7 +112,16 @@ export default function QuestionA() {
         qaOther: localStorage.getItem("qa-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/eng-qb");
     }
@@ -135,13 +144,10 @@ export default function QuestionA() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               If willing, would you please record your gender below?
             </p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE</i>
             </p>
           </div>

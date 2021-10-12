@@ -109,7 +109,16 @@ export default function QuestionAr() {
         qaOther: localStorage.getItem("qa-other"),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-qb");
     }
@@ -132,12 +141,9 @@ export default function QuestionAr() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">Пожалуйста, укажите Ваш пол</p>
-            <p
-              className="question"
-              style={{ margin: width <= 480 ? "1rem 0" : "" }}
-            >
-              <i>(ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ) </i>
+            <p className="question">Пожалуйста, укажите Ваш пол</p>
+            <p className="question-i">
+              <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ</i>
             </p>
           </div>
           <Form>

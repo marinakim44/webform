@@ -195,7 +195,16 @@ export default function Question10A() {
         q10a: JSON.parse(localStorage.getItem("q10a")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/eng-q12");
     }
@@ -218,11 +227,11 @@ export default function Question10A() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
+            <p className="question">
               How influential are the following factors behind your company’s
               carbon-neutral and/or net-zero commitments?
             </p>
-            <p className="question">
+            <p className="question-i">
               <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
             </p>
           </div>
@@ -295,7 +304,7 @@ export default function Question10A() {
                         {columns.map((col) => {
                           return (
                             <td className="input-cell">
-                              <label className="label-cell">
+                              <label className="alt-label-cell">
                                 <input
                                   type="radio"
                                   name={row.key}

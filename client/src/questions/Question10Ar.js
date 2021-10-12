@@ -196,7 +196,16 @@ export default function Question10Ar() {
         q10a: JSON.parse(localStorage.getItem("q10a")),
       };
 
-      axios.post("/allinputs", data);
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status == 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err));
 
       history.push("/rus-q12");
     }
@@ -224,7 +233,7 @@ export default function Question10Ar() {
               вашей компании по углеродной нейтральности и/или нулевым выбросам?
             </p>
             <p className="question-i">
-              <i>(ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА)</i>
+              <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
             </p>
           </div>
           {width <= 768 ? (
@@ -264,14 +273,14 @@ export default function Question10Ar() {
                   onClick={() => history.goBack()}
                 >
                   <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
+                  Назад
                 </Button>
                 <Button
                   variant="danger"
                   className="next-btn"
                   onClick={handleSubmit}
                 >
-                  Next
+                  Далее
                   <i className="fas fa-chevron-right next-arrow"></i>
                 </Button>
               </div>
@@ -296,7 +305,7 @@ export default function Question10Ar() {
                         {columns.map((col) => {
                           return (
                             <td className="input-cell">
-                              <label className="label-cell">
+                              <label className="alt-label-cell">
                                 <input
                                   type="radio"
                                   name={row.key}
