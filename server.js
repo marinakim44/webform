@@ -130,40 +130,40 @@ const responseSchema = new mongoose.Schema(
 
 const Response = mongoose.model("Response", responseSchema);
 
-const encryptSchema = new mongoose.Schema(
-  {
-    uuid: String,
-    name: String,
-    company: String,
-    title: String,
-    email: String,
-    phone: String,
-  },
-  {
-    bufferCommands: false,
-    autoCreate: false,
-  }
-);
+// const encryptSchema = new mongoose.Schema(
+//   {
+//     uuid: String,
+//     name: String,
+//     company: String,
+//     title: String,
+//     email: String,
+//     phone: String,
+//   },
+//   {
+//     bufferCommands: false,
+//     autoCreate: false,
+//   }
+// );
 
-const Encrypt = mongoose.model("Encrypt", encryptSchema);
+// const Encrypt = mongoose.model("Encrypt", encryptSchema);
 
 //POST APIs
 app.post("/allinputs", (req, res) => {
-  var encryptedName = key.encrypt(req.body.name, "base64");
-  var encryptedCompany = key.encrypt(req.body.company, "base64");
-  var encryptedTitle = key.encrypt(req.body.title, "base64");
-  var encryptedEmail = key.encrypt(req.body.email, "base64");
-  var encryptedPhone = key.encrypt(req.body.phone, "base64");
+  // var encryptedName = key.encrypt(req.body.name, "base64");
+  // var encryptedCompany = key.encrypt(req.body.company, "base64");
+  // var encryptedTitle = key.encrypt(req.body.title, "base64");
+  // var encryptedEmail = key.encrypt(req.body.email, "base64");
+  // var encryptedPhone = key.encrypt(req.body.phone, "base64");
 
   Response.findOneAndUpdate(
     { uuid: req.body.uuid },
     {
       datetime: currentDate,
-      name: encryptedName,
-      company: encryptedCompany,
-      title: encryptedTitle,
-      email: encryptedEmail,
-      phone: encryptedPhone,
+      name: req.body.name,
+      company: req.body.company,
+      title: req.body.title,
+      email: req.body.email,
+      phone: req.body.phone,
       question1: req.body.q1,
       question2: req.body.q2,
       question2none: req.body.q2none,
@@ -240,19 +240,19 @@ app.post("/allinputs", (req, res) => {
     }
   );
 
-  const decryptedData = new Encrypt({
-    uuid: req.body.uuid,
-    name: key.decrypt(encryptedName, "utf8"),
-    company: key.decrypt(encryptedCompany, "utf8"),
-    title: key.decrypt(encryptedTitle, "utf8"),
-    email: key.decrypt(encryptedEmail, "utf8"),
-    phone: key.decrypt(encryptedPhone, "utf8"),
-  });
+  // const decryptedData = new Encrypt({
+  //   uuid: req.body.uuid,
+  //   name: key.decrypt(encryptedName, "utf8"),
+  //   company: key.decrypt(encryptedCompany, "utf8"),
+  //   title: key.decrypt(encryptedTitle, "utf8"),
+  //   email: key.decrypt(encryptedEmail, "utf8"),
+  //   phone: key.decrypt(encryptedPhone, "utf8"),
+  // });
 
-  decryptedData
-    .save()
-    .then((item) => console.log(item))
-    .catch((err) => console.log(err));
+  // decryptedData
+  //   .save()
+  //   .then((item) => console.log(item))
+  //   .catch((err) => console.log(err));
 });
 
 //GET APIs
