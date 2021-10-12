@@ -120,16 +120,7 @@ export default function App() {
       uuid: localStorage.getItem("uuid"),
     };
 
-    axios
-      .post("/allinputs", data)
-      .then((response) => {
-        if (response.status == 200) {
-          console.log("Data posted");
-        } else {
-          console.log("Response status " + response.status);
-        }
-      })
-      .catch((err) => console.log(err));
+    axios.post("/allinputs", data);
   }
 
   function chooseRus(e) {
@@ -140,16 +131,7 @@ export default function App() {
       uuid: localStorage.getItem("uuid"),
     };
 
-    axios
-      .post("/allinputs", data)
-      .then((response) => {
-        if (response.status == 200) {
-          console.log("Data posted");
-        } else {
-          console.log("Response status " + response.status);
-        }
-      })
-      .catch((err) => console.log(err));
+    axios.post("/allinputs", data);
   }
   useEffect(() => {
     localStorage.setItem("language", language);
