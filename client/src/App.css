@@ -76,7 +76,6 @@ h1 {
     margin: 0 auto;
     height: 100%;
     min-height: 100vh;
-    /* height: 100%; */
   }
   .main .intro-heading {
     text-align: center;
@@ -198,12 +197,13 @@ h1 {
     text-align: center;
   }
   .lng-menu {
-    width: 250px;
+    width: 350px;
   }
   .lng-btn {
     background-color: #db536a;
     border: none;
     color: white;
+    width: 350px;
   }
   .lng-btn:hover {
     background-color: #a43e50;

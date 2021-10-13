@@ -349,6 +349,14 @@ export default function Question25() {
                   </div>
                 );
               })}
+              <Form.Control
+                type="text"
+                placeholder="Other (please specify)"
+                className="text-input"
+                onChange={handleChange}
+                value={other}
+                disabled={none || dontknow ? true : false}
+              ></Form.Control>
               <div className="m-none-dontknow-div">
                 <Button
                   type="button"

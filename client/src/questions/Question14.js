@@ -210,9 +210,12 @@ export default function Question14() {
           </div>
           <ModalAlert show={show} close={handleClose} />
           <p className="question">
-            Typically, how frequently does your company formally: assess its
-            major initiatives? change its major initiatives? update its
-            workforce about its major initiatives?
+            <strong>
+              Typically, how frequently does your company formally:
+            </strong>{" "}
+            <br />- assess its major initiatives?
+            <br />- change its major initiatives?
+            <br />- update its workforce about its major initiatives?
           </p>
           <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>

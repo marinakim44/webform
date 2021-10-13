@@ -155,7 +155,7 @@ export default function Question13() {
           <div style={{ textAlign: "left" }}>
             <Row style={{ verticalAlign: "middle" }}>
               <Col sm={6}>
-                <p>
+                <p style={{ color: "#db536a" }}>
                   <strong>A) Overarching strategic objectives</strong>
                 </p>
                 <p>
@@ -212,7 +212,7 @@ export default function Question13() {
             </Row>
             <Row>
               <Col sm={6}>
-                <p>
+                <p style={{ color: "#db536a" }}>
                   <strong>
                     B) Major initiatives underway in support of those strategic
                     objectives (in total)

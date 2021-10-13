@@ -133,9 +133,9 @@
   .sticky-sub-div {
     background-color: white;
     position: sticky;
-    top: 100px;
     z-index: 100;
     padding: 1rem 0;
+    top: 1px;
   }
   .back-arrow {
     margin-right: 10px;

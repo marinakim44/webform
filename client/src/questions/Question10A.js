@@ -240,7 +240,10 @@ export default function Question10A() {
               {rows.map((row) => {
                 return (
                   <div>
-                    <p className="question" style={{ color: "#db536a" }}>
+                    <p
+                      className="question question-options"
+                      style={{ color: "#db536a" }}
+                    >
                       <strong>
                         {row.key}) {row.value}
                       </strong>

@@ -186,9 +186,12 @@ export default function Question15() {
           </div>
           <ModalAlert show={show} close={handleClose} />
           <p className="question">
-            Typically, how long does it take for your company to:
-            approve/green-light major initiatives once an idea has been
-            proposed? commit significant resources to new major initiatives?
+            <strong>
+              Typically, how long does it take for your company to:
+            </strong>
+            <br />- approve/green-light major initiatives once an idea has been
+            proposed?
+            <br />- commit significant resources to new major initiatives?
           </p>
           <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
@@ -199,7 +202,7 @@ export default function Question15() {
             {rows.map((row) => {
               return (
                 <div>
-                  <p>
+                  <p className="question">
                     <strong style={{ color: "#db536a" }}>
                       {row.key}) {row.value}
                     </strong>

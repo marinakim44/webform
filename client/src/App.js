@@ -183,11 +183,11 @@ export default function App() {
               className="lng-btn"
               variant=""
               style={{
-                width: width > 768 ? "250px" : "",
+                width: width > 768 ? "350px" : "",
                 marginTop: width > 768 ? "2rem" : "",
               }}
             >
-              Select language
+              Select language / Выберите язык
             </Dropdown.Toggle>
             <Dropdown.Menu className="lng-menu">
               <Dropdown.Item onClick={chooseEng} value="English">

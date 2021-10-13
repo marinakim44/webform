@@ -244,7 +244,10 @@ export default function Question10Br() {
               return (
                 <div>
                   <strong>
-                    <p className="question" style={{ color: "#db536a" }}>
+                    <p
+                      className="question question-options"
+                      style={{ color: "#db536a" }}
+                    >
                       {row.key}) {row.value}
                     </p>
                   </strong>
