@@ -298,17 +298,10 @@ export default function Question3() {
           </div>
         ) : (
           <form>
-            <div style={{ overflow: "auto", height: "60vh" }}>
+            <div>
               <table className="table">
-                <thead
-                  style={{
-                    position: "sticky",
-                    top: 0,
-                    zIndex: 1,
-                    backgroundColor: "#fff",
-                  }}
-                >
-                  <tr style={{ position: "sticky", top: 0 }}>
+                <thead>
+                  <tr>
                     <td colSpan="2"></td>
                     {columns.map((col) => {
                       return (

@@ -333,16 +333,9 @@ export default function Question17r() {
             </div>
           ) : (
             <form>
-              <div style={{ overflow: "auto", height: "60vh" }}>
+              <div>
                 <Table bordered className="table">
-                  <thead
-                    style={{
-                      position: "sticky",
-                      top: 0,
-                      backgroundColor: "white",
-                      verticalAlign: "middle",
-                    }}
-                  >
+                  <thead>
                     <tr
                       style={{
                         fontWeight: "bold",
@@ -375,14 +368,14 @@ export default function Question17r() {
                           <td>{row.key}</td>
                           <td
                             className="left-align-text"
-                            style={{ width: "10%" }}
+                            style={{ width: "25%" }}
                           >
                             {row.value}
                           </td>
                           {columns.map((col) => {
                             return (
                               <td className="input-cell">
-                                <label className="label-cell">
+                                <label className="alt-label-cell">
                                   <input
                                     type="radio"
                                     name={row.key}

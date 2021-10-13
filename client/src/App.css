@@ -69,11 +69,10 @@ h1 {
     width: 100px;
   }
   .main {
-    top: 80px;
     text-align: center;
-    padding: 0.5rem 2rem;
+    padding: 1rem 2rem;
     background-color: white;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
     height: 100%;
     min-height: 100vh;
@@ -150,7 +149,6 @@ h1 {
   .sticky-sub-div {
     background-color: white;
     position: sticky;
-    top: 80px;
     z-index: 100;
     padding: 0;
     margin-top: 0;

@@ -452,39 +452,25 @@ export default function Question25Br() {
             </div>
           ) : (
             <Form>
-              <div style={{ overflow: "auto", height: "60vh" }}>
+              <div>
                 <table className="table">
-                  <thead
-                    style={{
-                      position: "sticky",
-                      top: 0,
-                      zIndex: 1,
-                      backgroundColor: "#fff",
-                    }}
-                  >
-                    <tr style={{ position: "sticky", top: 0 }}>
-                      <th
-                        colSpan="2"
-                        style={{ position: "sticky", top: 0, zIndex: 1 }}
-                      ></th>
+                  <tbody>
+                    <tr>
+                      <td colSpan="2"></td>
                       {columns.map((col) => {
                         return (
-                          <th
+                          <td
                             style={{
-                              position: "sticky",
-                              top: 0,
-                              zIndex: 1,
                               width: "120px",
-                              verticalAlign: "top",
+                              verticalAlign: "middle",
                             }}
                           >
-                            {col.value}
-                          </th>
+                            <strong>{col.value}</strong>
+                          </td>
                         );
                       })}
                     </tr>
-                  </thead>
-                  <tbody>
+
                     {rows.map((row) => {
                       return (
                         <tr className="table-row">
@@ -493,7 +479,7 @@ export default function Question25Br() {
                           {columns.map((col) => {
                             return (
                               <td className="input-cell">
-                                <label className="label-cell">
+                                <label className="alt-label-cell">
                                   <input
                                     type="radio"
                                     name={row.key}

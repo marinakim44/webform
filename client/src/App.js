@@ -139,7 +139,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Nav language={language} />
+      {/* <Nav language={language} /> */}
       <Route exact path="/">
         <div className="main">
           <div className="start-text">

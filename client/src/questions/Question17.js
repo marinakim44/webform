@@ -334,16 +334,9 @@ export default function Question17() {
             </div>
           ) : (
             <form>
-              <div style={{ overflow: "auto", height: "60vh" }}>
+              <div>
                 <Table bordered className="table">
-                  <thead
-                    style={{
-                      position: "sticky",
-                      top: 0,
-                      backgroundColor: "white",
-                      verticalAlign: "middle",
-                    }}
-                  >
+                  <thead>
                     <tr
                       style={{
                         fontWeight: "bold",

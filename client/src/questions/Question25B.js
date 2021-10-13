@@ -452,17 +452,10 @@ export default function Question25B() {
             </div>
           ) : (
             <Form>
-              <div style={{ overflow: "auto", height: "90vh" }}>
+              <div>
                 <table className="table">
-                  <thead
-                    style={{
-                      position: "sticky",
-                      top: 0,
-                      zIndex: 1,
-                      backgroundColor: "#fff",
-                    }}
-                  >
-                    <tr style={{ position: "sticky", top: 0 }}>
+                  <thead>
+                    <tr>
                       <th
                         colSpan="2"
                         style={{ position: "sticky", top: 0, zIndex: 1 }}

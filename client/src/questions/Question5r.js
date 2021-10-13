@@ -264,12 +264,7 @@ export default function Question5r() {
                     return (
                       <tr key={row.key} className="table-row">
                         <td>{row.key}</td>
-                        <td
-                          className="left-align-text"
-                          style={{ width: "200px" }}
-                        >
-                          {row.value}
-                        </td>
+                        <td className="left-align-text">{row.value}</td>
                         {columns.map((col) => {
                           return (
                             <td

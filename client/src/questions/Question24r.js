@@ -16,6 +16,12 @@ export default function Question24() {
     if (localStorage.getItem("q24-checked")) {
       setChecked(JSON.parse(localStorage.getItem("q24-checked")));
     }
+    if (localStorage.getItem("q24-none")) {
+      setNone(JSON.parse(localStorage.getItem("q24-none")));
+    }
+    if (localStorage.getItem("q24-not")) {
+      setNot(JSON.parse(localStorage.getItem("q24-not")));
+    }
   }, []);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

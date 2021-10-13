@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
 
-export default function Question25() {
+export default function Question25r() {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,72 +27,72 @@ export default function Question25() {
 
   const rows = [
     {
-      index: 1,
+      index: "1",
       key: "A",
       value: " Квалифицированный и адаптивный персонал ",
     },
     {
-      index: 2,
+      index: "2",
       key: "B",
       value: "Развитая инфраструктура  (включая цифровую инфраструктуру) ",
     },
     {
-      index: 3,
+      index: "3",
       key: "C",
       value: "Снижение рисков изменения климата и ущерба окружающей среде",
     },
     {
-      index: 4,
+      index: "4",
       key: "D",
       value: "Высокий уровень занятости",
     },
     {
-      index: 5,
+      index: "5",
       key: "E",
       value: "Эффективная налоговая система",
     },
     {
-      index: 6,
+      index: "6",
       key: "F",
       value: "Большее равенство доходов населения",
     },
     {
-      index: 7,
+      index: "7",
       key: "G",
       value: "Здоровье и благополучие сотрудников",
     },
     {
-      index: 8,
+      index: "8",
       key: "H",
       value: "Диверсифицированный и инклюзивный персонал",
     },
     {
-      index: 9,
+      index: "9",
       key: "I",
       value: "Меры предосторожности при использовании личных данных",
     },
     {
-      index: 10,
+      index: "10",
       key: "J",
       value: "Предсказуемая макроэкономическая среда",
     },
     {
-      index: 11,
+      index: "11",
       key: "K",
       value: "Инвестиционная привлекательность страны",
     },
     {
-      index: 12,
+      index: "12",
       key: "L",
       value: "Борьба с коррупцией и взяточничеством",
     },
     {
-      index: 13,
+      index: "13",
       key: "M",
       value: "Верховенство права во всех сферах деятельности государства",
     },
     {
-      index: 14,
+      index: "14",
       key: "N",
       value: "Доступ к недорогому капиталу",
     },
