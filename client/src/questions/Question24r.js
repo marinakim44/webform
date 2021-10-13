@@ -235,7 +235,7 @@ export default function Question24() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
     }
   }
 
@@ -263,7 +263,7 @@ export default function Question24() {
               <li style={{ listStyle: "none" }}>
                 A) в долгосрочную корпоративную стратегию вашей компании?
               </li>
-              <li style={{ listStyle: "none" }}>
+              <li style={{ listStyle: "none", marginBottom: "8px" }}>
                 B) в ваш личный годовой бонус или в долгосрочную систему
                 вознаграждений?
               </li>

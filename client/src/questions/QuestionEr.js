@@ -49,6 +49,7 @@ export default function QuestionEr() {
   useEffect(() => {
     localStorage.setItem("qe", input);
     localStorage.setItem("qe-checked", JSON.stringify(checked));
+    console.log(input);
   }, [input, checked]);
 
   function handleSubmit(e) {
@@ -120,9 +121,9 @@ export default function QuestionEr() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
 
-      if (localStorage.getItem("qe") === "Частная") {
+      if (localStorage.getItem("qe") === "option1") {
         history.push("/rus-qf");
       } else {
         history.push("/rus-qg");

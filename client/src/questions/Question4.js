@@ -209,7 +209,7 @@ export default function Question4() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
       console.log(JSON.parse(localStorage.getItem("q4-list")));
       history.push("/eng-q5");
     }

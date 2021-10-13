@@ -83,7 +83,7 @@ export default function Question6() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
 
       if (
         localStorage.getItem("q6") === "option1" ||

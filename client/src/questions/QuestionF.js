@@ -169,7 +169,7 @@ export default function QuestionF() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
       history.push("/eng-qh");
     }
   }
@@ -177,7 +177,7 @@ export default function QuestionF() {
   return (
     <BrowserRouter>
       <Route path="/eng-qf">
-        <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
+        <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
               {Math.round(((100 / 40) * 37).toString())}% completed

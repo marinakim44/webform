@@ -133,7 +133,7 @@ export default function Question5r() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
 
       if (input.B === "1") {
         history.push("/rus-q6");

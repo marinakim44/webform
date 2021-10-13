@@ -207,7 +207,7 @@ export default function Question10Br() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
 
       history.push("/rus-q12");
     }

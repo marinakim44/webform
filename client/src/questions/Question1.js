@@ -159,7 +159,7 @@ export default function Question1({ lng }) {
           console.log("Response status " + response.status);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response.data));
   }
 
   return (

@@ -91,7 +91,7 @@ export default function QuestionBr() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
     }
   }
 
@@ -131,6 +131,7 @@ export default function QuestionBr() {
                   value={input}
                   onChange={handleChange}
                   className="input-text"
+                  autoComplete="off"
                 />
               </Col>
             </Form.Group>

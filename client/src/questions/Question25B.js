@@ -350,7 +350,7 @@ export default function Question25B() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
     }
   }
 
@@ -493,7 +493,7 @@ export default function Question25B() {
                           {columns.map((col) => {
                             return (
                               <td className="input-cell">
-                                <label className="alt-abel-cell">
+                                <label className="alt-label-cell">
                                   <input
                                     type="radio"
                                     name={row.key}

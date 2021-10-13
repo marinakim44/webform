@@ -141,7 +141,7 @@ export default function QuestionCr() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.response.data));
 
       if (input === "option2") {
         history.push("/rus-qd");
