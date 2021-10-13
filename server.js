@@ -20,17 +20,13 @@ const options = {
   useUnifiedTopology: true,
 };
 
-mongoose.connect(
-  "mongodb+srv://admin-marina:testpassword4488@cluster0.hr1hl.mongodb.net/questionsDB?retryWrites=true&w=majority",
-  options,
-  function (err) {
-    if (!err) {
-      console.log("Mongodb connected...");
-    } else {
-      console.log(err);
-    }
+mongoose.connect(process.env.MONGO_URI, options, function (err) {
+  if (!err) {
+    console.log("Mongodb connected...");
+  } else {
+    console.log(err);
   }
-);
+});
 
 // mongoose.set("bufferCommands", false);
 // mongoose.connect(process.env.MONGO_URI, options, function (err) {
