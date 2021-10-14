@@ -1,6 +1,8 @@
 import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import Nav from "./Nav";
 import EngStart from "./EngStart";
+import EngIntro from "./EngIntro";
+import RusIntro from "./RusIntro";
 import EngFinish from "./EngFinish";
 import RusStart from "./RusStart";
 import RusFinish from "./RusFinish";
@@ -143,39 +145,10 @@ export default function App() {
       <Route exact path="/">
         <div className="main">
           <div className="start-text">
+            <h1 className="intro-heading">25th Annual Global CEO Survey</h1>
             <h1 className="intro-heading">
-              25th Annual Global CEO Survey Questionnaire
+              25-ый Ежегодный опрос руководителей крупнейших компаний мира
             </h1>
-            <p className="intro-text">
-              For more than two decades, PwC's Annual Global CEO Survey has
-              opened a unique window on the thinking of chief executives around
-              the world. This year, we're celebrating our 25th anniversary of
-              Global CEO Survey and 10th anniversary in Kazakhstan. <br />
-              <br /> It is our hope that the survey results—historically
-              released in Davos on the eve of the Annual Meeting of the World
-              Economic Forum—will stimulate fresh thinking and enduring insights
-              on the relationship between external forces, strategic objectives,
-              organisational responses and corporate performance. Many of this
-              year’s questions reflect our aspiration to dig deeper, and we want
-              to thank you in advance for your participation.
-              <br />
-              <br /> Kazakhstan’s findings of the report will be released in
-              cooperation with Forbes Kazakhstan in April 2022. <br />
-              <br />
-              <i>
-                This research is conducted in accordance with the Market
-                Research Society Code of Conduct, which is designed to safeguard
-                participant confidentiality and anonymity. If you complete the
-                survey, your responses will be combined with others at the
-                aggregate, industry, region and country/territory level to
-                reveal a consensus of opinion on these issues. Your data may
-                also be combined with other research conducted by PwC or
-                publicly available information in order to obtain further
-                insight. All responses will be kept completely confidential, and
-                individual responses will never be attributed without your prior
-                consent.
-              </i>
-            </p>
           </div>
           <Dropdown>
             <Dropdown.Toggle
@@ -191,13 +164,13 @@ export default function App() {
             </Dropdown.Toggle>
             <Dropdown.Menu className="lng-menu">
               <Dropdown.Item onClick={chooseEng} value="English">
-                <Link to="/eng-start">
+                <Link to="/eng-intro">
                   <div className="lng-div">English</div>
                 </Link>
               </Dropdown.Item>
 
               <Dropdown.Item onClick={chooseRus}>
-                <Link to="/rus-start">
+                <Link to="/rus-intro">
                   <div className="lng-div">Русский</div>
                 </Link>
               </Dropdown.Item>
@@ -206,6 +179,12 @@ export default function App() {
         </div>
       </Route>
       <Switch>
+        <Route exact path="/eng-intro">
+          <EngIntro lng={language} />
+        </Route>
+        <Route exact path="/rus-intro">
+          <RusIntro />
+        </Route>
         <Route exact path="/eng-start">
           <EngStart lng={language} />
         </Route>

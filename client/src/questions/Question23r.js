@@ -188,7 +188,7 @@ export default function Question23r() {
                   className="fas fa-chevron-left"
                   style={{ marginRight: "8px" }}
                 ></i>
-                Back
+                Назад
               </Button>
 
               <Button
@@ -196,7 +196,7 @@ export default function Question23r() {
                 className="next-btn"
                 onClick={handleSubmit}
               >
-                Next
+                Далее
                 <i
                   className="fas fa-chevron-right"
                   style={{ marginLeft: "8px" }}

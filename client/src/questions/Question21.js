@@ -191,7 +191,8 @@ export default function Question21() {
           <ModalAlert show={show} close={handleClose} />
           <p className="question">
             How confident are you about your company’s prospects for revenue
-            growth over: the next 12 months? the next three years?
+            growth over: <br />- the next 12 months?
+            <br />- the next three years?
           </p>
           <p className="question-i">
             <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>

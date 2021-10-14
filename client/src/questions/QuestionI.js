@@ -163,7 +163,7 @@ export default function QuestionI() {
             console.log("Response status " + response.status);
           }
         })
-        .catch((err) => console.log(err.response.data));
+        .catch((err) => console.log(err));
     }
   }
 

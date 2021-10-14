@@ -191,7 +191,9 @@ export default function Question21r() {
           <ModalAlert show={show} close={handleClose} />
           <p className="question">
             Насколько вы уверены в перспективах роста выручки вашей компании в
-            течение: cледующих 12 месяцев? следующих трех лет?
+            течение:
+            <br />- cледующих 12 месяцев?
+            <br />- следующих трех лет?
           </p>
           <p className="question-i">
             <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
