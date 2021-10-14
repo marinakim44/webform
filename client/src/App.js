@@ -117,23 +117,43 @@ export default function App() {
   function chooseEng(e) {
     e.preventDefault();
     setLanguage("English");
+    localStorage.setItem("language", language);
 
     const data = {
       uuid: localStorage.getItem("uuid"),
     };
 
-    axios.post("/allinputs", data);
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err.response.data));
   }
 
   function chooseRus(e) {
     e.preventDefault();
     setLanguage("Русский");
+    localStorage.setItem("language", language);
 
     const data = {
       uuid: localStorage.getItem("uuid"),
     };
 
-    axios.post("/allinputs", data);
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err.response.data));
   }
   useEffect(() => {
     localStorage.setItem("language", language);

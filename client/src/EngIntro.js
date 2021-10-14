@@ -1,8 +1,28 @@
 import { Button } from "react-bootstrap";
 import { Route, useHistory } from "react-router-dom";
+import axios from "axios";
 
 export default function EngIntro() {
   const history = useHistory();
+
+  const handleSubmit = () => {
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+    };
+
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status == 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err.response.data));
+    history.push("/eng-start");
+  };
+
   return (
     <Route exact path="/eng-intro">
       <div className="main">
@@ -39,7 +59,7 @@ export default function EngIntro() {
         <Button
           style={{ border: "none" }}
           className="next-btn"
-          onClick={() => history.push("/eng-start")}
+          onClick={handleSubmit}
         >
           Start
         </Button>
