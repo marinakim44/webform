@@ -38,14 +38,12 @@ mongoose.connect(process.env.MONGO_URI, options, function (err) {
 // });
 
 var date = new Date();
-var currentDate = date.toString();
+var currentDate = date.toLocaleString("ru-KZ", { timeZone: "Asia/Almaty" });
+console.log(currentDate);
 
 const responseSchema = new mongoose.Schema(
   {
-    datetime: {
-      type: Date,
-      required: true,
-    },
+    datetime: String,
     uuid: String,
     language: String,
     name: String,
@@ -228,11 +226,18 @@ app.post("/allinputs", (req, res) => {
     },
     { upsert: true },
     function (err, doc) {
-      if (err) {
-        return res.status(500).send(err);
+      if (!err) {
+        res.status(200).json(err);
+        return;
       } else {
-        return res.status(200).send("Saved");
+        res.status(500).json(err);
+        return;
       }
+      // if (err) {
+      //   return res.status(500).send(err);
+      // } else {
+      //   return res.status(200).send("Saved");
+      // }
     }
   );
 

@@ -168,6 +168,17 @@ export default function Question2() {
     }
   };
 
+  const stylesFalse = {
+    border: "solid black 1px",
+    backgroundColor: "white",
+    color: "black",
+  };
+  const stylesTrue = {
+    border: "none",
+    backgroundColor: "#ffa929",
+    color: "white",
+  };
+
   return (
     <Route path="/eng-q2">
       <div className="main">
@@ -201,7 +212,7 @@ export default function Question2() {
           </div>
         </div>
         <Creatable
-          isDisabled={dontknow ? true : false}
+          // isDisabled={dontknow ? true : false}
           components={{ Menu }}
           name="dropdown"
           isMulti
@@ -222,7 +233,7 @@ export default function Question2() {
             value={other.other1}
             onChange={handleOther}
             className="input-text"
-            disabled={dontknow ? true : false}
+            // disabled={dontknow ? true : false}
             onBlur={handleBlurOther}
             onFocus={handleFocusOther}
             autoComplete="off"
@@ -234,7 +245,7 @@ export default function Question2() {
             onChange={handleOther}
             placeholder="Other 2 (please specify)"
             className="input-text"
-            disabled={dontknow ? true : false}
+            // disabled={dontknow ? true : false}
             onBlur={handleBlurOther}
             onFocus={handleFocusOther}
             autoComplete="off"
@@ -246,16 +257,17 @@ export default function Question2() {
             onChange={handleOther}
             placeholder="Other 3 (please specify)"
             className="input-text"
-            disabled={dontknow ? true : false}
+            // disabled={dontknow ? true : false}
             onBlur={handleBlurOther}
             onFocus={handleFocusOther}
             autoComplete="off"
           ></Form.Control>
           <div className="dontknow-div">
             <Button
-              variant={dontknow === true ? "warning" : "outline-dark"}
+              // variant={dontknow === true ? "warning" : "outline-dark"}
+              style={dontknow === true ? stylesTrue : stylesFalse}
               type="button"
-              className="back-btn"
+              // className="back-btn"
               value="Don't know"
               onClick={handleDontknow}
               className="dontknow-btn"

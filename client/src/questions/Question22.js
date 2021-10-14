@@ -49,6 +49,12 @@ export default function Question22() {
         [name]: value,
       };
     });
+    setDontknow((prev) => {
+      return {
+        ...prev,
+        [name]: false,
+      };
+    });
   };
 
   const handleDontknow = (e) => {
@@ -248,7 +254,7 @@ export default function Question22() {
                   name="revenue"
                   value={input.revenue}
                   onChange={handleChange}
-                  disabled={dontknow.revenue === true ? true : false}
+                  // disabled={dontknow.revenue === true ? true : false}
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
@@ -303,7 +309,7 @@ export default function Question22() {
                   name="profit"
                   value={input.profit}
                   onChange={handleChange}
-                  disabled={dontknow.profit === true ? true : false}
+                  // disabled={dontknow.profit === true ? true : false}
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
@@ -358,7 +364,7 @@ export default function Question22() {
                   name="return"
                   value={input.return}
                   onChange={handleChange}
-                  disabled={dontknow.return === true ? true : false}
+                  // disabled={dontknow.return === true ? true : false}
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
@@ -440,7 +446,7 @@ export default function Question22() {
                           name="revenue"
                           value={dontknow.revenue === true ? "" : input.revenue}
                           onChange={handleChange}
-                          disabled={dontknow.revenue === true ? true : false}
+                          // disabled={dontknow.revenue === true ? true : false}
                           onBlur={handleBlur}
                           onFocus={handleFocus}
                         />
@@ -497,7 +503,7 @@ export default function Question22() {
                           name="profit"
                           value={dontknow.profit === true ? "" : input.profit}
                           onChange={handleChange}
-                          disabled={dontknow.profit === true ? true : false}
+                          // disabled={dontknow.profit === true ? true : false}
                           onBlur={handleBlur}
                           onFocus={handleFocus}
                         />
@@ -554,7 +560,7 @@ export default function Question22() {
                           name="return"
                           value={dontknow.return === true ? "" : input.return}
                           onChange={handleChange}
-                          disabled={dontknow.return === true ? true : false}
+                          // disabled={dontknow.return === true ? true : false}
                           onBlur={handleBlur}
                           onFocus={handleFocus}
                         />

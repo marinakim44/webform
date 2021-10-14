@@ -144,10 +144,14 @@ export default function Question25() {
         [name]: !checked[name],
       };
     });
+    setNone(false);
+    setDontknow(false);
   };
 
   const handleChange = (e) => {
     setOther(e.target.value);
+    setNone(false);
+    setDontknow(false);
   };
 
   const handleNone = () => {
@@ -334,11 +338,8 @@ export default function Question25() {
                         onChange={handleClick}
                         checked={checked[row.key]}
                         disabled={
-                          (Object.entries(checked).filter((c) => c[1] === true)
-                            .length === 3 &&
-                            !checked[row.key]) ||
-                          none === true ||
-                          dontknow === true
+                          Object.entries(checked).filter((c) => c[1] === true)
+                            .length === 3 && !checked[row.key]
                             ? true
                             : false
                         }
@@ -355,7 +356,7 @@ export default function Question25() {
                 className="text-input"
                 onChange={handleChange}
                 value={other}
-                disabled={none || dontknow ? true : false}
+                // disabled={none || dontknow ? true : false}
               ></Form.Control>
               <div className="m-none-dontknow-div">
                 <Button
@@ -417,15 +418,13 @@ export default function Question25() {
                         .filter((row) => row.index < 8)
                         .map((row) => {
                           return (
-                            <tr>
-                              <td>{row.key}</td>
-                              <td className="left-align-text">{row.value}</td>
+                            <tr className="left-align-text">
                               <td>
                                 <label
                                   className="alt-label-cell"
-                                  style={{
-                                    width: "150px",
-                                  }}
+                                  // style={{
+                                  //   width: "150px",
+                                  // }}
                                 >
                                   <input
                                     type="checkbox"
@@ -434,17 +433,15 @@ export default function Question25() {
                                     onChange={handleClick}
                                     checked={checked[row.key]}
                                     disabled={
-                                      (Object.entries(checked).filter(
+                                      Object.entries(checked).filter(
                                         (c) => c[1] === true
-                                      ).length === 3 &&
-                                        !checked[row.key]) ||
-                                      none === true ||
-                                      dontknow === true
+                                      ).length === 3 && !checked[row.key]
                                         ? true
                                         : false
                                     }
-                                    className="m-input"
+                                    className="m-input radio-input"
                                   ></input>
+                                  {row.value}
                                 </label>
                               </td>
                             </tr>
@@ -460,20 +457,13 @@ export default function Question25() {
                         .filter((row) => row.index >= 8)
                         .map((row) => {
                           return (
-                            <tr>
-                              <td>{row.key}</td>
-                              <td
-                                className="left-align-text"
-                                onClick={handleClick}
-                              >
-                                {row.value}
-                              </td>
+                            <tr className="left-align-text">
                               <td>
                                 <label
                                   className="alt-label-cell"
-                                  style={{
-                                    width: "150px",
-                                  }}
+                                  // style={{
+                                  //   width: "150px",
+                                  // }}
                                 >
                                   <input
                                     type="checkbox"
@@ -481,17 +471,16 @@ export default function Question25() {
                                     value={row.value}
                                     onChange={handleClick}
                                     checked={checked[row.key]}
+                                    className="m-input radio-input"
                                     disabled={
-                                      (Object.entries(checked).filter(
+                                      Object.entries(checked).filter(
                                         (c) => c[1] === true
-                                      ).length === 3 &&
-                                        !checked[row.key]) ||
-                                      none === true ||
-                                      dontknow === true
+                                      ).length === 3 && !checked[row.key]
                                         ? true
                                         : false
                                     }
                                   ></input>
+                                  {row.value}
                                 </label>
                               </td>
                             </tr>
@@ -507,7 +496,7 @@ export default function Question25() {
                 style={{ width: "415px", marginTop: "1rem" }}
                 onChange={handleChange}
                 value={other}
-                disabled={none || dontknow ? true : false}
+                // disabled={none || dontknow ? true : false}
               ></Form.Control>
               <div style={{ textAlign: "left", padding: "1rem 0" }}>
                 <Button

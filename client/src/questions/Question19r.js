@@ -82,6 +82,9 @@ export default function Question19r() {
         [name]: !checked[name],
       };
     });
+
+    setNone(false);
+    setDontknow(false);
   }
 
   useEffect(() => {
@@ -100,13 +103,12 @@ export default function Question19r() {
           return setInput(input.filter((a) => a !== x[0]));
         }
       });
-
-    console.log(checked);
-    console.log(input);
   }, [checked, input]);
 
   function handleChangeOther(e) {
     setOther(e.target.value);
+    setNone(false);
+    setDontknow(false);
   }
 
   function handleNone() {
@@ -193,6 +195,17 @@ export default function Question19r() {
     }
   }
 
+  const stylesFalse = {
+    border: "solid black 1px",
+    backgroundColor: "white",
+    color: "black",
+  };
+  const stylesTrue = {
+    border: "none",
+    backgroundColor: "#ffa929",
+    color: "white",
+  };
+
   return (
     <Route path="/rus-q19">
       <div className="main">
@@ -231,7 +244,7 @@ export default function Question19r() {
                       name={row.key}
                       value={row.key}
                       onChange={handleChange}
-                      disabled={none || dontknow === true ? true : false}
+                      // disabled={none || dontknow === true ? true : false}
                       checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
@@ -244,7 +257,7 @@ export default function Question19r() {
                 type="text"
                 placeholder="Прочие действия (просьба указать)"
                 value={none || dontknow ? "" : other}
-                disabled={dontknow || none === true ? true : false}
+                // disabled={dontknow || none === true ? true : false}
                 onChange={handleChangeOther}
                 className="input-text"
                 style={{ marginTop: "2rem" }}
@@ -255,7 +268,8 @@ export default function Question19r() {
                 variant={none ? "warning" : "outline-dark"}
                 type="button"
                 onClick={handleNone}
-                className="q19-none-btn"
+                className="none-btn"
+                // style={none === true ? stylesTrue : stylesFalse}
               >
                 Наша компания не предпринимала каких-либо действий
               </Button>
@@ -263,7 +277,7 @@ export default function Question19r() {
                 variant={dontknow ? "warning" : "outline-dark"}
                 type="button"
                 onClick={handleDontknow}
-                className="q19-dontknow-btn"
+                className="dontknow-btn"
               >
                 Затрудняюсь ответить
               </Button>
@@ -300,9 +314,9 @@ export default function Question19r() {
                       name={row.key}
                       value={row.key}
                       onChange={handleChange}
-                      disabled={
-                        none === true || dontknow === true ? true : false
-                      }
+                      // disabled={
+                      //   none === true || dontknow === true ? true : false
+                      // }
                       checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
@@ -314,13 +328,14 @@ export default function Question19r() {
               type="text"
               placeholder="Прочие действия (просьба указать)"
               value={none || dontknow ? "" : other}
-              disabled={dontknow || none ? true : false}
+              // disabled={dontknow || none ? true : false}
               onChange={handleChangeOther}
               style={{ margin: "1rem 0", width: "45%" }}
             ></Form.Control>
 
             <Button
               variant={none ? "warning" : "outline-dark"}
+              // style={none === true ? stylesTrue : stylesFalse}
               type="button"
               onClick={handleNone}
               className="rus-none-btn"

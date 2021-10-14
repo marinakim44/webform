@@ -58,6 +58,7 @@ export default function Question2r() {
         selectedOptions.push(option.label);
       }
     });
+    setDontknow(false);
 
     console.log(selectedOptions);
   }
@@ -70,6 +71,7 @@ export default function Question2r() {
         [name]: value,
       };
     });
+    setDontknow(false);
   };
 
   const handleDontknow = () => {
@@ -83,6 +85,11 @@ export default function Question2r() {
       });
     }
   };
+  useEffect(() => {
+    if (dontknow === true) {
+      setSelectedOptions([]);
+    }
+  }, [dontknow]);
   const handleBlurOther = (e) => {
     const { name } = e.target;
 
@@ -167,6 +174,18 @@ export default function Question2r() {
     }
   };
 
+  const stylesFalse = {
+    border: "solid black 1px",
+    backgroundColor: "white",
+    borderRadius: "4px",
+  };
+  const stylesTrue = {
+    border: "none",
+    backgroundColor: "#ffa929",
+    color: "white",
+    borderRadius: "4px",
+  };
+
   return (
     <Route path="/rus-q2">
       <div className="main">
@@ -201,7 +220,6 @@ export default function Question2r() {
 
         <Form style={{ width: "100%" }}>
           <Creatable
-            isDisabled={dontknow ? true : false}
             components={{ Menu }}
             name="dropdown"
             isMulti
@@ -221,7 +239,7 @@ export default function Question2r() {
             name="other1"
             value={other.other1}
             onChange={handleOther}
-            disabled={dontknow ? true : false}
+            // disabled={dontknow ? true : false}
             className="input-text"
             onBlur={handleBlurOther}
             onFocus={handleFocusOther}
@@ -233,7 +251,7 @@ export default function Question2r() {
             value={other.other2}
             onChange={handleOther}
             placeholder="Другое 2 (пожалуйста, укажите)"
-            disabled={dontknow ? true : false}
+            // disabled={dontknow ? true : false}
             className="input-text"
             onBlur={handleBlurOther}
             onFocus={handleFocusOther}
@@ -246,23 +264,23 @@ export default function Question2r() {
             onChange={handleOther}
             placeholder="Другое 3 (пожалуйста, укажите)"
             className="input-text"
-            disabled={dontknow ? true : false}
+            // disabled={dontknow ? true : false}
             onBlur={handleBlurOther}
             onFocus={handleFocusOther}
             autoComplete="off"
           ></Form.Control>
           <div className="dontknow-div">
-            <Button
+            <button
               type="button"
-              variant={dontknow ? "warning" : "outline-dark"}
-              className={width <= 480 ? "dontknow-btn" : "back-btn"}
-              style={{ margin: 0 }}
+              // variant={dontknow ? "warning" : "outline-dark"}
+              // className={width <= 480 ? "dontknow-btn" : "back-btn"}
+              style={dontknow === true ? stylesTrue : stylesFalse}
               value="Don't know"
               onClick={handleDontknow}
               className="dontknow-btn"
             >
               Не знаю
-            </Button>
+            </button>
           </div>
           <div className="back-next-btns">
             <Button

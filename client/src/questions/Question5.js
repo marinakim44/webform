@@ -273,7 +273,7 @@ export default function Question5() {
                             <td
                               key={col.key}
                               className="input-cell"
-                              style={{ width: "250px" }}
+                              // style={{ width: "250px" }}
                             >
                               <label className="label-cell">
                                 <input

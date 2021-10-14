@@ -34,6 +34,12 @@ export default function Question13() {
 
   function handleSelectA(e) {
     setInputA(e);
+    setDontknow((prev) => {
+      return {
+        ...prev,
+        A: false,
+      };
+    });
   }
   useEffect(() => {
     localStorage.setItem("q13a", inputA);
@@ -41,6 +47,12 @@ export default function Question13() {
 
   function handleSelectB(e) {
     setInputB(e);
+    setDontknow((prev) => {
+      return {
+        ...prev,
+        B: false,
+      };
+    });
   }
   useEffect(() => {
     localStorage.setItem("q13b", inputB);
@@ -78,7 +90,10 @@ export default function Question13() {
     e.preventDefault();
     localStorage.setItem("q13-dontknow", JSON.stringify(dontknow));
 
-    if (!inputA && dontknow.a === false && !inputB && dontknow.b === false) {
+    if (
+      (inputA === "" && dontknow.A === false) ||
+      (inputB === "" && dontknow.B === false)
+    ) {
       handleShow();
     } else {
       const data = {
@@ -118,6 +133,17 @@ export default function Question13() {
       history.push("/eng-q14");
     }
   }
+
+  const stylesFalse = {
+    border: "solid black 1px",
+    backgroundColor: "white",
+    color: "black",
+  };
+  const stylesTrue = {
+    border: "none",
+    backgroundColor: "#ffa929",
+    color: "white",
+  };
 
   return (
     <Route path="/eng-q13">
@@ -173,7 +199,7 @@ export default function Question13() {
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
-                    disabled={dontknow.A === true ? true : false}
+                    // disabled={dontknow.A === true ? true : false}
                     className="dropdown-toggle"
                   >
                     {inputA ? inputA : "Select"}
@@ -200,11 +226,12 @@ export default function Question13() {
                 <Button
                   type="button"
                   variant={dontknow.A === true ? "warning" : "outline-dark"}
+                  // style={dontknow.A === true ? stylesTrue : stylesFalse}
                   name="A"
                   value="dontknow"
                   onClick={handleDontknow}
                   className="dropdown-btn"
-                  checked={dontknow.a === true ? true : false}
+                  // checked={dontknow.A === true ? true : false}
                 >
                   Don't know
                 </Button>
@@ -240,7 +267,7 @@ export default function Question13() {
                     variant="light"
                     id="dropdown-basic"
                     className="dropdown-toggle"
-                    disabled={dontknow.B === true ? true : false}
+                    // disabled={dontknow.B === true ? true : false}
                   >
                     {inputB ? inputB : "Select"}
                   </Dropdown.Toggle>
@@ -265,6 +292,7 @@ export default function Question13() {
                 <Button
                   type="button"
                   variant={dontknow.B === true ? "warning" : "outline-dark"}
+                  // style={dontknow.B === true ? stylesTrue : stylesFalse}
                   name="B"
                   value="dontknow"
                   onClick={handleDontknow}
@@ -320,7 +348,7 @@ export default function Question13() {
                         variant="light"
                         id="dropdown-basic"
                         className="select-btn"
-                        disabled={dontknow.A === true ? true : false}
+                        // disabled={dontknow.A === true ? true : false}
                       >
                         {inputA ? inputA : "Select number"}
                       </Dropdown.Toggle>
@@ -387,7 +415,7 @@ export default function Question13() {
                         variant="light"
                         id="dropdown-basic"
                         className="select-btn"
-                        disabled={dontknow.B === true ? true : false}
+                        // disabled={dontknow.B === true ? true : false}
                       >
                         {inputB ? inputB : "Select number"}
                       </Dropdown.Toggle>

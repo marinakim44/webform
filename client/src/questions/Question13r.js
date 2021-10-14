@@ -34,6 +34,12 @@ export default function Question13r() {
 
   function handleSelectA(e) {
     setInputA(e);
+    setDontknow((prev) => {
+      return {
+        ...prev,
+        A: false,
+      };
+    });
   }
   useEffect(() => {
     localStorage.setItem("q13a", inputA);
@@ -41,6 +47,12 @@ export default function Question13r() {
 
   function handleSelectB(e) {
     setInputB(e);
+    setDontknow((prev) => {
+      return {
+        ...prev,
+        B: false,
+      };
+    });
   }
   useEffect(() => {
     localStorage.setItem("q13b", inputB);
@@ -77,8 +89,10 @@ export default function Question13r() {
   function handleSubmit(e) {
     e.preventDefault();
     localStorage.setItem("q13-dontknow", JSON.stringify(dontknow));
-
-    if (!inputA && dontknow.a === false && !inputB && dontknow.b === false) {
+    if (
+      (inputA === "" && dontknow.A === false) ||
+      (inputB === "" && dontknow.B === false)
+    ) {
       handleShow();
     } else {
       const data = {
@@ -118,6 +132,17 @@ export default function Question13r() {
       history.push("/rus-q14");
     }
   }
+
+  const stylesFalse = {
+    border: "solid black 1px",
+    backgroundColor: "white",
+    color: "black",
+  };
+  const stylesTrue = {
+    border: "none",
+    backgroundColor: "#ffa929",
+    color: "white",
+  };
 
   return (
     <Route path="/rus-q13">
@@ -172,7 +197,7 @@ export default function Question13r() {
                   <Dropdown.Toggle
                     variant="light"
                     id="dropdown-basic"
-                    disabled={dontknow.A === true ? true : false}
+                    // disabled={dontknow.A === true ? true : false}
                     className="dropdown-toggle"
                   >
                     {inputA ? inputA : "Выбрать"}
@@ -199,11 +224,12 @@ export default function Question13r() {
                 <Button
                   type="button"
                   variant={dontknow.A === true ? "warning" : "outline-dark"}
+                  // style={dontknow.A === true ? stylesTrue : stylesFalse}
                   name="A"
                   value="dontknow"
                   onClick={handleDontknow}
                   className="dropdown-btn"
-                  checked={dontknow.a === true ? true : false}
+                  // checked={dontknow.A === true ? true : false}
                 >
                   Затрудняюсь ответить
                 </Button>
@@ -238,7 +264,7 @@ export default function Question13r() {
                     variant="light"
                     id="dropdown-basic"
                     className="dropdown-toggle"
-                    disabled={dontknow.B === true ? true : false}
+                    // disabled={dontknow.B === true ? true : false}
                   >
                     {inputB ? inputB : "Выбрать"}
                   </Dropdown.Toggle>
@@ -263,6 +289,7 @@ export default function Question13r() {
                 <Button
                   type="button"
                   variant={dontknow.B === true ? "warning" : "outline-dark"}
+                  // style={dontknow.B === true ? stylesTrue : stylesFalse}
                   name="B"
                   value="dontknow"
                   onClick={handleDontknow}
@@ -314,7 +341,7 @@ export default function Question13r() {
                         variant="light"
                         id="dropdown-basic"
                         className="select-btn"
-                        disabled={dontknow.A === true ? true : false}
+                        // disabled={dontknow.A === true ? true : false}
                       >
                         {inputA ? inputA : "Выбрать"}
                       </Dropdown.Toggle>
@@ -337,16 +364,18 @@ export default function Question13r() {
                     </Dropdown>
                   </td>
                   <td>
-                    <Button
+                    <button
                       type="button"
-                      variant={dontknow.A === true ? "warning" : "outline-dark"}
+                      // variant={dontknow.A === true ? "warning" : "outline-dark"}
+                      style={dontknow.A === true ? stylesTrue : stylesFalse}
                       name="A"
                       value="dontknow"
                       onClick={handleDontknow}
-                      className="dropdown-btn q13-dropdown-btn"
+                      // className="dropdown-btn q13-dropdown-btn"
+                      className="dontknow-btn"
                     >
                       Затрудняюсь ответить
-                    </Button>
+                    </button>
                   </td>
                 </tr>
                 <tr className="table-row">
@@ -381,7 +410,7 @@ export default function Question13r() {
                         variant="light"
                         id="dropdown-basic"
                         className="select-btn"
-                        disabled={dontknow.B === true ? true : false}
+                        // disabled={dontknow.B === true ? true : false}
                       >
                         {inputB ? inputB : "Выбрать"}
                       </Dropdown.Toggle>
@@ -403,16 +432,17 @@ export default function Question13r() {
                     </Dropdown>
                   </td>
                   <td style={{ verticalAlign: "middle" }}>
-                    <Button
+                    <button
                       type="button"
                       name="B"
                       value="dontknow"
                       onClick={handleDontknow}
-                      className="dropdown-btn q13-dropdown-btn"
-                      variant={dontknow.B === true ? "warning" : "outline-dark"}
+                      className="dontknow-btn"
+                      // variant={dontknow.B === true ? "warning" : "outline-dark"}
+                      style={dontknow.B === true ? stylesTrue : stylesFalse}
                     >
                       Затрудняюсь ответить
-                    </Button>
+                    </button>
                   </td>
                 </tr>
               </tbody>

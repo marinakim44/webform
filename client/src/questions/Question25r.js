@@ -144,10 +144,14 @@ export default function Question25r() {
         [name]: !checked[name],
       };
     });
+    setNone(false);
+    setDontknow(false);
   };
 
   const handleChange = (e) => {
     setOther(e.target.value);
+    setNone(false);
+    setDontknow(false);
   };
 
   const handleNone = () => {
@@ -332,11 +336,8 @@ export default function Question25r() {
                         onChange={handleClick}
                         checked={checked[row.key]}
                         disabled={
-                          (Object.entries(checked).filter((c) => c[1] === true)
-                            .length === 3 &&
-                            !checked[row.key]) ||
-                          none === true ||
-                          dontknow === true
+                          Object.entries(checked).filter((c) => c[1] === true)
+                            .length === 3 && !checked[row.key]
                             ? true
                             : false
                         }
@@ -425,12 +426,9 @@ export default function Question25r() {
                                     onChange={handleClick}
                                     checked={checked[row.key]}
                                     disabled={
-                                      (Object.entries(checked).filter(
+                                      Object.entries(checked).filter(
                                         (c) => c[1] === true
-                                      ).length === 3 &&
-                                        !checked[row.key]) ||
-                                      none === true ||
-                                      dontknow === true
+                                      ).length === 3 && !checked[row.key]
                                         ? true
                                         : false
                                     }
@@ -462,12 +460,9 @@ export default function Question25r() {
                                     onChange={handleClick}
                                     checked={checked[row.key]}
                                     disabled={
-                                      (Object.entries(checked).filter(
+                                      Object.entries(checked).filter(
                                         (c) => c[1] === true
-                                      ).length === 3 &&
-                                        !checked[row.key]) ||
-                                      none === true ||
-                                      dontknow === true
+                                      ).length === 3 && !checked[row.key]
                                         ? true
                                         : false
                                     }
@@ -489,7 +484,7 @@ export default function Question25r() {
                 style={{ width: "415px", marginTop: "1rem" }}
                 onChange={handleChange}
                 value={other}
-                disabled={none || dontknow ? true : false}
+                // disabled={none || dontknow ? true : false}
               ></Form.Control>
               <div style={{ textAlign: "left", padding: "1rem 0" }}>
                 <Button

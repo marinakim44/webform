@@ -79,6 +79,9 @@ export default function Question19() {
         [name]: !checked[name],
       };
     });
+
+    setNone(false);
+    setDontknow(false);
   }
 
   useEffect(() => {
@@ -97,13 +100,12 @@ export default function Question19() {
           return setInput(input.filter((a) => a !== x[0]));
         }
       });
-
-    console.log(checked);
-    console.log(input);
   }, [checked, input]);
 
   function handleChangeOther(e) {
     setOther(e.target.value);
+    setNone(false);
+    setDontknow(false);
   }
 
   function handleNone() {
@@ -227,7 +229,7 @@ export default function Question19() {
                       name={row.key}
                       value={row.key}
                       onChange={handleChange}
-                      disabled={none || dontknow === true ? true : false}
+                      // disabled={none || dontknow === true ? true : false}
                       checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
@@ -240,7 +242,7 @@ export default function Question19() {
                 type="text"
                 placeholder="Other (please specify)"
                 value={none || dontknow ? "" : other}
-                disabled={dontknow || none === true ? true : false}
+                // disabled={dontknow || none === true ? true : false}
                 onChange={handleChangeOther}
                 className="input-text"
                 style={{ marginTop: "2rem" }}
@@ -296,9 +298,9 @@ export default function Question19() {
                       name={row.key}
                       value={row.key}
                       onChange={handleChange}
-                      disabled={
-                        none === true || dontknow === true ? true : false
-                      }
+                      // disabled={
+                      //   none === true || dontknow === true ? true : false
+                      // }
                       checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
@@ -310,7 +312,7 @@ export default function Question19() {
               type="text"
               placeholder="Other (please specify)"
               value={none || dontknow ? "" : other}
-              disabled={dontknow || none ? true : false}
+              // disabled={dontknow || none ? true : false}
               onChange={handleChangeOther}
               className="text-input"
             ></Form.Control>

@@ -247,6 +247,8 @@ export default function Question25Br() {
   const handleClick = (e) => {
     const { name, value } = e.target;
     const index = name + value;
+    setNone(false);
+
     setInput((prev) => {
       return {
         ...prev,
@@ -401,7 +403,7 @@ export default function Question25Br() {
                               name={row.key}
                               value={col.key}
                               onChange={handleClick}
-                              disabled={none || dontknow ? true : false}
+                              // disabled={none || dontknow ? true : false}
                               checked={checked[`${row.key}${col.key}`]}
                               className="m-input"
                             ></input>
@@ -485,7 +487,7 @@ export default function Question25Br() {
                                     name={row.key}
                                     value={col.key}
                                     onChange={handleClick}
-                                    disabled={none || dontknow ? true : false}
+                                    // disabled={none || dontknow ? true : false}
                                     checked={
                                       none === true
                                         ? false

@@ -143,10 +143,12 @@ export default function Question25C() {
         [name]: !checked[name],
       };
     });
+    setNone(false);
   };
 
   const handleChange = (e) => {
     setOther(e.target.value);
+    setNone(false);
   };
 
   const handleNone = () => {
@@ -338,9 +340,9 @@ export default function Question25C() {
                         value={row.value}
                         onChange={handleClick}
                         checked={checked[row.key]}
-                        disabled={
-                          none === true || dontknow === true ? true : false
-                        }
+                        // disabled={
+                        //   none === true || dontknow === true ? true : false
+                        // }
                       ></input>
                       {row.value}
                     </label>
@@ -353,7 +355,7 @@ export default function Question25C() {
                 className="text-input"
                 onChange={handleChange}
                 value={other}
-                disabled={none || dontknow ? true : false}
+                // disabled={none || dontknow ? true : false}
               ></Form.Control>
               <div>
                 <Button
@@ -418,11 +420,11 @@ export default function Question25C() {
                                     value={row.value}
                                     onChange={handleClick}
                                     checked={checked[row.key]}
-                                    disabled={
-                                      none === true || dontknow === true
-                                        ? true
-                                        : false
-                                    }
+                                    // disabled={
+                                    //   none === true || dontknow === true
+                                    //     ? true
+                                    //     : false
+                                    // }
                                   ></input>
                                 </label>
                               </td>
@@ -460,11 +462,11 @@ export default function Question25C() {
                                     value={row.value}
                                     onChange={handleClick}
                                     checked={checked[row.key]}
-                                    disabled={
-                                      none === true || dontknow === true
-                                        ? true
-                                        : false
-                                    }
+                                    // disabled={
+                                    //   none === true || dontknow === true
+                                    //     ? true
+                                    //     : false
+                                    // }
                                   ></input>
                                 </label>
                               </td>
@@ -481,7 +483,7 @@ export default function Question25C() {
                 style={{ width: "33.5%", marginTop: "1rem" }}
                 onChange={handleChange}
                 value={other}
-                disabled={none || dontknow ? true : false}
+                // disabled={none || dontknow ? true : false}
               ></Form.Control>
               <div
                 style={{
