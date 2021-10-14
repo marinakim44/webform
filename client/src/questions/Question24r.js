@@ -47,7 +47,7 @@ export default function Question24() {
   const columns = [
     {
       key: "A",
-      value: "Долгосрочная корпоративная стратегия Компании",
+      value: "Долгосрочная корпоративная стратегия компании",
     },
     {
       key: "B",

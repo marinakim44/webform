@@ -236,7 +236,9 @@ export default function Question4r() {
               Как повлияют на вашу компанию указанные угрозы в течение следующих
               12 месяцев?
               <i>
-                <p className="question-i">ВЫБЕРИТЕ НЕ БОЛЕЕ ТРЕХ ВАРИАНТОВ</p>
+                <p className="question-i">
+                  ДЛЯ КАЖДОГО СТОЛБЦА ВЫБЕРИТЕ НЕ БОЛЕЕ ТРЕХ ВАРИАНТОВ
+                </p>
               </i>
               {width <= 768 ? (
                 <p className="question">

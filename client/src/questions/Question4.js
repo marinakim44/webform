@@ -240,7 +240,7 @@ export default function Question4() {
                   className="question-i"
                   style={{ margin: width <= 480 ? "1rem 0" : "" }}
                 >
-                  PLEASE SELECT UP TO THREE RESPONSES PER EACH STATEMENT
+                  PLEASE SELECT UP TO THREE RESPONSES PER EACH COLUMN
                 </p>
               </i>
             </span>

@@ -40,6 +40,26 @@ export const countriesRus = [
     label: "Болгария",
   },
   {
+    value: "c94",
+    label: "Венесуэла",
+  },
+  {
+    value: "c95",
+    label: "Вьетнам",
+  },
+  {
+    value: "c89",
+    label: "Великобритания",
+  },
+  {
+    value: "c24",
+    label: "Египет",
+  },
+  {
+    value: "c96",
+    label: "Замбия",
+  },
+  {
     value: "c11",
     label: "Камбоджа",
   },
@@ -52,10 +72,6 @@ export const countriesRus = [
     label: "Канада",
   },
   {
-    value: "c14",
-    label: "Чили",
-  },
-  {
     value: "c15",
     label: "Китай",
   },
@@ -64,52 +80,20 @@ export const countriesRus = [
     label: "Колумбия",
   },
   {
-    value: "c17",
-    label: "Республика Конго",
-  },
-  {
     value: "c18",
     label: "Коста-Рика",
-  },
-  {
-    value: "c19",
-    label: "Хорватия",
   },
   {
     value: "c20",
     label: "Кипр",
   },
   {
-    value: "c21",
-    label: "Чехия",
-  },
-  {
     value: "c22",
     label: "DRC",
   },
   {
-    value: "c23",
-    label: "Эквадор",
-  },
-  {
-    value: "c24",
-    label: "Египет",
-  },
-  {
-    value: "25",
-    label: "Сальвадор",
-  },
-  {
-    value: "c26",
-    label: "Эстония",
-  },
-  {
-    value: "c27",
-    label: "Финляндия",
-  },
-  {
-    value: "c28",
-    label: "Франция",
+    value: "c36",
+    label: "Венгрия",
   },
   {
     value: "c29",
@@ -140,10 +124,6 @@ export const countriesRus = [
     label: "Гонконг",
   },
   {
-    value: "c36",
-    label: "Венгрия",
-  },
-  {
     value: "c37",
     label: "Исландия",
   },
@@ -168,12 +148,12 @@ export const countriesRus = [
     label: "Италия",
   },
   {
-    value: "c43",
-    label: "Кот-д'Ивуар",
+    value: "c77",
+    label: "Испания",
   },
   {
-    value: "c44",
-    label: "Япония",
+    value: "c43",
+    label: "Кот-д'Ивуар",
   },
   {
     value: "c45",
@@ -185,7 +165,11 @@ export const countriesRus = [
   },
   {
     value: "c47",
-    label: "KКыргызстан",
+    label: "Kыргызстан",
+  },
+  {
+    value: "c67",
+    label: "Катар",
   },
   {
     value: "c48",
@@ -240,6 +224,10 @@ export const countriesRus = [
     label: "Норвегия",
   },
   {
+    value: "c86",
+    label: "ОАЭ",
+  },
+  {
     value: "c61",
     label: "Панама",
   },
@@ -251,10 +239,7 @@ export const countriesRus = [
     value: "c63",
     label: "Перу",
   },
-  {
-    value: "c64",
-    label: "Филиппины",
-  },
+
   {
     value: "c65",
     label: "Польша",
@@ -264,8 +249,8 @@ export const countriesRus = [
     label: "Португалия",
   },
   {
-    value: "c67",
-    label: "Катар",
+    value: "c17",
+    label: "Республика Конго",
   },
   {
     value: "c68",
@@ -284,6 +269,10 @@ export const countriesRus = [
     label: "Саудовская Аравия",
   },
   {
+    value: "25",
+    label: "Сальвадор",
+  },
+  {
     value: "c72",
     label: "Сенегал",
   },
@@ -298,14 +287,6 @@ export const countriesRus = [
   {
     value: "c75",
     label: "Словакия",
-  },
-  {
-    value: "c76",
-    label: "Южная Африка",
-  },
-  {
-    value: "c77",
-    label: "Испания",
   },
   {
     value: "c78",
@@ -340,20 +321,8 @@ export const countriesRus = [
     label: "Турция",
   },
   {
-    value: "c86",
-    label: "ОАЭ",
-  },
-  {
-    value: "c87",
-    label: "ОАЭ",
-  },
-  {
     value: "c88",
     label: "Уганда",
-  },
-  {
-    value: "c89",
-    label: "Великобритания",
   },
   {
     value: "c90",
@@ -372,15 +341,43 @@ export const countriesRus = [
     label: "Узбекистан",
   },
   {
-    value: "c94",
-    label: "Венесуэла",
+    value: "c28",
+    label: "Франция",
   },
   {
-    value: "c95",
-    label: "Вьетнам",
+    value: "c64",
+    label: "Филиппины",
   },
   {
-    value: "c96",
-    label: "Замбия",
+    value: "c27",
+    label: "Финляндия",
+  },
+  {
+    value: "c19",
+    label: "Хорватия",
+  },
+  {
+    value: "c21",
+    label: "Чехия",
+  },
+  {
+    value: "c14",
+    label: "Чили",
+  },
+  {
+    value: "c23",
+    label: "Эквадор",
+  },
+  {
+    value: "c26",
+    label: "Эстония",
+  },
+  {
+    value: "c76",
+    label: "Южная Африка",
+  },
+  {
+    value: "c44",
+    label: "Япония",
   },
 ];

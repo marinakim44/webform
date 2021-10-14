@@ -41,6 +41,9 @@ export default function Question2r() {
     other2: false,
     other3: false,
   });
+  const [country1, setCountry1] = useState("");
+  const [country2, setCountry2] = useState("");
+  const [country3, setCountry3] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -49,18 +52,35 @@ export default function Question2r() {
     }
   }, []);
 
-  const isValidNewOption = (inputValue, selectedValue) =>
-    inputValue.length > 0 && selectedValue.length < 4;
+  // const isValidNewOption = (inputValue, selectedValue) =>
+  //   inputValue.length > 0 && selectedValue.length < 4;
 
-  function handleChange(selectedOption) {
-    selectedOption.forEach((option) => {
-      if (!selectedOptions.includes(option.label)) {
-        selectedOptions.push(option.label);
-      }
-    });
+  function handleChange1(selectedOption) {
+    if (!selectedOptions.includes(selectedOption.label)) {
+      setSelectedOptions((prev) => {
+        return [...prev, selectedOption.label];
+      });
+    }
+    setCountry1(selectedOption.label);
     setDontknow(false);
-
-    console.log(selectedOptions);
+  }
+  function handleChange2(selectedOption) {
+    if (!selectedOptions.includes(selectedOption.label)) {
+      setSelectedOptions((prev) => {
+        return [...prev, selectedOption.label];
+      });
+    }
+    setCountry2(selectedOption.label);
+    setDontknow(false);
+  }
+  function handleChange3(selectedOption) {
+    if (!selectedOptions.includes(selectedOption.label)) {
+      setSelectedOptions((prev) => {
+        return [...prev, selectedOption.label];
+      });
+    }
+    setCountry3(selectedOption.label);
+    setDontknow(false);
   }
 
   const handleOther = (e) => {
@@ -132,6 +152,9 @@ export default function Question2r() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSelectedOptions((prev) => {
+      return [...prev, country1, country2, country3];
+    });
 
     Object.entries(other)
       .filter((x) => x[1] !== "")
@@ -144,7 +167,7 @@ export default function Question2r() {
     localStorage.setItem("q2-dontknow", dontknow);
     localStorage.setItem("q2-other", JSON.stringify(other));
 
-    console.log(selectedOptions);
+    // console.log(selectedOptions);
 
     if (
       selectedOptions.length === 0 &&
@@ -222,12 +245,32 @@ export default function Question2r() {
           <Creatable
             components={{ Menu }}
             name="dropdown"
-            isMulti
-            isValidNewOption={isValidNewOption}
             options={countriesRus}
-            closeMenuOnSelect={false}
-            placeholder="Пожалуйста, выберите 3 страны"
-            onChange={handleChange}
+            closeMenuOnSelect={true}
+            placeholder="Пожалуйста, выберите страну 1"
+            onChange={handleChange1}
+            className="select-countries"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+          />
+          <Creatable
+            components={{ Menu }}
+            name="dropdown"
+            options={countriesRus}
+            closeMenuOnSelect={true}
+            placeholder="Пожалуйста, выберите страну 2"
+            onChange={handleChange2}
+            className="select-countries"
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+          />
+          <Creatable
+            components={{ Menu }}
+            name="dropdown"
+            options={countriesRus}
+            closeMenuOnSelect={true}
+            placeholder="Пожалуйста, выберите страну 3"
+            onChange={handleChange3}
             className="select-countries"
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -235,36 +278,12 @@ export default function Question2r() {
 
           <Form.Control
             type="text"
-            placeholder="Другое 1 (пожалуйста, укажите)"
+            placeholder="Другое (пожалуйста, укажите)"
             name="other1"
             value={other.other1}
             onChange={handleOther}
             // disabled={dontknow ? true : false}
             className="input-text"
-            onBlur={handleBlurOther}
-            onFocus={handleFocusOther}
-            autoComplete="off"
-          ></Form.Control>
-          <Form.Control
-            type="text"
-            name="other2"
-            value={other.other2}
-            onChange={handleOther}
-            placeholder="Другое 2 (пожалуйста, укажите)"
-            // disabled={dontknow ? true : false}
-            className="input-text"
-            onBlur={handleBlurOther}
-            onFocus={handleFocusOther}
-            autoComplete="off"
-          ></Form.Control>
-          <Form.Control
-            type="text"
-            name="other3"
-            value={other.other3}
-            onChange={handleOther}
-            placeholder="Другое 3 (пожалуйста, укажите)"
-            className="input-text"
-            // disabled={dontknow ? true : false}
             onBlur={handleBlurOther}
             onFocus={handleFocusOther}
             autoComplete="off"

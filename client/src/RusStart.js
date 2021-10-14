@@ -265,12 +265,10 @@ function RusStart() {
     e.preventDefault();
 
     if (
-      errorName ||
-      errorCompany ||
-      errorTitle ||
-      errorEmail ||
-      validationErrorEmail ||
-      !input
+      input.name === "" ||
+      input.company === "" ||
+      input.title === "" ||
+      input.email === ""
     ) {
       handleShow();
     } else {
