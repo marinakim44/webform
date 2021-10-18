@@ -230,7 +230,7 @@ export default function QuestionFr() {
               <Form.Group>
                 <Form.Control
                   type="text"
-                  placeholder="Other (please specify)"
+                  placeholder="Прочее (пожалуйста укажите)"
                   onChange={handleChange}
                   value={other}
                   className="input-text"

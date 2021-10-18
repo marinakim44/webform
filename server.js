@@ -227,12 +227,17 @@ app.post("/allinputs", (req, res) => {
     { upsert: true },
     function (err, doc) {
       if (!err) {
-        res.status(200).json(err);
-        return;
+        console.log("Document updated");
       } else {
-        res.status(500).json(err);
-        return;
+        console.log(err);
       }
+      // if (!err) {
+      //   res.status(200).json(err);
+      //   return;
+      // } else {
+      //   res.status(500).json(err);
+      //   return;
+      // }
       // if (err) {
       //   return res.status(500).send(err);
       // } else {

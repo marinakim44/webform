@@ -69,13 +69,13 @@ function EngStart() {
   const [errorTitle, setErrorTitle] = useState(false);
   const [errorEmail, setErrorEmail] = useState(false);
   const [validationErrorEmail, setValidationErrorEmail] = useState(false);
-  // const [active, setActive] = useState({
-  //   name: false,
-  //   company: false,
-  //   title: false,
-  //   email: false,
-  //   phone: false,
-  // });
+  const [active, setActive] = useState({
+    name: false,
+    company: false,
+    title: false,
+    email: false,
+    phone: false,
+  });
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -87,177 +87,177 @@ function EngStart() {
     });
   }
 
-  // function handleBlurName() {
-  //   if (!input.name) {
-  //     setErrorName(true);
-  //   }
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       name: false,
-  //     };
-  //   });
-  // }
+  function handleBlurName() {
+    if (!input.name) {
+      setErrorName(true);
+    }
+    setActive((prev) => {
+      return {
+        ...prev,
+        name: false,
+      };
+    });
+  }
 
-  // function handleFocusName() {
-  //   if (errorName) {
-  //     setErrorName(false);
-  //   }
+  function handleFocusName() {
+    if (errorName) {
+      setErrorName(false);
+    }
 
-  //   Object.keys(active)
-  //     .filter((el) => el === "name")
-  //     .forEach((el) => {
-  //       active[el] = true;
-  //     });
-  //   Object.keys(active)
-  //     .filter((el) => el !== "name")
-  //     .forEach((el) => {
-  //       active[el] = false;
-  //     });
+    Object.keys(active)
+      .filter((el) => el === "name")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "name")
+      .forEach((el) => {
+        active[el] = false;
+      });
 
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       name: true,
-  //     };
-  //   });
-  // }
+    setActive((prev) => {
+      return {
+        ...prev,
+        name: true,
+      };
+    });
+  }
 
-  // function handleBlurCompany() {
-  //   if (!input.company) {
-  //     setErrorCompany(true);
-  //   }
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       company: false,
-  //     };
-  //   });
-  // }
+  function handleBlurCompany() {
+    if (!input.company) {
+      setErrorCompany(true);
+    }
+    setActive((prev) => {
+      return {
+        ...prev,
+        company: false,
+      };
+    });
+  }
 
-  // function handleFocusCompany() {
-  //   if (errorCompany) {
-  //     setErrorCompany(false);
-  //   }
-  //   Object.keys(active)
-  //     .filter((el) => el === "company")
-  //     .forEach((el) => {
-  //       active[el] = true;
-  //     });
-  //   Object.keys(active)
-  //     .filter((el) => el !== "company")
-  //     .forEach((el) => {
-  //       active[el] = false;
-  //     });
+  function handleFocusCompany() {
+    if (errorCompany) {
+      setErrorCompany(false);
+    }
+    Object.keys(active)
+      .filter((el) => el === "company")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "company")
+      .forEach((el) => {
+        active[el] = false;
+      });
 
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       company: true,
-  //     };
-  //   });
-  // }
+    setActive((prev) => {
+      return {
+        ...prev,
+        company: true,
+      };
+    });
+  }
 
-  // function handleBlurTitle() {
-  //   if (!input.title) {
-  //     setErrorTitle(true);
-  //   }
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       title: false,
-  //     };
-  //   });
-  // }
+  function handleBlurTitle() {
+    if (!input.title) {
+      setErrorTitle(true);
+    }
+    setActive((prev) => {
+      return {
+        ...prev,
+        title: false,
+      };
+    });
+  }
 
-  // function handleFocusTitle() {
-  //   if (errorTitle) {
-  //     setErrorTitle(false);
-  //   }
-  //   Object.keys(active)
-  //     .filter((el) => el === "title")
-  //     .forEach((el) => {
-  //       active[el] = true;
-  //     });
-  //   Object.keys(active)
-  //     .filter((el) => el !== "title")
-  //     .forEach((el) => {
-  //       active[el] = false;
-  //     });
+  function handleFocusTitle() {
+    if (errorTitle) {
+      setErrorTitle(false);
+    }
+    Object.keys(active)
+      .filter((el) => el === "title")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "title")
+      .forEach((el) => {
+        active[el] = false;
+      });
 
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       title: true,
-  //     };
-  //   });
-  // }
+    setActive((prev) => {
+      return {
+        ...prev,
+        title: true,
+      };
+    });
+  }
 
   function validateEmail(email) {
     const re = /.+@.+\.+.+/;
     return re.test(email);
   }
 
-  // function handleBlurEmail() {
-  //   if (!input.email) {
-  //     setErrorEmail(true);
-  //   } else {
-  //     validateEmail(input.email);
-  //     if (validateEmail(input.email)) {
-  //       setValidationErrorEmail(false);
-  //     } else {
-  //       setValidationErrorEmail(true);
-  //     }
-  //   }
+  function handleBlurEmail() {
+    if (!input.email) {
+      setErrorEmail(true);
+    } else {
+      validateEmail(input.email);
+      if (validateEmail(input.email)) {
+        setValidationErrorEmail(false);
+      } else {
+        setValidationErrorEmail(true);
+      }
+    }
 
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       email: false,
-  //     };
-  //   });
-  // }
+    setActive((prev) => {
+      return {
+        ...prev,
+        email: false,
+      };
+    });
+  }
 
-  // function handleFocusEmail() {
-  //   if (errorEmail) {
-  //     setErrorEmail(false);
-  //   }
-  //   Object.keys(active)
-  //     .filter((el) => el === "email")
-  //     .forEach((el) => {
-  //       active[el] = true;
-  //     });
-  //   Object.keys(active)
-  //     .filter((el) => el !== "email")
-  //     .forEach((el) => {
-  //       active[el] = false;
-  //     });
+  function handleFocusEmail() {
+    if (errorEmail) {
+      setErrorEmail(false);
+    }
+    Object.keys(active)
+      .filter((el) => el === "email")
+      .forEach((el) => {
+        active[el] = true;
+      });
+    Object.keys(active)
+      .filter((el) => el !== "email")
+      .forEach((el) => {
+        active[el] = false;
+      });
 
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       email: true,
-  //     };
-  //   });
-  // }
+    setActive((prev) => {
+      return {
+        ...prev,
+        email: true,
+      };
+    });
+  }
 
-  // function handleBlurPhone() {
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       phone: false,
-  //     };
-  //   });
-  // }
+  function handleBlurPhone() {
+    setActive((prev) => {
+      return {
+        ...prev,
+        phone: false,
+      };
+    });
+  }
 
-  // function handleFocusPhone() {
-  //   setActive((prev) => {
-  //     return {
-  //       ...prev,
-  //       phone: true,
-  //     };
-  //   });
-  // }
+  function handleFocusPhone() {
+    setActive((prev) => {
+      return {
+        ...prev,
+        phone: true,
+      };
+    });
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -301,12 +301,12 @@ function EngStart() {
     <Route path="/eng-start">
       <div className="main">
         <div
-          // className={
-          //   Object.entries(active).filter((el) => el[1] === true).length > 0 &&
-          //   width <= 480
-          //     ? ""
-          //     : "sticky-sub-div"
-          // }
+          className={
+            Object.entries(active).filter((el) => el[1] === true).length > 0 &&
+            width <= 480
+              ? ""
+              : "sticky-sub-div"
+          }
           className="sticky-sub-div"
         >
           <h2 className="percent">0% completed</h2>
@@ -340,8 +340,8 @@ function EngStart() {
               name="name"
               value={input.name}
               onChange={handleChange}
-              // onBlur={handleBlurName}
-              // onFocus={handleFocusName}
+              onBlur={handleBlurName}
+              onFocus={handleFocusName}
               className="credentials-input m-credentials-input"
               style={{ marginTop: errorName ? 0 : "" }}
             ></Form.Control>
@@ -370,8 +370,8 @@ function EngStart() {
               name="company"
               value={input.company}
               onChange={handleChange}
-              // onBlur={handleBlurCompany}
-              // onFocus={handleFocusCompany}
+              onBlur={handleBlurCompany}
+              onFocus={handleFocusCompany}
               className="credentials-input m-credentials-input"
               style={{ marginTop: errorCompany ? 0 : "" }}
             ></Form.Control>
@@ -400,8 +400,8 @@ function EngStart() {
               value={input.title}
               onChange={handleChange}
               autoComplete="off"
-              // onBlur={handleBlurTitle}
-              // onFocus={handleFocusTitle}
+              onBlur={handleBlurTitle}
+              onFocus={handleFocusTitle}
               className="credentials-input m-credentials-input"
               style={{ marginTop: errorTitle ? 0 : "" }}
             ></Form.Control>
@@ -447,8 +447,8 @@ function EngStart() {
               value={input.email}
               onChange={handleChange}
               autoComplete="off"
-              // onBlur={handleBlurEmail}
-              // onFocus={handleFocusEmail}
+              onBlur={handleBlurEmail}
+              onFocus={handleFocusEmail}
               className="credentials-input m-credentials-input"
               style={{ marginTop: errorEmail || validationErrorEmail ? 0 : "" }}
             ></Form.Control>
@@ -458,8 +458,8 @@ function EngStart() {
               name="phone"
               value={input.phone}
               onChange={handleChange}
-              // onBlur={handleBlurPhone}
-              // onFocus={handleFocusPhone}
+              onBlur={handleBlurPhone}
+              onFocus={handleFocusPhone}
               autoComplete="off"
               className="credentials-input m-credentials-input"
             ></Form.Control>
