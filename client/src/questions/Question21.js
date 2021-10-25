@@ -5,8 +5,9 @@ import "../Medium.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question21() {
+export default function Question21({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,43 +25,83 @@ export default function Question21() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const rows = [
-    {
-      key: "A",
-      value: "Confidence in revenue growth - next 12 months",
-    },
-    {
-      key: "B",
-      value: "Confidence in revenue growth - next three years",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            value: "Confidence in revenue growth - next 12 months",
+          },
+          {
+            key: "B",
+            value: "Confidence in revenue growth - next three years",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            value: "Уверенность в росте выручки - следующие 12 месяцев ",
+          },
+          {
+            key: "B",
+            value: "Уверенность в росте выручки - следующие три года ",
+          },
+        ];
 
-  const columns = [
-    {
-      key: "1",
-      value: "Not confident",
-    },
-    {
-      key: "2",
-      value: "Slightly confident",
-    },
-    {
-      key: "3",
-      value: "Moderately confident",
-    },
-    {
-      key: "4",
-      value: "Very confident",
-    },
-    {
-      key: "5",
-      value: "Extremely confident",
-    },
-    {
-      key: "6",
-      value: "Don't know",
-    },
-  ];
+  const columns =
+    lng === "English"
+      ? [
+          {
+            key: "1",
+            value: "Not confident",
+          },
+          {
+            key: "2",
+            value: "Slightly confident",
+          },
+          {
+            key: "3",
+            value: "Moderately confident",
+          },
+          {
+            key: "4",
+            value: "Very confident",
+          },
+          {
+            key: "5",
+            value: "Extremely confident",
+          },
+          {
+            key: "6",
+            value: "Don't know",
+          },
+        ]
+      : [
+          {
+            key: "1",
+            value: "Не уверен (-а)",
+          },
+          {
+            key: "2",
+            value: "Немного уверен (-а)",
+          },
+          {
+            key: "3",
+            value: "Умеренно уверен (-а)",
+          },
+          {
+            key: "4",
+            value: "Очень уверен (-а)",
+          },
+          {
+            key: "5",
+            value: "Чрезвычайно уверен (-а)",
+          },
+          {
+            key: "6",
+            value: "Затрудняюсь ответить",
+          },
+        ];
 
   const [input, setInput] = useState({
     A: "",
@@ -136,16 +177,19 @@ export default function Question21() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -156,6 +200,9 @@ export default function Question21() {
         q17: JSON.parse(localStorage.getItem("q17")),
         q18: JSON.parse(localStorage.getItem("q18")),
         q19: JSON.parse(localStorage.getItem("q19")),
+        q19none: localStorage.getItem("q19-none"),
+        q19dontknow: localStorage.getItem("q19-dontknow"),
+        q19other: localStorage.getItem("q19-other"),
         q20: JSON.parse(localStorage.getItem("q20")),
         q21: JSON.parse(localStorage.getItem("q21")),
       };
@@ -178,7 +225,8 @@ export default function Question21() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 22).toString())}% completed
+            {Math.round(((100 / 39) * 22).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -189,14 +237,30 @@ export default function Question21() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            How confident are you about your company’s prospects for revenue
-            growth over: <br />- the next 12 months?
-            <br />- the next three years?
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              <p className="question">
+                How confident are you about your company’s prospects for revenue
+                growth over: <br />- the next 12 months?
+                <br />- the next three years?
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="question">
+                Насколько вы уверены в перспективах роста выручки вашей компании
+                в течение:
+                <br />- cледующих 12 месяцев?
+                <br />- следующих трех лет?
+              </p>
+              <p className="question-i">
+                <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+              </p>
+            </>
+          )}
         </div>
         {width <= 768 ? (
           <div className="left-align-text">
@@ -216,7 +280,7 @@ export default function Question21() {
                             type="radio"
                             name={row.key}
                             value={col.key}
-                            onClick={handleClick}
+                            onChange={handleClick}
                             className="m-input"
                             checked={
                               row.key === "A"
@@ -262,7 +326,7 @@ export default function Question21() {
                               type="radio"
                               name={row.key}
                               value={col.key}
-                              onClick={handleClick}
+                              onChange={handleClick}
                               checked={
                                 row.key === "A"
                                   ? checkedA[`${row.key}${col.key}`]
@@ -282,26 +346,7 @@ export default function Question21() {
           </table>
         )}
 
-        <div class="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i
-              className="fas fa-chevron-left"
-              style={{ marginRight: "8px" }}
-            ></i>
-            Back
-          </Button>
-          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
-            Next
-            <i
-              className="fas fa-chevron-right"
-              style={{ marginLeft: "8px" }}
-            ></i>
-          </Button>
-        </div>
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

@@ -6,8 +6,9 @@ import "../Medium.css";
 import "../Small.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question13() {
+export default function Question13({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -103,16 +104,19 @@ export default function Question13() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -150,7 +154,8 @@ export default function Question13() {
       <div className="main">
         <div className={active === true ? "" : "sticky-sub-div"}>
           <h2 className="percent">
-            {Math.round(((100 / 39) * 14).toString())}% completed
+            {Math.round(((100 / 39) * 14).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -162,31 +167,53 @@ export default function Question13() {
           </div>
           <ModalAlert show={show} close={handleClose} />
           <p className="question">
-            <strong>Typically, how many:</strong>
+            <strong>
+              {lng === "English" ? "Typically, how many:" : "Обычно сколько:"}
+            </strong>
 
             <li style={{ listStyle: "none" }}>
-              A) overarching strategic objectives does your company have?
+              {lng === "English"
+                ? "A) overarching strategic objectives does your company have?"
+                : "A) общих стратегических целей есть у вашей компании?"}
             </li>
 
             <li style={{ listStyle: "none" }}>
-              B) major initiatives does your company have underway in support of
-              those strategic objectives? (in total)
+              {lng === "English"
+                ? "B) major initiatives does your company have underway in support of those strategic objectives? (in total)"
+                : "B) основных инициатив осуществляет ваша компания в поддержку этих стратегических целей? (в целом)"}
             </li>
           </p>
           <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+            <i>
+              {lng === "English"
+                ? "PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT"
+                : "ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА"}
+            </i>
           </p>
         </div>
         {width <= 768 ? (
           <div style={{ textAlign: "left" }}>
             <Row style={{ verticalAlign: "middle" }}>
               <Col sm={6}>
-                <p style={{ color: "#db536a" }}>
-                  <strong>A) Overarching strategic objectives</strong>
-                </p>
-                <p>
-                  <i>Increasing market share</i>
-                </p>
+                {lng === "English" ? (
+                  <>
+                    <p style={{ color: "#db536a" }}>
+                      <strong>A) Overarching strategic objectives</strong>
+                    </p>
+                    <p>
+                      <i>Increasing market share</i>
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="question">
+                      <strong>A) Общие стратегические цели</strong>
+                    </p>
+                    <p className="question">
+                      <i>Увеличение доли рынка</i>
+                    </p>
+                  </>
+                )}
               </Col>
               <Col>
                 <Dropdown
@@ -202,7 +229,7 @@ export default function Question13() {
                     // disabled={dontknow.A === true ? true : false}
                     className="dropdown-toggle"
                   >
-                    {inputA ? inputA : "Select"}
+                    {inputA ? inputA : lng === "English" ? "Select" : "Выбрать"}
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
@@ -217,7 +244,7 @@ export default function Question13() {
                     <Dropdown.Item eventKey="9">9</Dropdown.Item>
                     <Dropdown.Item eventKey="10">10</Dropdown.Item>
                     <Dropdown.Item eventKey="11 or more">
-                      11 or more
+                      {lng === "English" ? "11 or more" : "11 или более"}
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -233,27 +260,49 @@ export default function Question13() {
                   className="dropdown-btn"
                   // checked={dontknow.A === true ? true : false}
                 >
-                  Don't know
+                  {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
                 </Button>
               </Col>
             </Row>
             <Row>
               <Col sm={6}>
-                <p style={{ color: "#db536a" }}>
-                  <strong>
-                    B) Major initiatives underway in support of those strategic
-                    objectives (in total)
-                  </strong>
-                </p>
-                <p>
-                  <i>
-                    <ul>
-                      <li>Releasing a new advertising campaign</li>
-                      <li>Launching a new product/service</li>
-                      <li>Acquiring a competitor</li>
-                    </ul>
-                  </i>
-                </p>
+                {lng === "English" ? (
+                  <>
+                    <p style={{ color: "#db536a" }}>
+                      <strong>
+                        B) Major initiatives underway in support of those
+                        strategic objectives (in total)
+                      </strong>
+                    </p>
+                    <p>
+                      <i>
+                        <ul>
+                          <li>Releasing a new advertising campaign</li>
+                          <li>Launching a new product/service</li>
+                          <li>Acquiring a competitor</li>
+                        </ul>
+                      </i>
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="question">
+                      <strong>
+                        B) Основные инициативы, осуществляемые в поддержку этих
+                        стратегических целей (в целом)
+                      </strong>
+                    </p>
+                    <p className="question">
+                      <i>
+                        <ul>
+                          <li>Запуск новой рекламной кампании</li>
+                          <li>Запуск нового продукта/услуги</li>
+                          <li>Приобретение конкурента</li>
+                        </ul>
+                      </i>
+                    </p>
+                  </>
+                )}
               </Col>
               <Col>
                 <Dropdown
@@ -269,7 +318,7 @@ export default function Question13() {
                     className="dropdown-toggle"
                     // disabled={dontknow.B === true ? true : false}
                   >
-                    {inputB ? inputB : "Select"}
+                    {inputB ? inputB : lng === "English" ? "Select" : "Выбрать"}
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
                     <Dropdown.Item eventKey="1-5">1-5</Dropdown.Item>
@@ -283,7 +332,7 @@ export default function Question13() {
                     <Dropdown.Item eventKey="39-45">39-45</Dropdown.Item>
                     <Dropdown.Item eventKey="46-50">46-50</Dropdown.Item>
                     <Dropdown.Item eventKey="51 or more">
-                      51 or more
+                      {lng === "English" ? "51 or more" : "51 или более"}
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
@@ -292,51 +341,33 @@ export default function Question13() {
                 <Button
                   type="button"
                   variant={dontknow.B === true ? "warning" : "outline-dark"}
-                  // style={dontknow.B === true ? stylesTrue : stylesFalse}
                   name="B"
                   value="dontknow"
                   onClick={handleDontknow}
                   className="dropdown-btn"
                 >
-                  Don't know
+                  {lng === "English" ? "Don't know" : "Выбрать"}
                 </Button>
               </Col>
             </Row>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </div>
         ) : (
-          <form>
+          <>
             <Table bordered>
               <tbody>
                 <tr className="table-row">
                   <td style={{ verticalAlign: "middle" }}>A</td>
                   <td style={{ verticalAlign: "middle", textAlign: "left" }}>
-                    <strong>Overarching strategic objectives</strong>
-                    <p>Increasing market share</p>
+                    <strong>
+                      {lng === "English"
+                        ? "Overarching strategic objectives"
+                        : "Общие стратегические цели"}
+                    </strong>
+                    <p>
+                      {lng === "English"
+                        ? "Increasing market share"
+                        : "Увеличение доли рынка"}
+                    </p>
                   </td>
                   <td>
                     <Dropdown
@@ -350,7 +381,11 @@ export default function Question13() {
                         className="select-btn"
                         // disabled={dontknow.A === true ? true : false}
                       >
-                        {inputA ? inputA : "Select number"}
+                        {inputA
+                          ? inputA
+                          : lng === "English"
+                          ? "Select number"
+                          : "Выбрать"}
                       </Dropdown.Toggle>
 
                       <Dropdown.Menu>
@@ -365,7 +400,7 @@ export default function Question13() {
                         <Dropdown.Item eventKey="9">9</Dropdown.Item>
                         <Dropdown.Item eventKey="10">10</Dropdown.Item>
                         <Dropdown.Item eventKey="11 or more">
-                          11 or more
+                          {lng === "English" ? "11 or more" : "11 или более"}
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -379,7 +414,9 @@ export default function Question13() {
                       onClick={handleDontknow}
                       className="dropdown-btn q13-dropdown-btn"
                     >
-                      Don't know
+                      {lng === "English"
+                        ? "Don't know"
+                        : "Затрудняюсь ответить"}
                     </Button>
                   </td>
                 </tr>
@@ -398,15 +435,26 @@ export default function Question13() {
                     }}
                   >
                     <strong>
-                      Major initiatives underway in support of those strategic
-                      objectives (in total)
+                      {lng === "English"
+                        ? "Major initiatives underway in support of those strategic objectives (in total)"
+                        : "Основные инициативы, осуществляемые в поддержку этих стратегических целей (в целом)"}
                     </strong>
                     <p></p>
 
                     <ul>
-                      <li>Releasing a new advertising campaign</li>
-                      <li>Launching a new product/service</li>
-                      <li>Acquiring a competitor</li>
+                      {lng === "English" ? (
+                        <>
+                          <li>Releasing a new advertising campaign</li>
+                          <li>Launching a new product/service</li>
+                          <li>Acquiring a competitor</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>Запуск новой рекламной кампании</li>
+                          <li>Запуск нового продукта/услуги</li>
+                          <li>Приобретение конкурента</li>
+                        </>
+                      )}
                     </ul>
                   </td>
                   <td style={{ verticalAlign: "middle" }}>
@@ -417,7 +465,11 @@ export default function Question13() {
                         className="select-btn"
                         // disabled={dontknow.B === true ? true : false}
                       >
-                        {inputB ? inputB : "Select number"}
+                        {inputB
+                          ? inputB
+                          : lng === "English"
+                          ? "Select number"
+                          : "Выбрать"}
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
                         <Dropdown.Item eventKey="1-5">1-5</Dropdown.Item>
@@ -431,7 +483,7 @@ export default function Question13() {
                         <Dropdown.Item eventKey="39-45">39-45</Dropdown.Item>
                         <Dropdown.Item eventKey="46-50">46-50</Dropdown.Item>
                         <Dropdown.Item eventKey="51 or more">
-                          51 or more
+                          {lng === "English" ? "51 or more" : "51 или более"}
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -445,40 +497,17 @@ export default function Question13() {
                       className="dropdown-btn q13-dropdown-btn"
                       variant={dontknow.B === true ? "warning" : "outline-dark"}
                     >
-                      Don't know
+                      {lng === "English"
+                        ? "Don't know"
+                        : "Затрудняюсь ответить"}
                     </Button>
                   </td>
                 </tr>
               </tbody>
             </Table>
-
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
-          </form>
+          </>
         )}
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

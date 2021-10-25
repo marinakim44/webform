@@ -4,8 +4,9 @@ import "../App.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question16() {
+export default function Question16({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -16,40 +17,76 @@ export default function Question16() {
       setInput(localStorage.getItem("q16"));
     }
   }, []);
-  const rows = [
-    {
-      key: "option1",
-      value: "0",
-    },
-    {
-      key: "option2",
-      value: "1",
-    },
-    {
-      key: "option3",
-      value: "2-5",
-    },
-    {
-      key: "option4",
-      value: "6-10",
-    },
-    {
-      key: "option5",
-      value: "11-20",
-    },
-    {
-      key: "option6",
-      value: "21-30",
-    },
-    {
-      key: "option7",
-      value: "More than 30",
-    },
-    {
-      key: "option8",
-      value: "Don't know",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "option1",
+            value: "0",
+          },
+          {
+            key: "option2",
+            value: "1",
+          },
+          {
+            key: "option3",
+            value: "2-5",
+          },
+          {
+            key: "option4",
+            value: "6-10",
+          },
+          {
+            key: "option5",
+            value: "11-20",
+          },
+          {
+            key: "option6",
+            value: "21-30",
+          },
+          {
+            key: "option7",
+            value: "More than 30",
+          },
+          {
+            key: "option8",
+            value: "Don't know",
+          },
+        ]
+      : [
+          {
+            key: "option1",
+            value: "0",
+          },
+          {
+            key: "option2",
+            value: "1",
+          },
+          {
+            key: "option3",
+            value: "2-5",
+          },
+          {
+            key: "option4",
+            value: "6-10",
+          },
+          {
+            key: "option5",
+            value: "11-20",
+          },
+          {
+            key: "option6",
+            value: "21-30",
+          },
+          {
+            key: "option7",
+            value: "Более 30",
+          },
+          {
+            key: "option8",
+            value: "Затрудняюсь ответить",
+          },
+        ];
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -104,16 +141,19 @@ export default function Question16() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -141,7 +181,8 @@ export default function Question16() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 17).toString())}% completed
+            {Math.round(((100 / 39) * 17).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -152,13 +193,27 @@ export default function Question16() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            During a typical review cycle, how many different profit and loss
-            (P&L) statements do you personally examine?
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              <p className="question">
+                During a typical review cycle, how many different profit and
+                loss (P&L) statements do you personally examine?
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ONE RESPONSE</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="left-align-text question">
+                В течение обычного цикла проверок сколько различных отчетов о
+                прибыли и убытках (P&L) вы лично проверяете?
+              </p>
+              <p className="question-i">
+                <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ</i>
+              </p>
+            </>
+          )}
         </div>
         {width <= 768 ? (
           <div className="left-align-text">
@@ -203,27 +258,7 @@ export default function Question16() {
             </div>
           </Form>
         )}
-        <div className="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i
-              className="fas fa-chevron-left"
-              style={{ marginRight: "8px" }}
-            ></i>
-            Back
-          </Button>
-
-          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
-            Next
-            <i
-              className="fas fa-chevron-right"
-              style={{ marginLeft: "8px" }}
-            ></i>
-          </Button>
-        </div>
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

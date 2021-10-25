@@ -5,8 +5,9 @@ import "../Medium.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question20() {
+export default function Question20({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,84 +37,168 @@ export default function Question20() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const rows = [
-    {
-      key: "A",
-      title: "LOYALTY (SHALLOW DEPENDENCE)",
-      value:
-        "Switch to a competitor’s products/services (e.g., if ours are unavailable, if a competitor offers discount/promotion)",
-    },
-    {
-      key: "B",
-      title: "RELIABILITY/QUALITY (SHALLOW INTERDEPENDENCE)",
-      value: "Recommend our products/services to family or friends",
-    },
-    {
-      key: "C",
-      title: "FORESIGHT (DEEP INTERDEPENDENCE)",
-      value: "Resist new updates or changes to our products/services",
-    },
-    {
-      key: "D",
-      title: "INTUITION (DEEP INTERDEPENDENCE)",
-      value: "Provide feedback that our products/services exceed expectations",
-    },
-    {
-      key: "E",
-      title: "COMPETENCY (SHALLOW DEPENDENCE)",
-      value:
-        "Update their personal preferences with our company to receive a more tailored experience",
-    },
-    {
-      key: "F",
-      title: "BENEVOLENCE (DEEP DEPENDENCE)",
-      value:
-        "Choose our products/services primarily because of the company’s values (e.g., environmental, social responsibility)",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            title: "LOYALTY (SHALLOW DEPENDENCE)",
+            value:
+              "Switch to a competitor’s products/services (e.g., if ours are unavailable, if a competitor offers discount/promotion)",
+          },
+          {
+            key: "B",
+            title: "RELIABILITY/QUALITY (SHALLOW INTERDEPENDENCE)",
+            value: "Recommend our products/services to family or friends",
+          },
+          {
+            key: "C",
+            title: "FORESIGHT (DEEP INTERDEPENDENCE)",
+            value: "Resist new updates or changes to our products/services",
+          },
+          {
+            key: "D",
+            title: "INTUITION (DEEP INTERDEPENDENCE)",
+            value:
+              "Provide feedback that our products/services exceed expectations",
+          },
+          {
+            key: "E",
+            title: "COMPETENCY (SHALLOW DEPENDENCE)",
+            value:
+              "Update their personal preferences with our company to receive a more tailored experience",
+          },
+          {
+            key: "F",
+            title: "BENEVOLENCE (DEEP DEPENDENCE)",
+            value:
+              "Choose our products/services primarily because of the company’s values (e.g., environmental, social responsibility)",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            title: "ЛОЯЛЬНОСТЬ (НЕБОЛЬШАЯ ЗАВИСИМОСТЬ) ",
+            value:
+              "Переключаются на продукты/услуги конкурента (напр., если наши продукты/услуги недоступны, если конкурент предлагает скидку/рекламную акцию) ",
+          },
+          {
+            key: "B",
+            title: "НАДЕЖНОСТЬ/КАЧЕСТВО (НЕБОЛЬШАЯ ВЗАИМОЗАВИСИМОСТЬ)",
+            value: "Рекомендуют наши продукты/услуги семье или друзьям ",
+          },
+          {
+            key: "C",
+            title: "ПРОГНОЗИРОВАНИЕ (ГЛУБОКАЯ ВЗАИМОЗАВИСИМОСТЬ) ",
+            value:
+              "Сопротивляются обновлениям или изменениям в наших продуктах/услугах",
+          },
+          {
+            key: "D",
+            title: "ИНТУИЦИЯ (ГЛУБОКАЯ ВЗАИМОЗАВИСИМОСТЬ)",
+            value:
+              "Предоставляют обратную связь о том, что наши продукты/услуги превосходят ожидания",
+          },
+          {
+            key: "E",
+            title: "КОМПЕТЕНТНОСТЬ (НЕБОЛЬШАЯ ЗАВИСИМОСТЬ)",
+            value:
+              "Сообщают о своих личных предпочтениях нашей компании, чтобы получить более индивидуальное обслуживание",
+          },
+          {
+            key: "F",
+            title: "БЛАГОЖЕЛАТЕЛЬНОЕ ОТНОШЕНИЕ (ЗНАЧИТЕЛЬНАЯ ЗАВИСИМОСТЬ) ",
+            value:
+              "Выбирают наши продукты/услуги в первую очередь из-за ценностей компании (напр., экологическая, социальная ответственность) ",
+          },
+        ];
 
-  const columns = [
-    {
-      key: 1,
-      title: "Almost never",
-      value: "0-5% of the time",
-    },
-    {
-      key: 2,
-      title: "Rarely",
-      value: "6-20% of the time",
-    },
-    {
-      key: 3,
-      title: "Occasionally",
-      value: "21-40% of the time",
-    },
-    {
-      key: 4,
-      title: "Sometimes",
-      value: "41-60% of the time",
-    },
-    {
-      key: 5,
-      title: "Frequently",
-      value: "61-80% of the time",
-    },
-    {
-      key: 6,
-      title: "Usually",
-      value: "81-94% of the time",
-    },
-    {
-      key: 7,
-      title: "Almost always",
-      value: "95-100% of the time",
-    },
-    {
-      key: 8,
-      title: "Don't know",
-      value: "",
-    },
-  ];
+  const columns =
+    lng === "English"
+      ? [
+          {
+            key: 1,
+            title: "Almost never",
+            value: "0-5% of the time",
+          },
+          {
+            key: 2,
+            title: "Rarely",
+            value: "6-20% of the time",
+          },
+          {
+            key: 3,
+            title: "Occasionally",
+            value: "21-40% of the time",
+          },
+          {
+            key: 4,
+            title: "Sometimes",
+            value: "41-60% of the time",
+          },
+          {
+            key: 5,
+            title: "Frequently",
+            value: "61-80% of the time",
+          },
+          {
+            key: 6,
+            title: "Usually",
+            value: "81-94% of the time",
+          },
+          {
+            key: 7,
+            title: "Almost always",
+            value: "95-100% of the time",
+          },
+          {
+            key: 8,
+            title: "Don't know",
+            value: "",
+          },
+        ]
+      : [
+          {
+            key: 1,
+            title: "Почти никогда",
+            value: "0–5% случаев",
+          },
+          {
+            key: 2,
+            title: "Редко",
+            value: "6–20% случаев",
+          },
+          {
+            key: 3,
+            title: "Периодически",
+            value: "21–40% случаев",
+          },
+          {
+            key: 4,
+            title: "Иногда",
+            value: "41–60% случаев",
+          },
+          {
+            key: 5,
+            title: "Часто",
+            value: "61–80% случаев",
+          },
+          {
+            key: 6,
+            title: "Как правило",
+            value: "81–94% случаев",
+          },
+          {
+            key: 7,
+            title: "Почти всегда",
+            value: "95–100% случаев",
+          },
+          {
+            key: 8,
+            title: "Затрудняюсь ответить",
+            value: "",
+          },
+        ];
 
   const [input, setInput] = useState({
     A: "",
@@ -289,16 +374,19 @@ export default function Question20() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -309,6 +397,9 @@ export default function Question20() {
         q17: JSON.parse(localStorage.getItem("q17")),
         q18: JSON.parse(localStorage.getItem("q18")),
         q19: JSON.parse(localStorage.getItem("q19")),
+        q19none: localStorage.getItem("q19-none"),
+        q19dontknow: localStorage.getItem("q19-dontknow"),
+        q19other: localStorage.getItem("q19-other"),
         q20: JSON.parse(localStorage.getItem("q20")),
       };
 
@@ -330,7 +421,8 @@ export default function Question20() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 21).toString())}% completed
+            {Math.round(((100 / 39) * 21).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -341,14 +433,30 @@ export default function Question20() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            Thinking about the customers who have regularly purchased your
-            products/services, how often would you say they take the following
-            actions:
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              {" "}
+              <p className="question">
+                Thinking about the customers who have regularly purchased your
+                products/services, how often would you say they take the
+                following actions:
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="question">
+                Если подумать о клиентах, которые регулярно покупают ваши
+                товары/услуги, как часто вы бы сказали, что они совершают
+                следующие действия:
+              </p>
+              <p className="question-i">
+                <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+              </p>
+            </>
+          )}
         </div>
 
         {width <= 768 ? (
@@ -503,27 +611,7 @@ export default function Question20() {
             </div>
           </form>
         )}
-        <div className="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i
-              className="fas fa-chevron-left"
-              style={{ marginRight: "8px" }}
-            ></i>
-            Back
-          </Button>
-
-          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
-            Next
-            <i
-              className="fas fa-chevron-right"
-              style={{ marginLeft: "8px" }}
-            ></i>
-          </Button>
-        </div>
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

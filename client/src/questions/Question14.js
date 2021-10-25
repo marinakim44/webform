@@ -4,8 +4,9 @@ import "../App.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question14() {
+export default function Question14({ lng }) {
   const history = useHistory();
   const width = window.screen.width;
   useEffect(() => {
@@ -20,58 +21,73 @@ export default function Question14() {
   const rows = [
     {
       key: "A",
-      value: "Assess its major initiatives",
+      value:
+        lng === "English"
+          ? "Assess its major initiatives"
+          : "Оценивает свои основные инициативы",
     },
     {
       key: "B",
-      value: "Change its major initiatives",
+      value:
+        lng === "English"
+          ? "Change its major initiatives"
+          : "Меняет свои основные инициативы",
     },
     {
       key: "C",
-      value: "Update its workforce about its major initiatives",
+      value:
+        lng === "English"
+          ? "Update its workforce about its major initiatives"
+          : "Информирует персонал о своих основных инициативах",
     },
   ];
 
   const columns = [
     {
       key: "1",
-      title: "Less often",
-      value: "Every four years or less frequently",
+      title: lng === "English" ? "<- Less often" : "<- Реже",
+      value:
+        lng === "English"
+          ? "Every four years or less frequently"
+          : "Каждые четыре года или реже",
     },
     {
       key: "2",
-      title: "Less often",
-      value: "Every three years",
+      title: lng === "English" ? "<- Less often" : "<- Реже",
+      value: lng === "English" ? "Every three years" : "Каждые три года",
     },
     {
       key: "3",
-      title: "Less often",
-      value: "Every two years",
+      title: lng === "English" ? "<- Less often" : "<- Реже",
+      value: lng === "English" ? "Every two years" : "Каждые два года",
     },
     {
       key: "4",
-      title: "Every year",
-      value: "Every year",
+      title: lng === "English" ? "Every year" : "Каждый год",
+      value: lng === "English" ? "Every year" : "Каждый год",
     },
     {
       key: "5",
-      title: "More often",
-      value: "Twice a year",
+      title: lng === "English" ? "More often ->" : "Чаще ->",
+      value: lng === "English" ? "Twice a year" : "Дважды в год",
     },
     {
       key: "6",
-      title: "More often",
-      value: "Three times a year",
+      title: lng === "English" ? "More often ->" : "Чаще ->",
+      value: lng === "English" ? "Three times a year" : "Три раза в год",
     },
     {
       key: "7",
-      title: "More often",
-      value: "Four times a year or more frequently",
+      title: lng === "English" ? "More often ->" : "Чаще ->",
+      value:
+        lng === "English"
+          ? "Four times a year or more frequently"
+          : "Четыре раза в год или чаще",
     },
     {
       key: "8",
-      title: "Don't know",
-      value: "Don't know",
+      title: lng === "English" ? "Don't know" : "Затрудняюсь ответить",
+      value: lng === "English" ? "Don't know" : "Затрудняюсь ответить",
     },
   ];
 
@@ -163,16 +179,19 @@ export default function Question14() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -198,7 +217,8 @@ export default function Question14() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 15).toString())}% completed
+            {Math.round(((100 / 39) * 15).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -209,23 +229,39 @@ export default function Question14() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            <strong>
-              Typically, how frequently does your company formally:
-            </strong>{" "}
-            <br />- assess its major initiatives?
-            <br />- change its major initiatives?
-            <br />- update its workforce about its major initiatives?
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              <p className="question">
+                <strong>
+                  Typically, how frequently does your company formally:
+                </strong>{" "}
+                <br />- assess its major initiatives?
+                <br />- change its major initiatives?
+                <br />- update its workforce about its major initiatives?
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="left-align-text question">
+                <strong>Обычно как часто ваша компания формально:</strong>
+                <br />- оценивает свои основные инициативы?
+                <br />- меняет свои основные инициативы?
+                <br />- информирует персонал о своих основных инициативах?
+              </p>
+              <p className="question-i">
+                <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+              </p>
+            </>
+          )}
         </div>
         {width <= 768 ? (
           <div className="left-align-text">
             {rows.map((row) => {
               return (
-                <div>
+                <div key={row.key}>
                   <p className="question" style={{ color: "#db536a" }}>
                     <strong>
                       {row.key}) {row.value}
@@ -233,7 +269,7 @@ export default function Question14() {
                   </p>
                   {columns.map((col) => {
                     return (
-                      <div className="m-div">
+                      <div key={col.key} className="m-div">
                         <label className="m-label">
                           <input
                             type="radio"
@@ -252,61 +288,39 @@ export default function Question14() {
                 </div>
               );
             })}
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </div>
         ) : (
-          <form>
+          <>
             <Table bordered className="table">
               <tbody>
                 <tr style={{ fontWeight: "bold", color: "#dc3545" }}>
                   <td colSpan="2" rowSpan="2"></td>
-                  <td colSpan="3">Less often</td>
-                  <td rowSpan="2">Every year</td>
-                  <td colSpan="3">More often</td>
-                  <td rowSpan="2">Don't know</td>
+                  <td colSpan="3">Реже</td>
+                  <td rowSpan="2">Каждый год</td>
+                  <td colSpan="3">Чаще</td>
+                  <td rowSpan="2">Затрудняюсь ответить</td>
                 </tr>
                 <tr>
                   {columns
                     .filter(
                       (col) =>
-                        col.value !== "Every year" && col.value !== "Don't know"
+                        col.value !== "Every year" &&
+                        col.value !== "Don't know" &&
+                        col.value !== "Каждый год" &&
+                        col.value !== "Затрудняюсь ответить"
                     )
                     .map((col) => {
-                      return <td>{col.value}</td>;
+                      return <td key={col.key}>{col.value}</td>;
                     })}
                 </tr>
                 {rows.map((row) => {
                   return (
-                    <tr className="table-row">
+                    <tr className="table-row" key={row.key}>
                       <td>{row.key}</td>
                       <td className="left-align-text">{row.value}</td>
                       {columns.map((col) => {
                         return (
-                          <td className="input-cell">
+                          <td className="input-cell" key={col.key}>
                             <label className="label-cell">
                               <input
                                 type="radio"
@@ -328,33 +342,9 @@ export default function Question14() {
                 })}
               </tbody>
             </Table>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
-          </form>
+          </>
         )}
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

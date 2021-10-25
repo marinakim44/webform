@@ -5,8 +5,9 @@ import "../Medium.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function QuestionD() {
+export default function QuestionD({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -67,16 +68,19 @@ export default function QuestionD() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -87,13 +91,18 @@ export default function QuestionD() {
         q17: JSON.parse(localStorage.getItem("q17")),
         q18: JSON.parse(localStorage.getItem("q18")),
         q19: JSON.parse(localStorage.getItem("q19")),
+        q19none: localStorage.getItem("q19-none"),
+        q19dontknow: localStorage.getItem("q19-dontknow"),
+        q19other: localStorage.getItem("q19-other"),
         q20: JSON.parse(localStorage.getItem("q20")),
         q21: JSON.parse(localStorage.getItem("q21")),
         q22: JSON.parse(localStorage.getItem("q22")),
         q23: localStorage.getItem("q23"),
         q24: JSON.parse(localStorage.getItem("q24")),
-        q25none: localStorage.getItem("q25none"),
-        q25dontknow: localStorage.getItem("q25dontknow"),
+        q24none: JSON.parse(localStorage.getItem("q24-none")),
+        q24not: JSON.parse(localStorage.getItem("q24-not")),
+        q25none: localStorage.getItem("q25-none"),
+        q25dontknow: localStorage.getItem("q25-dontknow"),
         q25other: localStorage.getItem("q25-other"),
         q25: JSON.parse(localStorage.getItem("q25")),
         q25b: JSON.parse(localStorage.getItem("q25b")),
@@ -102,12 +111,13 @@ export default function QuestionD() {
         q25c: JSON.parse(localStorage.getItem("q25c")),
         q25cNone: localStorage.getItem("q25c-none"),
         q25cDontknow: localStorage.getItem("q25c-dontknow"),
+        q25cOther: localStorage.getItem("q25c-other"),
         q26: localStorage.getItem("q26"),
         q27: localStorage.getItem("q27"),
         q28: localStorage.getItem("q28"),
         qa: localStorage.getItem("qa"),
         qaOther: localStorage.getItem("qa-other"),
-        qb: localStorage.getItem("qb"),
+        qbString: localStorage.getItem("qb-string"),
         qc: localStorage.getItem("qc"),
         qcOther: localStorage.getItem("qc-other"),
         qd: localStorage.getItem("qd"),
@@ -131,24 +141,39 @@ export default function QuestionD() {
         <div className="main" style={{ height: width <= 768 ? "100vh" : "" }}>
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 35).toString())}% completed
+              {Math.round(((100 / 40) * 35).toString())}%{" "}
+              {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
                 className="progressBarFilled"
                 style={{
-                  width: ((100 / 39) * 35).toString() + "%",
+                  width: ((100 / 40) * 35).toString() + "%",
                 }}
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="question">
-              Are your company and its multi-entity parent domiciled in the same
-              country?
-            </p>
-            <p className="question-i">
-              <i>PLEASE SELECT ONE RESPONSE</i>
-            </p>
+            {lng === "English" ? (
+              <>
+                <p className="question">
+                  Are your company and its multi-entity parent domiciled in the
+                  same country?
+                </p>
+                <p className="question-i">
+                  <i>PLEASE SELECT ONE RESPONSE</i>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="question">
+                  Находятся ли ваша компания и ее материнская компания,
+                  состоящая из нескольких компаний, в одной стране?
+                </p>
+                <p className="question-i">
+                  <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ОДИН ОТВЕТ</i>
+                </p>
+              </>
+            )}
           </div>
           <Form>
             <Form.Group>
@@ -168,7 +193,7 @@ export default function QuestionD() {
                     className="radio-input m-input"
                     checked={checked.option1}
                   ></input>
-                  Yes
+                  {lng === "English" ? "Yes" : "Да"}
                 </label>
               </div>
               <div
@@ -188,7 +213,7 @@ export default function QuestionD() {
                     class="radio-input m-input"
                     checked={checked.option2}
                   ></input>
-                  No
+                  {lng === "English" ? "No" : "Нет"}
                 </label>
               </div>
               <div
@@ -208,35 +233,11 @@ export default function QuestionD() {
                     class="radio-input m-input"
                     checked={checked.option3}
                   ></input>
-                  Don't know
+                  {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
                 </label>
               </div>
             </Form.Group>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
+            <Buttons lng={lng} click={handleSubmit} />
           </Form>
         </div>
       </Route>

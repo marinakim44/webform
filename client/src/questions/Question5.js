@@ -5,8 +5,9 @@ import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question5() {
+export default function Question5({ lng }) {
   const width = window.screen.width;
 
   useEffect(() => {
@@ -21,31 +22,52 @@ export default function Question5() {
   const rows = [
     {
       key: "A",
-      value: "Carbon-neutral commitment",
-      text: "Achieved when a company offsets its greenhouse gas (GHG) emissions to zero (e.g., by purchasing voluntary carbon credits)",
+      value:
+        lng === "English"
+          ? "Carbon-neutral commitment"
+          : "Обязательство по углеродной нейтральности",
+      text:
+        lng === "English"
+          ? "Achieved when a company offsets its greenhouse gas (GHG) emissions to zero (e.g., by purchasing voluntary carbon credits)"
+          : "Достигается, когда компания сводит к нулю выбросы парниковых газов (ПГ) (напр., путем покупки добровольных квот на выбросы углерода)",
     },
     {
       key: "B",
-      value: "Net-zero commitment",
-      text: "Achieved when a company reduces its greenhouse gas (GHG) emissions to near zero and removes its remaining unavoidable emissions",
+      value:
+        lng === "English"
+          ? "Net-zero commitment"
+          : "Обязательство по нулевым выбросам",
+      text:
+        lng === "English"
+          ? "Achieved when a company reduces its greenhouse gas (GHG) emissions to near zero and removes its remaining unavoidable emissions"
+          : "Достигается, когда компания сокращает выбросы парниковых газов (ПГ) почти до нуля и устраняет оставшиеся неизбежные выбросы",
     },
   ];
   const columns = [
     {
       key: "1",
-      value: "Yes, my company has made this commitment",
+      value:
+        lng === "English"
+          ? "Yes, my company has made this commitment"
+          : "Да, моя компания приняла это обязательство",
     },
     {
       key: "2",
-      value: "No, but my company is working toward making this commitment",
+      value:
+        lng === "English"
+          ? "No, but my company is working toward making this commitment"
+          : "Нет, но моя компания работает над принятием этого обязательства",
     },
     {
       key: "3",
-      value: "No, my company has not made this commitment",
+      value:
+        lng === "English"
+          ? "No, my company has not made this commitment"
+          : "Нет, моя компания не принимала этого обязательства",
     },
     {
       key: "4",
-      value: "Don't know",
+      value: lng === "English" ? "Don't know" : "Затрудняюсь ответить",
     },
   ];
   const [show, setShow] = useState(false);
@@ -117,10 +139,12 @@ export default function Question5() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
       };
 
@@ -169,7 +193,8 @@ export default function Question5() {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 6).toString())}% completed
+              {Math.round(((100 / 39) * 6).toString())}%{" "}
+              {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
@@ -180,16 +205,38 @@ export default function Question5() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="question">
-              <strong>Has your company made a:</strong>
-              <br />
-              <span>A) carbon-neutral commitment?</span>
-              <br />
-              <span>B) net-zero commitment?</span>
-            </p>
-            <p className="question-i">
-              <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-            </p>
+            {lng === "English" ? (
+              <>
+                <p className="question">
+                  <strong>Has your company made a:</strong>
+                  <br />
+                  <span>A) carbon-neutral commitment?</span>
+                  <br />
+                  <span>B) net-zero commitment?</span>
+                </p>
+                <p className="question-i">
+                  <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+                </p>
+              </>
+            ) : (
+              <>
+                <strong>
+                  <p className="question">Приняла ли ваша компания:</p>
+                </strong>
+                <p className="question">
+                  <li style={{ listStyle: "none" }}>
+                    A) обязательство по углеродной нейтральности?
+                  </li>
+
+                  <li style={{ listStyle: "none" }}>
+                    B) обязательство по нулевым выбросам?
+                  </li>
+                </p>
+                <p className="question-i">
+                  <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+                </p>
+              </>
+            )}
           </div>
           {width <= 768 ? (
             <div className="left-align-text">
@@ -224,28 +271,9 @@ export default function Question5() {
                   </div>
                 );
               })}
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i class="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
             </div>
           ) : (
-            <form>
+            <>
               <table className="table">
                 <tbody>
                   <tr>
@@ -292,27 +320,9 @@ export default function Question5() {
                   })}
                 </tbody>
               </table>
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i class="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
-            </form>
+            </>
           )}
+          <Buttons lng={lng} click={handleSubmit} />
         </div>
       </Route>
     </BrowserRouter>

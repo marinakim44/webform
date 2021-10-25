@@ -4,18 +4,15 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const path = require("path");
-const port = process.env.PORT || 3001;
-const NodeRSA = require("node-rsa");
-const key = new NodeRSA({ b: 512 });
+const port = process.env.PORT || 8080;
+var bodyParser = require("body-parser");
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 const options = {
-  // serverSelectionTimeoutMS: 60000,
-  // socketTimeoutMS: 45000,
-  // keepAlive: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
@@ -28,131 +25,89 @@ mongoose.connect(process.env.MONGO_URI, options, function (err) {
   }
 });
 
-// mongoose.set("bufferCommands", false);
-// mongoose.connect(process.env.MONGO_URI, options, function (err) {
-//   console.log(err);
-// });
-
-// mongoose.connection.on("error", (err) => {
-//   console.log(err);
-// });
-
-var date = new Date();
-var currentDate = date.toLocaleString("ru-KZ", { timeZone: "Asia/Almaty" });
-console.log(currentDate);
-
-const responseSchema = new mongoose.Schema(
-  {
-    datetime: String,
-    uuid: String,
-    language: String,
-    name: String,
-    company: String,
-    title: String,
-    email: String,
-    phone: String,
-    question1: Object,
-    question2: Array,
-    question2none: Boolean,
-    question2dontknow: Boolean,
-    question3: Object,
-    question4: Array,
-    question4other: String,
-    question5: Object,
-    question6: String,
-    question7: String,
-    question8: String,
-    question9: String,
-    question10A: Object,
-    question10B: Object,
-    question11: Object,
-    question12: Object,
-    question13: Object,
-    question14: Object,
-    question15: Object,
-    question16: String,
-    question17: Object,
-    question18: Object,
-    question19: {
-      input: Array,
-      none: Boolean,
-      dontknow: Boolean,
-      other: String,
-    },
-    question20: Object,
-    question21: Object,
-    question22: Object,
-    question23: String,
-    question24: Array,
-    question24none: Object,
-    question24not: Object,
-    question25A: Array,
-    question25Anone: Boolean,
-    question25Adontknow: Boolean,
-    question25Aother: String,
-    question25B: Object,
-    question25Bnone: Boolean,
-    question25Bdontknow: Boolean,
-    question25C: Array,
-    question25Cnone: Boolean,
-    question25Cdontknow: Boolean,
-    question25Cother: String,
-    question26: String,
-    question27: String,
-    question28: String,
-    questionA: String,
-    questionAother: String,
-    questionB: String,
-    questionC: String,
-    questionCother: String,
-    questionD: String,
-    questionE: String,
-    questionF: String,
-    questionFother: String,
-    questionG: String,
-    questionH: String,
-    questionI: String,
-    questionJ: String,
-    questionK: String,
-    questionL: String,
+const responseSchema = new mongoose.Schema({
+  datetime: String,
+  uuid: String,
+  language: String,
+  name: String,
+  company: String,
+  title: String,
+  email: String,
+  phone: String,
+  question1: Object,
+  question2: Array,
+  question2none: Boolean,
+  question2dontknow: Boolean,
+  question3: Object,
+  question4: Array,
+  question4other: String,
+  question5: Object,
+  question6: String,
+  question7: String,
+  question8: String,
+  question9: String,
+  question10A: Object,
+  question10B: Object,
+  question11: Object,
+  question12: Object,
+  question13: Object,
+  question14: Object,
+  question15: Object,
+  question16: String,
+  question17: Object,
+  question18: Object,
+  question19: {
+    input: Array,
+    none: Boolean,
+    dontknow: Boolean,
+    other: String,
   },
-  {
-    bufferCommands: false,
-    autoCreate: false,
-  }
-);
+  question20: Object,
+  question21: Object,
+  question22: Object,
+  question23: String,
+  question24: Array,
+  question24none: Object,
+  question24not: Object,
+  question25A: Array,
+  question25Anone: Boolean,
+  question25Adontknow: Boolean,
+  question25Aother: String,
+  question25B: Object,
+  question25Bnone: Boolean,
+  question25Bdontknow: Boolean,
+  question25C: Array,
+  question25Cnone: Boolean,
+  question25Cdontknow: Boolean,
+  question25Cother: String,
+  question26: String,
+  question27: String,
+  question28: String,
+  questionA: String,
+  questionAother: String,
+  questionB: String,
+  questionC: String,
+  questionCother: String,
+  questionD: String,
+  questionE: String,
+  questionF: String,
+  questionFother: String,
+  questionG: String,
+  questionH: String,
+  questionI: String,
+  questionJ: String,
+  questionK: String,
+  questionL: String,
+});
 
 const Response = mongoose.model("Response", responseSchema);
 
-// const encryptSchema = new mongoose.Schema(
-//   {
-//     uuid: String,
-//     name: String,
-//     company: String,
-//     title: String,
-//     email: String,
-//     phone: String,
-//   },
-//   {
-//     bufferCommands: false,
-//     autoCreate: false,
-//   }
-// );
-
-// const Encrypt = mongoose.model("Encrypt", encryptSchema);
-
 //POST APIs
-app.post("/allinputs", (req, res) => {
-  // var encryptedName = key.encrypt(req.body.name, "base64");
-  // var encryptedCompany = key.encrypt(req.body.company, "base64");
-  // var encryptedTitle = key.encrypt(req.body.title, "base64");
-  // var encryptedEmail = key.encrypt(req.body.email, "base64");
-  // var encryptedPhone = key.encrypt(req.body.phone, "base64");
-
+app.post("/allinputs", (req, res, next) => {
   Response.findOneAndUpdate(
     { uuid: req.body.uuid },
     {
-      datetime: currentDate,
+      datetime: req.body.currentDate,
       name: req.body.name,
       company: req.body.company,
       title: req.body.title,
@@ -231,53 +186,10 @@ app.post("/allinputs", (req, res) => {
       } else {
         console.log(err);
       }
-      // if (!err) {
-      //   res.status(200).json(err);
-      //   return;
-      // } else {
-      //   res.status(500).json(err);
-      //   return;
-      // }
-      // if (err) {
-      //   return res.status(500).send(err);
-      // } else {
-      //   return res.status(200).send("Saved");
-      // }
     }
   );
-
-  // const decryptedData = new Encrypt({
-  //   uuid: req.body.uuid,
-  //   name: key.decrypt(encryptedName, "utf8"),
-  //   company: key.decrypt(encryptedCompany, "utf8"),
-  //   title: key.decrypt(encryptedTitle, "utf8"),
-  //   email: key.decrypt(encryptedEmail, "utf8"),
-  //   phone: key.decrypt(encryptedPhone, "utf8"),
-  // });
-
-  // decryptedData
-  //   .save()
-  //   .then((item) => console.log(item))
-  //   .catch((err) => console.log(err));
+  return next();
 });
-
-//GET APIs
-// app.get("/display", (req, res) => {
-//   Response.find()
-//     .then((items) => res.json(items))
-//     .catch((err) => res.status(400).json("Error " + err));
-// });
-
-//DELETE APIs
-// app.delete("/delete", (req, res) => {
-//   Response.deleteMany({}, (req, res, err) => {
-//     if (!err) {
-//       console.log("deleted");
-//     } else {
-//       console.log(err);
-//     }
-//   });
-// });
 
 //for production
 if (process.env.NODE_ENV === "production") {

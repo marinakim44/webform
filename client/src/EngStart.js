@@ -5,7 +5,7 @@ import "./App.css";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 
-function EngStart() {
+function EngStart({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -309,7 +309,9 @@ function EngStart() {
           }
           className="sticky-sub-div"
         >
-          <h2 className="percent">0% completed</h2>
+          <h2 className="percent">
+            0% {lng === "English" ? "completed" : "завершено"}
+          </h2>
           <div className="progressBarEmpty">
             <div className="progressBarFilled" style={{ width: "0%" }}></div>
           </div>
@@ -328,7 +330,9 @@ function EngStart() {
                   margin: 0,
                 }}
               >
-                *Name field should not be empty
+                {lng === "English"
+                  ? "*Name field should not be empty"
+                  : "*Поле с именем должно быть заполнено"}
               </p>
             ) : (
               ""
@@ -336,7 +340,7 @@ function EngStart() {
             <Form.Control
               autoComplete="off"
               type="text"
-              placeholder="Full name*"
+              placeholder={lng === "English" ? "Full name*" : "Полное имя*"}
               name="name"
               value={input.name}
               onChange={handleChange}
@@ -357,7 +361,9 @@ function EngStart() {
                   margin: 0,
                 }}
               >
-                *Company field should not be empty
+                {lng === "English"
+                  ? "*Company field should not be empty"
+                  : "*Поле с компанией должно быть заполнено"}
               </p>
             ) : (
               ""
@@ -365,7 +371,9 @@ function EngStart() {
 
             <Form.Control
               type="text"
-              placeholder={"Company name*"}
+              placeholder={
+                lng === "English" ? "Company name*" : "Название компании*"
+              }
               autoComplete="off"
               name="company"
               value={input.company}
@@ -387,7 +395,9 @@ function EngStart() {
                   margin: 0,
                 }}
               >
-                *Title field should not be empty
+                {lng === "English"
+                  ? "*Title field should not be empty"
+                  : "*Поле с должностью должно быть заполнено"}
               </p>
             ) : (
               ""
@@ -395,7 +405,7 @@ function EngStart() {
 
             <Form.Control
               type="text"
-              placeholder="Job title*"
+              placeholder={lng === "English" ? "Job title*" : "Должность*"}
               name="title"
               value={input.title}
               onChange={handleChange}
@@ -417,7 +427,9 @@ function EngStart() {
                   margin: 0,
                 }}
               >
-                *Email fields should not be empty
+                {lng === "English"
+                  ? "*Email fields should not be empty"
+                  : "*Поле с электронной почтой должно быть заполнено"}
               </p>
             ) : (
               ""
@@ -434,7 +446,9 @@ function EngStart() {
                   margin: 0,
                 }}
               >
-                *Please specify a valid email address
+                {lng === "English"
+                  ? "*Please specify a valid email address"
+                  : "*Неправильно введен адрес электронной почты"}
               </p>
             ) : (
               ""
@@ -454,7 +468,11 @@ function EngStart() {
             ></Form.Control>
             <Form.Control
               type="text"
-              placeholder="Phone number (optional)"
+              placeholder={
+                lng === "English"
+                  ? "Phone number (optional)"
+                  : "Номер телефона (необязательно)"
+              }
               name="phone"
               value={input.phone}
               onChange={handleChange}
@@ -473,7 +491,7 @@ function EngStart() {
               onClick={() => history.goBack()}
             >
               <i className="fas fa-chevron-left back-arrow"></i>
-              Back
+              {lng === "English" ? "Back" : "Назад"}
             </Button>
 
             <Button
@@ -481,7 +499,7 @@ function EngStart() {
               className="next-btn"
               onClick={handleSubmit}
             >
-              Next
+              {lng === "English" ? "Next" : "Далее"}
               <i className="fas fa-chevron-right next-arrow"></i>
             </Button>
           </div>

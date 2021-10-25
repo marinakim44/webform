@@ -5,8 +5,9 @@ import "../Medium.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question25B() {
+export default function Question25B({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -21,95 +22,189 @@ export default function Question25B() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const rows = [
-    {
-      key: "A",
-      value: "A skilled, educated and adaptable workforce",
-    },
-    {
-      key: "B",
-      value: "Adequate digital and physical infrastructure",
-    },
-    {
-      key: "C",
-      value: "Reducing climate change and environmental damage",
-    },
-    {
-      key: "D",
-      value: "High levels of employment",
-    },
-    {
-      key: "E",
-      value: "An effective tax system",
-    },
-    {
-      key: "F",
-      value: "Greater income equality",
-    },
-    {
-      key: "G",
-      value: "The good health and well-being of the workforce",
-    },
-    {
-      key: "H",
-      value: "A diverse and inclusive workforce",
-    },
-    {
-      key: "I",
-      value: "Safeguards around usage of personal data",
-    },
-    {
-      key: "J",
-      value: "Predictable macroeconomic environment",
-    },
-    {
-      key: "K",
-      value: "Investment attractiveness of the country",
-    },
-    {
-      key: "L",
-      value: "Fighting against corruption and bribery",
-    },
-    {
-      key: "M",
-      value: "The supremacy of law in all spheres of state activity",
-    },
-    {
-      key: "N",
-      value: "Access to affordable capital",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            value: "A skilled, educated and adaptable workforce",
+          },
+          {
+            key: "B",
+            value: "Adequate digital and physical infrastructure",
+          },
+          {
+            key: "C",
+            value: "Reducing climate change and environmental damage",
+          },
+          {
+            key: "D",
+            value: "High levels of employment",
+          },
+          {
+            key: "E",
+            value: "An effective tax system",
+          },
+          {
+            key: "F",
+            value: "Greater income equality",
+          },
+          {
+            key: "G",
+            value: "The good health and well-being of the workforce",
+          },
+          {
+            key: "H",
+            value: "A diverse and inclusive workforce",
+          },
+          {
+            key: "I",
+            value: "Safeguards around usage of personal data",
+          },
+          {
+            key: "J",
+            value: "Predictable macroeconomic environment",
+          },
+          {
+            key: "K",
+            value: "Investment attractiveness of the country",
+          },
+          {
+            key: "L",
+            value: "Fighting against corruption and bribery",
+          },
+          {
+            key: "M",
+            value: "The supremacy of law in all spheres of state activity",
+          },
+          {
+            key: "N",
+            value: "Access to affordable capital",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            value: "Квалифицированный и адаптивный персонал ",
+          },
+          {
+            key: "B",
+            value:
+              "Развитая инфраструктура  (включая цифровую инфраструктуру) ",
+          },
+          {
+            key: "C",
+            value:
+              "Снижение рисков изменения климата и ущерба окружающей среде",
+          },
+          {
+            key: "D",
+            value: "Высокий уровень занятости",
+          },
+          {
+            key: "E",
+            value: "Эффективная налоговая система",
+          },
+          {
+            key: "F",
+            value: "Большее равенство доходов населения",
+          },
+          {
+            key: "G",
+            value: "Здоровье и благополучие сотрудников",
+          },
+          {
+            key: "H",
+            value: "Диверсифицированный и инклюзивный персонал",
+          },
+          {
+            key: "I",
+            value: "Меры предосторожности при использовании личных данных",
+          },
+          {
+            key: "J",
+            value: "Предсказуемая макроэкономическая среда",
+          },
+          {
+            key: "K",
+            value: "Инвестиционная привлекательность страны",
+          },
+          {
+            key: "L",
+            value: "Борьба с коррупцией и взяточничеством",
+          },
+          {
+            key: "M",
+            value: "Верховенство права во всех сферах деятельности государства",
+          },
+          {
+            key: "N",
+            value: "Доступ к недорогому капиталу",
+          },
+        ];
 
-  const columns = [
-    {
-      key: "1",
-      value: "Greatly ineffective",
-    },
-    {
-      key: "2",
-      value: "Ineffective",
-    },
-    {
-      key: "3",
-      value: "Neither / nor",
-    },
-    {
-      key: "4",
-      value: "Effective",
-    },
-    {
-      key: "5",
-      value: "Greatly effective",
-    },
-    {
-      key: "6",
-      value: "Don't know",
-    },
-    {
-      key: "7",
-      value: "Refused",
-    },
-  ];
+  const columns =
+    lng === "English"
+      ? [
+          {
+            key: "1",
+            value: "Greatly ineffective",
+          },
+          {
+            key: "2",
+            value: "Ineffective",
+          },
+          {
+            key: "3",
+            value: "Neither / nor",
+          },
+          {
+            key: "4",
+            value: "Effective",
+          },
+          {
+            key: "5",
+            value: "Greatly effective",
+          },
+          {
+            key: "6",
+            value: "Don't know",
+          },
+          {
+            key: "7",
+            value: "Refused",
+          },
+        ]
+      : [
+          {
+            key: "1",
+            value: "Очень неэффективно",
+          },
+          {
+            key: "2",
+            value: "Неэффективно",
+          },
+          {
+            key: "3",
+            value: "Не могу сказать определенно",
+          },
+          {
+            key: "4",
+            value: "Эффективно",
+          },
+          {
+            key: "5",
+            value: "Очень эффективно",
+          },
+          {
+            key: "6",
+            value: "Затрудняюсь ответить",
+          },
+          {
+            key: "7",
+            value: "Отказ от ответа",
+          },
+        ];
 
   const [input, setInput] = useState({
     A: "",
@@ -307,17 +402,19 @@ export default function Question25B() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -328,13 +425,18 @@ export default function Question25B() {
         q17: JSON.parse(localStorage.getItem("q17")),
         q18: JSON.parse(localStorage.getItem("q18")),
         q19: JSON.parse(localStorage.getItem("q19")),
+        q19none: localStorage.getItem("q19-none"),
+        q19dontknow: localStorage.getItem("q19-dontknow"),
+        q19other: localStorage.getItem("q19-other"),
         q20: JSON.parse(localStorage.getItem("q20")),
         q21: JSON.parse(localStorage.getItem("q21")),
         q22: JSON.parse(localStorage.getItem("q22")),
         q23: localStorage.getItem("q23"),
         q24: JSON.parse(localStorage.getItem("q24")),
-        q25none: localStorage.getItem("q25none"),
-        q25dontknow: localStorage.getItem("q25dontknow"),
+        q24none: JSON.parse(localStorage.getItem("q24-none")),
+        q24not: JSON.parse(localStorage.getItem("q24-not")),
+        q25none: localStorage.getItem("q25-none"),
+        q25dontknow: localStorage.getItem("q25-dontknow"),
         q25other: localStorage.getItem("q25-other"),
         q25: JSON.parse(localStorage.getItem("q25")),
         q25b: JSON.parse(localStorage.getItem("q25b")),
@@ -361,7 +463,8 @@ export default function Question25B() {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 27).toString())}% completed
+              {Math.round(((100 / 39) * 27).toString())}%{" "}
+              {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
@@ -373,14 +476,27 @@ export default function Question25B() {
             </div>
 
             <ModalAlert show={show} close={handleClose} />
-
-            <p className="question">
-              How effective do you think the government has been in achieving
-              these outcomes in Kazakhstan?
-            </p>
-            <p className="question-i">
-              <i>PLEASE SELECT ONE RESPONSE ONLY PER ROW</i>
-            </p>
+            {lng === "English" ? (
+              <>
+                <p className="question">
+                  How effective do you think the government has been in
+                  achieving these outcomes in Kazakhstan?
+                </p>
+                <p className="question-i">
+                  <i>PLEASE SELECT ONE RESPONSE ONLY PER ROW</i>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="question">
+                  Насколько эффективно добивается правительство достижения этих
+                  целей в Казахстане?
+                </p>
+                <p className="question-i">
+                  <i>ВЫБЕРИТЕ ОДИН ВАРИАНТ ОТВЕТА ДЛЯ КАЖДОЙ СТРОКИ</i>
+                </p>
+              </>
+            )}
           </div>
 
           {width <= 768 ? (
@@ -402,7 +518,6 @@ export default function Question25B() {
                               name={row.key}
                               value={col.key}
                               onChange={handleClick}
-                              // disabled={none || dontknow ? true : false}
                               checked={checked[`${row.key}${col.key}`]}
                               className="m-input"
                             ></input>
@@ -422,32 +537,9 @@ export default function Question25B() {
                   value="None of the above"
                   onClick={handleNone}
                 >
-                  NONE OF THE ABOVE
-                </Button>
-              </div>
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i
-                    className="fas fa-chevron-left"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                  Back
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i
-                    className="fas fa-chevron-right"
-                    style={{ marginLeft: "8px" }}
-                  ></i>
+                  {lng === "English"
+                    ? "NONE OF THE ABOVE"
+                    : "Ничего из вышеперечисленного"}
                 </Button>
               </div>
             </div>
@@ -493,7 +585,6 @@ export default function Question25B() {
                                     name={row.key}
                                     value={col.key}
                                     onChange={handleClick}
-                                    // disabled={none || dontknow ? true : false}
                                     checked={
                                       none === true
                                         ? false
@@ -525,37 +616,15 @@ export default function Question25B() {
                     value="None of the above"
                     onClick={handleNone}
                   >
-                    NONE OF THE ABOVE
-                  </Button>
-                </div>
-                <div className="back-next-btns">
-                  <Button
-                    variant="secondary"
-                    className="back-btn"
-                    onClick={() => history.goBack()}
-                  >
-                    <i
-                      className="fas fa-chevron-left"
-                      style={{ marginRight: "8px" }}
-                    ></i>
-                    Back
-                  </Button>
-
-                  <Button
-                    variant="danger"
-                    className="next-btn"
-                    onClick={handleSubmit}
-                  >
-                    Next
-                    <i
-                      className="fas fa-chevron-right"
-                      style={{ marginLeft: "8px" }}
-                    ></i>
+                    {lng === "English"
+                      ? "NONE OF THE ABOVE"
+                      : "Ничего из вышеперечисленного"}
                   </Button>
                 </div>
               </div>
             </Form>
           )}
+          <Buttons lng={lng} click={handleSubmit} />
         </div>
       </Route>
     </BrowserRouter>

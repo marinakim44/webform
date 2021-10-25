@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question8() {
+export default function Question8({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,10 +66,12 @@ export default function Question8() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
@@ -97,7 +99,8 @@ export default function Question8() {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 9).toString())}% completed
+              {Math.round(((100 / 39) * 9).toString())}%{" "}
+              {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
@@ -108,14 +111,28 @@ export default function Question8() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="question">
-              Has your company's approach to reducing greenhouse gas (GHG)
-              emissions been independently assessed and validated (e.g., by
-              SBTi)?
-            </p>
-            <p className="question-i">
-              <i>PLEASE SELECT ONE RESPONSE</i>
-            </p>
+            {lng === "English" ? (
+              <>
+                <p className="question">
+                  Has your company's approach to reducing greenhouse gas (GHG)
+                  emissions been independently assessed and validated (e.g., by
+                  SBTi)?
+                </p>
+                <p className="question-i">
+                  <i>PLEASE SELECT ONE RESPONSE</i>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="left-align-text question">
+                  Был ли подход вашей компании к сокращению выбросов парниковых
+                  газов (ПГ) независимо оценен и верифицирован (напр., SBTi)?
+                </p>
+                <p className="question-i">
+                  <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ</i>
+                </p>
+              </>
+            )}
           </div>
           <form className="left-align-text">
             <div className="m-div">
@@ -128,8 +145,9 @@ export default function Question8() {
                   onChange={handleClick}
                   checked={checked.option1}
                 />
-                Yes, my company’s approach to reducing GHG emissions has been
-                independently assessed and validated
+                {lng === "English"
+                  ? "Yes, my company’s approach to reducing GHG emissions has been independently assessed and validated"
+                  : "Да, подход моей компании к сокращению выбросов ПГ прошел независимую оценку и верификацию"}
               </label>
             </div>
 
@@ -143,8 +161,9 @@ export default function Question8() {
                   onChange={handleClick}
                   checked={checked.option2}
                 />
-                No, but my company’s approach to reducing GHG emissions is
-                currently being independently assessed and validated
+                {lng === "English"
+                  ? "No, but my company’s approach to reducing GHG emissions is currently being independently assessed and validated"
+                  : "Нет, но подход моей компании к сокращению выбросов ПГ в настоящее время проходит независимую оценку и верификацию"}
               </label>
             </div>
             <div className="m-div">
@@ -157,8 +176,9 @@ export default function Question8() {
                   onChange={handleClick}
                   checked={checked.option3}
                 />
-                No, my company’s approach to reducing GHG emissions has not been
-                independently assessed and validated
+                {lng === "English"
+                  ? "No, my company’s approach to reducing GHG emissions has not been independently assessed and validated"
+                  : "Нет, подход моей компании к сокращению выбросов ПГ не подвергался независимой оценке и не верифицировался"}
               </label>
             </div>
 
@@ -172,35 +192,11 @@ export default function Question8() {
                   onChange={handleClick}
                   checked={checked.option4}
                 />
-                Don't know
+                {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
               </label>
             </div>
 
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
+            <Buttons lng={lng} click={handleSubmit} />
           </form>
         </div>
       </Route>

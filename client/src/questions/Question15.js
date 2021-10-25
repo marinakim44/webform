@@ -5,8 +5,9 @@ import "../Medium.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question15() {
+export default function Question15({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,51 +18,101 @@ export default function Question15() {
       setInput(JSON.parse(localStorage.getItem("q15")));
     }
   }, []);
-  const rows = [
-    {
-      key: "A",
-      value:
-        "Approve/green-light major initiatives once an idea has been proposed",
-    },
-    {
-      key: "B",
-      value: "Commit significant resources to new major initiatives",
-    },
-  ];
-  const columns = [
-    {
-      key: "1",
-      value: "Up to three months",
-    },
-    {
-      key: "2",
-      value: "4-6 months",
-    },
-    {
-      key: "3",
-      value: "7-12 months",
-    },
-    {
-      key: "4",
-      value: "13-18 months",
-    },
-    {
-      key: "5",
-      value: "19-24 months",
-    },
-    {
-      key: "6",
-      value: "25-36 months",
-    },
-    {
-      key: "7",
-      value: "More than 36 months",
-    },
-    {
-      key: "8",
-      value: "Don't know",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            value:
+              "Approve/green-light major initiatives once an idea has been proposed",
+          },
+          {
+            key: "B",
+            value: "Commit significant resources to new major initiatives",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            value:
+              "Одобрить/дать зеленый свет крупным инициативам после того, как идея была предложена",
+          },
+          {
+            key: "B",
+            value: "Выделить значительные ресурсы на новые крупные инициативы",
+          },
+        ];
+
+  const columns =
+    lng === "English"
+      ? [
+          {
+            key: "1",
+            value: "Up to three months",
+          },
+          {
+            key: "2",
+            value: "4-6 months",
+          },
+          {
+            key: "3",
+            value: "7-12 months",
+          },
+          {
+            key: "4",
+            value: "13-18 months",
+          },
+          {
+            key: "5",
+            value: "19-24 months",
+          },
+          {
+            key: "6",
+            value: "25-36 months",
+          },
+          {
+            key: "7",
+            value: "More than 36 months",
+          },
+          {
+            key: "8",
+            value: "Don't know",
+          },
+        ]
+      : [
+          {
+            key: "1",
+            value: "До 3 месяцев",
+          },
+          {
+            key: "2",
+            value: "4-6 месяца",
+          },
+          {
+            key: "3",
+            value: "7-12 месяцев",
+          },
+          {
+            key: "4",
+            value: "13-18 месяцев",
+          },
+          {
+            key: "5",
+            value: "19-24 месяца",
+          },
+          {
+            key: "6",
+            value: "25-36 месяцев",
+          },
+          {
+            key: "7",
+            value: "Более 36 месяцев",
+          },
+          {
+            key: "8",
+            value: "Затрудняюсь ответить",
+          },
+        ];
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -138,16 +189,19 @@ export default function Question15() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -174,7 +228,8 @@ export default function Question15() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 16).toString())}% completed
+            {Math.round(((100 / 39) * 16).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -185,17 +240,41 @@ export default function Question15() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            <strong>
-              Typically, how long does it take for your company to:
-            </strong>
-            <br />- approve/green-light major initiatives once an idea has been
-            proposed?
-            <br />- commit significant resources to new major initiatives?
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              <p className="question">
+                <strong>
+                  Typically, how long does it take for your company to:
+                </strong>
+                <br />- approve/green-light major initiatives once an idea has
+                been proposed?
+                <br />- commit significant resources to new major initiatives?
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="question">
+                <strong>
+                  Обычно сколько времени требуется вашей компании, чтобы:
+                </strong>
+                <br />
+                <span>
+                  - одобрить/дать зеленый свет крупным инициативам после того,
+                  как идея была предложена?
+                </span>
+                <br />
+                <span>
+                  - выделить значительные ресурсы на новые крупные инициативы?
+                </span>
+              </p>
+              <p className="question-i">
+                <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+              </p>
+            </>
+          )}
         </div>
         {width <= 768 ? (
           <div className="left-align-text">
@@ -270,27 +349,7 @@ export default function Question15() {
           </form>
         )}
 
-        <div className="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i
-              className="fas fa-chevron-left"
-              style={{ marginRight: "8px" }}
-            ></i>
-            Back
-          </Button>
-
-          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
-            Next
-            <i
-              className="fas fa-chevron-right"
-              style={{ marginLeft: "8px" }}
-            ></i>
-          </Button>
-        </div>
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

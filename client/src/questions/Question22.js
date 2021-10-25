@@ -5,8 +5,9 @@ import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question22() {
+export default function Question22({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -132,8 +133,6 @@ export default function Question22() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log(JSON.parse(localStorage.getItem("q22")));
-
     if (
       (input.revenue === "" && dontknow.revenue === false) ||
       (input.profit === "" && dontknow.profit === false) ||
@@ -150,16 +149,19 @@ export default function Question22() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -170,6 +172,9 @@ export default function Question22() {
         q17: JSON.parse(localStorage.getItem("q17")),
         q18: JSON.parse(localStorage.getItem("q18")),
         q19: JSON.parse(localStorage.getItem("q19")),
+        q19none: localStorage.getItem("q19-none"),
+        q19dontknow: localStorage.getItem("q19-dontknow"),
+        q19other: localStorage.getItem("q19-other"),
         q20: JSON.parse(localStorage.getItem("q20")),
         q21: JSON.parse(localStorage.getItem("q21")),
         q22: JSON.parse(localStorage.getItem("q22")),
@@ -193,7 +198,8 @@ export default function Question22() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 23).toString())}% completed
+            {Math.round(((100 / 39) * 23).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -204,16 +210,33 @@ export default function Question22() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            What was your company’s revenue growth, profit margin and return on
-            assets (ROA) for the last fiscal year?
-          </p>
-          <p className="question-i">
-            <i>
-              PLEASE PROVIDE YOUR ANSWER TO THE NEAREST PERCENTAGE POINT IN THE
-              BOX BELOW
-            </i>
-          </p>
+          {lng === "English" ? (
+            <>
+              <p className="question">
+                What was your company’s revenue growth, profit margin and return
+                on assets (ROA) for the last fiscal year?
+              </p>
+              <p className="question-i">
+                <i>
+                  PLEASE PROVIDE YOUR ANSWER TO THE NEAREST PERCENTAGE POINT IN
+                  THE BOX BELOW
+                </i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="question">
+                Каков был рост выручки, прибыли и дохода на активы (ROA) вашей
+                компании за последний финансовый год?
+              </p>
+              <p className="question-i">
+                <i>
+                  ПОЖАЛУЙСТА, ДАЙТЕ ОТВЕТ ДО БЛИЖАЙШЕГО ПРОЦЕНТНОГО ПУНКТА В
+                  ГРАФЕ НИЖЕ
+                </i>
+              </p>
+            </>
+          )}
         </div>
         {width <= 768 ? (
           <div>
@@ -224,7 +247,9 @@ export default function Question22() {
                     className="left-align-text"
                     style={{ marginBottom: width <= 480 ? "1rem" : "" }}
                   >
-                    Revenue growth - last fiscal year
+                    {lng === "English"
+                      ? "Revenue growth - last fiscal year"
+                      : "Рост выручки - последний финансовый год"}
                   </p>
                 </strong>
               </Col>
@@ -241,7 +266,9 @@ export default function Question22() {
                   padding: 0,
                 }}
               >
-                *Please specify whole number
+                {lng === "English"
+                  ? "*Please specify whole number"
+                  : "*Пожалуйста, укажите целое число"}
               </p>
             ) : (
               ""
@@ -250,11 +277,14 @@ export default function Question22() {
               <Col sm={8}>
                 <Form.Control
                   type="text"
-                  placeholder="Specify whole number"
+                  placeholder={
+                    lng === "English"
+                      ? "Specify whole number"
+                      : "Укажите целое число"
+                  }
                   name="revenue"
                   value={input.revenue}
                   onChange={handleChange}
-                  // disabled={dontknow.revenue === true ? true : false}
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
@@ -271,7 +301,7 @@ export default function Question22() {
                   }
                   className="dontknow-22"
                 >
-                  Don't know
+                  {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
                 </Button>
               </Col>
             </Row>
@@ -279,7 +309,9 @@ export default function Question22() {
               <Col sm={6}>
                 <strong>
                   <p className="left-align-text">
-                    Profit growth - last fiscal year
+                    {lng === "English"
+                      ? "Profit growth - last fiscal year"
+                      : "Маржа прибыли - последний финансовый год"}
                   </p>
                 </strong>
               </Col>
@@ -296,7 +328,9 @@ export default function Question22() {
                   padding: 0,
                 }}
               >
-                *Please specify whole number
+                {lng === "English"
+                  ? "*Please specify whole number"
+                  : "*Пожалуйста, укажите целое число"}
               </p>
             ) : (
               ""
@@ -305,11 +339,14 @@ export default function Question22() {
               <Col sm={8}>
                 <Form.Control
                   type="text"
-                  placeholder="Specify whole number"
+                  placeholder={
+                    lng === "English"
+                      ? "Specify whole number"
+                      : "Укажите целое число"
+                  }
                   name="profit"
                   value={input.profit}
                   onChange={handleChange}
-                  // disabled={dontknow.profit === true ? true : false}
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
@@ -326,7 +363,7 @@ export default function Question22() {
                   }
                   className="dontknow-22"
                 >
-                  Don't know
+                  {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
                 </Button>
               </Col>
             </Row>
@@ -334,7 +371,9 @@ export default function Question22() {
               <Col sm={6}>
                 <strong>
                   <p className="left-align-text">
-                    Return growth - last fiscal year
+                    {lng === "English"
+                      ? "Return growth - last fiscal year"
+                      : "Доход на активы (ROA) - последний финансовый год"}
                   </p>
                 </strong>
               </Col>
@@ -351,7 +390,9 @@ export default function Question22() {
                   padding: 0,
                 }}
               >
-                *Please specify whole number
+                {lng === "English"
+                  ? "*Please specify whole number"
+                  : "*Пожалуйста, укажите целое число"}
               </p>
             ) : (
               ""
@@ -360,11 +401,14 @@ export default function Question22() {
               <Col sm={8}>
                 <Form.Control
                   type="text"
-                  placeholder="Specify whole number"
+                  placeholder={
+                    lng === "English"
+                      ? "Specify whole number"
+                      : "Укажите целое число"
+                  }
                   name="return"
                   value={input.return}
                   onChange={handleChange}
-                  // disabled={dontknow.return === true ? true : false}
                   onBlur={handleBlur}
                   onFocus={handleFocus}
                   className="m-input-22"
@@ -381,35 +425,10 @@ export default function Question22() {
                   }
                   className="dontknow-22"
                 >
-                  Don't know
+                  {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
                 </Button>
               </Col>
             </Row>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </div>
         ) : (
           <Form>
@@ -417,7 +436,9 @@ export default function Question22() {
               <tbody>
                 <tr>
                   <td style={{ textAlign: "right" }}>
-                    Revenue growth - last fiscal year
+                    {lng === "English"
+                      ? "Revenue growth - last fiscal year"
+                      : "Рост выручки - последний финансовый год"}
                   </td>
                   <td style={{ textAlign: "left" }}>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
@@ -435,18 +456,23 @@ export default function Question22() {
                               padding: 0,
                             }}
                           >
-                            *Please specify whole number
+                            {lng === "English"
+                              ? "*Please specify whole number"
+                              : "*Пожалуйста, укажите целое число"}
                           </p>
                         ) : (
                           ""
                         )}
                         <Form.Control
                           type="text"
-                          placeholder="Specify whole number"
+                          placeholder={
+                            lng === "English"
+                              ? "Specify whole number"
+                              : "Укажите целое число"
+                          }
                           name="revenue"
                           value={dontknow.revenue === true ? "" : input.revenue}
                           onChange={handleChange}
-                          // disabled={dontknow.revenue === true ? true : false}
                           onBlur={handleBlur}
                           onFocus={handleFocus}
                         />
@@ -469,13 +495,17 @@ export default function Question22() {
                       value="Don't know"
                       onClick={handleDontknow}
                     >
-                      Don't know
+                      {lng === "English"
+                        ? "Don't know"
+                        : "Затрудняюсь ответить"}
                     </Button>
                   </td>
                 </tr>
                 <tr>
                   <td style={{ textAlign: "right" }}>
-                    Profit margin - last fiscal year
+                    {lng === "English"
+                      ? "Profit margin - last fiscal year"
+                      : "Маржа прибыли - последний финансовый год"}
                   </td>
                   <td>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
@@ -492,18 +522,23 @@ export default function Question22() {
                               padding: 0,
                             }}
                           >
-                            *Please specify whole number
+                            {lng === "English"
+                              ? "*Please specify whole number"
+                              : "*Пожалуйста, укажите целое число"}
                           </p>
                         ) : (
                           ""
                         )}
                         <Form.Control
                           type="text"
-                          placeholder="Specify whole number"
+                          placeholder={
+                            lng === "English"
+                              ? "Specify whole number"
+                              : "Укажите целое число"
+                          }
                           name="profit"
                           value={dontknow.profit === true ? "" : input.profit}
                           onChange={handleChange}
-                          // disabled={dontknow.profit === true ? true : false}
                           onBlur={handleBlur}
                           onFocus={handleFocus}
                         />
@@ -526,13 +561,17 @@ export default function Question22() {
                       value="Don't know"
                       onClick={handleDontknow}
                     >
-                      Don't know
+                      {lng === "English"
+                        ? "Don't know"
+                        : "Затрудняюсь ответить"}
                     </Button>
                   </td>
                 </tr>
                 <tr>
                   <td style={{ textAlign: "right" }}>
-                    Return on assets - last fiscal year
+                    {lng === "English"
+                      ? "Return on assets - last fiscal year"
+                      : "Доход на активы (ROA) - последний финансовый год"}
                   </td>
                   <td>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
@@ -549,18 +588,23 @@ export default function Question22() {
                               padding: 0,
                             }}
                           >
-                            *Please specify whole number
+                            {lng === "English"
+                              ? "*Please specify whole number"
+                              : "*Пожалуйста, укажите целое число"}
                           </p>
                         ) : (
                           ""
                         )}
                         <Form.Control
                           type="text"
-                          placeholder="Specify whole number"
+                          placeholder={
+                            lng === "English"
+                              ? "Specify whole number"
+                              : "Укажите целое число"
+                          }
                           name="return"
                           value={dontknow.return === true ? "" : input.return}
                           onChange={handleChange}
-                          // disabled={dontknow.return === true ? true : false}
                           onBlur={handleBlur}
                           onFocus={handleFocus}
                         />
@@ -583,39 +627,17 @@ export default function Question22() {
                         dontknow.return === true ? "warning" : "outline-dark"
                       }
                     >
-                      Don't know
+                      {lng === "English"
+                        ? "Don't know"
+                        : "Затрудняюсь ответить"}
                     </Button>
                   </td>
                 </tr>
               </tbody>
             </Table>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </Form>
         )}
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

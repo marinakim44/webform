@@ -4,8 +4,9 @@ import { Button } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question10B() {
+export default function Question10B({ lng }) {
   const width = window.screen.width;
 
   useEffect(() => {
@@ -21,63 +22,124 @@ export default function Question10B() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const rows = [
-    {
-      key: "A",
-      value: "Attracting and/or retaining employees",
-    },
-    {
-      key: "B",
-      value: "Satisfying investor demands",
-    },
-    {
-      key: "C",
-      value: "Meeting customer expectations",
-    },
-    {
-      key: "D",
-      value: "Complying with government and/or intergovernmental targets",
-    },
-    {
-      key: "E",
-      value: "Mitigating climate change risks",
-    },
-    {
-      key: "F",
-      value: "Driving product/service innovation",
-    },
-    {
-      key: "G",
-      value: "Keeping pace with competitor commitments",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            value: "Attracting and/or retaining employees",
+          },
+          {
+            key: "B",
+            value: "Satisfying investor demands",
+          },
+          {
+            key: "C",
+            value: "Meeting customer expectations",
+          },
+          {
+            key: "D",
+            value: "Complying with government and/or intergovernmental targets",
+          },
+          {
+            key: "E",
+            value: "Mitigating climate change risks",
+          },
+          {
+            key: "F",
+            value: "Driving product/service innovation",
+          },
+          {
+            key: "G",
+            value: "Keeping pace with competitor commitments",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            value: "Привлечение и/или удержание сотрудников ",
+          },
+          {
+            key: "B",
+            value: "Удовлетворение требований инвесторов",
+          },
+          {
+            key: "C",
+            value: "Соответствие ожиданиям клиентов",
+          },
+          {
+            key: "D",
+            value:
+              "Соответствие государственным и/или межправительственным целям ",
+          },
+          {
+            key: "E",
+            value: "Снижение рисков изменения климата",
+          },
+          {
+            key: "F",
+            value: "Стимулирование инноваций в продуктах/услугах",
+          },
+          {
+            key: "G",
+            value: "Соответствие уровню обязательств конкурентов",
+          },
+        ];
 
-  const columns = [
-    {
-      key: "1",
-      value: "Not influential",
-    },
-    {
-      key: "2",
-      value: "Slightly influential",
-    },
-    {
-      key: "3",
-      value: "Moderately influential",
-    },
-    {
-      key: "4",
-      value: "Very influential",
-    },
-    {
-      key: "5",
-      value: "Extremely influential",
-    },
-    {
-      key: "6",
-      value: "Don't know",
-    },
-  ];
+  const columns =
+    lng === "English"
+      ? [
+          {
+            key: "1",
+            value: "Not influential",
+          },
+          {
+            key: "2",
+            value: "Slightly influential",
+          },
+          {
+            key: "3",
+            value: "Moderately influential",
+          },
+          {
+            key: "4",
+            value: "Very influential",
+          },
+          {
+            key: "5",
+            value: "Extremely influential",
+          },
+          {
+            key: "6",
+            value: "Don't know",
+          },
+        ]
+      : [
+          {
+            key: "1",
+            value: "Не важны",
+          },
+          {
+            key: "2",
+            value: "Важны в незначительной степени",
+          },
+          {
+            key: "3",
+            value: "Относительно важны",
+          },
+          {
+            key: "4",
+            value: "Очень важны",
+          },
+          {
+            key: "5",
+            value: "Чрезвычайно важны",
+          },
+          {
+            key: "6",
+            value: "Затрудняюсь ответить",
+          },
+        ];
 
   const [input, setInput] = useState({
     A: "",
@@ -186,10 +248,12 @@ export default function Question10B() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
@@ -219,7 +283,8 @@ export default function Question10B() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 11).toString())}% completed
+            {Math.round(((100 / 39) * 11).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -230,13 +295,29 @@ export default function Question10B() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            How influential are the following factors behind the carbon-neutral
-            and/or net-zero commitment your company is developing?
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              <p className="question">
+                How influential are the following factors behind the
+                carbon-neutral and/or net-zero commitment your company is
+                developing?
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="question">
+                Насколько важны следующие факторы, лежащие в основе обязательств
+                вашей компании по углеродной нейтральности и/или нулевым
+                выбросам?
+              </p>
+              <p className="question-i">
+                <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+              </p>
+            </>
+          )}
         </div>
 
         {width <= 768 ? (
@@ -314,21 +395,7 @@ export default function Question10B() {
             </table>
           </form>
         )}
-        <div className="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i className="fas fa-chevron-left back-arrow"></i>
-            Back
-          </Button>
-
-          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
-            Next
-            <i class="fas fa-chevron-right next-arrow"></i>
-          </Button>
-        </div>
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

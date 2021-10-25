@@ -6,8 +6,9 @@ import "../Medium.css";
 import "../Small.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question18() {
+export default function Question18({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,61 +32,121 @@ export default function Question18() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const rows = [
-    {
-      key: "A",
-      value:
-        "My company is increasingly concerned about the reputational risks associated with the amount of taxes it pays",
-    },
-    {
-      key: "B",
-      value: "My company aims to minimise the amount of taxes it pays",
-    },
-    {
-      key: "C",
-      value:
-        "My company effectively communicates to the public all the taxes it pays (e.g., income, payroll, property)",
-    },
-    {
-      key: "D",
-      value: "My company’s board regularly reviews its tax strategy",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            value:
+              "My company is increasingly concerned about the reputational risks associated with the amount of taxes it pays",
+          },
+          {
+            key: "B",
+            value: "My company aims to minimise the amount of taxes it pays",
+          },
+          {
+            key: "C",
+            value:
+              "My company effectively communicates to the public all the taxes it pays (e.g., income, payroll, property)",
+          },
+          {
+            key: "D",
+            value: "My company’s board regularly reviews its tax strategy",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            value:
+              "Моя компания все больше обеспокоена репутационными рисками, связанными с суммой уплачиваемых ею налогов",
+          },
+          {
+            key: "B",
+            value:
+              "Моя компания стремится минимизировать сумму налогов, которые она платит",
+          },
+          {
+            key: "C",
+            value:
+              "Моя компания официально придает огласке все налоги, которые она платит (напр., подоходный налог, налог на фонд заработной платы, налог на имущество) ",
+          },
+          {
+            key: "D",
+            value:
+              "Правление моей компании регулярно анализирует ее налоговую стратегию",
+          },
+        ];
 
-  const columns = [
-    {
-      key: 1,
-      value: "Strongly disagree",
-    },
-    {
-      key: 2,
-      value: "Moderately disagree",
-    },
-    {
-      key: 3,
-      value: "Slightly disagree",
-    },
-    {
-      key: 4,
-      value: "Neither agree nor disagree",
-    },
-    {
-      key: 5,
-      value: "Slightly agree",
-    },
-    {
-      key: 6,
-      value: "Moderately agree",
-    },
-    {
-      key: 7,
-      value: "Strongly agree",
-    },
-    {
-      key: 8,
-      value: "Don't know",
-    },
-  ];
+  const columns =
+    lng === "English"
+      ? [
+          {
+            key: 1,
+            value: "Strongly disagree",
+          },
+          {
+            key: 2,
+            value: "Moderately disagree",
+          },
+          {
+            key: 3,
+            value: "Slightly disagree",
+          },
+          {
+            key: 4,
+            value: "Neither agree nor disagree",
+          },
+          {
+            key: 5,
+            value: "Slightly agree",
+          },
+          {
+            key: 6,
+            value: "Moderately agree",
+          },
+          {
+            key: 7,
+            value: "Strongly agree",
+          },
+          {
+            key: 8,
+            value: "Don't know",
+          },
+        ]
+      : [
+          {
+            key: 1,
+            value: "Категорически не согласен",
+          },
+          {
+            key: 2,
+            value: "Умеренно не согласен",
+          },
+          {
+            key: 3,
+            value: "Немного не согласен",
+          },
+          {
+            key: 4,
+            value: "Не могу сказать определенно",
+          },
+          {
+            key: 5,
+            value: "Немного согласен",
+          },
+          {
+            key: 6,
+            value: "Умеренно согласен",
+          },
+          {
+            key: 7,
+            value: "Полностью согласен",
+          },
+          {
+            key: 8,
+            value: "Затрудняюсь ответить",
+          },
+        ];
 
   const [input, setInput] = useState({
     A: "",
@@ -207,16 +268,19 @@ export default function Question18() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -248,7 +312,8 @@ export default function Question18() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 19).toString())}% completed
+            {Math.round(((100 / 39) * 19).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -259,13 +324,29 @@ export default function Question18() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            Thinking about the taxes your company pays, to what extent do you
-            agree/disagree with the following statements?
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              {" "}
+              <p className="question">
+                Thinking about the taxes your company pays, to what extent do
+                you agree/disagree with the following statements?
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="question">
+                Если рассмотреть налоги, которые платит ваша компания, то в
+                какой степени вы согласны / не согласны со следующими
+                утверждениями?
+              </p>
+              <p className="question-i">
+                <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+              </p>
+            </>
+          )}
         </div>
 
         {width <= 768 ? (
@@ -308,25 +389,6 @@ export default function Question18() {
                 </div>
               );
             })}
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i class="fas fa-chevron-right next-arrow"></i>
-              </Button>
-            </div>
           </div>
         ) : (
           <form>
@@ -387,29 +449,10 @@ export default function Question18() {
                   })}
                 </tbody>
               </table>
-
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i class="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
             </div>
           </form>
         )}
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

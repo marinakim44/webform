@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question12() {
+export default function Question12({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,55 +24,79 @@ export default function Question12() {
   const rows = [
     {
       key: "A",
-      value: "The industry’s long-term trends",
+      value:
+        lng === "English"
+          ? "The industry’s long-term trends"
+          : "Долгосрочные тенденции отрасли",
     },
     {
       key: "B",
-      value: "The regulatory environment(s) in which my company operates",
+      value:
+        lng === "English"
+          ? "The regulatory environment(s) in which my company operates"
+          : "Нормативная среда, в которой работает моя компания",
     },
     {
       key: "C",
       value:
-        "Macro environmental forces (including demographic, cultural, environmental, technological)",
+        lng === "English"
+          ? "Macro environmental forces (including demographic, cultural, environmental, technological)"
+          : "Макро-экологические факторы (включая демографические, культурные, экологические, технологические)",
     },
     {
       key: "D",
-      value: "My company’s specific assets, capabilities and relationships",
+      value:
+        lng === "English"
+          ? "My company’s specific assets, capabilities and relationships"
+          : "Конкретные активы, технические возможности и отношения моей компании",
     },
   ];
 
   const columns = [
     {
       key: "1",
-      value: "Very unfavourable",
+      value: lng === "English" ? "Very unfavourable" : "Очень неблагоприятны",
     },
     {
       key: "2",
-      value: "Moderately unfavourable",
+      value:
+        lng === "English"
+          ? "Moderately unfavourable"
+          : "Умеренно неблагоприятны",
     },
     {
       key: "3",
-      value: "Slightly unfavourable",
+      value:
+        lng === "English"
+          ? "Slightly unfavourable"
+          : "Незначительно неблагоприятны",
     },
     {
       key: "4",
-      value: "Neither favourable nor unfavourable",
+      value:
+        lng === "English"
+          ? "Neither favourable nor unfavourable"
+          : "Не могу сказать определенно",
     },
     {
       key: "5",
-      value: "Slightly favourable",
+      value:
+        lng === "English"
+          ? "Slightly favourable"
+          : "Незначительно благоприятны",
     },
     {
       key: "6",
-      value: "Moderately favourable",
+      value:
+        lng === "English" ? "Moderately favourable" : "Умеренно благоприятны",
     },
     {
       key: "7",
-      value: "Very favourable",
+      value: lng === "English" ? "Very favourable" : "Очень благоприятны",
     },
     {
       key: "8",
-      value: "Don't know",
+      value: lng === "English" ? "Don't know" : "Затрудняюсь ответить",
     },
   ];
 
@@ -167,10 +191,12 @@ export default function Question12() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
@@ -201,7 +227,8 @@ export default function Question12() {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 13).toString())}% completed
+              {Math.round(((100 / 39) * 13).toString())}%{" "}
+              {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
@@ -212,16 +239,39 @@ export default function Question12() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="left-align-text">
-              How favourable are the following factors with regard to your
-              company’s ability to reduce greenhouse gas (GHG) emissions? <br />
-            </p>
-            <p className="question-i">
-              <i>
-                (favourable factors are those that may help your company,
-                unfavourable factors are those that may hinder your company)
-              </i>
-            </p>
+            {lng === "English" ? (
+              <>
+                <p className="left-align-text">
+                  How favourable are the following factors with regard to your
+                  company’s ability to reduce greenhouse gas (GHG) emissions?{" "}
+                  <br />
+                </p>
+                <p className="question-i">
+                  <i>
+                    (favourable factors are those that may help your company,
+                    unfavourable factors are those that may hinder your company)
+                  </i>
+                </p>
+              </>
+            ) : (
+              <>
+                <p
+                  className="left-align-text question"
+                  style={{ marginBottom: width <= 480 ? "0.5rem" : "" }}
+                >
+                  Насколько благоприятны следующие факторы в отношении
+                  способности вашей компании создавать финансовую ценность?
+                </p>
+
+                <p className="left-align-text question-i">
+                  <i>
+                    (благоприятные факторы - это те, которые могут помочь вашей
+                    компании, неблагоприятные - те, которые могут помешать вашей
+                    компании)
+                  </i>
+                </p>
+              </>
+            )}
           </div>
           {width <= 768 ? (
             <div className="left-align-text">
@@ -256,27 +306,9 @@ export default function Question12() {
                   </div>
                 );
               })}
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i className="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
             </div>
           ) : (
-            <form>
+            <>
               <table className="table">
                 <thead>
                   <tr>
@@ -312,27 +344,9 @@ export default function Question12() {
                   })}
                 </tbody>
               </table>
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i className="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
-            </form>
+            </>
           )}
+          <Buttons lng={lng} click={handleSubmit} />
         </div>
       </Route>
     </BrowserRouter>

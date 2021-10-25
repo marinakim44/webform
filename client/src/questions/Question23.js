@@ -5,8 +5,9 @@ import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question23() {
+export default function Question23({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,40 +18,76 @@ export default function Question23() {
       setChecked(JSON.parse(localStorage.getItem("q23-checked")));
     }
   }, []);
-  const rows = [
-    {
-      key: "A",
-      value: "<= 10% below actual",
-    },
-    {
-      key: "B",
-      value: "6-9% below actual",
-    },
-    {
-      key: "C",
-      value: "3-5% below actual",
-    },
-    {
-      key: "D",
-      value: "Forecast is within +-2% of actual",
-    },
-    {
-      key: "E",
-      value: "3-5% above actual",
-    },
-    {
-      key: "F",
-      value: "6-9% above actual",
-    },
-    {
-      key: "G",
-      value: ">= 10% above actual",
-    },
-    {
-      key: "H",
-      value: "Don't know",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            value: "≥10% below actual",
+          },
+          {
+            key: "B",
+            value: "6-9% below actual",
+          },
+          {
+            key: "C",
+            value: "3-5% below actual",
+          },
+          {
+            key: "D",
+            value: "Forecast is within ±2% of actual",
+          },
+          {
+            key: "E",
+            value: "3-5% above actual",
+          },
+          {
+            key: "F",
+            value: "6-9% above actual",
+          },
+          {
+            key: "G",
+            value: "≥10% above actual",
+          },
+          {
+            key: "H",
+            value: "Don't know",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            value: "≥10% ниже фактического",
+          },
+          {
+            key: "B",
+            value: "6–9% ниже фактического",
+          },
+          {
+            key: "C",
+            value: "3-5% ниже фактического",
+          },
+          {
+            key: "D",
+            value: "Прогноз в пределах ±2% of от фактического",
+          },
+          {
+            key: "E",
+            value: "3-5% выше фактического",
+          },
+          {
+            key: "F",
+            value: "6-9% выше фактического",
+          },
+          {
+            key: "G",
+            value: "≥10% выше фактического",
+          },
+          {
+            key: "H",
+            value: "Затрудняюсь ответить",
+          },
+        ];
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -99,16 +136,19 @@ export default function Question23() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -119,6 +159,9 @@ export default function Question23() {
         q17: JSON.parse(localStorage.getItem("q17")),
         q18: JSON.parse(localStorage.getItem("q18")),
         q19: JSON.parse(localStorage.getItem("q19")),
+        q19none: localStorage.getItem("q19-none"),
+        q19dontknow: localStorage.getItem("q19-dontknow"),
+        q19other: localStorage.getItem("q19-other"),
         q20: JSON.parse(localStorage.getItem("q20")),
         q21: JSON.parse(localStorage.getItem("q21")),
         q22: JSON.parse(localStorage.getItem("q22")),
@@ -143,7 +186,8 @@ export default function Question23() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 24).toString())}% completed
+            {Math.round(((100 / 39) * 24).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -154,10 +198,17 @@ export default function Question23() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="left-align-text" style={{ marginBottom: "1rem" }}>
-            How would you describe your company's typical forecasting accuracy
-            regarding year-on-year revenue growth?
-          </p>
+          {lng === "English" ? (
+            <p className="left-align-text" style={{ marginBottom: "1rem" }}>
+              How would you describe your company's typical forecasting accuracy
+              regarding year-on-year revenue growth?
+            </p>
+          ) : (
+            <p className="left-align-text" style={{ marginBottom: "1rem" }}>
+              Как бы вы описали типичную точность прогнозов вашей компании
+              относительно годового роста доходов?
+            </p>
+          )}
         </div>
         {width <= 768 ? (
           <div className="left-align-text">
@@ -178,54 +229,59 @@ export default function Question23() {
                 </div>
               );
             })}
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </div>
         ) : (
           <Form>
             <Table bordered>
               <tbody>
                 <tr style={{ color: "#db536a", fontWeight: "bold" }}>
-                  <td colSpan="3">Forecast is below actual</td>
-                  <td rowSpan="2" style={{ verticalAlign: "middle" }}>
-                    Forecast is within +-2% of actual
+                  <td colSpan="3">
+                    {lng === "English"
+                      ? "Forecast is below actual"
+                      : "Прогноз ниже фактического"}
                   </td>
-                  <td colSpan="3">Forecast is below actual</td>
                   <td rowSpan="2" style={{ verticalAlign: "middle" }}>
-                    Don't know
+                    {lng === "English"
+                      ? "Forecast is within ±2% of actual"
+                      : "Прогноз в пределах ±2% of от фактического"}
+                  </td>
+                  <td colSpan="3">
+                    {lng === "English"
+                      ? "Forecast is above actual"
+                      : "Прогноз выше фактического"}
+                  </td>
+                  <td rowSpan="2" style={{ verticalAlign: "middle" }}>
+                    {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
                   </td>
                 </tr>
                 <tr>
-                  <td>Less or equal to 10% below actual</td>
-                  <td>6-9% below actual</td>
-                  <td>3-5% below actual</td>
+                  <td>
+                    {lng === "English"
+                      ? "≥10% below actual"
+                      : "≥10% ниже фактического"}
+                  </td>
+                  <td>
+                    6-9%{" "}
+                    {lng === "English" ? "below actual" : "ниже фактического"}
+                  </td>
+                  <td>
+                    3-5%{" "}
+                    {lng === "English" ? "below actual" : "ниже фактического"}
+                  </td>
 
-                  <td>3-5% above actual</td>
-                  <td>6-9% above actual</td>
-                  <td>More or equal to 10% above actual</td>
+                  <td>
+                    3-5%{" "}
+                    {lng === "English" ? "above actual" : "выше фактического"}
+                  </td>
+                  <td>
+                    6-9%{" "}
+                    {lng === "English" ? "above actual" : "выше фактического"}
+                  </td>
+                  <td>
+                    {lng === "English"
+                      ? "≥10% above actual"
+                      : "≥10% выше фактического"}
+                  </td>
                 </tr>
 
                 <tr>
@@ -247,33 +303,9 @@ export default function Question23() {
                 </tr>
               </tbody>
             </Table>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </Form>
         )}
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

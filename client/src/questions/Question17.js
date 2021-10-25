@@ -5,8 +5,9 @@ import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question17() {
+export default function Question17({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -21,79 +22,156 @@ export default function Question17() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const rows = [
-    {
-      key: "A",
-      value: "Initiate investments in new projects",
-    },
-    {
-      key: "B",
-      value: "Stop low-potential or nonaligned projects",
-    },
-    {
-      key: "C",
-      value: "Invest in high-potential projects",
-    },
-    {
-      key: "D",
-      value: "Scale-up high-performing small businesses",
-    },
-    {
-      key: "E",
-      value: "Trim low-performing large businesses",
-    },
-    {
-      key: "F",
-      value: "Divest businesses",
-    },
-    {
-      key: "G",
-      value: "Acquire businesses",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            value: "Initiate investments in new projects",
+          },
+          {
+            key: "B",
+            value: "Stop low-potential or nonaligned projects",
+          },
+          {
+            key: "C",
+            value: "Invest in high-potential projects",
+          },
+          {
+            key: "D",
+            value: "Scale-up high-performing small businesses",
+          },
+          {
+            key: "E",
+            value: "Trim low-performing large businesses",
+          },
+          {
+            key: "F",
+            value: "Divest businesses",
+          },
+          {
+            key: "G",
+            value: "Acquire businesses",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            value: "Организация инвестиций в новые проекты ",
+          },
+          {
+            key: "B",
+            value:
+              "Приостановка проектов с низким потенциалом или несогласованных проектов",
+          },
+          {
+            key: "C",
+            value: "Инвестирование в перспективные проекты ",
+          },
+          {
+            key: "D",
+            value: "Расширение высокопроизводительных малых предприятий ",
+          },
+          {
+            key: "E",
+            value: "Сокращение неэффективных крупных предприятий",
+          },
+          {
+            key: "F",
+            value: "Вывод инвестиций из бизнеса",
+          },
+          {
+            key: "G",
+            value: "Приобретение компаний",
+          },
+        ];
 
-  const columns = [
-    {
-      key: "1",
-      title: "Less often",
-      value: "Every four years or less frequently",
-    },
-    {
-      key: "2",
-      title: "Less often",
-      value: "Every three years",
-    },
-    {
-      key: "3",
-      title: "Less often",
-      value: "Every two years",
-    },
-    {
-      key: "4",
-      title: "Every year",
-      value: "Every year",
-    },
-    {
-      key: "5",
-      title: "More often",
-      value: "Twice a year",
-    },
-    {
-      key: "6",
-      title: "More often",
-      value: "Three times a year",
-    },
-    {
-      key: "7",
-      title: "More often",
-      value: "Four times a year or more frequently",
-    },
-    {
-      key: "8",
-      title: "Not applicable / Don't know",
-      value: "Not applicable / Don't know",
-    },
-  ];
+  const columns =
+    lng === "English"
+      ? [
+          {
+            key: "1",
+            title: "Less often",
+            value: "Every four years or less frequently",
+          },
+          {
+            key: "2",
+            title: "Less often",
+            value: "Every three years",
+          },
+          {
+            key: "3",
+            title: "Less often",
+            value: "Every two years",
+          },
+          {
+            key: "4",
+            title: "Every year",
+            value: "Every year",
+          },
+          {
+            key: "5",
+            title: "More often",
+            value: "Twice a year",
+          },
+          {
+            key: "6",
+            title: "More often",
+            value: "Three times a year",
+          },
+          {
+            key: "7",
+            title: "More often",
+            value: "Four times a year or more frequently",
+          },
+          {
+            key: "8",
+            title: "Not applicable / Don't know",
+            value: "Not applicable / Don't know",
+          },
+        ]
+      : [
+          {
+            key: "1",
+            title: "Реже",
+            value: "Каждые четыре года или реже",
+          },
+          {
+            key: "2",
+            title: "Реже",
+            value: "Каждые три года",
+          },
+          {
+            key: "3",
+            title: "Реже",
+            value: "Каждые два года",
+          },
+          {
+            key: "4",
+            title: "Каждый год",
+            value: "Каждый год",
+          },
+          {
+            key: "5",
+            title: "Чаще",
+            value: "Дважды в год",
+          },
+          {
+            key: "6",
+            title: "Чаще",
+            value: "Три раза в год",
+          },
+          {
+            key: "7",
+            title: "Чаще",
+            value: "Четыре раза в год или чаще",
+          },
+          {
+            key: "8",
+            title: "Не применимо / Затрудняюсь ответить",
+            value: "Не применимо / Затрудняюсь ответить",
+          },
+        ];
 
   const [input, setInput] = useState({
     A: "",
@@ -220,16 +298,19 @@ export default function Question17() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -259,7 +340,8 @@ export default function Question17() {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 18).toString())}% completed
+              {Math.round(((100 / 39) * 18).toString())}%{" "}
+              {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
@@ -270,13 +352,27 @@ export default function Question17() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="question">
-              How frequently does your company typically engage in the following
-              processes?
-            </p>
-            <p className="question-i">
-              <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-            </p>
+            {lng === "English" ? (
+              <>
+                <p className="question">
+                  How frequently does your company typically engage in the
+                  following processes?
+                </p>
+                <p className="question-i">
+                  <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="left-align-text question">
+                  Как часто ваша компания обычно участвует в следующих
+                  процессах?
+                </p>
+                <p className="question-i">
+                  <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+                </p>
+              </>
+            )}
           </div>
           {width <= 768 ? (
             <div className="left-align-text">
@@ -312,25 +408,6 @@ export default function Question17() {
                   </div>
                 );
               })}
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i class="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
             </div>
           ) : (
             <form>
@@ -344,13 +421,19 @@ export default function Question17() {
                       }}
                     >
                       <td colSpan="2" rowSpan="2"></td>
-                      <td colSpan="3">Less often</td>
-                      <td rowSpan="2" style={{ verticalAlign: "middle" }}>
-                        Every year
+                      <td colSpan="3">
+                        {lng === "English" ? "Less often" : "Реже"}
                       </td>
-                      <td colSpan="3">More often</td>
                       <td rowSpan="2" style={{ verticalAlign: "middle" }}>
-                        Not applicable / Don't know
+                        {lng === "English" ? "Every year" : "Каждый год"}
+                      </td>
+                      <td colSpan="3">
+                        {lng === "English" ? "More often" : "Чаще"}
+                      </td>
+                      <td rowSpan="2" style={{ verticalAlign: "middle" }}>
+                        {lng === "English"
+                          ? "Not applicable / Don't know"
+                          : "Не применимо / Затрудняюсь ответить"}
                       </td>
                     </tr>
                     <tr>
@@ -358,7 +441,10 @@ export default function Question17() {
                         .filter(
                           (col) =>
                             col.value !== "Every year" &&
-                            col.value !== "Not applicable / Don't know"
+                            col.value !== "Not applicable / Don't know" &&
+                            col.value !==
+                              "Не применимо / Затрудняюсь ответить" &&
+                            col.value !== "Каждый год"
                         )
                         .map((column) => {
                           return <td>{column.value}</td>;
@@ -395,29 +481,10 @@ export default function Question17() {
                     })}
                   </tbody>
                 </Table>
-
-                <div className="back-next-btns">
-                  <Button
-                    variant="secondary"
-                    className="back-btn"
-                    onClick={() => history.goBack()}
-                  >
-                    <i className="fas fa-chevron-left back-arrow"></i>
-                    Back
-                  </Button>
-
-                  <Button
-                    variant="danger"
-                    className="next-btn"
-                    onClick={handleSubmit}
-                  >
-                    Next
-                    <i class="fas fa-chevron-right next-arrow"></i>
-                  </Button>
-                </div>
               </div>
             </form>
           )}
+          <Buttons lng={lng} click={handleSubmit} />
         </div>
       </Route>
     </BrowserRouter>

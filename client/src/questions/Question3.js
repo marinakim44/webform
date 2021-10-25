@@ -4,8 +4,9 @@ import "../App.css";
 import ModalAlert from "../ModalAlert";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Buttons from "../Buttons";
 
-export default function Question3() {
+export default function Question3({ lng }) {
   const width = window.screen.width;
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -14,60 +15,89 @@ export default function Question3() {
   const rows = [
     {
       key: "A",
-      value: "Macroeconomic volatility",
-      text: "(including in GDP, unemployment, inflation)",
+      value:
+        lng === "English"
+          ? "Macroeconomic volatility"
+          : "Макроэкономическая волатильность",
+      text:
+        lng === "English"
+          ? "(including in GDP, unemployment, inflation)"
+          : "(включая ВВП, безработицу, инфляцию)",
     },
     {
       key: "B",
-      value: "Climate change",
-      text: "(including physical risks and transition risks such as policy & legal, markets, technology and reputation risks)",
+      value: lng === "English" ? "Climate change" : "Изменение климата",
+      text:
+        lng === "English"
+          ? "(including physical risks and transition risks such as policy & legal, markets, technology and reputation risks)"
+          : "(включая физические риски и переходные риски, такие как политические и юридические, рыночные, технологические и репутационные риски)",
     },
     {
       key: "C",
-      value: "Social inequality",
-      text: "(including those stemming from gender, race and ethnicity, wealth)",
+      value: lng === "English" ? "Social inequality" : "Социальное неравенство",
+      text:
+        lng === "English"
+          ? "(including those stemming from gender, race and ethnicity, wealth)"
+          : "(включая связанное с полом, расой и этнической принадлежностью, финансовым положением)",
     },
     {
       key: "D",
-      value: "Geopolitical conflict",
-      text: "(including resource and trade disputes, terrorism, interstate violence)",
+      value:
+        lng === "English"
+          ? "Geopolitical conflict"
+          : "Геополитические конфликты",
+      text:
+        lng === "English"
+          ? "(including resource and trade disputes, terrorism, interstate violence)"
+          : "(включая ресурсные и торговые споры, терроризм, межгосударственные силовые действия)",
     },
     {
       key: "E",
-      value: "Cyber risks",
-      text: "(including hacking, surveillance, disinformation)",
+      value: lng === "English" ? "Cyber risks" : "Кибер-риски",
+      text:
+        lng === "English"
+          ? "(including hacking, surveillance, disinformation)"
+          : "(включая взлом, слежку, дезинформацию)",
     },
     {
       key: "F",
-      value: "Health risks",
-      text: "(including COVID-19 and other pandemics, chronic illness, strains on mental health)",
+      value: lng === "English" ? "Health risks" : "Риски для здоровья",
+      text:
+        lng === "English"
+          ? "(including COVID-19 and other pandemics, chronic illness, strains on mental health)"
+          : "(включая COVID-19 и другие пандемии, хронические заболевания, перенапряжение психики)",
     },
   ];
 
   const columns = [
     {
       key: "1",
-      value: "Not concerned",
+      value: lng === "English" ? "Not concerned" : "Не обеспокоен (-а)",
     },
     {
       key: "2",
-      value: "Slightly concerned",
+      value:
+        lng === "English" ? "Slightly concerned" : "Немного обеспокоен (-а)",
     },
     {
       key: "3",
-      value: "Moderately concerned",
+      value:
+        lng === "English"
+          ? "Moderately concerned"
+          : "Незначительно обеспокоен (-а)",
     },
     {
       key: "4",
-      value: "Very concerned",
+      value: lng === "English" ? "Very concerned" : "Очень обеспокоен (-а)",
     },
     {
       key: "5",
-      value: "Extremely concerned",
+      value:
+        lng === "English" ? "Extremely concerned" : "Крайне обеспокоен (-а)",
     },
     {
       key: "6",
-      value: "Don't know",
+      value: lng === "English" ? "Don't know" : "Затрудняюсь ответить",
     },
   ];
 
@@ -221,6 +251,7 @@ export default function Question3() {
       phone: localStorage.getItem("phone"),
       q1: JSON.parse(localStorage.getItem("q1")),
       q2: JSON.parse(localStorage.getItem("q2")),
+      q2dontknow: localStorage.getItem("q2-dontknow"),
       q3: JSON.parse(localStorage.getItem("q3")),
     };
 
@@ -241,7 +272,8 @@ export default function Question3() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 4).toString())}% completed
+            {Math.round(((100 / 39) * 4).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -252,17 +284,31 @@ export default function Question3() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <div className="left-align-text">
-            <p>
-              How concerned are you about the following global threats
-              negatively impacting your company over the next 12 months?
-            </p>
-            <i>
-              <p className="question-i">
-                PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
+          {lng === "English" ? (
+            <div className="left-align-text">
+              <p>
+                How concerned are you about the following global threats
+                negatively impacting your company over the next 12 months?
               </p>
-            </i>
-          </div>
+              <i>
+                <p className="question-i">
+                  PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
+                </p>
+              </i>
+            </div>
+          ) : (
+            <div className="left-align-text">
+              <p>
+                Насколько вы обеспокоены, что следующие глобальные угрозы
+                негативно повлияют на вашу компанию в следующие 12 месяцев?
+              </p>
+              <i>
+                <p className="question-i">
+                  ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА
+                </p>
+              </i>
+            </div>
+          )}
         </div>
         {width <= 768 ? (
           <div>
@@ -349,26 +395,7 @@ export default function Question3() {
             </div>
           </form>
         )}
-        <div className="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i className="fas fa-chevron-left back-arrow"></i>
-            Back
-          </Button>
-
-          <Button
-            type="button"
-            variant="danger"
-            className="next-btn"
-            onClick={handleSubmit}
-          >
-            Next
-            <i class="fas fa-chevron-right next-arrow"></i>
-          </Button>
-        </div>
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

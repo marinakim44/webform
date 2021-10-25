@@ -5,8 +5,9 @@ import "../Medium.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question24() {
+export default function Question24({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -27,49 +28,96 @@ export default function Question24() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const history = useHistory();
-  const rows = [
-    {
-      key: "A",
-      index: "1",
-      value: "Greenhouse gas (GHG) emission targets",
-    },
-    {
-      key: "B",
-      index: "2",
-      value: "Gender representation rates",
-    },
-    {
-      key: "C",
-      index: "3",
-      value: "Race and ethnicity representation rates",
-    },
-    {
-      key: "D",
-      index: "4",
-      value: "Customer satisfaction metrics",
-    },
-    {
-      key: "E",
-      index: "5",
-      value: "Automation and digitisation goals",
-    },
-    {
-      key: "F",
-      index: "6",
-      value: "Employee engagement metrics",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            index: "1",
+            value: "Greenhouse gas (GHG) emission targets",
+          },
+          {
+            key: "B",
+            index: "2",
+            value: "Gender representation rates",
+          },
+          {
+            key: "C",
+            index: "3",
+            value: "Race and ethnicity representation rates",
+          },
+          {
+            key: "D",
+            index: "4",
+            value: "Customer satisfaction metrics",
+          },
+          {
+            key: "E",
+            index: "5",
+            value: "Automation and digitisation goals",
+          },
+          {
+            key: "F",
+            index: "6",
+            value: "Employee engagement metrics",
+          },
+        ]
+      : [
+          {
+            index: "1",
+            key: "A",
+            value: "Целевые показатели выбросов парниковых газов (ПГ)",
+          },
+          {
+            index: "2",
+            key: "B",
+            value: "Показатели гендерной представленности",
+          },
+          {
+            index: "3",
+            key: "C",
+            value: "Показатели расовой и этнической представленности ",
+          },
+          {
+            index: "4",
+            key: "D",
+            value: "Показатели удовлетворенности клиентов",
+          },
+          {
+            index: "5",
+            key: "E",
+            value: "Цели автоматизации и цифровых технологий",
+          },
+          {
+            index: "6",
+            key: "F",
+            value: "Показатели вовлеченности сотрудников ",
+          },
+        ];
 
-  const columns = [
-    {
-      key: "A",
-      value: "Company’s long-term corporate strategy",
-    },
-    {
-      key: "B",
-      value: "Personal annual bonus or long-term incentive plan",
-    },
-  ];
+  const columns =
+    lng === "English"
+      ? [
+          {
+            key: "A",
+            value: "Company’s long-term corporate strategy",
+          },
+          {
+            key: "B",
+            value: "Personal annual bonus or long-term incentive plan",
+          },
+        ]
+      : [
+          {
+            key: "A",
+            value: "Долгосрочная корпоративная стратегия компании",
+          },
+          {
+            key: "B",
+            value:
+              "Личный годовой бонус или долгосрочная система вознаграждений",
+          },
+        ];
 
   const [input, setInput] = useState([]);
 
@@ -218,17 +266,19 @@ export default function Question24() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
-        q5a: localStorage.getItem("q5-carbonNeutral"),
-        q5b: localStorage.getItem("q5-netZero"),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
+        q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -239,6 +289,9 @@ export default function Question24() {
         q17: JSON.parse(localStorage.getItem("q17")),
         q18: JSON.parse(localStorage.getItem("q18")),
         q19: JSON.parse(localStorage.getItem("q19")),
+        q19none: localStorage.getItem("q19-none"),
+        q19dontknow: localStorage.getItem("q19-dontknow"),
+        q19other: localStorage.getItem("q19-other"),
         q20: JSON.parse(localStorage.getItem("q20")),
         q21: JSON.parse(localStorage.getItem("q21")),
         q22: JSON.parse(localStorage.getItem("q22")),
@@ -267,7 +320,8 @@ export default function Question24() {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 25).toString())}% completed
+              {Math.round(((100 / 39) * 25).toString())}%{" "}
+              {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
@@ -278,31 +332,53 @@ export default function Question24() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="question">
-              <strong>
-                Are the following non-financial related outcomes included in
-                your:
-              </strong>
+            {lng === "English" ? (
+              <>
+                <p className="question">
+                  <strong>
+                    Are the following non-financial related outcomes included in
+                    your:
+                  </strong>
 
-              <li style={{ listStyle: "none" }}>
-                {" "}
-                A) company’s long-term corporate strategy?
-              </li>
+                  <li style={{ listStyle: "none" }}>
+                    {" "}
+                    A) company’s long-term corporate strategy?
+                  </li>
 
-              <li style={{ listStyle: "none" }}>
-                B) personal annual bonus or long-term incentive plan?
-              </li>
-            </p>
-            <p className="question-i">
-              <i>PLEASE SELECT ALL THAT APPLY</i>
-            </p>
+                  <li style={{ listStyle: "none" }}>
+                    B) personal annual bonus or long-term incentive plan?
+                  </li>
+                </p>
+                <p className="question-i">
+                  <i>PLEASE SELECT ALL THAT APPLY</i>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="question">
+                  <strong>
+                    Включены ли следующие результаты, не связанные с финансами:
+                  </strong>
+                  <li style={{ listStyle: "none" }}>
+                    A) в долгосрочную корпоративную стратегию вашей компании?
+                  </li>
+                  <li style={{ listStyle: "none", marginBottom: "8px" }}>
+                    B) в ваш личный годовой бонус или в долгосрочную систему
+                    вознаграждений?
+                  </li>
+                  <i className="question-i">
+                    ПОЖАЛУЙСТА, ВЫБЕРИТЕ ВСЕ, ЧТО ПРИМЕНИМО
+                  </i>
+                </p>
+              </>
+            )}
           </div>
 
           {width <= 768 ? (
             <div className="left-align-text">
               {columns.map((col) => {
                 return (
-                  <div>
+                  <div key={col.key}>
                     <strong>
                       <p className="question" style={{ color: "#db536a" }}>
                         {col.key}) {col.value}
@@ -310,7 +386,7 @@ export default function Question24() {
                     </strong>
                     {rows.map((row) => {
                       return (
-                        <div className="m-div">
+                        <div key={row.index} className="m-div">
                           <label className="m-label">
                             <input
                               type="checkbox"
@@ -341,7 +417,9 @@ export default function Question24() {
                           checked={none[col.key] === true ? true : false}
                           disabled={not[col.key] === true ? true : false}
                         ></input>
-                        None of the above
+                        {lng === "English"
+                          ? "None of the above"
+                          : "Ничего из вышеперечисленного"}
                       </label>
                     </div>
                     <div className="m-div">
@@ -355,7 +433,9 @@ export default function Question24() {
                           checked={not[col.key] === true ? true : false}
                           disabled={none[col.key] === true ? true : false}
                         ></input>
-                        Prefer not to answer
+                        {lng === "English"
+                          ? "Prefer not to answer"
+                          : "Предпочел бы не отвечать"}
                       </label>
                     </div>
                   </div>
@@ -370,7 +450,7 @@ export default function Question24() {
 
                   {columns.map((col) => {
                     return (
-                      <td>
+                      <td key={col.key}>
                         <strong>
                           {col.key}) {col.value}
                         </strong>
@@ -380,12 +460,12 @@ export default function Question24() {
                 </tr>
                 {rows.map((row) => {
                   return (
-                    <tr>
+                    <tr key={row.index}>
                       <td>{row.key}</td>
                       <td className="left-align-text">{row.value}</td>
                       {columns.map((col) => {
                         return (
-                          <td className="input-cell">
+                          <td className="input-cell" key={col.key}>
                             <label className="alt-label-cell">
                               <input
                                 type="checkbox"
@@ -409,7 +489,11 @@ export default function Question24() {
                 })}
                 <tr>
                   <td>G</td>
-                  <td className="left-align-text">None of the above</td>
+                  <td className="left-align-text">
+                    {lng === "English"
+                      ? "None of the above"
+                      : "Ничего из вышеперечисленного"}
+                  </td>
                   <td className="input-cell">
                     <label className="alt-label-cell">
                       <input
@@ -437,7 +521,11 @@ export default function Question24() {
                 </tr>
                 <tr>
                   <td>H</td>
-                  <td className="left-align-text">Prefer not to answer</td>
+                  <td className="left-align-text">
+                    {lng === "English"
+                      ? "Prefer not to answer"
+                      : "Предпочел бы не отвечать"}
+                  </td>
                   <td className="input-cell">
                     <label className="alt-label-cell">
                       <input
@@ -466,32 +554,7 @@ export default function Question24() {
               </tbody>
             </Table>
           )}
-
-          <div className="back-next-btns">
-            <Button
-              variant="secondary"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              <i
-                className="fas fa-chevron-left"
-                style={{ marginRight: "8px" }}
-              ></i>
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-              <i
-                className="fas fa-chevron-right"
-                style={{ marginLeft: "8px" }}
-              ></i>
-            </Button>
-          </div>
+          <Buttons lng={lng} click={handleSubmit} />
         </div>
       </Route>
     </BrowserRouter>

@@ -5,9 +5,11 @@ import ModalAlert from "../ModalAlert";
 import Creatable from "react-select";
 import "../App.css";
 import { countries } from "../countries.js";
+import { countriesRus } from "../countriesRus";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "react-dropdown/style.css";
+import Buttons from "../Buttons";
 
 const Menu = (props) => {
   const optionSelectedLength = props.getValue().length || 0;
@@ -23,7 +25,7 @@ const Menu = (props) => {
   );
 };
 
-export default function Question2() {
+export default function Question2({ lng }) {
   const width = window.screen.width;
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -53,16 +55,7 @@ export default function Question2() {
     }
   }, []);
 
-  // const isValidNewOption = (inputValue, selectedValue) =>
-  //   inputValue.length > 0 && selectedValue.length < 4;
-
   function handleChange1(selectedOption) {
-    // selectedOption.forEach((option) => {
-    //   if (!selectedOptions.includes(option.label)) {
-    //     selectedOptions.push(option.label);
-    //   }
-    // });
-    // console.log(selectedOption);
     if (!selectedOptions.includes(selectedOption.label)) {
       setSelectedOptions((prev) => {
         return [...prev, selectedOption.label];
@@ -170,8 +163,6 @@ export default function Question2() {
     localStorage.setItem("q2-dontknow", dontknow);
     localStorage.setItem("q2-other", JSON.stringify(other));
 
-    // console.log(selectedOptions);
-
     if (
       selectedOptions.length === 0 &&
       dontknow === false &&
@@ -181,6 +172,12 @@ export default function Question2() {
     } else {
       const data = {
         uuid: localStorage.getItem("uuid"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1: JSON.parse(localStorage.getItem("q1")),
         q2: JSON.parse(localStorage.getItem("q2")),
         q2dontknow: localStorage.getItem("q2-dontknow"),
       };
@@ -223,7 +220,8 @@ export default function Question2() {
           }
         >
           <h2 className="percent">
-            {Math.round(((100 / 39) * 3).toString())}% completed
+            {Math.round(((100 / 39) * 3).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -235,12 +233,20 @@ export default function Question2() {
           </div>
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
-            <p className="question">
-              Which <strong>three countries/territories</strong>, excluding the
-              country/territory in which you are based, do you consider most
-              important for your company’s prospects for revenue growth over the
-              next 12 months?
-            </p>
+            {lng === "English" ? (
+              <p className="question">
+                Which <strong>three countries/territories</strong>, excluding
+                the country/territory in which you are based, do you consider
+                most important for your company’s prospects for revenue growth
+                over the next 12 months?
+              </p>
+            ) : (
+              <p className="question">
+                Какие <strong>три страны</strong>, за исключением страны, в
+                которой вы находитесь, вы считаете наиболее важными для
+                перспектив роста доходов вашей компании в следующие 12 месяцев?
+              </p>
+            )}
           </div>
         </div>
 
@@ -248,9 +254,13 @@ export default function Question2() {
           <Creatable
             components={{ Menu }}
             name="dropdown"
-            options={countries}
+            options={lng === "English" ? countries : countriesRus}
             closeMenuOnSelect={true}
-            placeholder="Please select country 1"
+            placeholder={
+              lng === "English"
+                ? "Please select country 1"
+                : "Пожалуйста, выберите страну 1"
+            }
             onChange={handleChange1}
             className="select-countries"
             onBlur={handleBlur}
@@ -259,9 +269,13 @@ export default function Question2() {
           <Creatable
             components={{ Menu }}
             name="dropdown"
-            options={countries}
+            options={lng === "English" ? countries : countriesRus}
             closeMenuOnSelect={true}
-            placeholder="Please select country 2"
+            placeholder={
+              lng === "English"
+                ? "Please select country 2"
+                : "Пожалуйста, выберите страну 2"
+            }
             onChange={handleChange2}
             className="select-countries"
             onBlur={handleBlur}
@@ -270,9 +284,13 @@ export default function Question2() {
           <Creatable
             components={{ Menu }}
             name="dropdown"
-            options={countries}
+            options={lng === "English" ? countries : countriesRus}
             closeMenuOnSelect={true}
-            placeholder="Please select country 3"
+            placeholder={
+              lng === "English"
+                ? "Please select country 3"
+                : "Пожалуйста, выберите страну 3"
+            }
             onChange={handleChange3}
             className="select-countries"
             onBlur={handleBlur}
@@ -280,12 +298,15 @@ export default function Question2() {
           />
           <Form.Control
             type="text"
-            placeholder="Other 1 (please specify)"
+            placeholder={
+              lng === "English"
+                ? "Other (please specify)"
+                : "Другое (пожалуйста, укажите)"
+            }
             name="other1"
             value={other.other1}
             onChange={handleOther}
             className="input-text"
-            // disabled={dontknow ? true : false}
             onBlur={handleBlurOther}
             onFocus={handleFocusOther}
             autoComplete="off"
@@ -293,36 +314,16 @@ export default function Question2() {
 
           <div className="dontknow-div">
             <Button
-              // variant={dontknow === true ? "warning" : "outline-dark"}
               style={dontknow === true ? stylesTrue : stylesFalse}
               type="button"
-              // className="back-btn"
               value="Don't know"
               onClick={handleDontknow}
               className="dontknow-btn"
             >
-              Don't know
+              {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
             </Button>
           </div>
-          <div className="back-next-btns">
-            <Button
-              variant="secondary"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              <i className="fas fa-chevron-left back-arrow"></i>
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-              <i class="fas fa-chevron-right next-arrow"></i>
-            </Button>
-          </div>
+          <Buttons lng={lng} click={handleSubmit} />
         </Form>
       </div>
     </Route>

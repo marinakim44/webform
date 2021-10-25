@@ -5,8 +5,9 @@ import ModalAlert from "../ModalAlert";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
+import Buttons from "../Buttons";
 
-export default function Question19() {
+export default function Question19({ lng }) {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (localStorage.getItem("q19")) {
@@ -21,35 +22,69 @@ export default function Question19() {
       setChecked(JSON.parse(localStorage.getItem("q19-checked")));
     }
   }, []);
-  const rows = [
-    {
-      key: "key1",
-      value: "The global tax policy change is not applicable to our company",
-    },
-    {
-      key: "key2",
-      value:
-        "Engaged tax specialists to advise our company on potential implications",
-    },
-    {
-      key: "key3",
-      value: "Modeled the cash tax’s impact on our company",
-    },
-    {
-      key: "key4",
-      value:
-        "Conducted scenario planning regarding where our company will pay taxes",
-    },
-    {
-      key: "key5",
-      value: "Encouraged government officials to support the tax policy",
-    },
-    {
-      key: "key6",
-      value:
-        "Recommended additional tax policy changes to government officials",
-    },
-  ];
+  const rows =
+    lng === "English"
+      ? [
+          {
+            key: "key1",
+            value:
+              "The global tax policy change is not applicable to our company",
+          },
+          {
+            key: "key2",
+            value:
+              "Engaged tax specialists to advise our company on potential implications",
+          },
+          {
+            key: "key3",
+            value: "Modeled the cash tax’s impact on our company",
+          },
+          {
+            key: "key4",
+            value:
+              "Conducted scenario planning regarding where our company will pay taxes",
+          },
+          {
+            key: "key5",
+            value: "Encouraged government officials to support the tax policy",
+          },
+          {
+            key: "key6",
+            value:
+              "Recommended additional tax policy changes to government officials",
+          },
+        ]
+      : [
+          {
+            key: "key1",
+            value:
+              "Глобальное изменение налоговой политики не распространяется на нашу компанию  ",
+          },
+          {
+            key: "key2",
+            value:
+              "Привлекла налоговых специалистов, чтобы проконсультировать нашу компанию о возможных последствиях",
+          },
+          {
+            key: "key3",
+            value: "Смоделировала влияние денежного налога на нашу компанию ",
+          },
+          {
+            key: "key4",
+            value:
+              "Проведела сценарное планирование относительно того, где наша компания будет платить налоги ",
+          },
+          {
+            key: "key5",
+            value:
+              "Предложила правительственным чиновникам поддержать налоговую политику",
+          },
+          {
+            key: "key6",
+            value:
+              "Рекомендовала государственным служащим дополнительные изменения в налоговой политике ",
+          },
+        ];
 
   const width = window.screen.width;
   const [show, setShow] = useState(false);
@@ -152,16 +187,19 @@ export default function Question19() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
         q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
-        q10: JSON.parse(localStorage.getItem("q10")),
+        q10a: JSON.parse(localStorage.getItem("q10a")),
+        q10b: JSON.parse(localStorage.getItem("q10b")),
         q11: JSON.parse(localStorage.getItem("q11")),
         q12: JSON.parse(localStorage.getItem("q12")),
         q13a: localStorage.getItem("q13a"),
@@ -197,7 +235,8 @@ export default function Question19() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 20).toString())}% completed
+            {Math.round(((100 / 39) * 20).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -208,14 +247,30 @@ export default function Question19() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            What actions has your company taken, if any, to prepare for
-            potential global tax policy change that would make all countries
-            commit to an effective corporate tax rate of at least 15%?
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ALL THAT APPLY</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              <p className="question">
+                What actions has your company taken, if any, to prepare for
+                potential global tax policy change that would make all countries
+                commit to an effective corporate tax rate of at least 15%?
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ALL THAT APPLY</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="question">
+                Какие действия предприняла ваша компания, если таковые были, для
+                подготовки к потенциальному глобальному изменению налоговой
+                политики, в результате которой все страны должны будут принять
+                эффективную ставку корпоративного налога на уровне не менее 15%?
+              </p>
+              <p className="question-i">
+                <i>ПРОСЬБА УКАЗАТЬ ВСЕ, ЧТО ПРИМЕНИМО</i>
+              </p>
+            </>
+          )}
         </div>
         {width <= 768 ? (
           <div className="left-align-text">
@@ -229,7 +284,6 @@ export default function Question19() {
                       name={row.key}
                       value={row.key}
                       onChange={handleChange}
-                      // disabled={none || dontknow === true ? true : false}
                       checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
@@ -240,9 +294,12 @@ export default function Question19() {
             <div style={{ width: "100%" }}>
               <Form.Control
                 type="text"
-                placeholder="Other (please specify)"
+                placeholder={
+                  lng === "English"
+                    ? "Other (please specify)"
+                    : "Прочие действия (просьба указать)"
+                }
                 value={none || dontknow ? "" : other}
-                // disabled={dontknow || none === true ? true : false}
                 onChange={handleChangeOther}
                 className="input-text"
                 style={{ marginTop: "2rem" }}
@@ -255,7 +312,9 @@ export default function Question19() {
                 onClick={handleNone}
                 className="none-btn"
               >
-                NONE OF THE ABOVE
+                {lng === "English"
+                  ? "NONE OF THE ABOVE"
+                  : "Наша компания не предпринимала каких-либо действий"}
               </Button>
               <Button
                 variant={dontknow ? "warning" : "outline-dark"}
@@ -263,26 +322,7 @@ export default function Question19() {
                 onClick={handleDontknow}
                 className="dontknow-btn"
               >
-                DON'T KNOW
-              </Button>
-            </div>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i class="fas fa-chevron-right next-arrow"></i>
+                {lng === "English" ? "DON'T KNOW" : "Затрудняюсь ответить"}
               </Button>
             </div>
           </div>
@@ -298,9 +338,6 @@ export default function Question19() {
                       name={row.key}
                       value={row.key}
                       onChange={handleChange}
-                      // disabled={
-                      //   none === true || dontknow === true ? true : false
-                      // }
                       checked={checked[`${row.key}`] === true ? true : false}
                     />
                     {row.value}
@@ -310,9 +347,12 @@ export default function Question19() {
             })}
             <Form.Control
               type="text"
-              placeholder="Other (please specify)"
+              placeholder={
+                lng === "English"
+                  ? "Other (please specify)"
+                  : "Прочие действия (просьба указать)"
+              }
               value={none || dontknow ? "" : other}
-              // disabled={dontknow || none ? true : false}
               onChange={handleChangeOther}
               className="text-input"
             ></Form.Control>
@@ -323,7 +363,9 @@ export default function Question19() {
               onClick={handleNone}
               className="none-btn"
             >
-              NONE
+              {lng === "English"
+                ? "NONE OF THE ABOVE"
+                : "Наша компания не предпринимала каких-либо действий"}
             </Button>
             <Button
               variant={dontknow ? "warning" : "outline-dark"}
@@ -331,29 +373,11 @@ export default function Question19() {
               onClick={handleDontknow}
               className="dontknow-btn"
             >
-              DON'T KNOW
+              {lng === "English" ? "DON'T KNOW" : "Затрудняюсь ответить"}
             </Button>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i className="fas fa-chevron-left back-arrow"></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i class="fas fa-chevron-right next-arrow"></i>
-              </Button>
-            </div>
           </Form>
         )}
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

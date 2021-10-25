@@ -1,37 +1,48 @@
 import { Route, useHistory } from "react-router-dom";
-import { Button, Form, ListGroup } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question4() {
+export default function Question4({ lng }) {
   const rows = [
     {
       key: "1",
       value:
-        "...develop products/services (including sourcing and procuring materials/inputs, manufacturing)",
+        lng === "English"
+          ? "...develop products/services (including sourcing and procuring materials/inputs, manufacturing)"
+          : "...разрабатывать продукты/услуги (включая поиск и закупку материалов/ресурсов, производство",
     },
     {
       key: "2",
       value:
-        "...sell products/services (including sales and marketing, distribution, public relations)",
+        lng === "English"
+          ? "...sell products/services (including sales and marketing, distribution, public relations)"
+          : "...продавать товары/услуги (включая продажи и маркетинг, дистрибуцию, связь с общественностью",
     },
     {
       key: "3",
       value:
-        "...raise capital (including cost of capital, sources of funding, reporting and compliance)",
+        lng === "English"
+          ? "...raise capital (including cost of capital, sources of funding, reporting and compliance)"
+          : "...привлекать капитал (включая стоимость капитала, источники финансирования, отчетность и нормативно-правовое соответствие",
     },
     {
       key: "4",
       value:
-        "...attract and retain key skills/talent (including reputation, rewards and benefits, culture)",
+        lng === "English"
+          ? "...attract and retain key skills/talent (including reputation, rewards and benefits, culture)"
+          : "...привлекать и удерживать ключеввых специалистов/кадры (включая репутацию, поощрения и льготы, культуру",
     },
     {
       key: "5",
       value:
-        "...innovate through technology or processes (including research and development, collaboration, creativity)",
+        lng === "English"
+          ? "...innovate through technology or processes (including research and development, collaboration, creativity)"
+          : "...внедрять инновации с помощью технологий или процессов (включая научные исследования и разработки, сотрудничество, творчество",
     },
   ];
 
@@ -195,6 +206,7 @@ export default function Question4() {
         phone: localStorage.getItem("phone"),
         q1: JSON.parse(localStorage.getItem("q1")),
         q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
         q4: JSON.parse(localStorage.getItem("q4-list")),
         q4other: localStorage.getItem("q4-other"),
@@ -220,7 +232,8 @@ export default function Question4() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 5).toString())}% completed
+            {Math.round(((100 / 39) * 5).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -232,18 +245,27 @@ export default function Question4() {
           </div>
           <ModalAlert show={show} close={handleClose} />
           <div className="left-align-text">
-            <span>
-              How do you anticipate your company could be impacted by the
-              following threat(s) over the next 12 months?
-              <i>
-                <p
-                  className="question-i"
-                  style={{ margin: width <= 480 ? "1rem 0" : "" }}
-                >
-                  PLEASE SELECT UP TO THREE RESPONSES PER EACH COLUMN
-                </p>
-              </i>
-            </span>
+            {lng === "English" ? (
+              <span className="question">
+                How do you anticipate your company could be impacted by the
+                following threat(s) over the next 12 months?
+                <i>
+                  <p className="question-i">
+                    PLEASE SELECT UP TO THREE RESPONSES PER EACH COLUMN
+                  </p>
+                </i>
+              </span>
+            ) : (
+              <span className="question">
+                Насколько вы обеспокоены, что следующие глобальные угрозы
+                негативно повлияют на вашу компанию в следующие 12 месяцев?
+                <i>
+                  <p className="question-i">
+                    ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА
+                  </p>
+                </i>
+              </span>
+            )}
           </div>
         </div>
 
@@ -253,21 +275,39 @@ export default function Question4() {
               return (
                 <div key={concern}>
                   <p className="question" style={{ color: "#db536a" }}>
-                    <strong>
-                      {concern === "A"
-                        ? "Macroeconomic volatility"
-                        : concern === "B"
-                        ? "Climate change"
-                        : concern === "C"
-                        ? "Social inequality"
-                        : concern === "D"
-                        ? "Geopolitical conflict"
-                        : concern === "E"
-                        ? "Cyber risks"
-                        : concern === "F"
-                        ? "Health risks"
-                        : ""}
-                    </strong>
+                    {lng === "English" ? (
+                      <strong>
+                        {concern === "A"
+                          ? "Macroeconomic volatility"
+                          : concern === "B"
+                          ? "Climate change"
+                          : concern === "C"
+                          ? "Social inequality"
+                          : concern === "D"
+                          ? "Geopolitical conflict"
+                          : concern === "E"
+                          ? "Cyber risks"
+                          : concern === "F"
+                          ? "Health risks"
+                          : ""}
+                      </strong>
+                    ) : (
+                      <strong>
+                        {concern === "A"
+                          ? "Макроэкономическая волатильность"
+                          : concern === "B"
+                          ? "Изменение климата"
+                          : concern === "C"
+                          ? "Социальное неравенство"
+                          : concern === "D"
+                          ? "Геополитические конфликты"
+                          : concern === "E"
+                          ? "Кибер-риски"
+                          : concern === "F"
+                          ? "Риски для здоровья"
+                          : ""}
+                      </strong>
+                    )}
                   </p>
                   {rows.map((row) => {
                     return (
@@ -306,31 +346,6 @@ export default function Question4() {
                 className="input-text"
               ></Form.Control>
             </Form.Group>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.push("/eng-q3")}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ color: "#fff", marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ color: "#fff", marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
           </div>
         ) : (
           <Form>
@@ -341,21 +356,39 @@ export default function Question4() {
                   {concerns.map((concern) => {
                     return (
                       <th key={concern}>
-                        <span>
-                          {concern === "A"
-                            ? "Macroeconomic volatility"
-                            : concern === "B"
-                            ? "Climate change"
-                            : concern === "C"
-                            ? "Social inequality"
-                            : concern === "D"
-                            ? "Geopolitical conflict"
-                            : concern === "E"
-                            ? "Cyber risks"
-                            : concern === "F"
-                            ? "Health risks"
-                            : ""}
-                        </span>
+                        {lng === "English" ? (
+                          <strong>
+                            {concern === "A"
+                              ? "Macroeconomic volatility"
+                              : concern === "B"
+                              ? "Climate change"
+                              : concern === "C"
+                              ? "Social inequality"
+                              : concern === "D"
+                              ? "Geopolitical conflict"
+                              : concern === "E"
+                              ? "Cyber risks"
+                              : concern === "F"
+                              ? "Health risks"
+                              : ""}
+                          </strong>
+                        ) : (
+                          <strong>
+                            {concern === "A"
+                              ? "Макроэкономическая волатильность"
+                              : concern === "B"
+                              ? "Изменение климата"
+                              : concern === "C"
+                              ? "Социальное неравенство"
+                              : concern === "D"
+                              ? "Геополитические конфликты"
+                              : concern === "E"
+                              ? "Кибер-риски"
+                              : concern === "F"
+                              ? "Риски для здоровья"
+                              : ""}
+                          </strong>
+                        )}
                       </th>
                     );
                   })}
@@ -397,37 +430,17 @@ export default function Question4() {
 
             <Form.Group>
               <Form.Control
-                placeholder="Other (please specify)"
+                placeholder={
+                  lng === "English"
+                    ? "Other (please specify)"
+                    : "Прочее (пожалуйста укажите)"
+                }
                 style={{ width: "35%", margin: 0, marginBottom: "2rem" }}
                 value={other}
                 onChange={handleOther}
               ></Form.Control>
             </Form.Group>
-            <div className="back-next-btns">
-              <Button
-                variant="secondary"
-                className="back-btn"
-                onClick={() => history.goBack()}
-              >
-                <i
-                  className="fas fa-chevron-left"
-                  style={{ color: "#fff", marginRight: "8px" }}
-                ></i>
-                Back
-              </Button>
-
-              <Button
-                variant="danger"
-                className="next-btn"
-                onClick={handleSubmit}
-              >
-                Next
-                <i
-                  className="fas fa-chevron-right"
-                  style={{ color: "#fff", marginLeft: "8px" }}
-                ></i>
-              </Button>
-            </div>
+            <Buttons lng={lng} click={handleSubmit} />
           </Form>
         )}
       </div>

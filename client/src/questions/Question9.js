@@ -1,11 +1,12 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question9() {
+export default function Question9({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,13 +59,16 @@ export default function Question9() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
+        q8: localStorage.getItem("q8"),
         q9: localStorage.getItem("q9"),
       };
 
@@ -88,7 +92,8 @@ export default function Question9() {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 10).toString())}% completed
+            {Math.round(((100 / 39) * 10).toString())}%{" "}
+            {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
@@ -99,13 +104,29 @@ export default function Question9() {
             ></div>
           </div>
           <ModalAlert show={show} close={handleClose} />
-          <p className="question">
-            Will your company’s approach to reducing greenhouse gas (GHG)
-            emissions be independently assessed and validated (e.g., by SBTi)?
-          </p>
-          <p className="question-i">
-            <i>PLEASE SELECT ONE RESPONSE</i>
-          </p>
+          {lng === "English" ? (
+            <>
+              <p className="question">
+                Will your company’s approach to reducing greenhouse gas (GHG)
+                emissions be independently assessed and validated (e.g., by
+                SBTi)?
+              </p>
+              <p className="question-i">
+                <i>PLEASE SELECT ONE RESPONSE</i>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="question">
+                Будет ли подход вашей компании к сокращению выбросов парниковых
+                газов (ПГ) подвергаться независимой оценке и верификации (напр.,
+                SBTi)?
+              </p>
+              <p className="question-i">
+                <i>ПОЖАЛУЙСТА, ВЫБЕРИТЕ ТОЛЬКО ОДИН ОТВЕТ</i>
+              </p>
+            </>
+          )}
         </div>
         <Form className="left-align-text">
           <div className="m-div">
@@ -119,8 +140,9 @@ export default function Question9() {
                 className="m-input"
                 checked={checked.option1}
               />
-              Yes, my company’s approach to reducing GHG emissions will be
-              independently assessed and validated
+              {lng === "English"
+                ? "Yes, my company’s approach to reducing GHG emissions will be independently assessed and validated"
+                : "Да, подход моей компании к сокращению выбросов ПГ будет подвергнут независимой оценке и верификации"}
             </label>
           </div>
           <div className="m-div">
@@ -134,8 +156,9 @@ export default function Question9() {
                 className="m-input"
                 checked={checked.option2}
               />
-              No, my company’s approach to reducing GHG emissions will not be
-              independently assessed and validated
+              {lng === "English"
+                ? "No, my company’s approach to reducing GHG emissions will not be independently assessed and validated"
+                : "Нет, подход моей компании к сокращению выбросов ПГ не будет подвергаться независимой оценке и верификации"}
             </label>
           </div>
           <div className="m-div">
@@ -149,35 +172,10 @@ export default function Question9() {
                 className="m-input"
                 checked={checked.option3}
               />
-              Don't know
+              {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
             </label>
           </div>
-
-          <div className="back-next-btns">
-            <Button
-              variant="secondary"
-              className="back-btn"
-              onClick={() => history.goBack()}
-            >
-              <i
-                className="fas fa-chevron-left"
-                style={{ marginRight: "8px" }}
-              ></i>
-              Back
-            </Button>
-
-            <Button
-              variant="danger"
-              className="next-btn"
-              onClick={handleSubmit}
-            >
-              Next
-              <i
-                className="fas fa-chevron-right"
-                style={{ marginLeft: "8px" }}
-              ></i>
-            </Button>
-          </div>
+          <Buttons lng={lng} click={handleSubmit} />
         </Form>
       </div>
     </Route>

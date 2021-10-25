@@ -6,6 +6,7 @@ import "../Medium.css";
 import "../Small.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
 export default function Question1({ lng }) {
   const width = window.screen.width;
@@ -23,46 +24,55 @@ export default function Question1({ lng }) {
   const rows = [
     {
       key: "A",
-      value: "Global economic growth - next 12 months",
+      value:
+        lng === "English"
+          ? "Global economic growth - next 12 months"
+          : "Глобальный экономический рост - следующие 12 месяцев",
     },
     {
       key: "B",
-      value: "Kazakhstan economic growth - next 12 months",
+      value:
+        lng === "English"
+          ? "Kazakhstan economic growth - next 12 months"
+          : "Экономический рост Казахстана  - следующие 12 месяцев",
     },
   ];
 
   const columns = [
     {
       key: "1",
-      value: "Decline significantly",
+      value:
+        lng === "English" ? "Decline significantly" : "Значительно снизится",
     },
     {
       key: "2",
-      value: "Decline moderately",
+      value: lng === "English" ? "Decline moderately" : "Умеренно снизится",
     },
     {
       key: "3",
-      value: "Decline slightly",
+      value: lng === "English" ? "Decline slightly" : "Немного снизится",
     },
     {
       key: "4",
-      value: "Stay the same",
+      value:
+        lng === "English" ? "Stay the same" : "Останется на прежнем уровне",
     },
     {
       key: "5",
-      value: "Improve slightly",
+      value: lng === "English" ? "Improve slightly" : "Немного повысится",
     },
     {
       key: "6",
-      value: "Improve moderately",
+      value: lng === "English" ? "Improve moderately" : "Умеренно повысится",
     },
     {
       key: "7",
-      value: "Improve significantly",
+      value:
+        lng === "English" ? "Improve significantly" : "Значительно повысится",
     },
     {
       key: "8",
-      value: "Don't know",
+      value: lng === "English" ? "Don't know" : "Затрудняюсь ответить",
     },
   ];
 
@@ -182,20 +192,47 @@ export default function Question1({ lng }) {
           <ModalAlert show={show} close={handleClose} />
 
           <div className="left-align-text">
-            <p className="question">
-              How do you believe economic growth (i.e., gross domestic product)
-              will change, if at all, over the next 12 months in: <br />
-              <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
-                A) the global economy?
-              </span>
-              <br />
-              <span style={{ marginLeft: "2rem" }}>B) Kazakhstan economy?</span>
-            </p>
-            <i>
-              <p className="question-i">
-                PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
-              </p>
-            </i>
+            {lng === "English" ? (
+              <>
+                <p className="question">
+                  How do you believe economic growth (i.e., gross domestic
+                  product) will change, if at all, over the next 12 months in:{" "}
+                  <br />
+                  <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                    A) the global economy?
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "2rem" }}>
+                    B) Kazakhstan economy?
+                  </span>
+                </p>
+                <i>
+                  <p className="question-i">
+                    PLEASE SELECT ONE RESPONSE PER EACH STATEMENT
+                  </p>
+                </i>
+              </>
+            ) : (
+              <>
+                <p className="question">
+                  Как, по вашему мнению, изменится экономический рост (т.е.
+                  валовой внутренний продукт) в следующие 12 месяцев, если
+                  вообще изменится: <br />
+                  <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
+                    A) глобальная экономика?
+                  </span>
+                  <br />
+                  <span style={{ marginLeft: "2rem" }}>
+                    B) экономика Казахстана?{" "}
+                  </span>
+                </p>
+                <i>
+                  <p className="question-i">
+                    ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА
+                  </p>
+                </i>
+              </>
+            )}
           </div>
         </div>
         {width <= 768 ? (
@@ -273,21 +310,7 @@ export default function Question1({ lng }) {
             </table>
           </Form>
         )}
-        <div className="back-next-btns">
-          <Button
-            variant="secondary"
-            className="back-btn"
-            onClick={() => history.goBack()}
-          >
-            <i className="fas fa-chevron-left back-arrow"></i>
-            Back
-          </Button>
-
-          <Button variant="danger" className="next-btn" onClick={handleSubmit}>
-            Next
-            <i className="fas fa-chevron-right next-arrow"></i>
-          </Button>
-        </div>
+        <Buttons lng={lng} click={handleSubmit} />
       </div>
     </Route>
   );

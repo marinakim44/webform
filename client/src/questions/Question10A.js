@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
+import Buttons from "../Buttons";
 
-export default function Question10A() {
+export default function Question10A({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,58 +24,83 @@ export default function Question10A() {
   const rows = [
     {
       key: "A",
-      value: "Attracting and/or retaining employees",
+      value:
+        lng === "English"
+          ? "Attracting and/or retaining employees"
+          : "Привлечение и/или удержание сотрудников",
     },
     {
       key: "B",
-      value: "Satisfying investor demands",
+      value:
+        lng === "English"
+          ? "Satisfying investor demands"
+          : "Удовлетворение требований инвесторов",
     },
     {
       key: "C",
-      value: "Meeting customer expectations",
+      value:
+        lng === "English"
+          ? "Meeting customer expectations"
+          : "Соответствие ожиданиям клиентов",
     },
     {
       key: "D",
-      value: "Complying with government and/or intergovernmental targets",
+      value:
+        lng === "English"
+          ? "Complying with government and/or intergovernmental targets"
+          : "Соответствие государственным и/или межправительственным целям",
     },
     {
       key: "E",
-      value: "Mitigating climate change risks",
+      value:
+        lng === "English"
+          ? "Mitigating climate change risks"
+          : "Снижение рисков изменения климата",
     },
     {
       key: "F",
-      value: "Driving product/service innovation",
+      value:
+        lng === "English"
+          ? "Driving product/service innovation"
+          : "Стимулирование инноваций в продуктах/услугах",
     },
     {
       key: "G",
-      value: "Keeping pace with competitor commitments",
+      value:
+        lng === "English"
+          ? "Keeping pace with competitor commitments"
+          : "Соответствие уровню обязательств конкурентов",
     },
   ];
 
   const columns = [
     {
       key: "1",
-      value: "Not influential",
+      value: lng === "English" ? "Not influential" : "Не важны",
     },
     {
       key: "2",
-      value: "Slightly influential",
+      value:
+        lng === "English"
+          ? "Slightly influential"
+          : "Важны в незначительной степени",
     },
     {
       key: "3",
-      value: "Moderately influential",
+      value:
+        lng === "English" ? "Moderately influential" : "Относительно важны",
     },
     {
       key: "4",
-      value: "Very influential",
+      value: lng === "English" ? "Very influential" : "Очень важны",
     },
     {
       key: "5",
-      value: "Extremely influential",
+      value: lng === "English" ? "Extremely influential" : "Чрезвычайно важны",
     },
     {
       key: "6",
-      value: "Don't know",
+      value: lng === "English" ? "Don't know" : "Затрудняюсь ответить",
     },
   ];
 
@@ -183,10 +208,12 @@ export default function Question10A() {
         title: localStorage.getItem("title"),
         email: localStorage.getItem("email"),
         phone: localStorage.getItem("phone"),
-        q1a: localStorage.getItem("q1a"),
-        q1b: localStorage.getItem("q1b"),
-        q2: JSON.parse(localStorage.getItem("countries")),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
         q3: JSON.parse(localStorage.getItem("q3")),
+        q4: JSON.parse(localStorage.getItem("q4-list")),
+        q4other: localStorage.getItem("q4-other"),
         q5: JSON.parse(localStorage.getItem("q5")),
         q6: localStorage.getItem("q6"),
         q7: localStorage.getItem("q7"),
@@ -216,7 +243,8 @@ export default function Question10A() {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 11).toString())}% completed
+              {Math.round(((100 / 39) * 11).toString())}%{" "}
+              {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
@@ -227,19 +255,34 @@ export default function Question10A() {
               ></div>
             </div>
             <ModalAlert show={show} close={handleClose} />
-            <p className="question">
-              How influential are the following factors behind your company’s
-              carbon-neutral and/or net-zero commitments?
-            </p>
-            <p className="question-i">
-              <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
-            </p>
+            {lng === "English" ? (
+              <>
+                <p className="question">
+                  How influential are the following factors behind your
+                  company’s carbon-neutral and/or net-zero commitments?
+                </p>
+                <p className="question-i">
+                  <i>PLEASE SELECT ONE RESPONSE FOR EACH STATEMENT</i>
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="left-align-text question">
+                  Насколько важны следующие факторы, лежащие в основе
+                  обязательств вашей компании по углеродной нейтральности и/или
+                  нулевым выбросам?
+                </p>
+                <p className="question-i">
+                  <i>ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА</i>
+                </p>
+              </>
+            )}
           </div>
           {width <= 768 ? (
             <div className="left-align-text">
               {rows.map((row) => {
                 return (
-                  <div>
+                  <div key={row.key}>
                     <p
                       className="question question-options"
                       style={{ color: "#db536a" }}
@@ -250,7 +293,7 @@ export default function Question10A() {
                     </p>
                     {columns.map((col) => {
                       return (
-                        <div className="m-div">
+                        <div className="m-div" key={col.key}>
                           <label className="m-label">
                             <input
                               type="radio"
@@ -268,45 +311,27 @@ export default function Question10A() {
                   </div>
                 );
               })}
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i className="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
             </div>
           ) : (
-            <form>
+            <>
               <table className="table">
                 <thead>
                   <tr>
                     <th colSpan="2"></th>
                     {columns.map((column) => {
-                      return <th>{column.value}</th>;
+                      return <th key={column.key}>{column.value}</th>;
                     })}
                   </tr>
                 </thead>
                 <tbody>
                   {rows.map((row) => {
                     return (
-                      <tr>
+                      <tr key={row.key}>
                         <td>{row.key}</td>
                         <td className="left-align-text">{row.value}</td>
                         {columns.map((col) => {
                           return (
-                            <td className="input-cell">
+                            <td key={col.key} className="input-cell">
                               <label className="alt-label-cell">
                                 <input
                                   type="radio"
@@ -324,27 +349,9 @@ export default function Question10A() {
                   })}
                 </tbody>
               </table>
-              <div className="back-next-btns">
-                <Button
-                  variant="secondary"
-                  className="back-btn"
-                  onClick={() => history.goBack()}
-                >
-                  <i className="fas fa-chevron-left back-arrow"></i>
-                  Back
-                </Button>
-
-                <Button
-                  variant="danger"
-                  className="next-btn"
-                  onClick={handleSubmit}
-                >
-                  Next
-                  <i className="fas fa-chevron-right next-arrow"></i>
-                </Button>
-              </div>
-            </form>
+            </>
           )}
+          <Buttons lng={lng} click={handleSubmit} />
         </div>
       </Route>
     </BrowserRouter>
