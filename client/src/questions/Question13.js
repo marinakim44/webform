@@ -126,7 +126,7 @@ export default function Question13({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -137,17 +137,6 @@ export default function Question13({ lng }) {
       history.push("/eng-q14");
     }
   }
-
-  const stylesFalse = {
-    border: "solid black 1px",
-    backgroundColor: "white",
-    color: "black",
-  };
-  const stylesTrue = {
-    border: "none",
-    backgroundColor: "#ffa929",
-    color: "white",
-  };
 
   return (
     <Route path="/eng-q13">

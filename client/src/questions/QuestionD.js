@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import { useState, useEffect } from "react";
@@ -126,7 +126,7 @@ export default function QuestionD({ lng }) {
       axios
         .post("allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -210,7 +210,7 @@ export default function QuestionD({ lng }) {
                     onChange={handleClick}
                     name="option"
                     style={{ marginRight: "8px" }}
-                    class="radio-input m-input"
+                    className="radio-input m-input"
                     checked={checked.option2}
                   ></input>
                   {lng === "English" ? "No" : "Нет"}
@@ -230,7 +230,7 @@ export default function QuestionD({ lng }) {
                     onChange={handleClick}
                     name="option"
                     style={{ marginRight: "8px" }}
-                    class="radio-input m-input"
+                    className="radio-input m-input"
                     checked={checked.option3}
                   ></input>
                   {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}

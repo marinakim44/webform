@@ -286,7 +286,7 @@ function EngStart({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -307,7 +307,6 @@ function EngStart({ lng }) {
               ? ""
               : "sticky-sub-div"
           }
-          className="sticky-sub-div"
         >
           <h2 className="percent">
             0% {lng === "English" ? "completed" : "завершено"}

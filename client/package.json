@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://ancient-ridge-93546.herokuapp.com/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
@@ -12,6 +11,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.21.4",
     "bootstrap": "^5.1.1",
+    "http-proxy-middleware": "^2.0.1",
     "react": "^17.0.2",
     "react-animated-progress-bar": "^1.0.4",
     "react-animations": "^1.0.0",

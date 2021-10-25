@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
@@ -324,7 +324,7 @@ export default function Question17({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -378,7 +378,7 @@ export default function Question17({ lng }) {
             <div className="left-align-text">
               {rows.map((row) => {
                 return (
-                  <div>
+                  <div key={row.key}>
                     <p className="question" style={{ color: "#db536a" }}>
                       <strong>
                         {row.key}) {row.value}
@@ -386,7 +386,7 @@ export default function Question17({ lng }) {
                     </p>
                     {columns.map((col) => {
                       return (
-                        <div className="m-div">
+                        <div className="m-div" key={col.key}>
                           <label className="m-label">
                             <input
                               type="radio"
@@ -447,19 +447,19 @@ export default function Question17({ lng }) {
                             col.value !== "Каждый год"
                         )
                         .map((column) => {
-                          return <td>{column.value}</td>;
+                          return <td key={column.key}>{column.value}</td>;
                         })}
                     </tr>
                   </thead>
                   <tbody>
                     {rows.map((row) => {
                       return (
-                        <tr className="table-row">
+                        <tr className="table-row" key={row.key}>
                           <td>{row.key}</td>
                           <td className="left-align-text">{row.value}</td>
                           {columns.map((col) => {
                             return (
-                              <td className="input-cell">
+                              <td className="input-cell" key={col.key}>
                                 <label className="alt-label-cell">
                                   <input
                                     type="radio"

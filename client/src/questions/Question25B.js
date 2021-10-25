@@ -224,7 +224,6 @@ export default function Question25B({ lng }) {
   });
 
   const [none, setNone] = useState(false);
-  const [dontknow, setDontknow] = useState(false);
   const [checked, setChecked] = useState({
     A1: false,
     A2: false,
@@ -371,10 +370,10 @@ export default function Question25B({ lng }) {
 
   useEffect(() => {
     if (none === true) {
-      Object.keys(checked).map((el) => {
+      Object.keys(checked).forEach((el) => {
         checked[el] = false;
       });
-      Object.keys(input).map((el) => {
+      Object.keys(input).forEach((el) => {
         input[el] = "";
       });
     }
@@ -447,7 +446,7 @@ export default function Question25B({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -503,7 +502,7 @@ export default function Question25B({ lng }) {
             <div className="left-align-text">
               {rows.map((row) => {
                 return (
-                  <div>
+                  <div key={row.key}>
                     <strong>
                       <p className="question" style={{ color: "#db536a" }}>
                         {row.key}) {row.value}
@@ -511,7 +510,7 @@ export default function Question25B({ lng }) {
                     </strong>
                     {columns.map((col) => {
                       return (
-                        <div className="m-div">
+                        <div className="m-div" key={col.key}>
                           <label className="m-label">
                             <input
                               type="radio"
@@ -556,6 +555,7 @@ export default function Question25B({ lng }) {
                       {columns.map((col) => {
                         return (
                           <th
+                            key={col.key}
                             style={{
                               position: "sticky",
                               top: 0,
@@ -573,12 +573,12 @@ export default function Question25B({ lng }) {
                   <tbody>
                     {rows.map((row) => {
                       return (
-                        <tr className="table-row">
+                        <tr className="table-row" key={row.key}>
                           <td>{row.key}</td>
                           <td className="left-align-text">{row.value}</td>
                           {columns.map((col) => {
                             return (
-                              <td className="input-cell">
+                              <td className="input-cell" key={col.key}>
                                 <label className="alt-label-cell">
                                   <input
                                     type="radio"

@@ -1,5 +1,4 @@
 import { Route, useHistory } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import "../App.css";
 import ModalAlert from "../ModalAlert";
 import { useState, useEffect } from "react";
@@ -180,12 +179,12 @@ export default function Question3({ lng }) {
     });
     Object.keys(checked)
       .filter((el) => el.slice(0, 1) === name && el === index)
-      .map((y) => {
+      .forEach((y) => {
         checked[y] = true;
       });
     Object.keys(checked)
       .filter((z) => z.slice(0, 1) === name && z !== index)
-      .map((a) => {
+      .forEach((a) => {
         checked[a] = false;
       });
   }
@@ -193,7 +192,7 @@ export default function Question3({ lng }) {
   useEffect(() => {
     Object.entries(input)
       .filter((x) => x[0] && x[1])
-      .map((e) => {
+      .forEach((e) => {
         var index = e[0] + e[1];
 
         Object.keys(checked)
@@ -210,20 +209,18 @@ export default function Question3({ lng }) {
 
     Object.entries(input)
       .filter((x) => x[1] === "3" || x[1] === "4" || x[1] === "5")
-      .map((x) => {
+      .forEach((x) => {
         if (!concerns.includes(x[0])) {
           concerns.push(x[0]);
         }
       });
     Object.entries(input)
       .filter((x) => x[1] === "1" || x[1] === "2" || x[1] === "6")
-      .map((x) => {
+      .forEach((x) => {
         if (concerns.includes(x[0])) {
           setConcerns(concerns.filter((y) => y !== x[0]));
         }
       });
-
-    console.log(concerns);
   }, [input, checked, concerns]);
 
   function handleSubmit(e) {
@@ -258,7 +255,7 @@ export default function Question3({ lng }) {
     axios
       .post("/allinputs", data)
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           console.log("Data posted");
         } else {
           console.log("Response status " + response.status);
@@ -314,31 +311,29 @@ export default function Question3({ lng }) {
           <div>
             {rows.map((row) => {
               return (
-                <>
-                  <div className="left-align-text">
-                    <p className="question" style={{ color: "#db536a" }}>
-                      <strong>{row.value}</strong>
-                    </p>
-                    <p className="question-sub">{row.text}</p>
-                    {columns.map((col) => {
-                      return (
-                        <div className="m-div">
-                          <label className="m-label">
-                            <input
-                              type="radio"
-                              name={row.key}
-                              className="m-input"
-                              value={col.key}
-                              onChange={handleChange}
-                              checked={checked[`${row.key}${col.key}`]}
-                            ></input>
-                            {col.value}
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </>
+                <div className="left-align-text" key={row.key}>
+                  <p className="question" style={{ color: "#db536a" }}>
+                    <strong>{row.value}</strong>
+                  </p>
+                  <p className="question-sub">{row.text}</p>
+                  {columns.map((col) => {
+                    return (
+                      <div className="m-div" key={col.key}>
+                        <label className="m-label">
+                          <input
+                            type="radio"
+                            name={row.key}
+                            className="m-input"
+                            value={col.key}
+                            onChange={handleChange}
+                            checked={checked[`${row.key}${col.key}`]}
+                          ></input>
+                          {col.value}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
               );
             })}
           </div>
@@ -372,6 +367,7 @@ export default function Question3({ lng }) {
                         {columns.map((col) => {
                           return (
                             <td
+                              key={col.key}
                               className="input-cell"
                               style={{ width: "100px" }}
                             >

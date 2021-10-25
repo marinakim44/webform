@@ -1,5 +1,5 @@
 import { Route, useHistory } from "react-router-dom";
-import { Button, Table, Form } from "react-bootstrap";
+import { Table, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "../App.css";
 import "../Medium.css";
@@ -171,7 +171,7 @@ export default function Question23({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

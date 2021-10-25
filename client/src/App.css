@@ -268,18 +268,12 @@ h1 {
   }
   .dontknow-btn {
     width: 200px;
-    /* border: solid black 1px; */
     border-radius: 4px;
-    /* background-color: white; */
-    height: 35px;
+    height: 86px;
     width: 200px;
   }
-  /* .dontknow-btn:focus {
-    background-color: #db536a;
-    color: white;
-    border: none;
-  } */
   .none-btn {
+    height: 86px;
     width: 200px;
     margin-right: 1rem;
   }

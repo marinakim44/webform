@@ -8,7 +8,6 @@ import ModalAlert from "../ModalAlert";
 import Buttons from "../Buttons";
 
 export default function QuestionB({ lng }) {
-  const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
     if (localStorage.getItem("qb-string")) {
@@ -95,7 +94,7 @@ export default function QuestionB({ lng }) {
       axios
         .post("allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

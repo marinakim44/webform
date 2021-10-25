@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
@@ -110,12 +109,12 @@ export default function Question5({ lng }) {
 
     Object.keys(checked)
       .filter((el) => el === index)
-      .map((el) => {
+      .forEach((el) => {
         checked[el] = true;
       });
     Object.keys(checked)
       .filter((el) => el !== index && el.slice(0, 1) === name)
-      .map((el) => {
+      .forEach((el) => {
         checked[el] = false;
       });
   }
@@ -151,7 +150,7 @@ export default function Question5({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

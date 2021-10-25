@@ -1,5 +1,5 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Route, useHistory } from "react-router-dom";
+import { Form } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import { useState, useEffect } from "react";
@@ -199,7 +199,7 @@ export default function QuestionI({ lng }) {
       axios
         .post("allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -248,7 +248,7 @@ export default function QuestionI({ lng }) {
         </div>
         <Form>
           <Form.Group>
-            <div class="left-align-text">
+            <div className="left-align-text">
               {rows.map((row) => {
                 return (
                   <div

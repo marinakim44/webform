@@ -1,6 +1,5 @@
 import { Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
 import "../App.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
@@ -266,7 +265,7 @@ export default function Question10B({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

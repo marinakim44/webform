@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import { useState, useEffect } from "react";
@@ -219,20 +219,18 @@ export default function Question24({ lng }) {
   useEffect(() => {
     Object.entries(checked)
       .filter((x) => x[1] === true)
-      .map((x) => {
+      .forEach((x) => {
         if (input.filter((el) => el === x[0]).length === 0) {
           input.push(x[0]);
         }
-        return;
       });
 
     Object.entries(checked)
       .filter((x) => x[1] === false)
-      .map((x) => {
+      .forEach((x) => {
         if (input.includes(x[0])) {
-          return setInput(input.filter((e) => e !== x[0]));
+          setInput(input.filter((e) => e !== x[0]));
         }
-        return;
       });
 
     localStorage.setItem("q24-checked", JSON.stringify(checked));
@@ -304,7 +302,7 @@ export default function Question24({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

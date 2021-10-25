@@ -1,5 +1,5 @@
 import { Route, useHistory } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "../App.css";
 import "../Medium.css";
@@ -84,46 +84,13 @@ export default function Question4({ lng }) {
     F4: false,
     F5: false,
   });
-  const [disabled, setDisabled] = useState({
-    A1: false,
-    A2: false,
-    A3: false,
-    A4: false,
-    A5: false,
-    B1: false,
-    B2: false,
-    B3: false,
-    B4: false,
-    B5: false,
-    C1: false,
-    C2: false,
-    C3: false,
-    C4: false,
-    C5: false,
-    D1: false,
-    D2: false,
-    D3: false,
-    D4: false,
-    D5: false,
-    E1: false,
-    E2: false,
-    E3: false,
-    E4: false,
-    E5: false,
-    F1: false,
-    F2: false,
-    F3: false,
-    F4: false,
-    F5: false,
-  });
-
   const errors = [];
   const [other, setOther] = useState("");
   const [list, setList] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log(concerns);
+
     if (localStorage.getItem("q4-checked")) {
       setChecked(JSON.parse(localStorage.getItem("q4-checked")));
     }
@@ -156,7 +123,7 @@ export default function Question4({ lng }) {
 
       Object.entries(checked)
         .filter((el) => el[0].slice(0, 1) === i)
-        .map((v) => {
+        .forEach((v) => {
           if (v[1] === true) {
             if (list.filter((l) => l.slice(0, 1) === i).length < 3) {
               if (!list.includes(v[0])) {
@@ -165,20 +132,16 @@ export default function Question4({ lng }) {
             }
           } else {
             if (list.includes(v[0])) {
-              // list.pop(v[0]);
               setList(list.filter((x) => x !== v[0]));
             }
           }
         });
     });
 
-    console.log(list);
-
     localStorage.setItem("q4-checked", JSON.stringify(checked));
-    localStorage.setItem("q4-disabled", JSON.stringify(disabled));
     localStorage.setItem("q4-other", other);
     localStorage.setItem("q4-list", JSON.stringify(list));
-  }, [checked, disabled, other, list]);
+  }, [checked, other, list, concerns]);
 
   const handleOther = (e) => {
     setOther(e.target.value);
@@ -215,14 +178,14 @@ export default function Question4({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
           }
         })
         .catch((err) => console.log(err.response.data));
-      console.log(JSON.parse(localStorage.getItem("q4-list")));
+
       history.push("/eng-q5");
     }
   };
@@ -395,7 +358,7 @@ export default function Question4({ lng }) {
                 </tr>
                 {rows.map((row) => {
                   return (
-                    <tr className="table-row">
+                    <tr className="table-row" key={row.key}>
                       <td className="left-align-text">{row.value}</td>
                       {concerns.map((concern) => {
                         return (

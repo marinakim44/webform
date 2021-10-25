@@ -211,7 +211,7 @@ export default function Question12({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -277,7 +277,7 @@ export default function Question12({ lng }) {
             <div className="left-align-text">
               {rows.map((row) => {
                 return (
-                  <div>
+                  <div key={row.key}>
                     <p
                       className="question question-options"
                       style={{ color: "#db536a" }}
@@ -288,7 +288,7 @@ export default function Question12({ lng }) {
                     </p>
                     {columns.map((col) => {
                       return (
-                        <div className="m-div">
+                        <div className="m-div" key={col.key}>
                           <label className="m-label">
                             <input
                               type="radio"
@@ -314,19 +314,19 @@ export default function Question12({ lng }) {
                   <tr>
                     <th colSpan="2"></th>
                     {columns.map((column) => {
-                      return <th>{column.value}</th>;
+                      return <th key={column.key}>{column.value}</th>;
                     })}
                   </tr>
                 </thead>
                 <tbody>
                   {rows.map((row) => {
                     return (
-                      <tr>
+                      <tr key={row.key}>
                         <td>{row.key}</td>
                         <td className="left-align-text">{row.value}</td>
                         {columns.map((col) => {
                           return (
-                            <td className="input-cell">
+                            <td className="input-cell" key={col.key}>
                               <label className="label-cell">
                                 <input
                                   type="radio"

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "../App.css";
 import "../Medium.css";
@@ -8,7 +8,6 @@ import ModalAlert from "../ModalAlert";
 import Buttons from "../Buttons";
 
 export default function Question6({ lng }) {
-  const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
     if (localStorage.getItem("q6-checked")) {
@@ -80,7 +79,7 @@ export default function Question6({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

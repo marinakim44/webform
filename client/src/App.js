@@ -69,17 +69,18 @@ export default function App() {
     e.preventDefault();
     setLanguage("English");
     localStorage.setItem("language", language);
-    var date = new Date();
-    var currentDate = date.toLocaleString("ru-KZ", { timeZone: "Asia/Almaty" });
+    // var date = new Date();
+    // var currentDate = date.toLocaleString("ru-KZ", { timeZone: "Asia/Almaty" });
+
     const data = {
       uuid: localStorage.getItem("uuid"),
-      date: currentDate,
+      // date: currentDate,
     };
 
     axios
       .post("/allinputs", data)
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           console.log("Data posted");
         } else {
           console.log("Response status " + response.status);
@@ -92,6 +93,8 @@ export default function App() {
     e.preventDefault();
     setLanguage("Русский");
     localStorage.setItem("language", language);
+    // var date = new Date();
+    // var currentDate = date.toLocaleString("ru-KZ", { timeZone: "Asia/Almaty" });
 
     const data = {
       uuid: localStorage.getItem("uuid"),
@@ -100,7 +103,7 @@ export default function App() {
     axios
       .post("/allinputs", data)
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           console.log("Data posted");
         } else {
           console.log("Response status " + response.status);

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
@@ -8,7 +8,6 @@ import ModalAlert from "../ModalAlert";
 import Buttons from "../Buttons";
 
 export default function QuestionA({ lng }) {
-  const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
     if (localStorage.getItem("qa-checked")) {
@@ -24,8 +23,6 @@ export default function QuestionA({ lng }) {
   const handleShow = () => setShow(true);
   const history = useHistory();
   const [input, setInput] = useState("");
-  const [other, setOther] = useState("");
-
   const [checked, setChecked] = useState({
     option1: false,
     option2: false,
@@ -124,7 +121,7 @@ export default function QuestionA({ lng }) {
       axios
         .post("allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

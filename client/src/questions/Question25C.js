@@ -194,22 +194,6 @@ export default function Question25C({ lng }) {
     M: false,
     N: false,
   });
-  const [disabled, setDisabled] = useState({
-    A: false,
-    B: false,
-    C: false,
-    D: false,
-    E: false,
-    F: false,
-    G: false,
-    H: false,
-    I: false,
-    J: false,
-    K: false,
-    L: false,
-    M: false,
-    N: false,
-  });
 
   const handleClick = (e) => {
     const { name } = e.target;
@@ -232,45 +216,20 @@ export default function Question25C({ lng }) {
 
     if (none === false) {
       setDontknow(false);
-      Object.keys(disabled).map((el) => {
-        disabled[el] = true;
-      });
       setOther("");
-    }
-    if (none === true) {
-      Object.keys(disabled).map((el) => {
-        disabled[el] = false;
-      });
-    }
-  };
-
-  const handleDontknow = () => {
-    setDontknow(!dontknow);
-
-    if (dontknow === false) {
-      setNone(false);
-      Object.keys(disabled).map((el) => {
-        disabled[el] = true;
-      });
-      setOther("");
-    }
-    if (dontknow === true) {
-      Object.keys(disabled).map((el) => {
-        disabled[el] = false;
-      });
     }
   };
 
   useEffect(() => {
     if (dontknow === true || none === true) {
-      Object.keys(checked).map((el) => {
+      Object.keys(checked).forEach((el) => {
         checked[el] = false;
       });
     }
 
     Object.entries(checked)
       .filter((x) => x[1] === true)
-      .map((x) => {
+      .forEach((x) => {
         if (!input.includes(x[0])) {
           input.push(x[0]);
         }
@@ -278,7 +237,7 @@ export default function Question25C({ lng }) {
 
     Object.entries(checked)
       .filter((x) => x[1] === false)
-      .map((x) => {
+      .forEach((x) => {
         if (input.includes(x[0])) {
           setInput(input.filter((el) => el !== x[0]));
         }
@@ -286,19 +245,19 @@ export default function Question25C({ lng }) {
 
     Object.entries(checked)
       .filter((x) => x[1] === true)
-      .map((x) => {
+      .forEach((x) => {
         Object.keys(checked)
           .filter((a) => a === x[0])
-          .map((a) => {
+          .forEach((a) => {
             checked[a] = true;
           });
       });
     Object.entries(checked)
       .filter((x) => x[1] === false)
-      .map((x) => {
+      .forEach((x) => {
         Object.keys(checked)
           .filter((a) => a === x[0])
-          .map((a) => {
+          .forEach((a) => {
             checked[a] = false;
           });
       });
@@ -307,13 +266,7 @@ export default function Question25C({ lng }) {
     localStorage.setItem("q25c", JSON.stringify(input));
     localStorage.setItem("q25c-other", other);
     localStorage.setItem("q25c-checked", JSON.stringify(checked));
-
-    Object.entries(checked)
-      .filter((k) => k[1] === true)
-      .map((k) => {
-        console.log(k[0]);
-      });
-  }, [none, dontknow, input, checked, other, disabled]);
+  }, [none, dontknow, input, checked, other]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -377,7 +330,7 @@ export default function Question25C({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

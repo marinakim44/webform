@@ -122,17 +122,17 @@ export default function Question19({ lng }) {
   useEffect(() => {
     Object.entries(checked)
       .filter((x) => x[1] === true)
-      .map((x) => {
+      .forEach((x) => {
         if (!input.includes(x[0])) {
-          return input.push(x[0]);
+          input.push(x[0]);
         }
       });
 
     Object.entries(checked)
       .filter((x) => x[1] === false)
-      .map((x) => {
+      .forEach((x) => {
         if (input.includes(x[0])) {
-          return setInput(input.filter((a) => a !== x[0]));
+          setInput(input.filter((a) => a !== x[0]));
         }
       });
   }, [checked, input]);
@@ -218,7 +218,7 @@ export default function Question19({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);

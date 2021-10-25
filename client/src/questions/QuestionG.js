@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import { useState, useEffect } from "react";
@@ -130,7 +130,7 @@ export default function QuestionG({ lng }) {
       axios
         .post("allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -190,7 +190,7 @@ export default function QuestionG({ lng }) {
                   name="option"
                   value="option1"
                   className="radio-input m-input"
-                  onClick={handleClick}
+                  onChange={handleClick}
                   checked={checked.option1}
                 ></input>
                 {lng === "English" ? "Yes" : "Да"}
@@ -203,7 +203,7 @@ export default function QuestionG({ lng }) {
                   name="option"
                   value="option2"
                   className="radio-input m-input"
-                  onClick={handleClick}
+                  onChange={handleClick}
                   checked={checked.option2}
                 ></input>
                 {lng === "English" ? "No" : "Нет"}
@@ -216,7 +216,7 @@ export default function QuestionG({ lng }) {
                   name="option"
                   value="option3"
                   className="radio-input m-input"
-                  onClick={handleClick}
+                  onChange={handleClick}
                   checked={checked.option3}
                 ></input>
                 {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}

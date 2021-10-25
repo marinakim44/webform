@@ -196,23 +196,6 @@ export default function Question25({ lng }) {
     N: false,
   });
 
-  const [disabled, setDisabled] = useState({
-    A: false,
-    B: false,
-    C: false,
-    D: false,
-    E: false,
-    F: false,
-    G: false,
-    H: false,
-    I: false,
-    J: false,
-    K: false,
-    L: false,
-    M: false,
-    N: false,
-  });
-
   const handleClick = (e) => {
     const { name } = e.target;
     setChecked((prev) => {
@@ -236,15 +219,7 @@ export default function Question25({ lng }) {
 
     if (none === false) {
       setDontknow(false);
-      Object.keys(disabled).map((el) => {
-        return (disabled[el] = true);
-      });
       setOther("");
-    }
-    if (none === true) {
-      Object.keys(disabled).map((el) => {
-        return (disabled[el] = false);
-      });
     }
   };
 
@@ -253,15 +228,7 @@ export default function Question25({ lng }) {
 
     if (dontknow === false) {
       setNone(false);
-      Object.keys(disabled).map((el) => {
-        return (disabled[el] = true);
-      });
       setOther("");
-    }
-    if (dontknow === true) {
-      Object.keys(disabled).map((el) => {
-        return (disabled[el] = false);
-      });
     }
   };
 
@@ -274,38 +241,36 @@ export default function Question25({ lng }) {
 
     Object.entries(checked)
       .filter((x) => x[1] === true)
-      .map((x) => {
+      .forEach((x) => {
         if (!input.includes(x[0])) {
-          return input.push(x[0]);
+          input.push(x[0]);
         }
-        return;
       });
 
     Object.entries(checked)
       .filter((x) => x[1] === false)
-      .map((x) => {
+      .forEach((x) => {
         if (input.includes(x[0])) {
-          return setInput(input.filter((el) => el !== x[0]));
+          setInput(input.filter((el) => el !== x[0]));
         }
-        return;
       });
 
     Object.entries(checked)
       .filter((x) => x[1] === true)
-      .map((x) => {
+      .forEach((x) => {
         Object.keys(checked)
           .filter((a) => a === x[0])
-          .map((a) => {
-            return (checked[a] = true);
+          .forEach((a) => {
+            checked[a] = true;
           });
       });
     Object.entries(checked)
       .filter((x) => x[1] === false)
-      .map((x) => {
+      .forEach((x) => {
         Object.keys(checked)
           .filter((a) => a === x[0])
-          .map((a) => {
-            return (checked[a] = false);
+          .forEach((a) => {
+            checked[a] = false;
           });
       });
 
@@ -314,7 +279,7 @@ export default function Question25({ lng }) {
     localStorage.setItem("q25", JSON.stringify(input));
     localStorage.setItem("q25-other", other);
     localStorage.setItem("q25-checked", JSON.stringify(checked));
-  }, [none, dontknow, input, checked, other, disabled]);
+  }, [none, dontknow, input, checked, other]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -371,7 +336,7 @@ export default function Question25({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -428,7 +393,7 @@ export default function Question25({ lng }) {
             <div className="left-align-text">
               {rows.map((row) => {
                 return (
-                  <div className="m-div">
+                  <div className="m-div" key={row.key}>
                     <label className="m-label">
                       <input
                         type="checkbox"
@@ -497,7 +462,7 @@ export default function Question25({ lng }) {
                         .filter((row) => row.index < 8)
                         .map((row) => {
                           return (
-                            <tr className="left-align-text">
+                            <tr className="left-align-text" key={row.key}>
                               <td>
                                 <label className="alt-label-cell">
                                   <input
@@ -531,7 +496,7 @@ export default function Question25({ lng }) {
                         .filter((row) => row.index >= 8)
                         .map((row) => {
                           return (
-                            <tr className="left-align-text">
+                            <tr className="left-align-text" key={row.key}>
                               <td>
                                 <label className="alt-label-cell">
                                   <input

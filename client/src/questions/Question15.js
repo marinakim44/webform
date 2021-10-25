@@ -1,5 +1,4 @@
 import { Route, useHistory } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import "../App.css";
 import "../Medium.css";
 import { useState, useEffect } from "react";
@@ -152,19 +151,19 @@ export default function Question15({ lng }) {
       };
     });
 
-    Object.entries(input).map((el) => {
+    Object.entries(input).forEach((el) => {
       Object.keys(checked)
         .filter((y) => y.slice(0, 1) === name && y === index)
-        .map((z) => {
-          return (checked[z] = true);
+        .forEach((z) => {
+          checked[z] = true;
         });
     });
 
-    Object.entries(input).map((el) => {
+    Object.entries(input).forEach((el) => {
       Object.keys(checked)
         .filter((y) => y.slice(0, 1) === name && y !== index)
-        .map((z) => {
-          return (checked[z] = false);
+        .forEach((z) => {
+          checked[z] = false;
         });
     });
   }
@@ -213,7 +212,7 @@ export default function Question15({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -280,7 +279,7 @@ export default function Question15({ lng }) {
           <div className="left-align-text">
             {rows.map((row) => {
               return (
-                <div>
+                <div key={row.key}>
                   <p className="question">
                     <strong style={{ color: "#db536a" }}>
                       {row.key}) {row.value}
@@ -288,7 +287,7 @@ export default function Question15({ lng }) {
                   </p>
                   {columns.map((col) => {
                     return (
-                      <div className="m-div">
+                      <div className="m-div" key={col.key}>
                         <label className="m-label">
                           <input
                             type="radio"
@@ -315,7 +314,7 @@ export default function Question15({ lng }) {
                   <td colSpan="2"></td>
                   {columns.map((col) => {
                     return (
-                      <td>
+                      <td key={col.key}>
                         <strong>{col.value}</strong>
                       </td>
                     );
@@ -323,12 +322,12 @@ export default function Question15({ lng }) {
                 </tr>
                 {rows.map((row) => {
                   return (
-                    <tr className="table-row">
+                    <tr className="table-row" key={row.key}>
                       <td>{row.key}</td>
                       <td className="left-align-text">{row.value}</td>
                       {columns.map((col) => {
                         return (
-                          <td className="input-cell">
+                          <td className="input-cell" key={col.key}>
                             <label className="label-cell">
                               <input
                                 type="radio"

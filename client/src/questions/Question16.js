@@ -1,5 +1,5 @@
 import { Route, useHistory } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "../App.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -166,7 +166,7 @@ export default function Question16({ lng }) {
       axios
         .post("/allinputs", data)
         .then((response) => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             console.log("Data posted");
           } else {
             console.log("Response status " + response.status);
@@ -219,7 +219,7 @@ export default function Question16({ lng }) {
           <div className="left-align-text">
             {rows.map((row) => {
               return (
-                <div className="m-div">
+                <div className="m-div" key={row.key}>
                   <label className="m-label">
                     <input
                       type="radio"
@@ -240,7 +240,7 @@ export default function Question16({ lng }) {
             <div style={{ textAlign: "left" }}>
               {rows.map((row) => {
                 return (
-                  <div className="m-div">
+                  <div className="m-div" key={row.key}>
                     <label className="m-label label-cell">
                       <input
                         type="radio"
