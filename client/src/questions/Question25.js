@@ -450,6 +450,7 @@ export default function Question25({ lng }) {
                 >
                   {lng === "English" ? "DON'T KNOW" : "Затрудняюсь ответить"}
                 </Button>
+                <Buttons lng={lng} click={handleSubmit} />
               </div>
             </div>
           ) : (

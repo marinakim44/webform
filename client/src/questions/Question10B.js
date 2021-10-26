@@ -323,7 +323,7 @@ export default function Question10B({ lng }) {
           <div>
             {rows.map((row) => {
               return (
-                <div>
+                <div key={row.key}>
                   <strong>
                     <p
                       className="question question-options"
@@ -334,7 +334,7 @@ export default function Question10B({ lng }) {
                   </strong>
                   {columns.map((col) => {
                     return (
-                      <div className="m-div left-align-text">
+                      <div className="m-div left-align-text" key={col.key}>
                         <label className="m-label">
                           <input
                             type="radio"

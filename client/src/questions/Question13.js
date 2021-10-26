@@ -159,19 +159,19 @@ export default function Question13({ lng }) {
             <strong>
               {lng === "English" ? "Typically, how many:" : "Обычно сколько:"}
             </strong>
-
-            <li style={{ listStyle: "none" }}>
-              {lng === "English"
-                ? "A) overarching strategic objectives does your company have?"
-                : "A) общих стратегических целей есть у вашей компании?"}
-            </li>
-
-            <li style={{ listStyle: "none" }}>
-              {lng === "English"
-                ? "B) major initiatives does your company have underway in support of those strategic objectives? (in total)"
-                : "B) основных инициатив осуществляет ваша компания в поддержку этих стратегических целей? (в целом)"}
-            </li>
           </p>
+          <li style={{ listStyle: "none" }}>
+            {lng === "English"
+              ? "A) overarching strategic objectives does your company have?"
+              : "A) общих стратегических целей есть у вашей компании?"}
+          </li>
+
+          <li style={{ listStyle: "none" }}>
+            {lng === "English"
+              ? "B) major initiatives does your company have underway in support of those strategic objectives? (in total)"
+              : "B) основных инициатив осуществляет ваша компания в поддержку этих стратегических целей? (в целом)"}
+          </li>
+
           <p className="question-i">
             <i>
               {lng === "English"
@@ -242,12 +242,10 @@ export default function Question13({ lng }) {
                 <Button
                   type="button"
                   variant={dontknow.A === true ? "warning" : "outline-dark"}
-                  // style={dontknow.A === true ? stylesTrue : stylesFalse}
                   name="A"
                   value="dontknow"
                   onClick={handleDontknow}
                   className="dropdown-btn"
-                  // checked={dontknow.A === true ? true : false}
                 >
                   {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
                 </Button>
@@ -305,7 +303,6 @@ export default function Question13({ lng }) {
                     variant="light"
                     id="dropdown-basic"
                     className="dropdown-toggle"
-                    // disabled={dontknow.B === true ? true : false}
                   >
                     {inputB ? inputB : lng === "English" ? "Select" : "Выбрать"}
                   </Dropdown.Toggle>
@@ -335,7 +332,7 @@ export default function Question13({ lng }) {
                   onClick={handleDontknow}
                   className="dropdown-btn"
                 >
-                  {lng === "English" ? "Don't know" : "Выбрать"}
+                  {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
                 </Button>
               </Col>
             </Row>

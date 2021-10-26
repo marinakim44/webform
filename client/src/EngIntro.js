@@ -104,7 +104,7 @@ export default function EngIntro({ lng }) {
 
         <Button
           style={{ border: "none" }}
-          className="next-btn"
+          className="next-btn start-btn"
           onClick={handleSubmit}
         >
           {lng === "English" ? "Start" : "Начать"}

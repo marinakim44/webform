@@ -233,83 +233,90 @@ export default function Question4({ lng }) {
         </div>
 
         {width <= 768 ? (
-          <div className="left-align-text">
-            {concerns.map((concern) => {
-              return (
-                <div key={concern}>
-                  <p className="question" style={{ color: "#db536a" }}>
-                    {lng === "English" ? (
-                      <strong>
-                        {concern === "A"
-                          ? "Macroeconomic volatility"
-                          : concern === "B"
-                          ? "Climate change"
-                          : concern === "C"
-                          ? "Social inequality"
-                          : concern === "D"
-                          ? "Geopolitical conflict"
-                          : concern === "E"
-                          ? "Cyber risks"
-                          : concern === "F"
-                          ? "Health risks"
-                          : ""}
-                      </strong>
-                    ) : (
-                      <strong>
-                        {concern === "A"
-                          ? "Макроэкономическая волатильность"
-                          : concern === "B"
-                          ? "Изменение климата"
-                          : concern === "C"
-                          ? "Социальное неравенство"
-                          : concern === "D"
-                          ? "Геополитические конфликты"
-                          : concern === "E"
-                          ? "Кибер-риски"
-                          : concern === "F"
-                          ? "Риски для здоровья"
-                          : ""}
-                      </strong>
-                    )}
-                  </p>
-                  {rows.map((row) => {
-                    return (
-                      <div key={row.key} className="m-div">
-                        <label className="m-label">
-                          <input
-                            type="checkbox"
-                            name={concern.slice(0, 1)}
-                            value={row.key}
-                            onChange={handleChange}
-                            checked={
-                              checked[`${concern.slice(0, 1)}${row.key}`]
-                            }
-                            disabled={
-                              Object.entries(checked).filter(
-                                (el) =>
-                                  el[0].slice(0, 1) === concern.slice(0, 1) &&
-                                  el[1] === true
-                              ).length === 3 &&
-                              !checked[`${concern.slice(0, 1)}${row.key}`]
-                            }
-                          ></input>
-                          {row.value}
-                        </label>
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            })}
-            <Form.Group>
-              <Form.Control
-                placeholder="Other (please specify)"
-                onChange={handleOther}
-                value={other}
-                className="input-text"
-              ></Form.Control>
-            </Form.Group>
-          </div>
+          <>
+            <div className="left-align-text">
+              {concerns.map((concern) => {
+                return (
+                  <div key={concern}>
+                    <p className="question" style={{ color: "#db536a" }}>
+                      {lng === "English" ? (
+                        <strong>
+                          {concern === "A"
+                            ? "Macroeconomic volatility"
+                            : concern === "B"
+                            ? "Climate change"
+                            : concern === "C"
+                            ? "Social inequality"
+                            : concern === "D"
+                            ? "Geopolitical conflict"
+                            : concern === "E"
+                            ? "Cyber risks"
+                            : concern === "F"
+                            ? "Health risks"
+                            : ""}
+                        </strong>
+                      ) : (
+                        <strong>
+                          {concern === "A"
+                            ? "Макроэкономическая волатильность"
+                            : concern === "B"
+                            ? "Изменение климата"
+                            : concern === "C"
+                            ? "Социальное неравенство"
+                            : concern === "D"
+                            ? "Геополитические конфликты"
+                            : concern === "E"
+                            ? "Кибер-риски"
+                            : concern === "F"
+                            ? "Риски для здоровья"
+                            : ""}
+                        </strong>
+                      )}
+                    </p>
+                    {rows.map((row) => {
+                      return (
+                        <div key={row.key} className="m-div">
+                          <label className="m-label">
+                            <input
+                              type="checkbox"
+                              name={concern.slice(0, 1)}
+                              value={row.key}
+                              onChange={handleChange}
+                              checked={
+                                checked[`${concern.slice(0, 1)}${row.key}`]
+                              }
+                              disabled={
+                                Object.entries(checked).filter(
+                                  (el) =>
+                                    el[0].slice(0, 1) === concern.slice(0, 1) &&
+                                    el[1] === true
+                                ).length === 3 &&
+                                !checked[`${concern.slice(0, 1)}${row.key}`]
+                              }
+                            ></input>
+                            {row.value}
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              <Form.Group>
+                <Form.Control
+                  placeholder={
+                    lng === "English"
+                      ? "Other (please specify)"
+                      : "Прочее (пожалуйста укажите)"
+                  }
+                  onChange={handleOther}
+                  value={other}
+                  className="input-text"
+                ></Form.Control>
+              </Form.Group>
+            </div>
+            <Buttons lng={lng} click={handleSubmit} />
+          </>
         ) : (
           <Form>
             <table className="table">
