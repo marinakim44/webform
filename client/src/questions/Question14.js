@@ -295,10 +295,18 @@ export default function Question14({ lng }) {
               <tbody>
                 <tr style={{ fontWeight: "bold", color: "#dc3545" }}>
                   <td colSpan="2" rowSpan="2"></td>
-                  <td colSpan="3">Реже</td>
-                  <td rowSpan="2">Каждый год</td>
-                  <td colSpan="3">Чаще</td>
-                  <td rowSpan="2">Затрудняюсь ответить</td>
+                  <td colSpan="3">
+                    {lng === "English" ? "Less often" : "Реже"}
+                  </td>
+                  <td rowSpan="2">
+                    {lng === "English" ? "Every year" : "Каждый год"}
+                  </td>
+                  <td colSpan="3">
+                    {lng === "English" ? "More often" : "Чаще"}
+                  </td>
+                  <td rowSpan="2">
+                    {lng === "English" ? "Don't know" : "Затрудняюсь ответить"}
+                  </td>
                 </tr>
                 <tr>
                   {columns

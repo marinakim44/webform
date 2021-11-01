@@ -241,7 +241,7 @@ export default function Question5({ lng }) {
             <div className="left-align-text">
               {rows.map((row) => {
                 return (
-                  <div>
+                  <div key={row.key}>
                     <p
                       className="question question-options"
                       style={{ color: "#db536a" }}
@@ -252,7 +252,7 @@ export default function Question5({ lng }) {
                     </p>
                     {columns.map((col) => {
                       return (
-                        <div className="m-div">
+                        <div className="m-div" key={col.key}>
                           <label className="m-label">
                             <input
                               className="m-input"

@@ -362,8 +362,9 @@ export default function Question25C({ lng }) {
             {lng === "English" ? (
               <>
                 <p className="question">
-                  Which three of these outcomes do you think should be
-                  government priorities in Kazakhstan?
+                  In order to achieve goals (if any) which of stated below, your
+                  company is interested in cooperation with government agencies
+                  in the next three years?
                 </p>
                 <p className="question-i">
                   <i>SELECT ALL THAT APPLY</i>

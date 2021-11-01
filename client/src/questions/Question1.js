@@ -239,7 +239,7 @@ export default function Question1({ lng }) {
           <div className="left-align-text">
             {rows.map((row) => {
               return (
-                <div>
+                <div key={row.key}>
                   <strong>
                     <p style={{ color: "#db536a" }} className="question">
                       {row.key}) {row.value}
@@ -248,7 +248,7 @@ export default function Question1({ lng }) {
 
                   {columns.map((col) => {
                     return (
-                      <div className="m-div">
+                      <div className="m-div" key={col.key}>
                         <label className="m-label">
                           <input
                             className="m-input"

@@ -276,7 +276,7 @@ export default function Question19({ lng }) {
           <div className="left-align-text">
             {rows.map((row) => {
               return (
-                <div className="m-div">
+                <div className="m-div" key={row.key}>
                   <label>
                     <input
                       style={{ marginRight: "8px" }}

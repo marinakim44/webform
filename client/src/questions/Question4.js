@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
-import ModalAlert from "../ModalAlert";
+// import ModalAlert from "../ModalAlert";
 import Buttons from "../Buttons";
 
 export default function Question4({ lng }) {
@@ -47,9 +47,9 @@ export default function Question4({ lng }) {
   ];
 
   const width = window.screen.width;
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
   const history = useHistory();
   const [concerns, setConcerns] = useState([]);
   const [checked, setChecked] = useState({
@@ -84,7 +84,7 @@ export default function Question4({ lng }) {
     F4: false,
     F5: false,
   });
-  const errors = [];
+  // const errors = [];
   const [other, setOther] = useState("");
   const [list, setList] = useState([]);
 
@@ -149,45 +149,45 @@ export default function Question4({ lng }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    concerns.forEach((el) => {
-      var i = el.slice(0, 1);
+    // concerns.forEach((el) => {
+    //   var i = el.slice(0, 1);
 
-      if (!list.filter((l) => l.slice(0, 1) === i).length > 0) {
-        errors.push(i);
-      }
-    });
+    //   if (!list.filter((l) => l.slice(0, 1) === i).length > 0) {
+    //     errors.push(i);
+    //   }
+    // });
 
-    if (errors.length > 0) {
-      handleShow();
-    } else {
-      const data = {
-        uuid: localStorage.getItem("uuid"),
-        name: localStorage.getItem("name"),
-        company: localStorage.getItem("company"),
-        title: localStorage.getItem("title"),
-        email: localStorage.getItem("email"),
-        phone: localStorage.getItem("phone"),
-        q1: JSON.parse(localStorage.getItem("q1")),
-        q2: JSON.parse(localStorage.getItem("q2")),
-        q2dontknow: localStorage.getItem("q2-dontknow"),
-        q3: JSON.parse(localStorage.getItem("q3")),
-        q4: JSON.parse(localStorage.getItem("q4-list")),
-        q4other: localStorage.getItem("q4-other"),
-      };
+    // if (errors.length > 0) {
+    //   handleShow();
+    // } else {
+    const data = {
+      uuid: localStorage.getItem("uuid"),
+      name: localStorage.getItem("name"),
+      company: localStorage.getItem("company"),
+      title: localStorage.getItem("title"),
+      email: localStorage.getItem("email"),
+      phone: localStorage.getItem("phone"),
+      q1: JSON.parse(localStorage.getItem("q1")),
+      q2: JSON.parse(localStorage.getItem("q2")),
+      q2dontknow: localStorage.getItem("q2-dontknow"),
+      q3: JSON.parse(localStorage.getItem("q3")),
+      q4: JSON.parse(localStorage.getItem("q4-list")),
+      q4other: localStorage.getItem("q4-other"),
+    };
 
-      axios
-        .post("/allinputs", data)
-        .then((response) => {
-          if (response.status === 200) {
-            console.log("Data posted");
-          } else {
-            console.log("Response status " + response.status);
-          }
-        })
-        .catch((err) => console.log(err.response.data));
+    axios
+      .post("/allinputs", data)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("Data posted");
+        } else {
+          console.log("Response status " + response.status);
+        }
+      })
+      .catch((err) => console.log(err.response.data));
 
-      history.push("/eng-q5");
-    }
+    history.push("/eng-q5");
+    // }
   };
 
   return (
@@ -206,7 +206,7 @@ export default function Question4({ lng }) {
               }}
             ></div>
           </div>
-          <ModalAlert show={show} close={handleClose} />
+          {/* <ModalAlert show={show} close={handleClose} /> */}
           <div className="left-align-text">
             {lng === "English" ? (
               <span className="question">
