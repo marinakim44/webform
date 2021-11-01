@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   let response = new Response({
+    date: req.body.date,
     uuid: req.body.uuid,
     name: req.body.name,
     company: req.body.company,
@@ -90,6 +91,7 @@ router.post("/", async (req, res) => {
   Answer.findOneAndUpdate(
     { uuid: req.body.uuid },
     {
+      date: req.body.date,
       name: req.body.name,
       company: req.body.company,
       title: req.body.title,

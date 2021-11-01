@@ -69,12 +69,9 @@ export default function App() {
     e.preventDefault();
     setLanguage("English");
     localStorage.setItem("language", language);
-    // var date = new Date();
-    // var currentDate = date.toLocaleString("ru-KZ", { timeZone: "Asia/Almaty" });
-
     const data = {
       uuid: localStorage.getItem("uuid"),
-      // date: currentDate,
+      date: new Date().toLocaleString("ru-KZ", { timeZone: "Asia/Almaty" }),
     };
 
     axios
@@ -98,6 +95,7 @@ export default function App() {
 
     const data = {
       uuid: localStorage.getItem("uuid"),
+      date: new Date().toLocaleString("ru-KZ", { timeZone: "Asia/Almaty" }),
     };
 
     axios
