@@ -235,13 +235,12 @@ export default function Question10B({ lng }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // localStorage.setItem("q10b-checked", JSON.stringify(checked));
-
     if (Object.entries(input).filter((el) => el[1] === "").length > 0) {
       handleShow();
     } else {
       const data = {
         uuid: localStorage.getItem("uuid"),
+        date: localStorage.getItem("date"),
         name: localStorage.getItem("name"),
         company: localStorage.getItem("company"),
         title: localStorage.getItem("title"),

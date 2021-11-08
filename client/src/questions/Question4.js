@@ -149,19 +149,10 @@ export default function Question4({ lng }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // concerns.forEach((el) => {
-    //   var i = el.slice(0, 1);
 
-    //   if (!list.filter((l) => l.slice(0, 1) === i).length > 0) {
-    //     errors.push(i);
-    //   }
-    // });
-
-    // if (errors.length > 0) {
-    //   handleShow();
-    // } else {
     const data = {
       uuid: localStorage.getItem("uuid"),
+      date: localStorage.getItem("date"),
       name: localStorage.getItem("name"),
       company: localStorage.getItem("company"),
       title: localStorage.getItem("title"),
@@ -217,6 +208,10 @@ export default function Question4({ lng }) {
                     PLEASE SELECT UP TO THREE RESPONSES PER EACH COLUMN
                   </p>
                 </i>
+                <br />
+                <strong>
+                  <p>It could inhibit our company’s ability to…</p>
+                </strong>
               </span>
             ) : (
               <span className="question">
@@ -227,6 +222,10 @@ export default function Question4({ lng }) {
                     ДЛЯ КАЖДОЙ СТРОКИ УКАЖИТЕ ТОЛЬКО ОДИН ВАРИАНТ ОТВЕТА
                   </p>
                 </i>
+                <br />
+                <strong>
+                  <p>Это может помешать нашей компании...</p>
+                </strong>
               </span>
             )}
           </div>

@@ -146,30 +146,30 @@ export default function Question1({ lng }) {
 
     if (input.A && input.B) {
       history.push("/eng-q2");
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        date: localStorage.getItem("date"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1: JSON.parse(localStorage.getItem("q1")),
+      };
+
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err.response.data));
     } else {
       handleShow();
     }
-
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1: JSON.parse(localStorage.getItem("q1")),
-    };
-
-    axios
-      .post("/allinputs", data)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log("Data posted");
-        } else {
-          console.log("Response status " + response.status);
-        }
-      })
-      .catch((err) => console.log(err.response.data));
   }
 
   return (

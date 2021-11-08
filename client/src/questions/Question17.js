@@ -293,6 +293,7 @@ export default function Question17({ lng }) {
 
       const data = {
         uuid: localStorage.getItem("uuid"),
+        date: localStorage.getItem("date"),
         name: localStorage.getItem("name"),
         company: localStorage.getItem("company"),
         title: localStorage.getItem("title"),

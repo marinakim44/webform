@@ -8,6 +8,7 @@ export default function EngIntro({ lng }) {
   const handleSubmit = () => {
     const data = {
       uuid: localStorage.getItem("uuid"),
+      date: localStorage.getItem("date"),
     };
 
     axios

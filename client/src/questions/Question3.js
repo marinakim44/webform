@@ -230,6 +230,31 @@ export default function Question3({ lng }) {
     localStorage.setItem("q3", JSON.stringify(input));
 
     if (input.A && input.B && input.C && input.D && input.E && input.F) {
+      const data = {
+        uuid: localStorage.getItem("uuid"),
+        date: localStorage.getItem("date"),
+        name: localStorage.getItem("name"),
+        company: localStorage.getItem("company"),
+        title: localStorage.getItem("title"),
+        email: localStorage.getItem("email"),
+        phone: localStorage.getItem("phone"),
+        q1: JSON.parse(localStorage.getItem("q1")),
+        q2: JSON.parse(localStorage.getItem("q2")),
+        q2dontknow: localStorage.getItem("q2-dontknow"),
+        q3: JSON.parse(localStorage.getItem("q3")),
+      };
+
+      axios
+        .post("/allinputs", data)
+        .then((response) => {
+          if (response.status === 200) {
+            console.log("Data posted");
+          } else {
+            console.log("Response status " + response.status);
+          }
+        })
+        .catch((err) => console.log(err.response.data));
+
       if (concerns.length > 0) {
         history.push("/eng-q4");
       } else {
@@ -238,30 +263,6 @@ export default function Question3({ lng }) {
     } else {
       handleShow();
     }
-
-    const data = {
-      uuid: localStorage.getItem("uuid"),
-      name: localStorage.getItem("name"),
-      company: localStorage.getItem("company"),
-      title: localStorage.getItem("title"),
-      email: localStorage.getItem("email"),
-      phone: localStorage.getItem("phone"),
-      q1: JSON.parse(localStorage.getItem("q1")),
-      q2: JSON.parse(localStorage.getItem("q2")),
-      q2dontknow: localStorage.getItem("q2-dontknow"),
-      q3: JSON.parse(localStorage.getItem("q3")),
-    };
-
-    axios
-      .post("/allinputs", data)
-      .then((response) => {
-        if (response.status === 200) {
-          console.log("Data posted");
-        } else {
-          console.log("Response status " + response.status);
-        }
-      })
-      .catch((err) => console.log(err.response.data));
   }
 
   return (
