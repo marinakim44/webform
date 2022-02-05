@@ -8,7 +8,7 @@ module.exports = function (app) {
   ),
     app.use(
       createProxyMiddleware("/allinputs", {
-        target: "https://ancient-ridge-93546.herokuapp.com",
+        target: "https://yourapp.herokuapp.com",
         changeOrigin: true,
       })
     );
