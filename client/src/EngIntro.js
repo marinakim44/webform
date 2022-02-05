@@ -29,76 +29,72 @@ export default function EngIntro({ lng }) {
       <div className="main">
         {lng === "English" ? (
           <>
-            <h1 className="intro-heading">25th Annual Global CEO Survey</h1>
+            <h1 className="intro-heading">Lorem Ipsum (English)</h1>
             <p className="intro-text">
-              For more than two decades, PwC's Annual Global CEO Survey has
-              opened a unique window on the thinking of chief executives around
-              the world. This year, we're celebrating our 25th anniversary of
-              Global CEO Survey and 10th anniversary in Kazakhstan. <br />
-              <br /> It is our hope that the survey results—historically
-              released in Davos on the eve of the Annual Meeting of the World
-              Economic Forum—will stimulate fresh thinking and enduring insights
-              on the relationship between external forces, strategic objectives,
-              organisational responses and corporate performance. Many of this
-              year’s questions reflect our aspiration to dig deeper, and we want
-              to thank you in advance for your participation.
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. <br />
               <br />
-              <br /> Kazakhstan’s findings of the report will be released in
-              cooperation with Forbes Kazakhstan in April 2022. <br />
+              It has survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum. <br />
               <br />
-              <i>
-                This research is conducted in accordance with the Market
-                Research Society Code of Conduct, which is designed to safeguard
-                participant confidentiality and anonymity. If you complete the
-                survey, your responses will be combined with others at the
-                aggregate, industry, region and country/territory level to
-                reveal a consensus of opinion on these issues. Your data may
-                also be combined with other research conducted by PwC or
-                publicly available information in order to obtain further
-                insight. All responses will be kept completely confidential, and
-                individual responses will never be attributed without your prior
-                consent.
-              </i>
+              Contrary to popular belief, Lorem Ipsum is not simply random text.
+              It has roots in a piece of classical Latin literature from 45 BC,
+              making it over 2000 years old. Richard McClintock, a Latin
+              professor at Hampden-Sydney College in Virginia, looked up one of
+              the more obscure Latin words, consectetur, from a Lorem Ipsum
+              passage, and going through the cites of the word in classical
+              literature, discovered the undoubtable source. Lorem Ipsum comes
+              from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et
+              Malorum" (The Extremes of Good and Evil) by Cicero, written in 45
+              BC. This book is a treatise on the theory of ethics, very popular
+              during the Renaissance. The first line of Lorem Ipsum, "Lorem
+              ipsum dolor sit amet..", comes from a line in section 1.10.32. The
+              standard chunk of Lorem Ipsum used since the 1500s is reproduced
+              below for those interested. Sections 1.10.32 and 1.10.33 from "de
+              Finibus Bonorum et Malorum" by Cicero are also reproduced in their
+              exact original form, accompanied by English versions from the 1914
+              translation by H. Rackham.
             </p>
           </>
         ) : (
           <>
-            <h1 className="intro-heading">
-              25-ый Ежегодный опрос руководителей крупнейших компаний мира
-            </h1>
+            <h1 className="intro-heading">Lorem Ipsum (Russian)</h1>
             <p className="intro-text">
-              Ежегодный опрос руководителей крупнейших компаний, проводимый PwC
-              на протяжении более двух десятилетий, позволяет ознакомиться с
-              мнениями лидеров бизнеса по всему миру. В этом году, мы отмечаем
-              25-ю годовщину глобального исследования и 10-ю годовщину в
-              Казахстане.
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book. <br />
               <br />
-              <br /> Мы надеемся, что результаты опроса, по традиции публикуемые
-              в Давосе накануне ежегодного Всемирного экономического форума,
-              будут стимулировать новое мышление и глубокое понимание
-              взаимосвязи между внешними силами, стратегическими целями,
-              реакцией организаций и корпоративной эффективностью. Многие
-              вопросы этого года отражают наше стремление проводить более
-              тщательное исследование, и мы хотим заранее поблагодарить вас за
-              участие.
+              It has survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum. <br />
               <br />
-              <br /> Результаты казахстанской версии исследования будут
-              представлены совместно с Forbes Kazakhstan в апреле 2022 года.
-              <br />
-              <br />
-              <i>
-                Данное исследование проводится в соответствии с Кодексом
-                поведения Ассоциации Рыночных Исследований, обеспечивающего
-                конфиденциальность и анонимность участников. Если Вы пройдете
-                опрос, Ваши ответы будут внесены с остальными в базу на
-                агрегированном, промышленном, региональном или территориальном
-                уровнях для достижения консенсуса по данным вопросам. Ваши
-                данные также могут быть объединены с другими исследованиями,
-                проведенными PwC, или общедоступной информацией для дальнейшего
-                изучения. Все ответы будут храниться в условиях строжайшей
-                конфиденциальности, и они никогда не будут обнародованы без
-                вашего предварительного согласия.
-              </i>
+              Contrary to popular belief, Lorem Ipsum is not simply random text.
+              It has roots in a piece of classical Latin literature from 45 BC,
+              making it over 2000 years old. Richard McClintock, a Latin
+              professor at Hampden-Sydney College in Virginia, looked up one of
+              the more obscure Latin words, consectetur, from a Lorem Ipsum
+              passage, and going through the cites of the word in classical
+              literature, discovered the undoubtable source. Lorem Ipsum comes
+              from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et
+              Malorum" (The Extremes of Good and Evil) by Cicero, written in 45
+              BC. This book is a treatise on the theory of ethics, very popular
+              during the Renaissance. The first line of Lorem Ipsum, "Lorem
+              ipsum dolor sit amet..", comes from a line in section 1.10.32. The
+              standard chunk of Lorem Ipsum used since the 1500s is reproduced
+              below for those interested. Sections 1.10.32 and 1.10.33 from "de
+              Finibus Bonorum et Malorum" by Cicero are also reproduced in their
+              exact original form, accompanied by English versions from the 1914
+              translation by H. Rackham.
             </p>
           </>
         )}

@@ -14,57 +14,36 @@ export default function Question3({ lng }) {
   const rows = [
     {
       key: "A",
-      value:
-        lng === "English"
-          ? "Macroeconomic volatility"
-          : "Макроэкономическая волатильность",
-      text:
-        lng === "English"
-          ? "(including in GDP, unemployment, inflation)"
-          : "(включая ВВП, безработицу, инфляцию)",
+      value: lng === "English" ? "Threat 1" : "Угроза 1",
+      text: lng === "English" ? "(comments)" : "(комментарии)",
     },
     {
       key: "B",
-      value: lng === "English" ? "Climate change" : "Изменение климата",
-      text:
-        lng === "English"
-          ? "(including physical risks and transition risks such as policy & legal, markets, technology and reputation risks)"
-          : "(включая физические риски и переходные риски, такие как политические и юридические, рыночные, технологические и репутационные риски)",
+      value: lng === "English" ? "Threat 2" : "Угроза 2",
+      text: lng === "English" ? "(comments)" : "(комментарии)",
     },
     {
       key: "C",
-      value: lng === "English" ? "Social inequality" : "Социальное неравенство",
-      text:
-        lng === "English"
-          ? "(including those stemming from gender, race and ethnicity, wealth)"
-          : "(включая связанное с полом, расой и этнической принадлежностью, финансовым положением)",
+      value: lng === "English" ? "Threat 3" : "Угроза 3",
+      text: lng === "English" ? "(comments)" : "(комментарии)",
     },
     {
       key: "D",
-      value:
-        lng === "English"
-          ? "Geopolitical conflict"
-          : "Геополитические конфликты",
-      text:
-        lng === "English"
-          ? "(including resource and trade disputes, terrorism, interstate violence)"
-          : "(включая ресурсные и торговые споры, терроризм, межгосударственные силовые действия)",
+      value: lng === "English" ? "Threat 4" : "Угроза 4",
+      text: lng === "English" ? "(comments)" : "(комментарии)",
     },
     {
       key: "E",
-      value: lng === "English" ? "Cyber risks" : "Кибер-риски",
+      value: lng === "English" ? "Threat 5" : "Угроза 5",
       text:
         lng === "English"
-          ? "(including hacking, surveillance, disinformation)"
+          ? "(comments)"
           : "(включая взлом, слежку, дезинформацию)",
     },
     {
       key: "F",
-      value: lng === "English" ? "Health risks" : "Риски для здоровья",
-      text:
-        lng === "English"
-          ? "(including COVID-19 and other pandemics, chronic illness, strains on mental health)"
-          : "(включая COVID-19 и другие пандемии, хронические заболевания, перенапряжение психики)",
+      value: lng === "English" ? "Threat 6" : "Угроза 6",
+      text: lng === "English" ? "(comments)" : "(комментарии)",
     },
   ];
 
@@ -270,14 +249,14 @@ export default function Question3({ lng }) {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 4).toString())}%{" "}
+            {Math.round(((100 / 12) * 4).toString())}%{" "}
             {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 39) * 4).toString() + "%",
+                width: ((100 / 12) * 4).toString() + "%",
               }}
             ></div>
           </div>

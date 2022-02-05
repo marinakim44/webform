@@ -281,14 +281,14 @@ export default function Question10B({ lng }) {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 11).toString())}%{" "}
+            {Math.round(((100 / 12) * 11).toString())}%{" "}
             {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 39) * 11).toString() + "%",
+                width: ((100 / 12) * 11).toString() + "%",
               }}
             ></div>
           </div>

@@ -11,38 +11,23 @@ export default function Question4({ lng }) {
   const rows = [
     {
       key: "1",
-      value:
-        lng === "English"
-          ? "...develop products/services (including sourcing and procuring materials/inputs, manufacturing)"
-          : "...разрабатывать продукты/услуги (включая поиск и закупку материалов/ресурсов, производство",
+      value: lng === "English" ? "...option 1" : "...вариант 1",
     },
     {
       key: "2",
-      value:
-        lng === "English"
-          ? "...sell products/services (including sales and marketing, distribution, public relations)"
-          : "...продавать товары/услуги (включая продажи и маркетинг, дистрибуцию, связь с общественностью",
+      value: lng === "English" ? "...option 2" : "...вариант 2",
     },
     {
       key: "3",
-      value:
-        lng === "English"
-          ? "...raise capital (including cost of capital, sources of funding, reporting and compliance)"
-          : "...привлекать капитал (включая стоимость капитала, источники финансирования, отчетность и нормативно-правовое соответствие",
+      value: lng === "English" ? "...option 3" : "...вариант 3",
     },
     {
       key: "4",
-      value:
-        lng === "English"
-          ? "...attract and retain key skills/talent (including reputation, rewards and benefits, culture)"
-          : "...привлекать и удерживать ключеввых специалистов/кадры (включая репутацию, поощрения и льготы, культуру",
+      value: lng === "English" ? "...option 4" : "...вариант 4",
     },
     {
       key: "5",
-      value:
-        lng === "English"
-          ? "...innovate through technology or processes (including research and development, collaboration, creativity)"
-          : "...внедрять инновации с помощью технологий или процессов (включая научные исследования и разработки, сотрудничество, творчество",
+      value: lng === "English" ? "...option 5" : "...вариант 5",
     },
   ];
 
@@ -186,14 +171,14 @@ export default function Question4({ lng }) {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 5).toString())}%{" "}
+            {Math.round(((100 / 12) * 5).toString())}%{" "}
             {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 39) * 5).toString() + "%",
+                width: ((100 / 12) * 5).toString() + "%",
               }}
             ></div>
           </div>
@@ -241,33 +226,33 @@ export default function Question4({ lng }) {
                       {lng === "English" ? (
                         <strong>
                           {concern === "A"
-                            ? "Macroeconomic volatility"
+                            ? "Threat 1"
                             : concern === "B"
-                            ? "Climate change"
+                            ? "Threat 2"
                             : concern === "C"
-                            ? "Social inequality"
+                            ? "Threat 3"
                             : concern === "D"
-                            ? "Geopolitical conflict"
+                            ? "Threat 4"
                             : concern === "E"
-                            ? "Cyber risks"
+                            ? "Threat 5"
                             : concern === "F"
-                            ? "Health risks"
+                            ? "Threat 6"
                             : ""}
                         </strong>
                       ) : (
                         <strong>
                           {concern === "A"
-                            ? "Макроэкономическая волатильность"
+                            ? "Угроза 1"
                             : concern === "B"
-                            ? "Изменение климата"
+                            ? "Угроза 2"
                             : concern === "C"
-                            ? "Социальное неравенство"
+                            ? "Угроза 3"
                             : concern === "D"
-                            ? "Геополитические конфликты"
+                            ? "Угроза 4"
                             : concern === "E"
-                            ? "Кибер-риски"
+                            ? "Угроза 5"
                             : concern === "F"
-                            ? "Риски для здоровья"
+                            ? "Угроза 6"
                             : ""}
                         </strong>
                       )}
@@ -328,33 +313,33 @@ export default function Question4({ lng }) {
                         {lng === "English" ? (
                           <strong>
                             {concern === "A"
-                              ? "Macroeconomic volatility"
+                              ? "Threat 1"
                               : concern === "B"
-                              ? "Climate change"
+                              ? "Threat 2"
                               : concern === "C"
-                              ? "Social inequality"
+                              ? "Threat 3"
                               : concern === "D"
-                              ? "Geopolitical conflict"
+                              ? "Threat 4"
                               : concern === "E"
-                              ? "Cyber risks"
+                              ? "Threat 5"
                               : concern === "F"
-                              ? "Health risks"
+                              ? "Threat 6"
                               : ""}
                           </strong>
                         ) : (
                           <strong>
                             {concern === "A"
-                              ? "Макроэкономическая волатильность"
+                              ? "Угроза 1"
                               : concern === "B"
-                              ? "Изменение климата"
+                              ? "Угроза 2"
                               : concern === "C"
-                              ? "Социальное неравенство"
+                              ? "Угроза 3"
                               : concern === "D"
-                              ? "Геополитические конфликты"
+                              ? "Угроза 4"
                               : concern === "E"
-                              ? "Кибер-риски"
+                              ? "Угроза 5"
                               : concern === "F"
-                              ? "Риски для здоровья"
+                              ? "Угроза 6"
                               : ""}
                           </strong>
                         )}

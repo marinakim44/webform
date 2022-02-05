@@ -6,7 +6,7 @@ export default function EngFinish({ lng }) {
   const width = window.screen.width;
   useEffect(() => {
     window.scrollTo(0, 0);
-    // window.localStorage.clear();
+    window.localStorage.clear();
   }, []);
   return (
     <Route path="/eng-finish">
@@ -30,31 +30,38 @@ export default function EngFinish({ lng }) {
                 {" "}
                 <h1 className="intro-heading">Thank you!</h1>
                 <p className="intro-text">
-                  CLOSE SURVEY: This concludes our survey. Thank you for taking
-                  the time to answer our questions. Your responses will be
-                  combined with others at the aggregate, industry, region and
-                  country/territory level to reveal a consensus of opinion on
-                  these issues. Your data may also be combined with other
-                  research conducted by PwC or publicly available information in
-                  order to obtain further insight. All responses will be kept
-                  completely confidential, and individual responses will never
-                  be attributed without your prior consent.
+                  CLOSE SURVEY: <br />
+                  <br />
+                  Why do we use it? It is a long established fact that a reader
+                  will be distracted by the readable content of a page when
+                  looking at its layout. The point of using Lorem Ipsum is that
+                  it has a more-or-less normal distribution of letters, as
+                  opposed to using 'Content here, content here', making it look
+                  like readable English. Many desktop publishing packages and
+                  web page editors now use Lorem Ipsum as their default model
+                  text, and a search for 'lorem ipsum' will uncover many web
+                  sites still in their infancy. Various versions have evolved
+                  over the years, sometimes by accident, sometimes on purpose
+                  (injected humour and the like).
                 </p>
               </>
             ) : (
               <>
                 <h1 className="intro-heading">Благодарим за участие!</h1>
                 <p className="intro-text">
-                  ЗАВЕРШЕНИЕ ОПРОСА: На этом наш опрос завершен. Благодарим Вас
-                  за то, что уделили время и ответили на наши вопросы. Ваши
-                  ответы будут внесены с остальными в базу на агрегированном,
-                  отраслевом, региональном и территориальном уровнях для
-                  достижения консенсуса по данным вопросам. Ваши данные также
-                  могут быть объединены с другим исследованием, проведенным PwC,
-                  или с общедоступной информацией для дальнейшего изучения. Все
-                  ответы будут храниться в условиях строжайшей
-                  конфиденциальности, и они никогда не будут обнародованы без
-                  Вашего предварительного согласия.
+                  CLOSE SURVEY: <br />
+                  <br />
+                  Why do we use it? It is a long established fact that a reader
+                  will be distracted by the readable content of a page when
+                  looking at its layout. The point of using Lorem Ipsum is that
+                  it has a more-or-less normal distribution of letters, as
+                  opposed to using 'Content here, content here', making it look
+                  like readable English. Many desktop publishing packages and
+                  web page editors now use Lorem Ipsum as their default model
+                  text, and a search for 'lorem ipsum' will uncover many web
+                  sites still in their infancy. Various versions have evolved
+                  over the years, sometimes by accident, sometimes on purpose
+                  (injected humour and the like).
                 </p>
               </>
             )}

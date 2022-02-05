@@ -26,15 +26,15 @@ export default function Question1({ lng }) {
       key: "A",
       value:
         lng === "English"
-          ? "Global economic growth - next 12 months"
-          : "Глобальный экономический рост - следующие 12 месяцев",
+          ? "Global economic growth"
+          : "Глобальный экономический рост",
     },
     {
       key: "B",
       value:
         lng === "English"
-          ? "Kazakhstan economic growth - next 12 months"
-          : "Экономический рост Казахстана  - следующие 12 месяцев",
+          ? "Economic growth in your country"
+          : "Экономический рост в вашей стране",
     },
   ];
 
@@ -177,14 +177,14 @@ export default function Question1({ lng }) {
       <div className="main">
         <div className="sticky-sub-div">
           <h2 className="percent">
-            {Math.round(((100 / 39) * 2).toString())}
+            {Math.round(((100 / 12) * 2).toString())}
             {lng === "English" ? "% completed" : "% завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 39) * 2).toString() + "%",
+                width: ((100 / 12) * 2).toString() + "%",
               }}
             ></div>
           </div>
@@ -195,15 +195,13 @@ export default function Question1({ lng }) {
             {lng === "English" ? (
               <>
                 <p className="question">
-                  How do you believe economic growth (i.e., gross domestic
-                  product) will change, if at all, over the next 12 months in:{" "}
-                  <br />
+                  How do you believe economic growth will change in: <br />
                   <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
                     A) the global economy?
                   </span>
                   <br />
                   <span style={{ marginLeft: "2rem" }}>
-                    B) Kazakhstan economy?
+                    B) economy of your country?
                   </span>
                 </p>
                 <i>
@@ -215,15 +213,14 @@ export default function Question1({ lng }) {
             ) : (
               <>
                 <p className="question">
-                  Как, по вашему мнению, изменится экономический рост (т.е.
-                  валовой внутренний продукт) в следующие 12 месяцев, если
+                  Как, по вашему мнению, изменится экономический рост, если
                   вообще изменится: <br />
                   <span style={{ marginLeft: "2rem", marginTop: "1rem" }}>
-                    A) глобальная экономика?
+                    A) в глобальной экономике?
                   </span>
                   <br />
                   <span style={{ marginLeft: "2rem" }}>
-                    B) экономика Казахстана?{" "}
+                    B) в экономике вашей страны?{" "}
                   </span>
                 </p>
                 <i>

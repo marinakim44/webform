@@ -221,14 +221,14 @@ export default function Question2({ lng }) {
           }
         >
           <h2 className="percent">
-            {Math.round(((100 / 39) * 3).toString())}%{" "}
+            {Math.round(((100 / 12) * 3).toString())}%{" "}
             {lng === "English" ? "completed" : "завершено"}
           </h2>
           <div className="progressBarEmpty">
             <div
               className="progressBarFilled"
               style={{
-                width: ((100 / 39) * 3).toString() + "%",
+                width: ((100 / 12) * 3).toString() + "%",
               }}
             ></div>
           </div>
@@ -236,16 +236,11 @@ export default function Question2({ lng }) {
           <div className="left-align-text">
             {lng === "English" ? (
               <p className="question">
-                Which <strong>three countries/territories</strong>, excluding
-                the country/territory in which you are based, do you consider
-                most important for your company’s prospects for revenue growth
-                over the next 12 months?
+                Which <strong>three countries/territories</strong>...?
               </p>
             ) : (
               <p className="question">
-                Какие <strong>три страны</strong>, за исключением страны, в
-                которой вы находитесь, вы считаете наиболее важными для
-                перспектив роста доходов вашей компании в следующие 12 месяцев?
+                Какие <strong>три страны</strong>...
               </p>
             )}
           </div>

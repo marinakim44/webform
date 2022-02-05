@@ -15,34 +15,6 @@ import Question10A from "./questions/Question10A";
 import Question10B from "./questions/Question10B";
 import Question11 from "./questions/Question11";
 import Question12 from "./questions/Question12";
-import Question13 from "./questions/Question13";
-import Question14 from "./questions/Question14";
-import Question15 from "./questions/Question15";
-import Question16 from "./questions/Question16";
-import Question17 from "./questions/Question17";
-import Question18 from "./questions/Question18";
-import Question19 from "./questions/Question19";
-import Question20 from "./questions/Question20";
-import Question21 from "./questions/Question21";
-import Question22 from "./questions/Question22";
-import Question23 from "./questions/Question23";
-import Question24 from "./questions/Question24";
-import Question25 from "./questions/Question25";
-import Question25B from "./questions/Question25B";
-import Question25C from "./questions/Question25C";
-import Question26 from "./questions/Question26";
-import Question27 from "./questions/Question27";
-import Question28 from "./questions/Question28";
-import QuestionA from "./questions/QuestionA";
-import QuestionB from "./questions/QuestionB";
-import QuestionC from "./questions/QuestionC";
-import QuestionD from "./questions/QuestionD";
-import QuestionE from "./questions/QuestionE";
-import QuestionF from "./questions/QuestionF";
-import QuestionG from "./questions/QuestionG";
-import QuestionH from "./questions/QuestionH";
-import QuestionI from "./questions/QuestionI";
-import QuestionJ from "./questions/QuestionJ";
 import { Dropdown } from "react-bootstrap";
 import "./App.css";
 import "./Medium.css";
@@ -127,10 +99,8 @@ export default function App() {
       <Route exact path="/">
         <div className="main">
           <div className="start-text">
-            <h1 className="intro-heading">25th Annual Global CEO Survey</h1>
-            <h1 className="intro-heading">
-              25-ый Ежегодный опрос руководителей крупнейших компаний мира
-            </h1>
+            <h1 className="intro-heading">Lorem Ipsum (English)</h1>
+            <h1 className="intro-heading">Lorem Ipsum (Russian)</h1>
           </div>
           <Dropdown>
             <Dropdown.Toggle
@@ -205,90 +175,6 @@ export default function App() {
         </Route>
         <Route exact path="/eng-q12">
           <Question12 lng={language} />
-        </Route>
-        <Route exact path="/eng-q13">
-          <Question13 lng={language} />
-        </Route>
-        <Route exact path="/eng-q14">
-          <Question14 lng={language} />
-        </Route>
-        <Route exact path="/eng-q15">
-          <Question15 lng={language} />
-        </Route>
-        <Route exact path="/eng-q16">
-          <Question16 lng={language} />
-        </Route>
-        <Route exact path="/eng-q17">
-          <Question17 lng={language} />
-        </Route>
-        <Route exact path="/eng-q18">
-          <Question18 lng={language} />
-        </Route>
-        <Route exact path="/eng-q19">
-          <Question19 lng={language} />
-        </Route>
-        <Route exact path="/eng-q20">
-          <Question20 lng={language} />
-        </Route>
-        <Route exact path="/eng-q21">
-          <Question21 lng={language} />
-        </Route>
-        <Route exact path="/eng-q22">
-          <Question22 lng={language} />
-        </Route>
-        <Route exact path="/eng-q23">
-          <Question23 lng={language} />
-        </Route>
-        <Route exact path="/eng-q24">
-          <Question24 lng={language} />
-        </Route>
-        <Route exact path="/eng-q25">
-          <Question25 lng={language} />
-        </Route>
-        <Route exact path="/eng-q25b">
-          <Question25B lng={language} />
-        </Route>
-        <Route exact path="/eng-q25c">
-          <Question25C lng={language} />
-        </Route>
-        <Route exact path="/eng-q26">
-          <Question26 lng={language} />
-        </Route>
-        <Route exact path="/eng-q27">
-          <Question27 lng={language} />
-        </Route>
-        <Route exact path="/eng-q28">
-          <Question28 lng={language} />
-        </Route>
-        <Route exact path="/eng-qa">
-          <QuestionA lng={language} />
-        </Route>
-        <Route exact path="/eng-qb">
-          <QuestionB lng={language} />
-        </Route>
-        <Route exact path="/eng-qc">
-          <QuestionC lng={language} />
-        </Route>
-        <Route exact path="/eng-qd">
-          <QuestionD lng={language} />
-        </Route>
-        <Route exact path="/eng-qe">
-          <QuestionE lng={language} />
-        </Route>
-        <Route exact path="/eng-qf">
-          <QuestionF lng={language} />
-        </Route>
-        <Route exact path="/eng-qg">
-          <QuestionG lng={language} />
-        </Route>
-        <Route exact path="/eng-qh">
-          <QuestionH lng={language} />
-        </Route>
-        <Route exact path="/eng-qi">
-          <QuestionI lng={language} />
-        </Route>
-        <Route exact path="/eng-qj">
-          <QuestionJ lng={language} />
         </Route>
         <Route exact path="/eng-finish">
           <EngFinish lng={language} />

@@ -1,10 +1,10 @@
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../App.css";
 import "../Medium.css";
 import axios from "axios";
 import ModalAlert from "../ModalAlert";
-import Buttons from "../Buttons";
+import { Button } from "react-bootstrap";
 
 export default function Question12({ lng }) {
   const width = window.screen.width;
@@ -182,8 +182,7 @@ export default function Question12({ lng }) {
     if (Object.entries(input).filter((x) => x[1] === "").length > 0) {
       handleShow();
     } else {
-      history.push("/eng-q13");
-
+      history.push("/eng-finish");
       const data = {
         uuid: localStorage.getItem("uuid"),
         date: localStorage.getItem("date"),
@@ -228,14 +227,14 @@ export default function Question12({ lng }) {
         <div className="main">
           <div className="sticky-sub-div">
             <h2 className="percent">
-              {Math.round(((100 / 39) * 13).toString())}%{" "}
+              {Math.round(((100 / 12) * 11.5).toString())}%{" "}
               {lng === "English" ? "completed" : "завершено"}
             </h2>
             <div className="progressBarEmpty">
               <div
                 className="progressBarFilled"
                 style={{
-                  width: ((100 / 39) * 13).toString() + "%",
+                  width: ((100 / 12) * 11.5).toString() + "%",
                 }}
               ></div>
             </div>
@@ -347,7 +346,29 @@ export default function Question12({ lng }) {
               </table>
             </>
           )}
-          <Buttons lng={lng} click={handleSubmit} />
+          <div className="back-next-btns">
+            <Button
+              variant="secondary"
+              className="back-btn"
+              onClick={() => history.goBack()}
+            >
+              <i
+                className="fas fa-chevron-left"
+                style={{ marginRight: "8px" }}
+              ></i>
+              {lng === "English" ? "Back" : "Назад"}
+            </Button>
+
+            <Button className="finish-btn" onClick={handleSubmit}>
+              <i className="fas fa-check" style={{ marginRight: "8px" }}></i>
+              {/* <Link
+                to="/eng-finish"
+                style={{ color: "#fff", textDecoration: "none" }}
+              > */}
+              {lng === "English" ? "Finish" : "Завершить"}
+              {/* </Link> */}
+            </Button>
+          </div>
         </div>
       </Route>
     </BrowserRouter>
